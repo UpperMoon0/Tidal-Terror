@@ -36,6 +36,9 @@ forge*changelog.txt
 # Game-ready textures belong in src/main/resources and remain tracked.
 /art/
 
+# Local artwork sources and generation references.
+/art-source/
+
 # Data-generator cache; keep generated registry JSON tracked.
 /src/generated/resources/.cache/
 
