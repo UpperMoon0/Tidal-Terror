@@ -11,4 +11,4 @@ The source currently identifies itself as **1.0.0**. `CHANGELOG.md` keeps that v
 - Run the relevant native suites and a packaged client/server smoke test for that final source. Existing development test results do not certify a different release artifact.
 - Record the release date in `CHANGELOG.md`, tag the published revision, and link the actual release/download page from the README. No download URL, project ID, or release tag should be invented before publication.
 
-The normal jar contains the mod assets and registry data. Worlds, logs, generated development galleries, shader packs, and native test/preview classes are excluded. TerraBlender and optional shaders are separate downloads. Project code/art use the existing All Rights Reserved policy; the preserved Forge MDK third-party notice is `LICENSE-Forge-MDK.txt`.
+The normal jar contains the mod assets and registry data. Worlds, logs, generated development galleries, shader packs, and native test/preview classes are excluded. TerraBlender and optional shaders are separate downloads. The project uses the MIT License in `LICENSE.txt`; the preserved Forge MDK third-party notice is `LICENSE-Forge-MDK.txt`.

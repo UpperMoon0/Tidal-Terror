@@ -29,7 +29,7 @@ Version **1.0.0** is currently documented as unreleased. See the [changelog](CHA
 
 Report problems on the [issue tracker](https://github.com/UpperMoon0/Tidal-Terror/issues), with mod/loader versions, reproduction steps, and the relevant log or crash report. Include the seed and coordinates for generation problems.
 
-Author: **NsTut**. The project follows the **All Rights Reserved** policy in [LICENSE.txt](LICENSE.txt). The original Forge MDK notice is preserved separately in [LICENSE-Forge-MDK.txt](LICENSE-Forge-MDK.txt).
+Author: **NsTut**. Licensed under the [MIT License](LICENSE.txt). The original Forge MDK notice is preserved separately in [LICENSE-Forge-MDK.txt](LICENSE-Forge-MDK.txt).
 
 ## Development
 
@@ -64,13 +64,3 @@ Generate biome and feature data with `./gradlew.bat runData`. Generated registry
 Run each test property separately; test fixtures are excluded from normal release builds.
 
 Development shaders are optional: run `python tools/install_dev_shaders.py` to install the pinned Oculus, Embeddium, and Complementary development dependencies. Downloaded dependencies are excluded from Git and the release jar.
-
-See `docs/Coral-Cathedral.txt` and the Coral Crusher notes in `docs` for source references, behavior, and validation details.
-
-The [Cathedral Ray AI notes](docs/Cathedral-Ray-AI.md) describe peaceful cruising, loose schooling, player curiosity, predator avoidance, and safe recovery.
-
-The [predator AI notes](docs/CoralCrusher-Predator-AI.md) describe the encounter cycle, low-health escape, safe regeneration, and native regression coverage.
-
-The [ambient AI notes](docs/Reef-Ambient-AI.md) describe Veilglow blooms and escape pulses, Shardback feeding and defensive warnings, safe recovery, and native regression tests.
-
-The [spawn balance notes](docs/Reef-Spawn-Balance.md) describe separate population pools for each mod creature and reduced drowned spawning.
