@@ -91,3 +91,9 @@ are excluded from ordinary jars.
   and illustrated eggs are present. Test/preview fixtures are excluded.
 - Preview jar: `build/libs/tidalterror-1.0.0-reef-life-ai-preview.jar`
 - SHA-256: `772dfc16a22bdd1b03dc6e4e93cb2d960913d2106a1e544de5e4a0129914bb4e`
+
+## CI regression corrections
+
+Native ambient fixtures use a dedicated 48 x 18 x 48 template: their 24-block pools and 15-block-high water setup exceeded the older 20 x 12 x 20 template. The native GameTest batch runner spaces fixtures from template bounds, so the larger bounds keep setup and roaming creatures isolated. The cover fixture allows native ticks to initialize the stationary predator's water flags before starting crab AI, preserving the intended initial encounter geometry. Foraging movement is measured across the observation window, so a crab returning close to its starting point is not misreported as stationary. Escape tests still require movement away from danger, entry into shelter, water and collision safety. Native path traces showed vanilla amphibious evaluation selecting swimming nodes one block above the sediment; the grounded route validator correctly rejected them. Shardback now uses the native amphibious evaluator with supported-foot neighbors and zero water-border penalty. It still uses native collision/pathfinding, can traverse supported land while recovering, and retains all route water/ground checks and the 32-node bound. Exact route targets remain unchanged.
+
+A new native unsupported-water-gap regression requires the crab to reject the route and remain on the supported side, submerged and collision-free. The combined ambient suite now contains 14 required tests.

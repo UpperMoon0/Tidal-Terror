@@ -64,6 +64,10 @@ jobs:
           chmod +x gradlew
           mkdir -p build/${{ matrix.directory }}
           echo 'eula=true' > build/${{ matrix.directory }}/eula.txt
+          # The terrain audit documents this seed and a fresh normal Overworld.
+          if [[ '${{ matrix.suite }}' == terrain ]]; then
+            printf 'level-seed=7142026\nlevel-name=reef-audit-world\nonline-mode=false\nview-distance=5\nsimulation-distance=5\nmax-tick-time=0\n' > build/${{ matrix.directory }}/server.properties
+          fi
       - name: Run native regression checks
         run: ./gradlew -P${{ matrix.property }} ${{ matrix.task }} --no-daemon --no-configuration-cache
       - uses: actions/upload-artifact@v4

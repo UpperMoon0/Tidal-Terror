@@ -202,10 +202,14 @@ public final class ReefNativeAudit {
                         entity.getType()==net.minecraft.world.entity.EntityType.TROPICAL_FISH)entity.discard();
             var tab=com.nhat.tidal_terror.TidalTerror.TIDAL_TERROR_TAB.get();
             tab.buildContents(new net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters(level.enabledFeatures(),true,level.registryAccess()));
-            require(tab.getDisplayItems().size()==4 && tab.getDisplayItems().stream().anyMatch(stack -> stack.is(com.nhat.tidal_terror.TidalTerror.CORAL_CRUSHER_SPAWN_EGG.get())) && tab.getDisplayItems().stream().anyMatch(stack -> stack.is(com.nhat.tidal_terror.TidalTerror.CATHEDRAL_RAY_SPAWN_EGG.get())) && tab.getDisplayItems().stream().anyMatch(stack -> stack.is(com.nhat.tidal_terror.TidalTerror.SHARDBACK_SPAWN_EGG.get())),"Wrong creative tab contents");
+            var expectedItems=Set.of("coral_crusher_spawn_egg","cathedral_ray_spawn_egg","veilglow_spawn_egg","shardback_spawn_egg",
+                    "raw_coral_crusher_steak","cooked_coral_crusher_steak","raw_cathedral_ray_wing","cooked_cathedral_ray_wing",
+                    "raw_veilglow_gel","cooked_veilglow_gel","raw_shardback_claw","cooked_shardback_claw");
+            var actualItems=tab.getDisplayItems().stream().map(stack -> net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem()).getPath()).collect(java.util.stream.Collectors.toSet());
+            require(tab.getDisplayItems().size()==12 && actualItems.equals(expectedItems),"Wrong creative tab contents: "+actualItems);
             require(!net.minecraftforge.registries.ForgeRegistries.ITEMS.containsKey(new net.minecraft.resources.ResourceLocation("tidalterror","example_item")),"Template item remains");
             require(!net.minecraftforge.registries.ForgeRegistries.BLOCKS.containsKey(new net.minecraft.resources.ResourceLocation("tidalterror","example_block")),"Template block remains");
-            System.out.println("REEF_AUDIT CREATIVE_TAB PASS coral_crusher, cathedral_ray, veilglow and shardback spawn eggs");
+            System.out.println("REEF_AUDIT CREATIVE_TAB PASS all four spawn eggs and eight raw/cooked foods");
             require(!SpawnPlacements.checkSpawnRules(ModEntities.CORAL_CRUSHER.get(),level,MobSpawnType.NATURAL,
                     spawn.atY(level.getSeaLevel()),level.random),"Surface spawn allowed");
             Files.createDirectories(Path.of("../reef-audit-v4"));

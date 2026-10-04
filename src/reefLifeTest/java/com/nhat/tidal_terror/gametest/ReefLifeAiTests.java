@@ -30,7 +30,7 @@ public class ReefLifeAiTests {
   p.setPos(h.absoluteVec(new net.minecraft.world.phys.Vec3(20,6,20)));
   for(int i=0;i<65;i++)p.tick();p.doTick();return p;
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=240)
+ @GameTest(template="reef_life_pool",timeoutTicks=240)
  public static void jellyPulseAndLooseBloom(GameTestHelper h){
   water(h,false);var a=h.spawn(ModEntities.VEILGLOW.get(),10,6,10);
   var b=h.spawn(ModEntities.VEILGLOW.get(),14,6,10);var start=b.position();boolean[] seen={false,false};
@@ -41,7 +41,7 @@ public class ReefLifeAiTests {
    h.assertTrue(a.getTarget()==null&&b.getTarget()==null,"Bloom acquired an attack target");h.succeed();
   });
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=180)
+ @GameTest(template="reef_life_pool",timeoutTicks=180)
  public static void jellyEscapesPredator(GameTestHelper h){
   water(h,false);var j=h.spawn(ModEntities.VEILGLOW.get(),10,6,10);var s=shark(h,6);double before=j.distanceToSqr(s);
   h.runAfterDelay(80,()->{
@@ -50,7 +50,7 @@ public class ReefLifeAiTests {
    h.assertTrue(j.getTarget()==null&&j.getHealth()==12,"Jelly attacked or took passive predator damage");h.succeed();
   });
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=620)
+ @GameTest(template="reef_life_pool",timeoutTicks=620)
  public static void jellyDamageThenSafeRecovery(GameTestHelper h){
   water(h,false);var j=h.spawn(ModEntities.VEILGLOW.get(),10,6,10);float[] damaged={0};
   h.runAfterDelay(5,()->{
@@ -63,7 +63,7 @@ public class ReefLifeAiTests {
    h.assertTrue(j.getTarget()==null&&j.isInWater(),"Recovery pursued a target or beached");h.succeed();
   });
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=160)
+ @GameTest(template="reef_life_pool",timeoutTicks=160)
  public static void jellyEscapeRespectsSolidWall(GameTestHelper h){
   water(h,false);for(int x=0;x<=23;x++)for(int y=3;y<=14;y++)h.setBlock(x,y,13,Blocks.STONE);
   var j=h.spawn(ModEntities.VEILGLOW.get(),10,6,10);shark(h,6);
@@ -73,21 +73,24 @@ public class ReefLifeAiTests {
    h.assertTrue(h.getLevel().noCollision(j)&&j.isInWater(),"Escape clipped terrain or left water");h.succeed();
   });
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=240)
+ @GameTest(template="reef_life_pool",timeoutTicks=240)
  public static void crabForagesWithoutChangingSediment(GameTestHelper h){
-  water(h,true);var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);var start=c.position();boolean[] fed={false};
-  h.onEachTick(()->fed[0]|=c.getBehavior()==ShardbackEntity.Behavior.FORAGE);
+  water(h,true);var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);var start=c.position();boolean[] fed={false};double[] furthest={0};
+  h.onEachTick(()->{fed[0]|=c.getBehavior()==ShardbackEntity.Behavior.FORAGE;furthest[0]=Math.max(furthest[0],c.position().distanceTo(start));});
   h.runAfterDelay(180,()->{
    h.assertTrue(fed[0],"Crab never paused to forage");
-   h.assertTrue(c.position().distanceTo(start)>.75,"Crab did not browse between patches");
+   h.assertTrue(furthest[0]>.75,"Crab did not browse between patches; maximum displacement="+furthest[0]);
    h.assertBlockPresent(Blocks.SANDSTONE,new net.minecraft.core.BlockPos(10,3,10));
    h.assertTrue(c.getTarget()==null&&Math.abs(c.getY()-start.y)<.5,"Crab foraging attacked or floated");h.succeed();
   });
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=240)
+ @GameTest(template="reef_life_pool",timeoutTicks=240)
  public static void crabEscapesAndShelters(GameTestHelper h){
   water(h,true);for(int z=11;z<=18;z++)for(int y=4;y<=7;y++)h.setBlock(16,y,z,Blocks.STONE);
   var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);var s=shark(h,6);double before=c.distanceToSqr(s);
+  // Entity water flags are initialized by native ticks, not by spawn().
+  // Keep the crab at the encounter start until its stationary predator is wet.
+  c.setNoAi(true);h.runAfterDelay(5,()->{h.assertTrue(s.isInWater(),"Predator fixture never entered water");c.setNoAi(false);});
   boolean[] escaped={false},covered={false};
   h.onEachTick(()->{escaped[0]|=c.getBehavior()==ShardbackEntity.Behavior.FLEE;covered[0]|=c.getBehavior()==ShardbackEntity.Behavior.SHELTER;});
   h.runAfterDelay(180,()->{
@@ -96,7 +99,7 @@ public class ReefLifeAiTests {
    h.assertTrue(c.getTarget()==null&&c.isInWater()&&h.getLevel().noCollision(c),"Crab attacked, beached or clipped cover");h.succeed();
   });
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=160)
+ @GameTest(template="reef_life_pool",timeoutTicks=160)
  public static void crabWarnsThenContactPinchesAndRetreats(GameTestHelper h){
   water(h,true);var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);var p=player(h,GameType.SURVIVAL);
   p.setPos(c.position().add(2,0,0));p.doTick();
@@ -109,7 +112,7 @@ public class ReefLifeAiTests {
    p.discard();h.succeed();
   });
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=160)
+ @GameTest(template="reef_life_pool",timeoutTicks=160)
  public static void creativeAndSpectatorDoNotProvokeCrab(GameTestHelper h){
   water(h,true);var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);var p=player(h,GameType.CREATIVE);
   p.setPos(c.position().add(2,0,0));p.doTick();
@@ -122,4 +125,19 @@ public class ReefLifeAiTests {
    p.discard();h.succeed();
   });
  }
+ @GameTest(template="reef_life_pool",timeoutTicks=140)
+ public static void crabCannotRouteAcrossUnsupportedWater(GameTestHelper h){
+  water(h,true);
+  for(int x=13;x<=15;x++)for(int z=0;z<=23;z++)h.setBlock(x,3,z,Blocks.WATER);
+  var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);
+  h.runAfterDelay(5,()->{
+   var destination=h.absoluteVec(new net.minecraft.world.phys.Vec3(19.5,4,10.5));
+   h.assertTrue(!com.nhat.tidal_terror.entities.ReefNavigation.move(c,destination,1,true),"Crab accepted a floating path across an unsupported seabed gap");
+  });
+  h.runAfterDelay(100,()->{
+   h.assertTrue(c.getX()<h.absolutePos(new net.minecraft.core.BlockPos(13,4,0)).getX(),"Crab crossed the unsupported gap");
+   h.assertTrue(c.isInWater()&&c.isAlive()&&h.getLevel().noCollision(c),"Crab left water or clipped while avoiding the gap");h.succeed();
+  });
+ }
+
 }

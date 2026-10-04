@@ -17,7 +17,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("tidalterror")
 @PrefixGameTestTemplate(false)
 public class VeilglowTests {
-    @GameTest(template="coral_crusher_pool",timeoutTicks=100)
+    @GameTest(template="reef_life_pool",timeoutTicks=100)
     public static void contactStingIsMildAndNeverPursues(GameTestHelper helper) {
         var level=helper.getLevel();level.getServer().setDifficulty(net.minecraft.world.Difficulty.NORMAL,true);
         var center=helper.absolutePos(new BlockPos(10,5,10));
@@ -59,7 +59,7 @@ public class VeilglowTests {
             player.discard();helper.succeed();
         });
     }
-    @GameTest(template="coral_crusher_pool", timeoutTicks=60)
+    @GameTest(template="reef_life_pool", timeoutTicks=60)
     public static void habitatCollisionAndEgg(GameTestHelper helper) {
         var level=helper.getLevel(); var type=ModEntities.VEILGLOW.get();
         var pos=helper.absolutePos(new BlockPos(10,5,10));
@@ -103,7 +103,7 @@ public class VeilglowTests {
         helper.succeed();
     }
 
-    @GameTest(template="coral_crusher_pool", timeoutTicks=240)
+    @GameTest(template="reef_life_pool", timeoutTicks=240)
     public static void swimmingUsesNavigation(GameTestHelper helper) {
         var ray=helper.spawn(ModEntities.VEILGLOW.get(),10,5,10);
         var destination=helper.absolutePos(new BlockPos(10,6,15));

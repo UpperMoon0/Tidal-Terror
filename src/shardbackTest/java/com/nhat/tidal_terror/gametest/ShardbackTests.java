@@ -15,7 +15,7 @@ public class ShardbackTests {
   for(int x=0;x<=23;x++)for(int z=0;z<=23;z++)for(int y=3;y<=8;y++)
    helper.setBlock(x,y,z,y==3?Blocks.SANDSTONE:Blocks.WATER);
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=60)
+ @GameTest(template="reef_life_pool",timeoutTicks=60)
  public static void seabedHabitatAndEgg(GameTestHelper helper){
   pool(helper);var level=helper.getLevel();var pos=helper.absolutePos(new BlockPos(10,4,10));
   var type=ModEntities.SHARDBACK.get();var registry=level.registryAccess().registryOrThrow(Registries.BIOME);
@@ -50,7 +50,7 @@ public class ShardbackTests {
   helper.assertTrue(!level.noCollision(crab),"Crab overlaps solid terrain");
   System.out.println("SHARDBACK_TEST seabedHabitatAndEgg PASS");helper.succeed();
  }
- @GameTest(template="coral_crusher_pool",timeoutTicks=240)
+ @GameTest(template="reef_life_pool",timeoutTicks=240)
  public static void walksOnSeabedAndBreathes(GameTestHelper helper){
   pool(helper);var crab=helper.spawn(ModEntities.SHARDBACK.get(),10,4,10);
   var start=crab.position();var destination=helper.absolutePos(new BlockPos(15,4,10));
@@ -60,7 +60,7 @@ public class ShardbackTests {
   helper.runAfterDelay(180,()->{
    helper.assertTrue(crab.position().distanceTo(start)>.75,"Crab did not walk along the seabed");
    helper.assertTrue(Math.abs(crab.getY()-start.y)<.6,"Crab left the seabed vertically; position="+crab.position()+", start="+start);
-   helper.assertTrue(crab.isInWater()&&crab.isAlive()&&crab.getHealth()==16,"Crab drowned or lost health underwater");
+   helper.assertTrue(crab.isInWater()&&crab.isAlive()&&crab.getHealth()==16,"Crab drowned or lost health underwater: health="+crab.getHealth()+" water="+crab.isInWater()+" air="+crab.getAirSupply()+" position="+crab.position()+" damage="+crab.getLastDamageSource());
    helper.assertTrue(crab.getTarget()==null,"Peaceful crab acquired an attack target");
    System.out.println("SHARDBACK_TEST walksOnSeabedAndBreathes PASS distance="+crab.position().distanceTo(start));helper.succeed();
   });

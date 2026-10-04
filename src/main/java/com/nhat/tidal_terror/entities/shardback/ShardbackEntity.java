@@ -32,7 +32,7 @@ public class ShardbackEntity extends PathfinderMob {
    || state.is(net.minecraft.world.level.block.Blocks.GRAVEL)
    || state.is(net.minecraft.world.level.block.Blocks.CLAY);
  }
- @Override protected PathNavigation createNavigation(Level level){return new AmphibiousPathNavigation(this,level);}
+ @Override protected PathNavigation createNavigation(Level level){return new SeabedPathNavigation(this,level);}
  @Override protected void registerGoals(){
   forageGoal=new ShardbackForageGoal(this);goalSelector.addGoal(1,forageGoal);
  }
