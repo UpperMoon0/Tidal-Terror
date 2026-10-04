@@ -23,7 +23,7 @@ Find Coral Cathedral in newly generated ocean chunks, or use `/locate biome tida
 
 Coral Crushers ignore Creative and Spectator players. Use Survival or Adventure to try their hunting behavior. Shaders are optional and are not required to play.
 
-Version **0.0.1** is currently documented as unreleased. See the [changelog](CHANGELOG.md), [CurseForge page text](CURSEFORGE.md), and [release checklist](docs/Release-Checklist.md). A public download link will be added after publication.
+Download **0.0.1** from [GitHub Releases](https://github.com/UpperMoon0/Tidal-Terror/releases/tag/v0.0.1). The [CurseForge project](https://www.curseforge.com/minecraft/mc-mods/tidal-terror) and its first file are awaiting moderator review. See the [changelog](CHANGELOG.md) for release changes.
 
 ## Feedback and license
 
@@ -42,6 +42,8 @@ Requires Java 17. The Gradle wrapper downloads the Forge development dependencie
 
 The release jar is written to `build/libs`. On Linux or macOS, use `./gradlew` instead.
 
+To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.txt`, and push to `main`. CI runs native regression checks and packaging verification, then uploads to CurseForge and creates the matching GitHub release. Publication requires the repository secret `CURSEFORGE_API_TOKEN`.
+
 Generate biome and feature data with `./gradlew.bat runData`. Generated registry JSON is tracked; runtime worlds and generator caches are ignored.
 
 ## Verification
@@ -55,12 +57,11 @@ Generate biome and feature data with `./gradlew.bat runData`. Generated registry
 ./gradlew.bat -PcoralCrusherModelTests verifyVeilglowModel
 ./gradlew.bat -PshardbackTests runGameTestServer
 ./gradlew.bat -PcoralCrusherModelTests verifyShardbackModel
-./gradlew.bat -PreefTests runServer
 ./gradlew.bat -PreefLifeTests runGameTestServer
 ./gradlew.bat -PfoodTests runGameTestServer
 ./gradlew.bat -PspawnPoolTests runGameTestServer
 ```
 
-Run each test property separately; test fixtures are excluded from normal release builds.
+Run each test property separately; test fixtures are excluded from normal release builds. The Validate workflow also runs the terrain audit in an isolated server with its documented seed and required server settings.
 
 Development shaders are optional: run `python tools/install_dev_shaders.py` to install the pinned Oculus, Embeddium, and Complementary development dependencies. Downloaded dependencies are excluded from Git and the release jar.

@@ -21,3 +21,7 @@ Use **Re-run failed jobs** for a failed pipeline. A manual retry of the exact ta
 Check the Actions run, the GitHub release's jar/checksum/manifest, and the CurseForge Files page separately. An accepted upload can remain pending moderation; green Actions does not mean a publicly downloadable CurseForge file. Client playtesting and shader screenshot review remain separate from automated native checks.
 
 The normal jar excludes worlds, logs, development galleries, shader packs, and test/preview classes. TerraBlender and optional shaders are separate downloads. The mod is MIT licensed; the preserved third-party Forge MDK notice is `LICENSE-Forge-MDK.txt`.
+
+## Verified initial release
+
+On 2026-10-04, [Release run 37217889677](https://github.com/UpperMoon0/Tidal-Terror/actions/runs/37217889677) passed all 58 required native GameTests, four model checks, the native terrain audit, 13 release tooling tests, clean packaging, CurseForge upload and GitHub release publication. Tag `v0.0.1` points to `cc8e05ca7febed3c86be8d941bad7bcb7920cec0`. The jar SHA-256 is `20fb4e00093e6f5d384cbecb161e76fe765f616d0816dfa88577f423ada90da1`; the GitHub release retains the manifest, checksum and upload receipt. CurseForge file `9060762` was accepted and showed Under Review on the author page; the initial project also awaited moderator approval.
