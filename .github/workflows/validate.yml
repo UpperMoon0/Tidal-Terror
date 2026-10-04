@@ -1,0 +1,92 @@
+name: Validate
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  tooling:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tools -p 'test_release.py' -v
+  native:
+    name: Native ${{ matrix.suite }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: crusher
+            property: coralCrusherTests
+            task: runGameTestServer
+            directory: coral-crusher-gametest
+          - suite: ray
+            property: cathedralRayTests
+            task: runGameTestServer
+            directory: cathedral-ray-gametest
+          - suite: reef-life
+            property: reefLifeTests
+            task: runGameTestServer
+            directory: reef-life-gametest
+          - suite: food
+            property: foodTests
+            task: runGameTestServer
+            directory: food-gametest
+          - suite: spawn-pools
+            property: spawnPoolTests
+            task: runGameTestServer
+            directory: spawn-pool-gametest
+          - suite: terrain
+            property: reefTests
+            task: runServer
+            directory: reef-native-test-v4a
+          - suite: models
+            property: coralCrusherModelTests
+            task: verifyCoralCrusherAnimation verifyCathedralRayModel verifyVeilglowModel verifyShardbackModel
+            directory: model-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Prepare isolated native server
+        run: |
+          chmod +x gradlew
+          mkdir -p build/${{ matrix.directory }}
+          echo 'eula=true' > build/${{ matrix.directory }}/eula.txt
+      - name: Run native regression checks
+        run: ./gradlew -P${{ matrix.property }} ${{ matrix.task }} --no-daemon --no-configuration-cache
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-${{ matrix.suite }}-evidence
+          path: |
+            build/${{ matrix.directory }}/logs/
+            build/reef-audit-v4/
+            build/*-model*/
+          if-no-files-found: ignore
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x gradlew
+      - run: ./gradlew clean build --no-daemon --no-configuration-cache
+      - run: python3 tools/release.py package --output build/release

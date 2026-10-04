@@ -1,0 +1,122 @@
+name: Release
+# Follow Endless: version detection, preflight, native verification, packaging,
+# CurseForge publication, then the public GitHub release.
+on:
+  push:
+    branches: [main]
+    paths:
+      - gradle.properties
+      - .github/workflows/**
+      - tools/release.py
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: tidal-terror-release
+  cancel-in-progress: false
+jobs:
+  version-change:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.version.outputs.changed }}
+      value: ${{ steps.version.outputs.value }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: version
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: python3 tools/release.py plan
+  preflight:
+    needs: version-change
+    if: needs.version-change.outputs.changed == 'true' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: python3 tools/release.py preflight
+  verify:
+    needs: preflight
+    uses: ./.github/workflows/validate.yml
+  build:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x gradlew
+      - run: ./gradlew clean build --no-daemon --no-configuration-cache
+      - run: python3 tools/release.py package --output build/release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tidal-terror-release
+          path: build/release/
+          if-no-files-found: error
+  publish-curseforge:
+    needs: [build, version-change]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: tidal-terror-release
+          path: build/release
+      - name: Reserve version and preserve exact release files
+        id: prepared
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/release.py prepare --output build/release
+      - name: Publish verified jar to CurseForge
+        id: curseforge
+        if: steps.prepared.outputs.upload == 'true'
+        uses: Kira-NT/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3
+        with:
+          curseforge-id: 1726637
+          curseforge-token: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          files: build/release/tidalterror-${{ needs.version-change.outputs.value }}.jar
+          name: Tidal Terror ${{ needs.version-change.outputs.value }} - Forge 1.20.1
+          version: ${{ needs.version-change.outputs.value }}
+          version-type: release
+          changelog-file: changelogs/v${{ needs.version-change.outputs.value }}.txt
+          loaders: forge
+          game-versions: '1.20.1'
+          game-version-filter: none
+          environment: client | server
+          java: '17'
+          curseforge-dependencies: terrablender(required)
+          retry-attempts: 1
+          fail-mode: fail
+      - name: Record successful CurseForge upload
+        if: steps.prepared.outputs.upload == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CF_FILE_ID: ${{ steps.curseforge.outputs.curseforge-version }}
+          CF_FILE_URL: ${{ steps.curseforge.outputs.curseforge-url }}
+        run: python3 tools/release.py receipt --output build/release
+  release:
+    needs: [publish-curseforge, version-change]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: tidal-terror-release
+          path: build/release
+      - name: Publish GitHub release after CurseForge succeeds
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/release.py finalize --output build/release

@@ -195,7 +195,8 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Title'    : mod_name,
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                // Stable across retries of the same version; no wall-clock build timestamp.
+                'Implementation-Minecraft-Version': minecraft_version
         ])
     }
 
@@ -455,4 +456,10 @@ if (project.hasProperty('spawnPoolTests')) {
                 throw new GradleException('Reef spawn pool tests did not pass; inspect the native server log.')
         }
     }
+}
+
+// Preserve identical release bytes when a publication job is retried.
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
 }

@@ -1,14 +1,23 @@
 # Release checklist
 
-The source currently identifies itself as **0.0.1**. `CHANGELOG.md` keeps that version unreleased until a release is published. `CURSEFORGE.md` is the player-facing project description, ready to copy into the project page; creating it does not publish a CurseForge project or upload a file.
+CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minecraft/mc-mods/tidal-terror). Its description is maintained in `CURSEFORGE.md`. TerraBlender is a required dependency of every uploaded file.
 
-## Before publication
+## Version-driven publication
 
-- Upload `src/main/resources/tidalterror-icon.png` as the project icon. This 500x500 image is already referenced by `logoFile` in `META-INF/mods.toml`; its generated original, biome screenshot, sandy Crusher model preview and prompt are retained in `art-source/project-icon`.
-- Select and upload release screenshots of the actual biome and all four creatures. Development shader screenshots should identify the optional shader stack; local `art` galleries are not committed or hosted automatically.
-- Create or confirm the CurseForge project, copy the description from `CURSEFORGE.md`, and mark TerraBlender (Forge) as a required dependency. Choose Minecraft 1.20.1 and Forge for the uploaded file.
-- Build the final release source with Java 17 using `./gradlew.bat build`. Upload the ordinary jar from `build/libs`, without enabling test/preview properties. Confirm that metadata contains the intended version, author, URLs, and dependency ranges and no unresolved placeholders.
-- Run the relevant native suites and a packaged client/server smoke test for that final source. Existing development test results do not certify a different release artifact.
-- Record the release date in `CHANGELOG.md`, tag the published revision, and link the actual release/download page from the README. No download URL, project ID, or release tag should be invented before publication.
+The workflows follow Endless's structure, adapted to Forge 1.20.1 and Java 17. To release:
 
-The normal jar contains the mod assets and registry data. Worlds, logs, generated development galleries, shader packs, and native test/preview classes are excluded. TerraBlender and optional shaders are separate downloads. The project uses the MIT License in `LICENSE.txt`; the preserved Forge MDK third-party notice is `LICENSE-Forge-MDK.txt`.
+1. Change `mod_version` in `gradle.properties` and add nonempty `changelogs/vVERSION.txt` notes.
+2. Commit and push to `main`. The Release workflow compares the version with the previous revision. An untagged current version also runs, allowing the initial release and workflow repairs.
+3. Preflight rejects missing notes and tags belonging to another commit. Validation runs 57 native GameTests, the terrain audit, four model checks, release tooling tests, and a clean packaging check.
+4. A separate clean build produces the ordinary jar, verifies expanded metadata, dependencies, the icon and all resources, and rejects test/preview classes. The exact jar, SHA256SUMS, and source manifest are retained as an artifact and in a draft GitHub release.
+5. The same jar uploads to CurseForge project 1726637 using `CURSEFORGE_API_TOKEN`, marked Forge 1.20.1, Java 17, client/server, release, with required TerraBlender. A receipt containing its file ID and checksum is saved before the GitHub release becomes public.
+
+Normal PRs and non-main pushes use Validate without publishing. Manual Release runs must target `main`. Completed uploads with a recorded receipt are reused; differing bytes or reused version tags fail rather than overwrite a release. Archive ordering and timestamps are stable across rebuilds.
+
+## Recovery and verification
+
+Use **Re-run failed jobs** for a failed pipeline. A manual retry of the exact tagged commit is also allowed. If CurseForge accepted the upload but execution stopped before its receipt was recorded, inspect the author's Files page and reconcile that file before rerunning publication: the upload API cannot guarantee exactly-once delivery. Automatic upload retries are disabled for that reason. A newer source commit needs a new version after a version has been reserved.
+
+Check the Actions run, the GitHub release's jar/checksum/manifest, and the CurseForge Files page separately. An accepted upload can remain pending moderation; green Actions does not mean a publicly downloadable CurseForge file. Client playtesting and shader screenshot review remain separate from automated native checks.
+
+The normal jar excludes worlds, logs, development galleries, shader packs, and test/preview classes. TerraBlender and optional shaders are separate downloads. The mod is MIT licensed; the preserved third-party Forge MDK notice is `LICENSE-Forge-MDK.txt`.
