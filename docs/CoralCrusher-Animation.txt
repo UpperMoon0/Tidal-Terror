@@ -47,4 +47,4 @@ Test sources reside in src/modelTest and are excluded from the release jar.
 Normal ./gradlew.bat build --offline passed, including reobfJar.
 The historical release archive inspection confirmed no model checks, baseline
 model, or GameTest fixtures in the then-named examplemod-1.0.0.jar. The current
-release filename, after template cleanup, is build/libs/tidalterror-1.0.0.jar.
+release filename is build/libs/tidalterror-0.0.1.jar.

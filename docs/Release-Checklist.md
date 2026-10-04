@@ -1,6 +1,6 @@
 # Release checklist
 
-The source currently identifies itself as **1.0.0**. `CHANGELOG.md` keeps that version unreleased until a release is published. `CURSEFORGE.md` is the player-facing project description, ready to copy into the project page; creating it does not publish a CurseForge project or upload a file.
+The source currently identifies itself as **0.0.1**. `CHANGELOG.md` keeps that version unreleased until a release is published. `CURSEFORGE.md` is the player-facing project description, ready to copy into the project page; creating it does not publish a CurseForge project or upload a file.
 
 ## Before publication
 

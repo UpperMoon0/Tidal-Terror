@@ -23,7 +23,7 @@ Find Coral Cathedral in newly generated ocean chunks, or use `/locate biome tida
 
 Coral Crushers ignore Creative and Spectator players. Use Survival or Adventure to try their hunting behavior. Shaders are optional and are not required to play.
 
-Version **1.0.0** is currently documented as unreleased. See the [changelog](CHANGELOG.md), [CurseForge page text](CURSEFORGE.md), and [release checklist](docs/Release-Checklist.md). A public download link will be added after publication.
+Version **0.0.1** is currently documented as unreleased. See the [changelog](CHANGELOG.md), [CurseForge page text](CURSEFORGE.md), and [release checklist](docs/Release-Checklist.md). A public download link will be added after publication.
 
 ## Feedback and license
 
