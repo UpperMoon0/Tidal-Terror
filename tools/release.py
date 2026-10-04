@@ -151,8 +151,13 @@ def main():
     elif args.action == 'prepare':
         manifest = verify_bundle(folder,value,sha)
         info = release_info(tag)
+        if not tag_commit(value):
+            command('git','config','user.name','github-actions[bot]')
+            command('git','config','user.email','41898282+github-actions[bot]@users.noreply.github.com')
+            command('git','tag','-a',tag,'-m',f'Tidal Terror {tag}',sha)
+            command('git','push','origin',tag)
         if info is None:
-            gh('release','create',tag,'--target',sha,'--draft','--title',f'Tidal Terror {tag}','--notes-file',str(notes))
+            gh('release','create',tag,'--verify-tag','--draft','--title',f'Tidal Terror {tag}','--notes-file',str(notes))
             gh('release','upload',tag,str(folder/f'tidalterror-{value}.jar'),str(folder/'SHA256SUMS'),str(folder/'release-manifest.json'))
             info = release_info(tag)
         assets = {x['name'] for x in info['assets']}
