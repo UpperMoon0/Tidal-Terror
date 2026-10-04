@@ -19,6 +19,15 @@ The reef combines branching coral groves, open chalices, lace-like sea fans, bou
 
 Each creature drops its own seafood: **Coral Crusher Steak**, **Cathedral Ray Wing**, **Veilglow Gel**, or **Shardback Claw**. Cook them in a furnace, smoker, or campfire for better hunger restoration.
 
+## Craft the reef's equipment (0.0.2)
+
+Hunt Coral Crushers for **Crusher Teeth**, or gather **Shardback Plates** from crab drops and peaceful molts. Shardbacks shed plates after several minutes underwater when they can forage safely on sediment. Combine materials with iron ingots and dead coral blocks; the spear also uses leather. Collecting materials unlocks the crafting recipes.
+
+- **Reef Spear:** an ivory tooth on a coral shaft with sandy bindings. Deals 6 attack damage at 1.1 attack speed, has 250 durability and one extra block of main-hand entity reach. Fully charged hits cause 2 bleeding damage over 4 seconds when both fighters are in water; repeated hits refresh the effect.
+- **Reef Armor:** native violet shell plates, cobalt coral growths, ivory supports and slate joints, matching Shardback. The full set provides 16 armor, no toughness, and iron durability. Each piece reduces knockback by 5% while grounded underwater, up to 20%.
+
+This is a specialist branch between iron and diamond. Teeth repair the spear; plates repair the armor. Equipment and crafting materials appear in the Tidal Terror creative tab.
+
 ## Requirements and installation
 
 - **Minecraft Java Edition 1.20.1**

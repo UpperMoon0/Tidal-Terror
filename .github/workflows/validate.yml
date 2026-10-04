@@ -44,13 +44,17 @@ jobs:
             property: spawnPoolTests
             task: runGameTestServer
             directory: spawn-pool-gametest
+          - suite: equipment
+            property: equipmentTests
+            task: runGameTestServer
+            directory: equipment-gametest
           - suite: terrain
             property: reefTests
             task: runServer
             directory: reef-native-test-v4a
           - suite: models
             property: coralCrusherModelTests
-            task: verifyCoralCrusherAnimation verifyCathedralRayModel verifyVeilglowModel verifyShardbackModel
+            task: verifyCoralCrusherAnimation verifyCathedralRayModel verifyVeilglowModel verifyShardbackModel verifyReefEquipmentModel
             directory: model-tests
     steps:
       - uses: actions/checkout@v4
@@ -78,6 +82,7 @@ jobs:
             build/${{ matrix.directory }}/logs/
             build/reef-audit-v4/
             build/*-model*/
+            build/equipment-art/
           if-no-files-found: ignore
   package:
     runs-on: ubuntu-latest

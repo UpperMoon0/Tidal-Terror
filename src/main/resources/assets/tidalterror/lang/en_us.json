@@ -16,5 +16,15 @@
   "item.tidalterror.raw_veilglow_gel": "Raw Veilglow Gel",
   "item.tidalterror.cooked_veilglow_gel": "Cooked Veilglow Gel",
   "item.tidalterror.raw_shardback_claw": "Raw Shardback Claw",
-  "item.tidalterror.cooked_shardback_claw": "Cooked Shardback Claw"
+  "item.tidalterror.cooked_shardback_claw": "Cooked Shardback Claw",
+  "item.tidalterror.crusher_tooth": "Crusher Tooth",
+  "item.tidalterror.shardback_plate": "Shardback Plate",
+  "item.tidalterror.reef_spear": "Reef Spear",
+  "item.tidalterror.reef_helmet": "Reef Helmet",
+  "item.tidalterror.reef_chestplate": "Reef Chestplate",
+  "item.tidalterror.reef_leggings": "Reef Leggings",
+  "item.tidalterror.reef_boots": "Reef Boots",
+  "effect.tidalterror.reef_bleeding": "Reef Bleeding",
+  "tooltip.tidalterror.reef_spear": "Fully charged underwater hits: 2 bleeding damage over 4 seconds",
+  "tooltip.tidalterror.reef_armor": "5% less knockback per piece while grounded underwater"
 }

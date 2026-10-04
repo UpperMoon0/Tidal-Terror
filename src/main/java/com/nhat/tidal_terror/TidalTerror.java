@@ -3,6 +3,8 @@ package com.nhat.tidal_terror;
 import com.nhat.tidal_terror.entities.ModEntities;
 import com.nhat.tidal_terror.items.CoralCrusherSpawnEggItem;
 import com.nhat.tidal_terror.items.ModFoods;
+import com.nhat.tidal_terror.items.ModEquipment;
+import com.nhat.tidal_terror.effects.ModEffects;
 import com.nhat.tidal_terror.worldgen.ReefWorldgen;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -47,12 +49,21 @@ public class TidalTerror {
                         output.accept(ModFoods.COOKED_VEILGLOW_GEL.get());
                         output.accept(ModFoods.RAW_SHARDBACK_CLAW.get());
                         output.accept(ModFoods.COOKED_SHARDBACK_CLAW.get());
+                        output.accept(ModEquipment.CRUSHER_TOOTH.get());
+                        output.accept(ModEquipment.SHARDBACK_PLATE.get());
+                        output.accept(ModEquipment.REEF_SPEAR.get());
+                        output.accept(ModEquipment.REEF_HELMET.get());
+                        output.accept(ModEquipment.REEF_CHESTPLATE.get());
+                        output.accept(ModEquipment.REEF_LEGGINGS.get());
+                        output.accept(ModEquipment.REEF_BOOTS.get());
                     })
                     .build());
 
     public TidalTerror() {
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModFoods.register();
+        ModEquipment.register();
+        ModEffects.register(bus);
         ITEMS.register(bus);
         CREATIVE_MODE_TABS.register(bus);
         ModEntities.register(bus);

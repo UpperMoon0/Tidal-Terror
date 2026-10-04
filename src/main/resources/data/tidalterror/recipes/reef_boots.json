@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "P P",
+    "ICI"
+  ],
+  "key": {
+    "C": {
+      "tag": "tidalterror:coral_skeletons"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "tidalterror:shardback_plate"
+    }
+  },
+  "result": {
+    "item": "tidalterror:reef_boots"
+  }
+}

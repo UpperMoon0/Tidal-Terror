@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.2 — Unreleased
+
+- Added the native 3D Reef Spear: Crusher tooth, coral skeleton shaft and sandy hide bindings; 6 damage, 1.1 attack speed, 250 durability and +1 block main-hand entity reach.
+- Fully charged underwater spear hits apply 2 bleeding damage over 4 seconds, refreshing without stacking.
+- Added four pieces of Shardback Reef Armor with violet shell plates, cobalt coral growths, ivory supports and slate joints; 16 armor, no toughness and iron durability.
+- Each worn armor piece reduces knockback by 5% while grounded underwater, up to 20%.
+- Added tooth/plate loot alongside seafood, peaceful Shardback molts, iron-and-coral recipes, recipe unlocks and material repairs.
+- Added native equipment gameplay/model checks, exact-face texture tooling and isolated client previews.
+
 ## 0.0.1 â€” 2026-10-04
 
 - Added Coral Cathedral: a deep ocean biome with giant branching, chalice, and sea-fan corals, irregular smaller colonies, dense coral gardens, sandy floors, and sandstone beneath.
