@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.1 — Unreleased
+## 0.0.1 â€” 2026-10-04
 
 - Added Coral Cathedral: a deep ocean biome with giant branching, chalice, and sea-fan corals, irregular smaller colonies, dense coral gardens, sandy floors, and sandstone beneath.
 - Added animated Coral Crushers, Cathedral Rays, Veilglows, and Shardbacks, with habitat-specific natural spawning and separate population pools.
