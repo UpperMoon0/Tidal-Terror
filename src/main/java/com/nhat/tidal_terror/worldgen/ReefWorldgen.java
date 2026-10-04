@@ -72,6 +72,28 @@ public final class ReefWorldgen {
     }
 
     private static void spawns(SpawnPlacementRegisterEvent event) {
+        event.register(ModEntities.SHARDBACK.get(), SpawnPlacements.Type.IN_WATER,
+                Heightmap.Types.OCEAN_FLOOR, (type, level, reason, pos, random) ->
+                    level.getBiome(pos).is(BIOME) && pos.getY()<level.getSeaLevel()-4
+                    && level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.WATER)
+                    && level.getBlockState(pos.above()).is(net.minecraft.world.level.block.Blocks.WATER)
+                    && com.nhat.tidal_terror.entities.shardback.ShardbackEntity.isSeabed(level.getBlockState(pos.below()))
+                    && level.getBlockState(pos.below()).isFaceSturdy(level,pos.below(),net.minecraft.core.Direction.UP),
+                SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(ModEntities.VEILGLOW.get(), SpawnPlacements.Type.IN_WATER,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (type, level, reason, pos, random) -> {
+                    if(!level.getBiome(pos).is(BIOME) || pos.getY()>=level.getSeaLevel()-8)return false;
+                    // The tall bell and hanging ribbons need an entirely submerged column.
+                    for(int y=-1;y<=3;y++)if(!level.getBlockState(pos.above(y)).is(net.minecraft.world.level.block.Blocks.WATER))return false;
+                    return true;
+                }, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(ModEntities.CATHEDRAL_RAY.get(), SpawnPlacements.Type.IN_WATER,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (type, level, reason, pos, random) ->
+                    level.getBiome(pos).is(BIOME) && pos.getY() < level.getSeaLevel()-4
+                    && level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.WATER)
+                    && level.getBlockState(pos.above()).is(net.minecraft.world.level.block.Blocks.WATER)
+                    && level.getBlockState(pos.below()).is(net.minecraft.world.level.block.Blocks.WATER),
+                SpawnPlacementRegisterEvent.Operation.REPLACE);
         event.register(ModEntities.CORAL_CRUSHER.get(), SpawnPlacements.Type.IN_WATER,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (type, level, reason, pos, random) -> {
                     if (!level.getBiome(pos).is(BIOME) || pos.getY() >= level.getSeaLevel()-4) return false;
@@ -124,11 +146,24 @@ public final class ReefWorldgen {
         generation.addFeature(GenerationStep.Decoration.RAW_GENERATION, BASIN_PLACED);
         generation.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, PLACED);
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, GARDEN_PLACED);
+        MobSpawnSettings.Builder oceanMobs = new MobSpawnSettings.Builder();
+        BiomeDefaultFeatures.warmOceanSpawns(oceanMobs, 10, 4);
+        MobSpawnSettings oceanSpawns = oceanMobs.build();
         MobSpawnSettings.Builder mobs = new MobSpawnSettings.Builder();
-        BiomeDefaultFeatures.warmOceanSpawns(mobs, 10, 4);
+        // Keep the warm-ocean roster, but make drowned uncommon in this reef.
+        // This changes only our biome table, not vanilla drowned placement rules.
+        for (MobCategory category : MobCategory.values()) {
+            for (MobSpawnSettings.SpawnerData spawn : oceanSpawns.getMobs(category).unwrap()) {
+                mobs.addSpawn(category, spawn.type == EntityType.DROWNED
+                        ? new MobSpawnSettings.SpawnerData(EntityType.DROWNED, 1, 1, 1) : spawn);
+            }
+        }
         mobs.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(EntityType.TURTLE, 3, 1, 2));
         mobs.addSpawn(MobCategory.WATER_AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.PUFFERFISH, 15, 1, 3));
-        mobs.addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.CORAL_CRUSHER.get(), 2, 1, 1));
+        mobs.addSpawn(ModEntities.CRUSHER_POOL, new MobSpawnSettings.SpawnerData(ModEntities.CORAL_CRUSHER.get(), 2, 1, 1));
+        mobs.addSpawn(ModEntities.RAY_POOL, new MobSpawnSettings.SpawnerData(ModEntities.CATHEDRAL_RAY.get(), 6, 2, 3));
+        mobs.addSpawn(ModEntities.VEILGLOW_POOL, new MobSpawnSettings.SpawnerData(ModEntities.VEILGLOW.get(), 8, 2, 4));
+        mobs.addSpawn(ModEntities.SHARDBACK_POOL, new MobSpawnSettings.SpawnerData(ModEntities.SHARDBACK.get(), 10, 1, 3));
         context.register(BIOME, new Biome.BiomeBuilder().hasPrecipitation(true).temperature(.95F).downfall(.8F)
                 .specialEffects(new BiomeSpecialEffects.Builder().waterColor(0x35bdb2).waterFogColor(0x126b82)
                         .fogColor(0xc0d8ff).skyColor(0x78a7ff).build())

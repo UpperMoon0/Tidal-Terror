@@ -1,0 +1,38 @@
+[
+  {
+    "item": "coral_crusher_steak",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_equal": true,
+    "edge_pixels_filled": 2
+  },
+  {
+    "item": "cathedral_ray_wing",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_equal": true,
+    "edge_pixels_filled": 0
+  },
+  {
+    "item": "veilglow_gel",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_equal": true,
+    "edge_pixels_filled": 0
+  },
+  {
+    "item": "shardback_claw",
+    "size": [
+      64,
+      64
+    ],
+    "alpha_equal": true,
+    "edge_pixels_filled": 0
+  }
+]

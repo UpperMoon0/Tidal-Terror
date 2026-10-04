@@ -1,5 +1,8 @@
 Coral Crusher model animation (Minecraft 1.20.1)
 
+For the complete modeling, animation, ImageGen texturing, UV reconstruction,
+and variant workflow, see CoralCrusher-Art-Workflow.md in this directory.
+
 The exported setupAnim method was empty, lowerjaw contained no cubes, and
 head/body/tail were independent root parts. Head and tail now belong to the
 body, with geometry rebased around the neck, jaw hinges, and tail attachment.
@@ -12,8 +15,10 @@ Motion
 - Body pitch follows the renderer's interpolated entity pitch underwater;
   limited head yaw follows the renderer's relative look direction.
 - Jaw opening/closing and slight head recoil use EntityModel.attackTime.
-  Vanilla MeleeAttackGoal already calls swing(MAIN_HAND); LivingEntityRenderer
-  fills attackTime from the entity's interpolated, synchronized attack swing.
+  The predator goal calls swing(MAIN_HAND) once for its committed bite;
+  LivingEntityRenderer fills attackTime from the synchronized attack swing.
+- The synchronized WINDUP behavior strengthens the tail stroke and slightly
+  opens the jaw/poses the head before the charge.
 - Faster tail and body movement out of water, following CodModel's pattern.
 - Reset every baked ModelPart before posing, to prevent cumulative transforms
   and leakage between entities sharing the renderer's model instance.
@@ -36,8 +41,10 @@ rest geometry/UV preservation, moving swim/bite/land vertices, and pose reset.
 48 rendered vertex frames were exported and rasterized with the actual texture
 for build/animation-preview/coral-crusher-animation.gif. This is a software
 preview of native model geometry, not an in-game framebuffer capture.
-The server-side AI implementation is unchanged from the prior verified fix.
+The swimming-control implementation is retained. The encounter controller is
+now documented in CoralCrusher-Predator-AI.md.
 Test sources reside in src/modelTest and are excluded from the release jar.
 Normal ./gradlew.bat build --offline passed, including reobfJar.
-Release archive inspection confirmed no model checks, baseline model, or
-GameTest fixtures were included in build/libs/examplemod-1.0.0.jar.
+The historical release archive inspection confirmed no model checks, baseline
+model, or GameTest fixtures in the then-named examplemod-1.0.0.jar. The current
+release filename, after template cleanup, is build/libs/tidalterror-1.0.0.jar.

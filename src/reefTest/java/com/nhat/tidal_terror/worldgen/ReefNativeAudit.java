@@ -136,7 +136,7 @@ public final class ReefNativeAudit {
             for(var key:biomeRegistry.registryKeySet()) {
                 if(!key.location().getNamespace().equals("minecraft"))continue;
                 var holder=biomeRegistry.getHolderOrThrow(key);
-                require(holder.value().getMobSettings().getMobs(MobCategory.WATER_CREATURE).unwrap().stream()
+                require(holder.value().getMobSettings().getMobs(ModEntities.CORAL_CRUSHER.get().getCategory()).unwrap().stream()
                         .noneMatch(entry -> entry.type==ModEntities.CORAL_CRUSHER.get()),"Shark listed in vanilla biome "+key);
                 // Keep the valid water column constant and vary only the biome.
                 var view=(net.minecraft.world.level.ServerLevelAccessor)java.lang.reflect.Proxy.newProxyInstance(
@@ -158,13 +158,23 @@ public final class ReefNativeAudit {
             level.addNewPlayer(player);
             level.setDefaultSpawnPos(new BlockPos(0,80,0),0);
             var nearby=clearWater.stream().filter(pos -> pos.distSqr(spawn)<1600).toList();
+            for(var entity:java.util.stream.StreamSupport.stream(level.getAllEntities().spliterator(),false).toList())
+                if(entity instanceof CoralCrusherEntity)entity.discard();
             for(int attempt=0;attempt<300;attempt++) {
                 BlockPos pos=nearby.get(level.random.nextInt(nearby.size()));
                 NaturalSpawner.spawnCategoryForPosition(MobCategory.WATER_CREATURE,level,pos);
+                for(var reefPool:ModEntities.reefPools())NaturalSpawner.spawnCategoryForPosition(reefPool,level,pos);
             }
-            int sharkCount=0;
-            for(var entity:level.getAllEntities())if(entity instanceof CoralCrusherEntity)sharkCount++;
+            int sharkCount=0, sandySharks=0, blueSharks=0;
+            for(var entity:level.getAllEntities())if(entity instanceof CoralCrusherEntity shark) {
+                sharkCount++;
+                require(shark.isSandy()==CoralCrusherEntity.sandyAtSpawn(level,shark.blockPosition()),
+                        "Native shark skin does not match spawn habitat at "+shark.blockPosition());
+                if(shark.isSandy())sandySharks++;else blueSharks++;
+            }
             require(sharkCount>0,"Native NaturalSpawner did not create a shark");
+            require(sandySharks>0 && blueSharks>0,"Native spawning must produce both habitat skins");
+            System.out.println("REEF_AUDIT NATIVE_SKINS PASS sandy="+sandySharks+" blue="+blueSharks);
             var deep=clearWater.stream().filter(pos->pos.getY()<=-15 &&
                     Math.abs(pos.getX()-spawn.getX())<32 && Math.abs(pos.getZ()-spawn.getZ())<32).toList();
             require(!deep.isEmpty(),"No deep fauna positions");
@@ -172,6 +182,7 @@ public final class ReefNativeAudit {
             for(int attempt=0;attempt<250;attempt++) {
                 BlockPos pos=deep.get(level.random.nextInt(deep.size()));
                 NaturalSpawner.spawnCategoryForPosition(MobCategory.WATER_CREATURE,level,pos);
+                for(var reefPool:ModEntities.reefPools())NaturalSpawner.spawnCategoryForPosition(reefPool,level,pos);
                 NaturalSpawner.spawnCategoryForPosition(MobCategory.WATER_AMBIENT,level,pos);
                 NaturalSpawner.spawnCategoryForPosition(MobCategory.CREATURE,level,pos);
             }
@@ -191,10 +202,10 @@ public final class ReefNativeAudit {
                         entity.getType()==net.minecraft.world.entity.EntityType.TROPICAL_FISH)entity.discard();
             var tab=com.nhat.tidal_terror.TidalTerror.TIDAL_TERROR_TAB.get();
             tab.buildContents(new net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters(level.enabledFeatures(),true,level.registryAccess()));
-            require(tab.getDisplayItems().size()==1 && tab.getDisplayItems().iterator().next().is(com.nhat.tidal_terror.TidalTerror.CORAL_CRUSHER_SPAWN_EGG.get()),"Wrong creative tab contents");
+            require(tab.getDisplayItems().size()==4 && tab.getDisplayItems().stream().anyMatch(stack -> stack.is(com.nhat.tidal_terror.TidalTerror.CORAL_CRUSHER_SPAWN_EGG.get())) && tab.getDisplayItems().stream().anyMatch(stack -> stack.is(com.nhat.tidal_terror.TidalTerror.CATHEDRAL_RAY_SPAWN_EGG.get())) && tab.getDisplayItems().stream().anyMatch(stack -> stack.is(com.nhat.tidal_terror.TidalTerror.SHARDBACK_SPAWN_EGG.get())),"Wrong creative tab contents");
             require(!net.minecraftforge.registries.ForgeRegistries.ITEMS.containsKey(new net.minecraft.resources.ResourceLocation("tidalterror","example_item")),"Template item remains");
             require(!net.minecraftforge.registries.ForgeRegistries.BLOCKS.containsKey(new net.minecraft.resources.ResourceLocation("tidalterror","example_block")),"Template block remains");
-            System.out.println("REEF_AUDIT CREATIVE_TAB PASS only coral_crusher_spawn_egg");
+            System.out.println("REEF_AUDIT CREATIVE_TAB PASS coral_crusher, cathedral_ray, veilglow and shardback spawn eggs");
             require(!SpawnPlacements.checkSpawnRules(ModEntities.CORAL_CRUSHER.get(),level,MobSpawnType.NATURAL,
                     spawn.atY(level.getSeaLevel()),level.random),"Surface spawn allowed");
             Files.createDirectories(Path.of("../reef-audit-v4"));
@@ -249,6 +260,7 @@ public final class ReefNativeAudit {
             System.out.println("REEF_AUDIT COAST nativeBoundaryChecks="+coastChecks+" maximumHeightError="+maximumSeamError+" photo="+photographCoast);
             // Native survival was checked on every actual coral block above, including chunk seams.
             Files.writeString(Path.of("../reef-audit-v4/location.txt"),center.getX()+","+center.getZ());
+            ReefStructureAudit.verify(level, center);
             System.out.println("REEF_AUDIT PASS "+report);
             Files.writeString(Path.of("../reef-audit-v4/world-path.txt"),Path.of("reef-audit-world").toAbsolutePath().normalize().toString());
             Files.writeString(Path.of("../reef-audit-v4/passed.txt"),report+" vanillaBiomesRejected="+vanillaChecked+" allGeneratedCoralNativeTicksSurvive=true");

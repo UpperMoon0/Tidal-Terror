@@ -69,13 +69,14 @@ public final class ReefExplorer {
      // The audit deliberately accelerates spawning. Start this independent
      // exploration copy with a normal-looking population and one native shark.
      for(var entity:java.util.stream.StreamSupport.stream(level.getAllEntities().spliterator(),false).filter(Objects::nonNull).toList())
-      if(entity.getType().getCategory()==net.minecraft.world.entity.MobCategory.WATER_CREATURE ||
+      if(com.nhat.tidal_terror.entities.ModEntities.reefPools().contains(entity.getType().getCategory()) ||
+          entity.getType().getCategory()==net.minecraft.world.entity.MobCategory.WATER_CREATURE ||
           entity.getType()==net.minecraft.world.entity.EntityType.TURTLE ||
           entity.getType()==net.minecraft.world.entity.EntityType.TROPICAL_FISH)entity.discard();
      boolean shark=false;
      for(int attempt=0;attempt<200 && !shark;attempt++){
       var pos=new net.minecraft.core.BlockPos(36+level.random.nextInt(45),-20+level.random.nextInt(40),12+level.random.nextInt(45));
-      net.minecraft.world.level.NaturalSpawner.spawnCategoryForPosition(net.minecraft.world.entity.MobCategory.WATER_CREATURE,level,pos);
+      net.minecraft.world.level.NaturalSpawner.spawnCategoryForPosition(com.nhat.tidal_terror.entities.ModEntities.CRUSHER_POOL,level,pos);
       for(var entity:level.getAllEntities())if(entity instanceof com.nhat.tidal_terror.entities.coral_crusher.CoralCrusherEntity reefShark){
        reefShark.setPersistenceRequired();shark=true;break;
       }

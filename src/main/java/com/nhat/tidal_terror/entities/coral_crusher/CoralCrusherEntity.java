@@ -6,13 +6,17 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
@@ -31,6 +35,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 public class CoralCrusherEntity extends WaterAnimal {
+    public enum Behavior { PATROL, INVESTIGATE, CIRCLE, WINDUP, CHARGE, RECOVER, FLEE, MELEE_WINDUP, REPOSITION }
+    private static final EntityDataAccessor<Integer> DATA_BEHAVIOR =
+            SynchedEntityData.defineId(CoralCrusherEntity.class, EntityDataSerializers.INT);
+    private CoralCrusherHuntGoal huntGoal;
+    private BlockPos territory;
     private static final EntityDataAccessor<Boolean> DATA_SANDY =
             SynchedEntityData.defineId(CoralCrusherEntity.class, EntityDataSerializers.BOOLEAN);
     public static final int SANDY_SPAWN_HEIGHT = 24;
@@ -39,6 +48,7 @@ public class CoralCrusherEntity extends WaterAnimal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_SANDY, false);
+        this.entityData.define(DATA_BEHAVIOR, Behavior.PATROL.ordinal());
     }
 
     public boolean isSandy() {
@@ -47,6 +57,22 @@ public class CoralCrusherEntity extends WaterAnimal {
 
     public void setSandy(boolean sandy) {
         this.entityData.set(DATA_SANDY, sandy);
+    }
+
+    public Behavior getBehavior() { return Behavior.values()[this.entityData.get(DATA_BEHAVIOR)]; }
+    void setBehavior(Behavior behavior) { this.entityData.set(DATA_BEHAVIOR, behavior.ordinal()); }
+    public BlockPos getTerritory() {
+        if (this.territory == null) this.territory = this.blockPosition();
+        return this.territory;
+    }
+    public boolean isRetreating() { return getBehavior() == Behavior.FLEE; }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        boolean damaged = super.hurt(source, amount);
+        if (damaged && !level().isClientSide && this.huntGoal != null)
+            this.huntGoal.onHurt(source.getEntity() instanceof LivingEntity attacker ? attacker : null);
+        return damaged;
     }
 
     public static boolean sandyAtSpawn(ServerLevelAccessor level, BlockPos pos) {
@@ -69,7 +95,10 @@ public class CoralCrusherEntity extends WaterAnimal {
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
             MobSpawnType reason, @Nullable SpawnGroupData groupData, @Nullable CompoundTag spawnTag) {
-        this.setSandy(sandyAtSpawn(level, this.blockPosition()));
+        // Vanilla block-use, water-use, and dispenser eggs all finalize with
+        // SPAWN_EGG. Natural spawns retain their seabed-based skin selection.
+        this.setSandy(reason == MobSpawnType.SPAWN_EGG
+                ? this.random.nextBoolean() : sandyAtSpawn(level, this.blockPosition()));
         return super.finalizeSpawn(level, difficulty, reason, groupData, spawnTag);
     }
 
@@ -77,6 +106,8 @@ public class CoralCrusherEntity extends WaterAnimal {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("Skin", this.isSandy() ? "sandy" : "blue");
+        tag.put("Territory", NbtUtils.writeBlockPos(getTerritory()));
+        tag.putBoolean("Retreating", isRetreating());
     }
 
     @Override
@@ -84,12 +115,15 @@ public class CoralCrusherEntity extends WaterAnimal {
         super.readAdditionalSaveData(tag);
         // Existing sharks without a Skin tag retain their original blue skin.
         this.setSandy("sandy".equals(tag.getString("Skin")));
+        if (tag.contains("Territory", 10)) this.territory = NbtUtils.readBlockPos(tag.getCompound("Territory"));
+        if (tag.getBoolean("Retreating")) this.huntGoal.resumeRetreat();
     }
 
     public CoralCrusherEntity(EntityType<? extends WaterAnimal> entityType, Level level) {
         super(entityType, level);
-        // Minecraft 1.20.1 Dolphin's controls steer navigation in all three axes.
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+        // Keep native three-axis steering, but disable its constant upward
+        // buoyancy. Navigation owns depth during patrol, pursuit and retreat.
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, false);
         this.lookControl = new SmoothSwimmingLookControl(this, 10) {
             @Override
             protected Optional<Float> getXRotD() {
@@ -107,11 +141,22 @@ public class CoralCrusherEntity extends WaterAnimal {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        // Dolphin's melee multiplier avoids overshooting the swim controller's turns.
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2D, false));
-        // RandomSwimmingGoal owns MOVE, so melee can interrupt wandering.
-        this.goalSelector.addGoal(3, new RandomSwimmingGoal(this, 1.0D, 50));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.huntGoal = new CoralCrusherHuntGoal(this);
+        this.goalSelector.addGoal(1, this.huntGoal);
+        // Investigation supplies the delay; nearby visible players should not
+        // be missed for an arbitrary random number of acquisition attempts.
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 0,
+                true, false, target -> this.huntGoal.canAcquire(target)));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Drowned.class, 0,
+                true, false, target -> this.huntGoal.canAcquire(target)) {
+            @Override protected AABB getTargetSearchArea(double range) {
+                // Vanilla's generic mob search has only four blocks of vertical
+                // expansion. Deep-water hunting needs a full three-dimensional search.
+                return CoralCrusherEntity.this.getBoundingBox().inflate(48, 48, 48);
+            }
+        });
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractFish.class, 120,
+                true, false, target -> this.huntGoal.canAcquire(target) && distanceToSqr(target) < 100));
     }
 
     @Override
@@ -121,15 +166,12 @@ public class CoralCrusherEntity extends WaterAnimal {
 
     @Override
     public void travel(Vec3 travelVector) {
-        // Match Dolphin.travel: consume the swim controller's inputs rather than
-        // replacing navigation's velocity with an unrelated random vector.
+        // Consume navigation's steering without any automatic rise or sink.
+        // Existing momentum decays normally; the hunt goal chooses the height.
         if (this.isEffectiveAi() && this.isInWater()) {
             this.moveRelative(this.getSpeed(), travelVector);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
-            if (this.getTarget() == null) {
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
-            }
         } else {
             super.travel(travelVector);
         }
@@ -140,6 +182,6 @@ public class CoralCrusherEntity extends WaterAnimal {
                 .add(Attributes.MAX_HEALTH, 120.0D)
                 .add(Attributes.ATTACK_DAMAGE, 10.0D)
                 .add(Attributes.ATTACK_KNOCKBACK, 2.0D)
-                .add(Attributes.FOLLOW_RANGE, 20.0D);
+                .add(Attributes.FOLLOW_RANGE, 64.0D);
     }
 }

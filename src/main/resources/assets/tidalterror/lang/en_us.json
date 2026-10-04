@@ -2,5 +2,19 @@
   "biome.tidalterror.coral_cathedral": "Coral Cathedral",
   "entity.tidalterror.coral_crusher": "Coral Crusher",
   "item.tidalterror.coral_crusher_spawn_egg": "Coral Crusher Spawn Egg",
-  "itemGroup.tidalterror": "Tidal Terror"
+  "itemGroup.tidalterror": "Tidal Terror",
+  "entity.tidalterror.cathedral_ray": "Cathedral Ray",
+  "item.tidalterror.cathedral_ray_spawn_egg": "Cathedral Ray Spawn Egg",
+  "entity.tidalterror.veilglow": "Veilglow",
+  "item.tidalterror.veilglow_spawn_egg": "Veilglow Spawn Egg",
+  "entity.tidalterror.shardback": "Shardback",
+  "item.tidalterror.shardback_spawn_egg": "Shardback Spawn Egg",
+  "item.tidalterror.raw_coral_crusher_steak": "Raw Coral Crusher Steak",
+  "item.tidalterror.cooked_coral_crusher_steak": "Cooked Coral Crusher Steak",
+  "item.tidalterror.raw_cathedral_ray_wing": "Raw Cathedral Ray Wing",
+  "item.tidalterror.cooked_cathedral_ray_wing": "Cooked Cathedral Ray Wing",
+  "item.tidalterror.raw_veilglow_gel": "Raw Veilglow Gel",
+  "item.tidalterror.cooked_veilglow_gel": "Cooked Veilglow Gel",
+  "item.tidalterror.raw_shardback_claw": "Raw Shardback Claw",
+  "item.tidalterror.cooked_shardback_claw": "Cooked Shardback Claw"
 }

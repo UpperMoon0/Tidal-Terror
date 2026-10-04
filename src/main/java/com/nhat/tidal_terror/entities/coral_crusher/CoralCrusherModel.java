@@ -104,7 +104,15 @@ public class CoralCrusherModel<T extends Entity> extends EntityModel<T> {
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float swimAmount = Mth.clamp((float) entity.getDeltaMovement().length() * 4.0F, 0.0F, 1.0F);
+        boolean windingUp = entity instanceof CoralCrusherEntity crusher
+                && (crusher.getBehavior() == CoralCrusherEntity.Behavior.WINDUP
+                    || crusher.getBehavior() == CoralCrusherEntity.Behavior.MELEE_WINDUP);
+        if (windingUp) swimAmount = Math.max(swimAmount, 0.7F);
         animatePose(entity.isInWaterOrBubble(), swimAmount, ageInTicks, netHeadYaw, headPitch, this.attackTime);
+        if (windingUp) {
+            this.lowerJaw.xRot += 0.12F;
+            this.head.xRot -= 0.05F;
+        }
     }
 
     void animatePose(boolean inWater, float swimAmount, float ageInTicks, float netHeadYaw, float headPitch, float attackProgress) {

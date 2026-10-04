@@ -1,0 +1,45 @@
+{
+  "mode": "built-in imagegen",
+  "entries": [
+    {
+      "id": "coral_crusher_steak",
+      "ref": "art/coral-crusher-texture-v1/textured-model-preview.png",
+      "design": "A thick crescent-shaped shark steak cut, pink salmon flesh with a small cream cartilage center and slate blue skin rim matching this shark. Food cut, no whole animal.",
+      "raw": "C:\\Users\\NsTut\\.codex\\generated_images\\01a102b9-673d-7813-b015-61f8d7761593\\exec-933265ff-1ec7-4462-bd93-d0a7be164a84.png",
+      "cooked": "C:\\Users\\NsTut\\.codex\\generated_images\\01a102b9-673d-7813-b015-61f8d7761593\\exec-46052da9-a834-4940-9a20-851d0736846b.png",
+      "raw_prompt": "Create one Minecraft inventory food item sprite, based on the attached actual textured mob model preview (reference for anatomy/colors only). A thick crescent-shaped shark steak cut, pink salmon flesh with a small cream cartilage center and slate blue skin rim matching this shark. Food cut, no whole animal. Crisp deliberate pixel art, limited palette, chunky stepped silhouette and square pixel shading suitable for downscaling to exactly 64x64. Center one isolated icon on square canvas, 10% clear padding, same overhead three-quarter inventory lighting, no text, labels, UI, floor, cast shadow, plate, garnish, or background. Truly transparent background. This is the RAW food version.",
+      "cooked_prompt": "Edit this RAW Minecraft food sprite into its COOKED version. Treat the supplied raw icon as the edit target. Preserve EXACT same outer silhouette, cutout/holes, position, canvas, orientation, volume and transparent alpha boundary. ONLY recolor/shade interior pixels to cooked food. Turn raw pink flesh to warm golden tan cooked flesh, dark brown toasted edges, a few subtle brown grill stripes; keep skin rim recognizable but browned. Crisp square pixel art matching reference, not smooth painting. No steam, garnish, extra outline, plate, cast shadow, text or background. Transparent background. Identical silhouette is essential.",
+      "saved_model_reference": "art-source/food/model-reference-coral_crusher_steak.png"
+    },
+    {
+      "id": "cathedral_ray_wing",
+      "ref": "art/cathedral-ray/textured-model-preview.png",
+      "design": "One triangular manta ray wing fillet, curved tapered tip, indigo lavender skin edge and faint mint markings matching this ray, pale pink cream cut flesh. Food cut, no whole animal.",
+      "raw": "C:\\Users\\NsTut\\.codex\\generated_images\\01a102b9-673d-7813-b015-61f8d7761593\\exec-b042c74a-1441-4379-93a6-94200327675b.png",
+      "cooked": "C:\\Users\\NsTut\\.codex\\generated_images\\01a102b9-673d-7813-b015-61f8d7761593\\exec-141117a0-c673-4a40-9b1d-30b81335e919.png",
+      "raw_prompt": "Create one Minecraft inventory food item sprite, based on the attached actual textured mob model preview (reference for anatomy/colors only). One triangular manta ray wing fillet, curved tapered tip, indigo lavender skin edge and faint mint markings matching this ray, pale pink cream cut flesh. Food cut, no whole animal. Crisp deliberate pixel art, limited palette, chunky stepped silhouette and square pixel shading suitable for downscaling to exactly 64x64. Center one isolated icon on square canvas, 10% clear padding, same overhead three-quarter inventory lighting, no text, labels, UI, floor, cast shadow, plate, garnish, or background. Truly transparent background. This is the RAW food version.",
+      "cooked_prompt": "Edit this RAW Minecraft food sprite into its COOKED version. Treat the supplied raw icon as the edit target. Preserve EXACT same outer silhouette, cutout/holes, position, canvas, orientation, volume and transparent alpha boundary. ONLY recolor/shade interior pixels to cooked food. Turn raw pink flesh to warm golden tan cooked flesh, dark brown toasted edges, a few subtle brown grill stripes; keep skin rim recognizable but browned. Crisp square pixel art matching reference, not smooth painting. No steam, garnish, extra outline, plate, cast shadow, text or background. Transparent background. Identical silhouette is essential.",
+      "saved_model_reference": "art-source/food/model-reference-cathedral_ray_wing.png"
+    },
+    {
+      "id": "veilglow_gel",
+      "ref": "art/veilglow/runtime/03-side.png",
+      "design": "A single edible jellyfish gel chunk: rounded lobed lavender jelly wedge with mint flecks and pale cut center inspired by the actual purple mint jellyfish. Solid readable food chunk, no tentacles or whole animal.",
+      "raw": "C:\\Users\\NsTut\\.codex\\generated_images\\01a102b9-673d-7813-b015-61f8d7761593\\exec-992187dd-47b6-4c60-93d7-2e62d0ec10ce.png",
+      "cooked": "C:\\Users\\NsTut\\.codex\\generated_images\\01a102b9-673d-7813-b015-61f8d7761593\\exec-6cc5d8fb-d601-4026-a737-7e25718790b1.png",
+      "raw_prompt": "Create one Minecraft inventory food item sprite, based on the attached actual textured mob model preview (reference for anatomy/colors only). A single edible jellyfish gel chunk: rounded lobed lavender jelly wedge with mint flecks and pale cut center inspired by the actual purple mint jellyfish. Solid readable food chunk, no tentacles or whole animal. Crisp deliberate pixel art, limited palette, chunky stepped silhouette and square pixel shading suitable for downscaling to exactly 64x64. Center one isolated icon on square canvas, 10% clear padding, same overhead three-quarter inventory lighting, no text, labels, UI, floor, cast shadow, plate, garnish, or background. Truly transparent background. This is the RAW food version.",
+      "cooked_prompt": "Edit this RAW Minecraft food sprite into its COOKED version. Treat the supplied raw icon as the edit target. Preserve EXACT same outer silhouette, cutout/holes, position, canvas, orientation, volume and transparent alpha boundary. ONLY recolor/shade interior pixels to cooked food. Turn lavender gel to warm caramel amber glazed gel with plum shadows and muted golden flecks. Crisp square pixel art matching reference, not smooth painting. No steam, garnish, extra outline, plate, cast shadow, text or background. Transparent background. Identical silhouette is essential.",
+      "saved_model_reference": "art-source/food/model-reference-veilglow_gel.png"
+    },
+    {
+      "id": "shardback_claw",
+      "ref": "art/shardback/runtime/03-side.png",
+      "design": "A single crab claw food portion, chunky curved purple blue shell with two short pale tips and exposed cream pink meat at cut base matching the actual armored crab. No legs, no whole animal.",
+      "raw": "C:\\Users\\NsTut\\.codex\\generated_images\\01a102b9-673d-7813-b015-61f8d7761593\\exec-17837c5e-3e68-4990-8f48-97ecae3078ff.png",
+      "cooked": "C:\\Users\\NsTut\\.codex\\generated_images\\01a102b9-673d-7813-b015-61f8d7761593\\exec-e16c556f-c20f-4d7b-835b-cdf4084e7616.png",
+      "raw_prompt": "Create one Minecraft inventory food item sprite, based on the attached actual textured mob model preview (reference for anatomy/colors only). A single crab claw food portion, chunky curved purple blue shell with two short pale tips and exposed cream pink meat at cut base matching the actual armored crab. No legs, no whole animal. Crisp deliberate pixel art, limited palette, chunky stepped silhouette and square pixel shading suitable for downscaling to exactly 64x64. Center one isolated icon on square canvas, 10% clear padding, same overhead three-quarter inventory lighting, no text, labels, UI, floor, cast shadow, plate, garnish, or background. Truly transparent background. This is the RAW food version.",
+      "cooked_prompt": "Edit this RAW Minecraft food sprite into its COOKED version. Treat the supplied raw icon as the edit target. Preserve EXACT same outer silhouette, cutout/holes, position, canvas, orientation, volume and transparent alpha boundary. ONLY recolor/shade interior pixels to cooked food. Turn purple blue shell to warm orange-red roasted crab shell, tips ivory and meat pale cooked cream. Crisp square pixel art matching reference, not smooth painting. No steam, garnish, extra outline, plate, cast shadow, text or background. Transparent background. Identical silhouette is essential.",
+      "saved_model_reference": "art-source/food/model-reference-shardback_claw.png"
+    }
+  ]
+}

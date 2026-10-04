@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tidalterror:item/cooked_veilglow_gel"
+  }
+}

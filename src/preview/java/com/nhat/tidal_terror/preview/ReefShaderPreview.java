@@ -110,7 +110,7 @@ public final class ReefShaderPreview {
                     player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION,100000,0,false,false));
                     // Remove the audit's deliberately accelerated population from this copy.
                     for(var entity:java.util.stream.StreamSupport.stream(level.getAllEntities().spliterator(),false).filter(java.util.Objects::nonNull).toList())
-                        if(entity.getType().getCategory()==MobCategory.WATER_CREATURE ||
+                        if((com.nhat.tidal_terror.entities.ModEntities.reefPools().contains(entity.getType().getCategory()) || entity.getType().getCategory()==MobCategory.WATER_CREATURE) ||
                                 entity.getType()==net.minecraft.world.entity.EntityType.TURTLE ||
                                 entity.getType()==net.minecraft.world.entity.EntityType.TROPICAL_FISH)entity.discard();
                     player.teleportTo(level,reefX-45,-10,reefZ,0,0);
@@ -126,7 +126,7 @@ public final class ReefShaderPreview {
                 // Production spawning rates and caps are not changed by this photo fixture.
                 if(tick==100 || tick%200==0)MC.getSingleplayerServer().execute(() -> {
                     var level=MC.getSingleplayerServer().overworld();
-                    for(var entity:java.util.stream.StreamSupport.stream(level.getAllEntities().spliterator(),false).filter(java.util.Objects::nonNull).toList())if(entity.getType().getCategory()==MobCategory.WATER_CREATURE
+                    for(var entity:java.util.stream.StreamSupport.stream(level.getAllEntities().spliterator(),false).filter(java.util.Objects::nonNull).toList())if((com.nhat.tidal_terror.entities.ModEntities.reefPools().contains(entity.getType().getCategory()) || entity.getType().getCategory()==MobCategory.WATER_CREATURE)
                             )entity.discard();
                     List<BlockPos> candidates=new ArrayList<>();
                     for(int x=reefX-16;x<=reefX+48;x+=3)for(int z=reefZ-32;z<=reefZ+48;z+=3)for(int y=-30;y<=25;y+=5) {
@@ -134,7 +134,7 @@ public final class ReefShaderPreview {
                         if(level.getBiome(pos).is(ReefWorldgen.BIOME) && level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.WATER)) candidates.add(pos);
                     }
                     for(int attempt=0;attempt<300 && sharkId==null && !candidates.isEmpty();attempt++) {
-                        NaturalSpawner.spawnCategoryForPosition(MobCategory.WATER_CREATURE,level,candidates.get(level.random.nextInt(candidates.size())));
+                        NaturalSpawner.spawnCategoryForPosition(com.nhat.tidal_terror.entities.ModEntities.CRUSHER_POOL,level,candidates.get(level.random.nextInt(candidates.size())));
                         for(var entity:level.getAllEntities())if(entity instanceof CoralCrusherEntity shark && openWater(shark)
                                 && Math.abs(shark.getX()-reefX)<=48 && Math.abs(shark.getZ()-reefZ)<=48
                                 && (!SANDY_PHOTOS || shark.isSandy())) {
@@ -177,7 +177,7 @@ public final class ReefShaderPreview {
                         MC.options.hideGui=false;MC.setScreen(screen);
                         var select=screen.getClass().getDeclaredMethod("selectTab",net.minecraft.world.item.CreativeModeTab.class);
                         select.setAccessible(true);select.invoke(screen,tab);
-                        if(tab.getDisplayItems().size()!=1 || !tab.getDisplayItems().iterator().next().is(com.nhat.tidal_terror.TidalTerror.CORAL_CRUSHER_SPAWN_EGG.get()))
+                        if(tab.getDisplayItems().size()!=4 || tab.getDisplayItems().stream().noneMatch(stack -> stack.is(com.nhat.tidal_terror.TidalTerror.CORAL_CRUSHER_SPAWN_EGG.get())) || tab.getDisplayItems().stream().noneMatch(stack -> stack.is(com.nhat.tidal_terror.TidalTerror.CATHEDRAL_RAY_SPAWN_EGG.get())))
                             throw new IllegalStateException("Client creative tab has wrong contents");
                         inventoryCapture=true;frames=0;cameraAt=System.nanoTime();
                     }

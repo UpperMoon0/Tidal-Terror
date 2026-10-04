@@ -17,7 +17,30 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("tidalterror")
 @PrefixGameTestTemplate(false)
 public class CoralCrusherSkinTests {
-    @GameTest(template = "coral_crusher_pool", timeoutTicks = 40)
+    @GameTest(template = "coral_crusher_pool", batch="crusher_skin_egg", timeoutTicks = 40)
+    public static void spawnEggRandomizesBothSkins(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var egg = new net.minecraft.world.item.ItemStack(
+                com.nhat.tidal_terror.TidalTerror.CORAL_CRUSHER_SPAWN_EGG.get());
+        // Use EntityType's real egg creation path, including finalization/NBT,
+        // at two heights. Egg skins must not depend on their spawn habitat.
+        for (int height : new int[]{3, 30}) {
+            int sandy = 0;
+            for (int i = 0; i < 64; i++) {
+                var shark = ModEntities.CORAL_CRUSHER.get().spawn(level, egg, null,
+                        helper.absolutePos(new BlockPos(10, height, 10)),
+                        MobSpawnType.SPAWN_EGG, false, false);
+                helper.assertTrue(shark != null, "Native egg creation failed");
+                if (shark.isSandy()) sandy++;
+                shark.discard();
+            }
+            helper.assertTrue(sandy > 0 && sandy < 64,
+                    "Egg must create both skins at height " + height + "; sandy=" + sandy);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "coral_crusher_pool", batch="crusher_skin_depth", timeoutTicks = 40)
     public static void spawnDepthAndPersistentSkin(GameTestHelper helper) {
         var level = helper.getLevel();
         var reef = level.registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(ReefWorldgen.BIOME);
@@ -28,9 +51,15 @@ public class CoralCrusherSkinTests {
                 (proxy, method, args) -> method.getName().equals("getBiome") ? reef : method.invoke(level, args));
         BlockPos floor = helper.absolutePos(new BlockPos(10, 1, 10));
         level.setBlock(floor, Blocks.SAND.defaultBlockState(), 2);
-        for (int y = 1; y <= 50; y++) level.setBlock(floor.above(y), Blocks.WATER.defaultBlockState(), 2);
+        // Large combat arenas can place this fixture in previously unprepared
+        // terrain. Clear the whole column to sea level so native sand above the
+        // test floor cannot be mistaken for the seabed under test.
+        for (int y = floor.getY() + 1; y <= level.getSeaLevel() + 8; y++)
+            level.setBlock(new BlockPos(floor.getX(), y, floor.getZ()), Blocks.WATER.defaultBlockState(), 2);
         // A high coral is not the seabed, even though OCEAN_FLOOR sees it.
         level.setBlock(floor.above(30), Blocks.TUBE_CORAL_BLOCK.defaultBlockState(), 2);
+        System.out.println("SKIN_FLOOR pos="+floor+" state="+level.getBlockState(floor)
+                +" oceanFloor="+level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR,floor.getX(),floor.getZ()));
         helper.assertTrue(CoralCrusherEntity.sandyAtSpawn(view, floor.above(24)), "24m clearance must be sandy");
         helper.assertTrue(!CoralCrusherEntity.sandyAtSpawn(view, floor.above(25)), "25m clearance must be blue");
         helper.assertTrue(!CoralCrusherEntity.sandyAtSpawn(view, floor.above(40)), "High coral must not count as seabed");

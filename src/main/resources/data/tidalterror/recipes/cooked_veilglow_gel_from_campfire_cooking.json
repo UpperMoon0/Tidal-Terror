@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": {
+    "item": "tidalterror:raw_veilglow_gel"
+  },
+  "result": "tidalterror:cooked_veilglow_gel",
+  "experience": 0.35,
+  "cookingtime": 600
+}

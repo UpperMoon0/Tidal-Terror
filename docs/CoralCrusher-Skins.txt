@@ -3,7 +3,10 @@ Coral Crusher skins — Minecraft 1.20.1 / Forge 47.2.0
 Both skins use tidalterror:coral_crusher, with the same model, animation,
 attributes, attacks and navigation. No new entity type or spawn-list entry.
 
-At finalizeSpawn, sharks within 24 blocks above the reef's actual sand seabed
+Spawn eggs choose blue or sandy randomly with equal probability, independent
+of depth, through vanilla SPAWN_EGG finalization (including dispenser use).
+
+At natural finalizeSpawn, sharks within 24 blocks above the reef's actual sand seabed
 receive the sandy skin. Sharks higher in the water receive the existing blue
 skin. The skin stays fixed as the shark swims and is saved as Skin=sandy or
 Skin=blue. Old saves without Skin and unknown skin values default to blue.

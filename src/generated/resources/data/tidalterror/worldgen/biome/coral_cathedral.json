@@ -103,7 +103,7 @@
         "type": "minecraft:drowned",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 5
+        "weight": 1
       },
       {
         "type": "minecraft:spider",
@@ -154,6 +154,38 @@
         "weight": 5
       }
     ],
+    "tidalterror_crusher": [
+      {
+        "type": "tidalterror:coral_crusher",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 2
+      }
+    ],
+    "tidalterror_ray": [
+      {
+        "type": "tidalterror:cathedral_ray",
+        "maxCount": 3,
+        "minCount": 2,
+        "weight": 6
+      }
+    ],
+    "tidalterror_shardback": [
+      {
+        "type": "tidalterror:shardback",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 10
+      }
+    ],
+    "tidalterror_veilglow": [
+      {
+        "type": "tidalterror:veilglow",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 8
+      }
+    ],
     "underground_water_creature": [
       {
         "type": "minecraft:glow_squid",
@@ -186,12 +218,6 @@
       {
         "type": "minecraft:dolphin",
         "maxCount": 2,
-        "minCount": 1,
-        "weight": 2
-      },
-      {
-        "type": "tidalterror:coral_crusher",
-        "maxCount": 1,
         "minCount": 1,
         "weight": 2
       }

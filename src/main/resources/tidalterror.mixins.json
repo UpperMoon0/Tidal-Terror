@@ -4,6 +4,6 @@
   "package": "com.nhat.tidal_terror.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "tidalterror.refmap.json",
-  "mixins": ["ReefWaterPostprocessMixin", "ReefTurtlePlacementMixin"],
+  "mixins": ["ReefWaterPostprocessMixin", "ReefTurtlePlacementMixin", "ReefShipwreckPlacementMixin", "ReefRuinedPortalPlacementMixin"],
   "injectors": { "defaultRequire": 1 }
 }

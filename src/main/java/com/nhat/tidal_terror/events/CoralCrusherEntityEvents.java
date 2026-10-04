@@ -11,6 +11,9 @@ import net.minecraftforge.fml.common.Mod;
 public class CoralCrusherEntityEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.SHARDBACK.get(), com.nhat.tidal_terror.entities.shardback.ShardbackEntity.createAttributes().build());
         event.put(ModEntities.CORAL_CRUSHER.get(), CoralCrusherEntity.createAttributes().build());
+        event.put(ModEntities.CATHEDRAL_RAY.get(), com.nhat.tidal_terror.entities.cathedral_ray.CathedralRayEntity.createAttributes().build());
+        event.put(ModEntities.VEILGLOW.get(), com.nhat.tidal_terror.entities.veilglow.VeilglowEntity.createAttributes().build());
     }
 }

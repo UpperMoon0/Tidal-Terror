@@ -12,7 +12,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
-import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
@@ -23,7 +22,7 @@ import java.util.UUID;
 @GameTestHolder("tidalterror")
 @PrefixGameTestTemplate(false)
 public class CoralCrusherAiTests {
-    private static ServerPlayer player(GameTestHelper helper) {
+    static ServerPlayer player(GameTestHelper helper) {
         // Forge 47.2.0's login hook requires a real Netty channel; register the
         // native ServerPlayer directly in this isolated level instead of logging in.
         ServerPlayer player = new ServerPlayer(helper.getLevel().getServer(), helper.getLevel(),
@@ -37,7 +36,7 @@ public class CoralCrusherAiTests {
         return player;
     }
 
-    private static void pool(GameTestHelper helper) {
+    static void pool(GameTestHelper helper) {
         for (int x = 0; x < 20; x++) {
             for (int y = 0; y < 12; y++) {
                 for (int z = 0; z < 20; z++) {
@@ -60,8 +59,10 @@ public class CoralCrusherAiTests {
         player.setNoGravity(true);
         double initialDistance = crusher.distanceToSqr(player);
         float initialHealth = player.getHealth();
-        for (int tick = 1; tick <= 280; tick++) {
+        java.util.Set<CoralCrusherEntity.Behavior> observed = java.util.EnumSet.noneOf(CoralCrusherEntity.Behavior.class);
+        for (int tick = 1; tick <= 480; tick++) {
             helper.runAtTickTime(tick, () -> {
+                observed.add(crusher.getBehavior());
                 player.doTick();
                 player.setPos(target);
                 player.setDeltaMovement(Vec3.ZERO);
@@ -81,21 +82,27 @@ public class CoralCrusherAiTests {
         }
         helper.succeedWhen(() -> {
             helper.assertTrue(player.getHealth() < initialHealth, "Crusher must inflict melee damage");
+            helper.assertTrue(observed.containsAll(java.util.EnumSet.of(CoralCrusherEntity.Behavior.INVESTIGATE,
+                    CoralCrusherEntity.Behavior.CIRCLE)) && (observed.contains(CoralCrusherEntity.Behavior.MELEE_WINDUP)
+                    || observed.containsAll(java.util.EnumSet.of(CoralCrusherEntity.Behavior.WINDUP,
+                    CoralCrusherEntity.Behavior.CHARGE))), "Bite must follow investigation, circling, and a telegraphed attack: " + observed);
             helper.assertTrue(crusher.getTarget() == player, "Damage must occur while targeting the player");
             helper.assertTrue(crusher.distanceToSqr(player) < initialDistance * 0.6,
                     "Melee must follow pursuit");
             helper.assertTrue(startY < targetY ? crusher.getY() > helper.absolutePos(new BlockPos(0, startY, 0)).getY() + 1
                             : crusher.getY() < helper.absolutePos(new BlockPos(0, startY, 0)).getY() - 1,
                     "Melee must follow vertical pursuit");
+            player.discard();
+            crusher.discard();
         });
     }
 
-    @GameTest(template = "coral_crusher_pool", timeoutTicks = 300)
+    @GameTest(template = "coral_crusher_pool", timeoutTicks = 500)
     public static void pursuesPlayerAboveAndAttacks(GameTestHelper helper) {
         chase(helper, 3, 8);
     }
 
-    @GameTest(template = "coral_crusher_pool", timeoutTicks = 300)
+    @GameTest(template = "coral_crusher_pool", timeoutTicks = 500)
     public static void pursuesPlayerBelowAndAttacks(GameTestHelper helper) {
         chase(helper, 8, 3);
     }
@@ -114,6 +121,8 @@ public class CoralCrusherAiTests {
         });
         helper.runAtTickTime(80, () -> {
             helper.assertTrue(crusher.getTarget() == null, "Spectator must not be targeted");
+            player.discard();
+            crusher.discard();
             helper.succeed();
         });
     }
@@ -123,14 +132,15 @@ public class CoralCrusherAiTests {
         pool(helper);
         CoralCrusherEntity crusher = helper.spawn(ModEntities.CORAL_CRUSHER.get(), 10, 5, 10);
         Vec3 start = crusher.position();
-        helper.runAtTickTime(5, () -> crusher.goalSelector.getAvailableGoals().stream()
-                .map(goal -> goal.getGoal()).filter(goal -> goal instanceof RandomSwimmingGoal)
-                .forEach(goal -> ((RandomSwimmingGoal) goal).trigger()));
+        for (int tick = 20; tick <= 180; tick += 20) helper.runAtTickTime(tick, () ->
+                System.out.println("CRUSHER_PATROL position=" + crusher.position() + " home=" + crusher.getTerritory()
+                        + " state=" + crusher.getBehavior() + " pathDone=" + crusher.getNavigation().isDone()));
         helper.succeedWhen(() -> {
             helper.assertTrue(crusher.getTarget() == null, "Wandering must not require a target");
             helper.assertTrue(crusher.position().distanceToSqr(start) > 4,
                     "Crusher must swim away from its start");
             helper.assertTrue(!crusher.getNavigation().isDone(), "Wandering must use a water path");
+            crusher.discard();
         });
     }
 }
