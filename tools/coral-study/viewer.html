@@ -1,0 +1,27 @@
+<!doctype html><meta charset="utf-8"><title>Coral structure workshop</title><style>
+body{margin:0;background:#0d1922;color:#d8e9ee;font:16px system-ui}header{padding:20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}h1{font-size:22px;margin:0}select,input,button{accent-color:#56cfc0}canvas{width:100vw;height:calc(100vh - 125px);display:block;touch-action:none}p{margin:0 20px;font-size:14px;color:#aac0ca}a{color:#64deca}</style>
+<header><h1>Coral structure workshop</h1><select id="shape"><option>Branching staghorn grove</option><option>Folded open chalice</option><option>Ribbed lace sea fans</option></select>
+<label>Turn <input id="turn" type="range" min="0" max="360" value="35"></label><label>Tilt <input id="tilt" type="range" min="-10" max="80" value="18"></label>
+<label>Slice <input id="slice" type="range" min="1" max="108" value="108"></label><button id="reset">Reset view</button></header>
+<p>Drag to orbit Â· Scroll to zoom Â· One block = one metre Â· Exact generation shapes with simplified block colours. <a href="iteration-1/structure-study.png">First study</a> / <a href="iteration-2/structure-study.png">Refined study</a></p><canvas id="view"></canvas>
+<script>
+const data=__CORAL_VOXELS__,canvas=document.querySelector('#view'),ctx=canvas.getContext('2d');
+const shape=document.querySelector('#shape'),turn=document.querySelector('#turn'),tilt=document.querySelector('#tilt'),slice=document.querySelector('#slice');
+const colors=[[50,93,212],[219,184,28],[177,52,209],[224,55,46],[222,209,47],[197,175,126]];
+const sides=[[[1,0,0],[[1,0,0],[1,1,0],[1,1,1],[1,0,1]]],[[-1,0,0],[[0,0,1],[0,1,1],[0,1,0],[0,0,0]]],[[0,1,0],[[0,1,0],[0,1,1],[1,1,1],[1,1,0]]],[[0,-1,0],[[0,0,1],[0,0,0],[1,0,0],[1,0,1]]],[[0,0,1],[[1,0,1],[1,1,1],[0,1,1],[0,0,1]]],[[0,0,-1],[[0,0,0],[0,1,0],[1,1,0],[1,0,0]]]];
+let mesh=[],zoom=1,scheduled=false;
+function build(){const vox=data[+shape.value||shape.selectedIndex].filter(v=>v[1]<+slice.value);const set=new Set(vox.map(v=>v.slice(0,3).join(',')));mesh=[];
+for(const [x,y,z,c] of vox)for(const [n,face]of sides){if(set.has([x+n[0],y+n[1],z+n[2]].join(',')))continue;mesh.push({n,c,centre:[x,y,z],pts:face.map(p=>[x+p[0],y+p[1],z+p[2]])});}request();}
+function request(){if(!scheduled){scheduled=true;requestAnimationFrame(draw);}}
+function draw(){scheduled=false;canvas.width=canvas.clientWidth;canvas.height=canvas.clientHeight;const w=canvas.width,h=canvas.height,a=+turn.value*Math.PI/180,e=+tilt.value*Math.PI/180,scale=Math.min(w/90,h/125)*zoom;
+const dir=[Math.sin(a)*Math.cos(e),Math.sin(e),Math.cos(a)*Math.cos(e)],project=([x,y,z])=>[w/2+(Math.cos(a)*x-Math.sin(a)*z)*scale,h/2+(Math.sin(e)*(Math.sin(a)*x+Math.cos(a)*z)-Math.cos(e)*(y-54))*scale];
+ctx.fillStyle='#0d1922';ctx.fillRect(0,0,w,h);
+const visible=mesh.filter(f=>f.n.reduce((s,n,i)=>s+n*dir[i],0)>0).map(f=>({...f,depth:f.centre.reduce((s,n,i)=>s+n*dir[i],0)})).sort((a,b)=>a.depth-b.depth);
+for(const f of visible){const light=.68+.2*Math.max(0,f.n[1])+.16*Math.max(0,f.n[0])+.08*Math.max(0,f.n[2]),col=colors[f.c<0?5:f.c];ctx.fillStyle='rgb('+col.map(v=>Math.round(v*light)).join(',')+')';ctx.beginPath();f.pts.forEach((p,i)=>{const [x,y]=project(p);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();ctx.fill();}
+ctx.fillStyle='#bed4dc';ctx.font='14px system-ui';for(let y=0;y<=108;y+=10){let [x,py]=project([-43,y,0]);ctx.fillText(y+' m',x-35,py);}ctx.fillText(data[shape.selectedIndex].length.toLocaleString()+' blocks Â· 108 m study',20,h-20);}
+shape.onchange=build;slice.oninput=build;turn.oninput=tilt.oninput=request;window.onresize=request;
+let drag=null;canvas.onpointerdown=e=>{drag=[e.clientX,e.clientY,+turn.value,+tilt.value];canvas.setPointerCapture(e.pointerId)};canvas.onpointerup=()=>drag=null;
+canvas.onpointermove=e=>{if(drag){turn.value=(drag[2]+(e.clientX-drag[0])*.5+360)%360;tilt.value=Math.max(-10,Math.min(80,drag[3]-(e.clientY-drag[1])*.25));request();}};
+canvas.onwheel=e=>{e.preventDefault();zoom=Math.max(.4,Math.min(3,zoom*Math.exp(-e.deltaY*.001)));request();};
+document.querySelector('#reset').onclick=()=>{turn.value=35;tilt.value=18;slice.value=108;zoom=1;build();};build();
+</script>

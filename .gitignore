@@ -1,0 +1,57 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+
+# Files from Forge MDK
+forge*changelog.txt
+
+# Downloaded development-only render mods and shader packs.
+.dependencies/
+
+# Runtime data, worlds, logs, and data-generator working directories.
+/run-data/
+/logs/
+/crash-reports/
+
+# Generated screenshots, texture studies, and preview archives.
+# Game-ready textures belong in src/main/resources and remain tracked.
+/art/
+
+# Data-generator cache; keep generated registry JSON tracked.
+/src/generated/resources/.cache/
+
+# Python tooling caches and virtual environments.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local secrets and operating-system metadata.
+.env
+.env.*
+!.env.example
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Parked Git metadata must never be committed.
+/.git_dis/
