@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "editTarget": "exec-8921a74f-ffac-465c-b6c6-249f5f35124d.png",
+  "modelReference": "cathedral-ray-reference.png",
+  "modelReferenceSource": "https://raw.githubusercontent.com/UpperMoon0/Tidal-Terror/main/art-source/food/model-reference-cathedral_ray_wing.png",
+  "prompt": "Use case: precise-object-edit. Image 1 is the banner EDIT TARGET. Image 2 is the authoritative textured native Cathedral Ray model reference sheet. Correct ONLY the ray in the upper right of Image 1 to match the real model in Image 2. Preserve the coral reef background, centered exact two-line TIDAL TERROR title, sandy shark at left, crab at lower left, jellyfish at lower right, and 3:1 horizontal composition closely.\nReplace the inaccurate thick ray with a thin, flat, broad stepped diamond-wing ray viewed from ABOVE at a gentle three-quarter angle, head directed toward upper left and tail trailing toward lower right. Its entire visible upper surface is indigo/cobalt blue with branching mint green luminous vein patterns and mint spots, violet thin stepped wing edges. Match the TOP view of Image 2: wings taper sideways to sharp points; rear margins taper toward the thin segmented tail. Narrow central body ridge only. Two SHORT parallel purple cephalic tips extend FORWARD in the same plane at the front, as reference shows, not upwards. Wing thickness is only about two voxel pixels relative to 70-pixel span; extremely thin. Cream underside is below and visible only as a narrow lower edge if at all. NO cream stripe or cream patch on top, NO gills on top, NO upright horns, NO thick fuselage. Match native ray proportions and markings faithfully. Preserve same ray footprint and overall banner lighting and polished Minecraft voxel art. Exactly the original four creatures. Do not reproduce reference labels or reference background.",
+  "original": "generated-banner-corrected-ray.png",
+  "export": "../../docs/assets/tidal-terror-banner.png",
+  "exportSize": [
+    1800,
+    600
+  ],
+  "resampling": "Pillow LANCZOS"
+}

@@ -1,5 +1,7 @@
 # Tidal Terror
 
+![Tidal Terror banner](https://raw.githubusercontent.com/UpperMoon0/Tidal-Terror/main/docs/assets/tidal-terror-banner.png)
+
 Explore an ocean of towering coral and unfamiliar marine life. Tidal Terror adds **Coral Cathedral**, a deep reef biome with vast sandy basins, sandstone seabeds, intricate coral formations, and smaller gardens scattered between them. Some giant corals rise almost to the ocean surface, while the deepest interior waters reach roughly 100 blocks below it.
 
 ## Meet the reef's creatures
@@ -35,6 +37,8 @@ Explore newly generated ocean chunks. With commands enabled, use `/locate biome 
 Coral Crushers ignore Creative and Spectator players. Switch to Survival or Adventure to experience their hunting behavior.
 
 ## Feedback
+
+Created by **NsTut**.
 
 Report bugs on the [issue tracker](https://github.com/UpperMoon0/Tidal-Terror/issues). Include your Minecraft, Forge, TerraBlender, and Tidal Terror versions, other installed mods, steps to reproduce, and the relevant log or crash report. For generation issues, also include the world seed and coordinates.
 

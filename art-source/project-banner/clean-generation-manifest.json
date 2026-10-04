@@ -1,0 +1,20 @@
+{
+  "tool": "built-in image_gen",
+  "mode": "fresh generation; no earlier banner supplied",
+  "prompt": "Create a BRAND NEW clean polished Minecraft mod banner from scratch. Wide horizontal 3:1 ratio. Five reference images: 1 real coral biome for environment only; 2 sandy Coral Crusher native perspective model; 3 Cathedral Ray native perspective UNDERBELLY; 4 Shardback native perspective crab; 5 Veilglow native perspective jellyfish. Preserve these mobs' actual geometry and colors faithfully.\nDESIGN PRIORITY: very clean readable typography and quiet center. Exact title TIDAL TERROR in center, two lines TIDAL above TERROR. Large crisp ivory block letters with perfectly solid flat ivory front faces and simple solid navy extrusion. NO mottled pixel texture inside lettering, NO speckles, NO distressed text, NO cracks, NO glow or light streaks on letters. Smooth clean flat letter faces and sharply defined edges.\nBehind title reserve central 45 percent as calm uninterrupted deep teal water, smooth gentle blue-teal gradient with minimal visual detail. NO coral column or branches directly behind title, NO bubbles or fish behind or around title, NO particles, NO caustic flecks behind title, NO grain or speckles. Background becomes detailed only toward outer left/right edges and along bottom margin: lush giant blue/purple branching voxel coral, smaller coral gardens, sandstone/sand floor, sparse large soft sunlight beams. Bright underwater surface subtly across top. Use clean large readable forms and restrained lighting. Avoid over-texturing environment.\nArrange exactly four accurate mobs around central title, ALL fully inside frame with at least 5 percent margin including tail tips and fins. Make sandy shark upper-left at medium size heading toward center, two dorsal fins, cream jaw/belly, black eye and gills, stepped broad snout, forked tail. Keep enough space above its tall tail fin. Shardback lower-left small, violet stepped shell with cobalt coral decoration, cream jointed legs, black square stalk eyes and violet/blue claws. Cathedral Ray upper-right overhead seen from BELOW: thin broad stepped diamond wings, full cream undersurface across both wings and narrow central body, two rows of five blue gills on belly, small mouth, thin purple wingrim, two short FORWARD cephalic tips in same plane, slender tail trailing right. No blue dorsal top or mint veins visible on belly. Jellyfish lower-right lavender stepped bell, dark violet rim with mint squares, separate long lavender cuboid tentacles and mint tips. Use crisp native pixel textures on the four MOB surfaces only, not noise on text or central water. Overall clean professional banner, not a busy collage, no panels or labels, no watermark, no humans or extra creatures. Keep all limbs/fins/tails clear of canvas edges and title.",
+  "references": [
+    "D:/Workspaces/Minecraft Projects/MC Mods/Tidal-Terror/art-source/project-icon/biome-reference.png",
+    "D:/Workspaces/Minecraft Projects/MC Mods/Tidal-Terror/art-source/project-banner/fresh-references/sandy-coral-crusher.png",
+    "D:/Workspaces/Minecraft Projects/MC Mods/Tidal-Terror/art-source/project-banner/fresh-references/cathedral-ray-underbelly.png",
+    "D:/Workspaces/Minecraft Projects/MC Mods/Tidal-Terror/art-source/project-banner/fresh-references/shardback.png",
+    "D:/Workspaces/Minecraft Projects/MC Mods/Tidal-Terror/art-source/project-banner/fresh-references/veilglow.png"
+  ],
+  "original": "generated-banner-clean.png",
+  "export": "../../docs/assets/tidal-terror-banner.png",
+  "exportSize": [
+    1800,
+    600
+  ],
+  "resampling": "Pillow LANCZOS",
+  "nativeModelVerification": "All four native model verification tasks passed; build/banner-model-export.txt"
+}
