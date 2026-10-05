@@ -52,7 +52,7 @@ particles, native enchanting-table candidates, actual anvil/book assembly, succe
 JEI 15.20.0.118 loads through `localRuntime` in development clients. It follows
 the [official JEI setup for Minecraft 1.20.1](https://github.com/mezz/JustEnoughItems/wiki/Getting-Started-%5BMinecraft-1.18.2-to-1.20.1%5D).
 It is excluded from native server test runs and is not declared as a required
-mod dependency or bundled into the released JAR. All five shaped equipment
+mod dependency or bundled into the released JAR. All six shaped equipment
 recipes use vanilla crafting and are discovered by JEI without a custom plugin.
 
 ## Verified native client
@@ -88,3 +88,7 @@ Fang Arrow is an ArrowItem in minecraft:arrows, with a registered AbstractArrow 
 Compatibility follows the standard ArrowItem factory and arrow tag; weapons that bypass that factory or replace the projectile with a separate ammunition system need a specific adapter. A registered third-party-style BowItem fixture covers inherited bow behavior. Universal behavior for every modded bow is not claimed.
 
 Book tooltips describe only their general bleeding bonus. Spear tooltips explain full charge, both fighters in water, nonstacking refresh and Crusher Tooth repair. Armor tooltips explain 5% knockback reduction per piece while grounded underwater, 20% full set, and Shardback Plate repair. Armor crafting consumes the matching iron armor piece, three plates and one dead coral block.
+
+The 2026-10-06 revision passed all thirteen equipment GameTests, nine native client framebuffer captures, thirteen release-tooling tests and clean release JAR guards. Native firing tests cover both vanilla ranged weapons and a registered Forge-style bow subclass; arrow tests cover dry-land bleeding, rejected hits, saved piercing and pickup.
+
+![Native gear and fang arrow tooltips](assets/reef-icons/gear-tooltips-native.png)
