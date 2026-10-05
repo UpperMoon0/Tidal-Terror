@@ -87,3 +87,7 @@ Artwork sources, concept references and runtime screenshots are optional local f
 ## Independent bleeding pulse clock
 
 Repeated hits now refresh effect duration without postponing the two-second damage pulse. Raising power or duration preserves that same clock. The server saves the remaining pulse ticks with the entity; legacy saves retain their prior pulse phase. A cured/removed effect starts a fresh clock when reapplied. Native damage immunity and all damage/enchantment values are unchanged. Two regression tests cover repeated native spear hits, power changes, expiry, milk curing and entity save/reload.
+
+## Compact spear tooltip
+
+The spear shows `Bleed: 2 damage over 4s` normally, `5 damage over 4s` with Serration III, and `10 damage over 8s` with Serration III + Hemorrhage II. The condition line is `Fully charged; both in water. Refreshes bleed.` Repair stays on its own short line. Hover text reads the current item enchantments and shares power/duration lookup with the actual hit effect. Native tooltip checks cover all twelve level combinations, including fractional totals and removing unnecessary decimal zeros.

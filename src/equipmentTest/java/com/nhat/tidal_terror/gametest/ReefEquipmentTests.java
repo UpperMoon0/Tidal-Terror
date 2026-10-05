@@ -116,6 +116,20 @@ public final class ReefEquipmentTests {
     }
     @GameTest(template="reef_life_pool",timeoutTicks=40)
     public static void gearTooltipsAndNativeMaterialAnvilRepair(GameTestHelper h) {
+        var spear=new ItemStack(ModEquipment.REEF_SPEAR.get());
+        for(int power=0;power<=3;power++)for(int extension=0;extension<=2;extension++) {
+            net.minecraft.world.item.enchantment.EnchantmentHelper.setEnchantments(Map.of(
+                    com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),power,
+                    com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(),extension),spear);
+            var tooltip=new ArrayList<net.minecraft.network.chat.Component>();
+            spear.getItem().appendHoverText(spear,h.getLevel(),tooltip,TooltipFlag.NORMAL);
+            var line=(net.minecraft.network.chat.contents.TranslatableContents)tooltip.get(0).getContents();
+            h.assertTrue(line.getKey().equals("tooltip.tidalterror.reef_spear"),"Missing bleeding damage line");
+            double expected=new double[][]{{2,3,4},{3,4.5,6},{4,6,8},{5,7.5,10}}[power][extension];
+            near(h,Double.parseDouble(line.getArgs()[0].toString()),expected,"Tooltip did not update with bleeding enchantments");
+            near(h,((Number)line.getArgs()[1]).doubleValue(),new int[]{4,6,8}[extension],"Tooltip bleeding duration did not update");
+            h.assertTrue(!line.getArgs()[0].toString().endsWith(".0"),"Tooltip retained unnecessary decimal zeros");
+        }
         for(var item:List.of(ModEquipment.REEF_SPEAR.get(),ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get())) {
             var stack=new ItemStack(item);stack.setDamageValue(100);var text=new ArrayList<net.minecraft.network.chat.Component>();
             item.appendHoverText(stack,h.getLevel(),text,TooltipFlag.NORMAL);h.assertTrue(text.size()==(item instanceof ReefSpearItem?3:2),"Gear lost mechanic/repair tooltip");

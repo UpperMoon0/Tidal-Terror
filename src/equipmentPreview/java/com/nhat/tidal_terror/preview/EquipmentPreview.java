@@ -189,6 +189,10 @@ public final class EquipmentPreview {
             g.drawCenteredString(font,"REEF GEAR - ACTUAL NATIVE TOOLTIPS",width/2,16,0xFF30263C);
             var items=new Item[]{ModEquipment.REEF_SPEAR.get(),ModEquipment.REEF_BOOTS.get(),ModEquipment.FANG_ARROW.get()};
             for(int i=0;i<3;i++) {int y=60+i*100;var stack=new ItemStack(items[i]);g.renderItem(stack,30,y);g.renderTooltip(font,stack,60,y);}
+            var enchanted=new ItemStack(ModEquipment.REEF_SPEAR.get());
+            enchanted.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),3);
+            enchanted.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(),2);
+            g.renderItem(enchanted,width/2+10,60);g.renderTooltip(font,enchanted,width/2+40,60);
         }
     }
     private static final class BookBoard extends Screen {

@@ -46,8 +46,8 @@ public final class ReefSpearItem extends Item {
         if (!target.level().isClientSide && attacker instanceof Player player
                 && player.getAttackStrengthScale(0.5F) >= 0.99F && player.isInWater() && target.isInWater() && target.isAlive()) {
             // Native equal-strength effects refresh duration without stacking damage.
-            int power = net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(), stack), 0, 3);
-            int duration = 80 + 40 * net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(), stack), 0, 2);
+            int power = bleedingPower(stack);
+            int duration = bleedingDuration(stack);
             target.addEffect(new MobEffectInstance(ModEffects.REEF_BLEEDING.get(), duration, power, false, false, true));
             com.nhat.tidal_terror.particles.ModParticles.bleed(target, 12);
         }
@@ -68,11 +68,18 @@ public final class ReefSpearItem extends Item {
                 || super.canApplyAtEnchantingTable(stack, enchantment);
     }
     @Override public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> text, TooltipFlag flags) {
-        int power = net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(), stack), 0, 3);
-        int extension = net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(), stack), 0, 2);
-        text.add(Component.translatable("tooltip.tidalterror.reef_spear", (2 + extension) * (1 + .5F * power), 4 + 2 * extension).withStyle(ChatFormatting.AQUA));
+        int duration = bleedingDuration(stack);
+        float damage = duration / 40 * (1 + .5F * bleedingPower(stack));
+        String shownDamage = damage == (int)damage ? Integer.toString((int)damage) : Float.toString(damage);
+        text.add(Component.translatable("tooltip.tidalterror.reef_spear", shownDamage, duration / 20).withStyle(ChatFormatting.AQUA));
         text.add(Component.translatable("tooltip.tidalterror.reef_spear_refresh").withStyle(ChatFormatting.GRAY));
         text.add(Component.translatable("tooltip.tidalterror.reef_spear_repair").withStyle(ChatFormatting.GRAY));
+    }
+    private static int bleedingPower(ItemStack stack) {
+        return net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(), stack), 0, 3);
+    }
+    private static int bleedingDuration(ItemStack stack) {
+        return 80 + 40 * net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(), stack), 0, 2);
     }
     @Override public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(com.nhat.tidal_terror.client.ReefEquipmentClient.spear());
