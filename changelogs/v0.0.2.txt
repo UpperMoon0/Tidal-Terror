@@ -11,4 +11,7 @@ Reef equipment and crafting rewards
 - Bleeding uses custom blood droplets that disperse underwater, with no vanilla potion swirls.
 - Serration I-III increases bleed pulse damage; Hemorrhage I-II extends duration. Both spear-only enchantments support enchanting tables and books/anvils.
 - JEI is available in the development client without becoming a required release dependency.
-- Added eight native equipment regression tests, a native equipment model/UV audit, reproducible ImageGen sprite/material workflows and isolated client framebuffer verification.
+- Added ten native equipment regression tests, a native equipment model/UV audit, reproducible ImageGen sprite/material workflows and isolated client framebuffer verification.
+
+- Coral Crusher bites cause base bleeding; spear holds point forward in both hands.
+- All five Serration/Hemorrhage book levels appear beside the spear with level-specific bonus tooltips.

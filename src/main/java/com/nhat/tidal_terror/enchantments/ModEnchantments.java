@@ -14,6 +14,12 @@ public final class ModEnchantments {
     public static final RegistryObject<Enchantment> HEMORRHAGE = REGISTRY.register("hemorrhage", () -> new SpearEnchantment(Enchantment.Rarity.RARE, 2, 20));
     private ModEnchantments() {}
     public static void register(IEventBus bus) { REGISTRY.register(bus); }
+    public static void addBooks(net.minecraft.world.item.CreativeModeTab.Output output) {
+        for (var enchantment : new Enchantment[]{SERRATION.get(), HEMORRHAGE.get()}) {
+            for (int level = 1; level <= enchantment.getMaxLevel(); level++)
+                output.accept(net.minecraft.world.item.EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, level)));
+        }
+    }
 
     private static final class SpearEnchantment extends Enchantment {
         private final int levels, cost;

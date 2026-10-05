@@ -138,7 +138,7 @@ public final class EquipmentPreview {
                     future=CompletableFuture.runAsync(()->server.overworld().getEntity(bloodTarget).discard(),server);
                     MC.options.hideGui=false;
                     MC.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(MC.player));
-                }
+                } else if(stage==7) MC.setScreen(new BookBoard());
                 ready=System.nanoTime();frames=0;
             }
         }catch(Throwable error){fail(error);}
@@ -169,17 +169,32 @@ public final class EquipmentPreview {
                 if(!(particle instanceof com.nhat.tidal_terror.client.BloodParticle))throw new IllegalStateException("Blood particle provider missing after reload");
                 particleChecked=true;
             }
-            String file=new String[]{"01-native-orthographic.png","02-underwater-first-person.png","03-underwater-offhand.png","04-creative-equipment.png","05-reload-and-glint.png","06-blood-particles.png","07-jei-inventory.png"}[stage];
+            String file=new String[]{"01-native-orthographic.png","02-underwater-first-person.png","03-underwater-offhand.png","04-creative-equipment.png","05-reload-and-glint.png","06-blood-particles.png","07-jei-inventory.png","08-book-tooltips.png"}[stage];
             try(var image=Screenshot.takeScreenshot(MC.getMainRenderTarget())){image.writeToFile(OUT.resolve(file));}
             CAPTURES.add(file);System.out.println("REEF_EQUIPMENT_PREVIEW CAPTURE "+file);
             stage++;ready=0;
-            if(stage==7) {
-                Files.writeString(OUT.resolve("passed.txt"),"Native worn armor, held spear, first person, creative items, resource reload, glint, registered blood particle, JEI inventory; fresh isolated world\n"+String.join("\n",CAPTURES));
-                System.out.println("REEF_EQUIPMENT_PREVIEW PASS seven actual framebuffer captures");done=true;MC.stop();
+            if(stage==8) {
+                Files.writeString(OUT.resolve("passed.txt"),"Native worn armor, forward held spear, first person, creative items, resource reload, glint, registered blood particle, JEI inventory, book tooltips; isolated world\n"+String.join("\n",CAPTURES));
+                System.out.println("REEF_EQUIPMENT_PREVIEW PASS eight actual framebuffer captures");done=true;MC.stop();
             }
         }catch(Throwable error){fail(error);}
     }
 
+    private static final class BookBoard extends Screen {
+        BookBoard() { super(Component.literal("Spear Enchantment Books")); }
+        @Override public boolean isPauseScreen() { return false; }
+        @Override public void render(GuiGraphics g,int mouseX,int mouseY,float partialTick) {
+            g.fill(0,0,width,height,0xFFDDDCE4);
+            g.drawCenteredString(font,"SPEAR BOOKS - ACTUAL NATIVE TOOLTIPS",width/2,16,0xFF30263C);
+            var enchantments=new net.minecraft.world.item.enchantment.Enchantment[]{com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get()};
+            for(int i=0;i<2;i++) {
+                var enchantment=enchantments[i];int y=80+i*140;
+                var book=EnchantedBookItem.createForEnchantment(new net.minecraft.world.item.enchantment.EnchantmentInstance(enchantment,enchantment.getMaxLevel()));
+                g.renderItem(book,45,y);g.renderTooltip(font,book,85,y);
+            }
+            g.drawCenteredString(font,"ALL FIVE LEVELS IN THE TIDAL TERROR TAB",width/2,height-20,0xFF30263C);
+        }
+    }
     private static final class Board extends Screen {
         private final boolean glint;
         Board(boolean glint) {super(Component.literal("Reef Equipment"));this.glint=glint;}

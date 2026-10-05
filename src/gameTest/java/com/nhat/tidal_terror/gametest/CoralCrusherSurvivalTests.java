@@ -92,17 +92,19 @@ public class CoralCrusherSurvivalTests {
                     if (circleStart[0] == null) circleStart[0] = shark.position();
                     circleTravel[0] = Math.max(circleTravel[0], shark.position().distanceToSqr(circleStart[0]));
                 }
-                if (player.getHealth() < health[0]) {
+                if (player.getHealth() < health[0] && player.getLastDamageSource()!=null
+                        && player.getLastDamageSource().getEntity()==shark) {
                     System.out.println("CRUSHER_BITE tick="+now+" state="+shark.getBehavior()+" health="+player.getHealth()
                             +" previous="+health[0]+" firstHit="+hit[0]);
                     helper.assertTrue(windup[0] >= CoralCrusherHuntGoal.WINDUP_TICKS - 1,
                             "Damage occurred without a full telegraph");
                     helper.assertTrue(circleTravel[0] > 1, "Circling must actually move the shark");
+                    helper.assertTrue(player.hasEffect(com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get()), "Telegraphed bite did not cause bleeding");
                     if (hit[0] < 0) hit[0] = now;
                     else helper.assertTrue(now - hit[0] >= CoralCrusherHuntGoal.RECOVERY_TICKS,
                             "Multiple bites during recovery");
-                    health[0] = player.getHealth();
                 }
+                health[0] = player.getHealth();
                 if (hit[0] >= 0 && now == hit[0] + 40) {
                     helper.assertTrue(shark.getBehavior() == CoralCrusherEntity.Behavior.RECOVER,
                             "The committed bite must be followed by recovery");

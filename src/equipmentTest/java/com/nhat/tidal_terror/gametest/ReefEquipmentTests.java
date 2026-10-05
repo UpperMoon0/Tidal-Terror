@@ -24,6 +24,43 @@ import net.minecraftforge.gametest.*;
 
 @GameTestHolder("tidalterror") @PrefixGameTestTemplate(false)
 public final class ReefEquipmentTests {
+    @GameTest(template="reef_life_pool",timeoutTicks=100)
+    public static void crusherBitesBleedOnlyAfterAcceptedDamage(GameTestHelper h) {
+        pool(h);var victim=target(h);
+        var shark=h.spawn(ModEntities.CORAL_CRUSHER.get(),8,4,8);shark.setNoAi(true);shark.setNoGravity(true);
+        h.assertTrue(shark.doHurtTarget(victim),"Native Crusher bite rejected");
+        var effect=victim.getEffect(ModEffects.REEF_BLEEDING.get());
+        h.assertTrue(effect!=null&&effect.getDuration()==80&&effect.getAmplifier()==0&&!effect.isVisible(),"Crusher bite did not apply base bleeding without potion swirls");
+        float health=victim.getHealth();
+        var rejected=target(h);rejected.setInvulnerable(true);
+        h.assertTrue(!shark.doHurtTarget(rejected)&&!rejected.hasEffect(ModEffects.REEF_BLEEDING.get()),"Rejected bite caused bleeding");
+        h.runAfterDelay(85,()->{
+            near(h,victim.getHealth(),health-2,"Crusher bleeding total");
+            h.assertTrue(!victim.hasEffect(ModEffects.REEF_BLEEDING.get()),"Crusher bleeding did not expire");h.succeed();
+        });
+    }
+
+    @GameTest(template="reef_life_pool",timeoutTicks=40)
+    public static void spearBooksExposeEveryLevelAndExplainBonuses(GameTestHelper h) {
+        var tab=com.nhat.tidal_terror.TidalTerror.TIDAL_TERROR_TAB.get();
+        tab.buildContents(new CreativeModeTab.ItemDisplayParameters(h.getLevel().enabledFeatures(),true,h.getLevel().registryAccess()));
+        int count=0;
+        for(var enchantment:List.of(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get())) {
+            for(int level=1;level<=enchantment.getMaxLevel();level++) {
+                int expected=level;count++;
+                var book=tab.getDisplayItems().stream().filter(s->s.is(Items.ENCHANTED_BOOK)&&net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(s).getOrDefault(enchantment,0)==expected).findFirst();
+                h.assertTrue(book.isPresent(),"Missing creative spear book level "+expected);
+                var lines=new ArrayList<net.minecraft.network.chat.Component>();
+                net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.ItemTooltipEvent(book.get(),h.makeMockSurvivalPlayer(),lines,TooltipFlag.Default.NORMAL));
+                h.assertTrue(lines.size()==2,"Book lost its bonus/applicability tooltip");
+                var bonus=(net.minecraft.network.chat.contents.TranslatableContents)lines.get(0).getContents();
+                String key=enchantment==com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get()?"tooltip.tidalterror.serration_book":"tooltip.tidalterror.hemorrhage_book";
+                h.assertTrue(bonus.getKey().equals(key),"Wrong book explanation");
+                near(h,((Number)bonus.getArgs()[0]).doubleValue(),enchantment==com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get()?.5*expected:2*expected,"Book bonus did not reflect its level");
+            }
+        }
+        h.assertTrue(count==5&&tab.getDisplayItems().size()==24,"Wrong creative book/equipment count");h.succeed();
+    }
     @GameTest(template="reef_life_pool",timeoutTicks=180)
     public static void enchantedBleedingScalesAndKeepsChargedWaterGate(GameTestHelper h) {
         pool(h); var p=player(h,true); var t=target(h);

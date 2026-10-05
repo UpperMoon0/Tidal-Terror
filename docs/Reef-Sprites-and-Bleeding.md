@@ -43,9 +43,9 @@ seconds. The spear tooltip calculates its actual enchanted total and duration.
 A weaker hit cannot downgrade an active stronger effect. Enchantment values
 from edited NBT are clamped to the supported levels.
 
-Eight native equipment GameTests cover the original six equipment regressions
+Ten native equipment GameTests cover the original six equipment regressions
 plus enhanced bleed timing, stronger-effect preservation, suppressed potion
-particles, native enchanting-table candidates, and actual anvil/book assembly.
+particles, native enchanting-table candidates, actual anvil/book assembly, successful versus rejected Crusher bites, and all five creative book levels with native tooltip events.
 
 ## Development JEI
 
@@ -68,3 +68,15 @@ also passed locally. Eight equipment GameTests passed locally and in CI.
 ![Native underwater blood](assets/reef-icons/blood-native.png)
 
 ![Native JEI and equipment icons](assets/reef-icons/jei-native.png)
+
+## Forward spear and book discovery (2026-10-06)
+
+The held spear points forward in third person, with an angled forward first-person hold in either hand. Successful Coral Crusher bites apply the base four-second bleed (two damage), including custom blood particles. Rejected hits do not apply it.
+
+The Tidal Terror tab includes Serration I, II, III and Hemorrhage I, II immediately after the spear. Native enchanted-book tooltips state the exact level bonus and the charged underwater-hit requirement. Vanilla enchanted-book/search behavior remains compatible.
+
+The updated isolated client passed eight framebuffer captures, including the forward spear in both hands and the actual book tooltips. All ten equipment GameTests passed locally.
+
+![Forward held spear](assets/reef-icons/spear-forward-native.png)
+
+![Native book tooltips](assets/reef-icons/books-native.png)

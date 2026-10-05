@@ -28,5 +28,8 @@
   "enchantment.tidalterror.serration": "Serration",
   "enchantment.tidalterror.hemorrhage": "Hemorrhage",
   "tooltip.tidalterror.reef_spear": "Fully charged underwater hits: %s bleeding damage over %s seconds",
-  "tooltip.tidalterror.reef_armor": "5% less knockback per piece while grounded underwater"
+  "tooltip.tidalterror.reef_armor": "5% less knockback per piece while grounded underwater",
+  "tooltip.tidalterror.serration_book": "+%s damage per bleeding pulse",
+  "tooltip.tidalterror.hemorrhage_book": "+%s seconds of bleeding (%s seconds total)",
+  "tooltip.tidalterror.spear_book": "Reef Spear: fully charged underwater hits only"
 }

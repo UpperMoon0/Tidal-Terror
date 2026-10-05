@@ -9,6 +9,16 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = TidalTerror.MODID)
 public final class ReefEquipmentEvents {
+    @SubscribeEvent public static void enchantmentBookTooltip(net.minecraftforge.event.entity.player.ItemTooltipEvent event) {
+        if (!event.getItemStack().is(net.minecraft.world.item.Items.ENCHANTED_BOOK)) return;
+        var enchantments = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(event.getItemStack());
+        int power = net.minecraft.util.Mth.clamp(enchantments.getOrDefault(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(), 0), 0, 3);
+        int duration = net.minecraft.util.Mth.clamp(enchantments.getOrDefault(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(), 0), 0, 2);
+        if (power == 0 && duration == 0) return;
+        if (power > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.serration_book", .5F * power).withStyle(net.minecraft.ChatFormatting.AQUA));
+        if (duration > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.hemorrhage_book", 2 * duration, 4 + 2 * duration).withStyle(net.minecraft.ChatFormatting.AQUA));
+        event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.spear_book").withStyle(net.minecraft.ChatFormatting.GRAY));
+    }
     @SubscribeEvent public static void bloodTrail(net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent event) {
         var entity = event.getEntity();
         if (entity.level().isClientSide || entity.tickCount % 8 != 0 || !entity.isAlive()) return;

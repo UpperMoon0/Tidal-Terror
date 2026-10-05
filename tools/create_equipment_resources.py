@@ -48,10 +48,10 @@ for name in ('crusher_tooth','shardback_plate','reef_helmet','reef_chestplate','
 write('assets/tidalterror/models/item/reef_spear.json',{
     'loader':'forge:separate_transforms',
     'base':{'parent':'builtin/entity','gui_light':'front','textures':{'particle':'tidalterror:item/reef_spear'},'display':{
-        'thirdperson_righthand':{'rotation':[90,0,0],'translation':[0,2,0],'scale':[.8,.8,.8]},
-        'thirdperson_lefthand':{'rotation':[90,0,0],'translation':[0,2,0],'scale':[.8,.8,.8]},
-        'firstperson_righthand':{'rotation':[0,0,20],'translation':[1,0,0],'scale':[.45,.45,.45]},
-        'firstperson_lefthand':{'rotation':[0,0,20],'translation':[1,0,0],'scale':[.45,.45,.45]},
+        'thirdperson_righthand':{'rotation':[0,0,0],'translation':[0,2,0],'scale':[.8,.8,.8]},
+        'thirdperson_lefthand':{'rotation':[0,0,0],'translation':[0,2,0],'scale':[.8,.8,.8]},
+        'firstperson_righthand':{'rotation':[-60,15,5],'translation':[0,2,0],'scale':[.45,.45,.45]},
+        'firstperson_lefthand':{'rotation':[-60,15,5],'translation':[0,2,0],'scale':[.45,.45,.45]},
         'ground':{'rotation':[0,0,45],'translation':[0,2,0],'scale':[.3,.3,.3]},
         'fixed':{'rotation':[0,0,45],'translation':[0,0,0],'scale':[.3,.3,.3]}}},
     'perspectives':{'gui':{'parent':'minecraft:item/generated','textures':{'layer0':'tidalterror:item/reef_spear'}}}})
@@ -65,6 +65,9 @@ lang['effect.tidalterror.reef_bleeding']='Reef Bleeding'
 lang['tooltip.tidalterror.reef_spear']='Fully charged underwater hits: %s bleeding damage over %s seconds'
 lang['enchantment.tidalterror.serration']='Serration'
 lang['enchantment.tidalterror.hemorrhage']='Hemorrhage'
+lang['tooltip.tidalterror.serration_book']='+%s damage per bleeding pulse'
+lang['tooltip.tidalterror.hemorrhage_book']='+%s seconds of bleeding (%s seconds total)'
+lang['tooltip.tidalterror.spear_book']='Reef Spear: fully charged underwater hits only'
 lang['tooltip.tidalterror.reef_armor']='5% less knockback per piece while grounded underwater'
 write(path.relative_to(RES),lang)
 print('Equipment acquisition, recipes, unlocks, language and models generated')

@@ -11,6 +11,8 @@
 - Revised armor icons to vanilla silhouettes and material icons to their native mob appearance using referenced ImageGen sprites.
 - Added custom blood droplets/plumes with no potion swirls, and spear-only Serration I–III and Hemorrhage I–II enchantments for stronger/longer bleeding.
 - Added optional development-client JEI and native table/anvil/enchanted bleeding regressions.
+- Coral Crusher bites apply base bleeding; held spears point forward in both hands.
+- All five spear enchantment book levels appear beside the spear with level-specific bonus tooltips.
 
 ## 0.0.1 â€” 2026-10-04
 
