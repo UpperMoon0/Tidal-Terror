@@ -49,17 +49,16 @@ write('data/tidalterror/advancements/recipes/equipment/fang_arrow.json',{'parent
 
 for name in ('fang_arrow','crusher_tooth','shardback_plate','reef_helmet','reef_chestplate','reef_leggings','reef_boots'):
     write(f'assets/tidalterror/models/item/{name}.json',{'parent':'minecraft:item/generated','textures':{'layer0':'tidalterror:item/'+name}})
-# Native spear model in-hand; exported native icon in inventory using Forge's separate transforms.
+# The native spear model renders in every context, including GUI and hotbar.
 write('assets/tidalterror/models/item/reef_spear.json',{
-    'loader':'forge:separate_transforms',
-    'base':{'parent':'builtin/entity','gui_light':'front','textures':{'particle':'tidalterror:item/reef_spear'},'display':{
+    'parent':'builtin/entity','gui_light':'front','textures':{'particle':'tidalterror:item/reef_spear_model'},'display':{
         'thirdperson_righthand':{'rotation':[0,0,0],'translation':[0,2,0],'scale':[.8,.8,.8]},
         'thirdperson_lefthand':{'rotation':[0,0,0],'translation':[0,2,0],'scale':[.8,.8,.8]},
         'firstperson_righthand':{'rotation':[-60,15,5],'translation':[0,2,0],'scale':[.45,.45,.45]},
         'firstperson_lefthand':{'rotation':[-60,15,5],'translation':[0,2,0],'scale':[.45,.45,.45]},
+        'gui':{'rotation':[0,0,-45],'translation':[0,0,0],'scale':[.3,.3,.3]},
         'ground':{'rotation':[0,0,45],'translation':[0,2,0],'scale':[.3,.3,.3]},
-        'fixed':{'rotation':[0,0,45],'translation':[0,0,0],'scale':[.3,.3,.3]}}},
-    'perspectives':{'gui':{'parent':'minecraft:item/generated','textures':{'layer0':'tidalterror:item/reef_spear'}}}})
+        'fixed':{'rotation':[0,0,-45],'translation':[0,0,0],'scale':[.3,.3,.3]}}})
 
 path=RES/'assets/tidalterror/lang/en_us.json'
 lang=json.loads(path.read_text())

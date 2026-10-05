@@ -154,7 +154,7 @@ dependencies {
     implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:1.20.1-3.0.1.6")
     if (file('.dependencies/shaders/oculus-mc1.20.1-1.8.0.jar').exists()
             && file('.dependencies/shaders/embeddium-0.3.31+mc1.20.1.jar').exists()
-            && !project.hasProperty('reefTests') && !project.hasProperty('coralCrusherTests') && !project.hasProperty('cathedralRayTests') && !project.hasProperty('veilglowTests') && !project.hasProperty('shardbackTests') && !project.hasProperty('reefLifeTests') && !project.hasProperty('foodTests') && !project.hasProperty('spawnPoolTests') && !project.hasProperty('equipmentTests')) {
+            && !project.hasProperty('reefTests') && !project.hasProperty('coralCrusherTests') && !project.hasProperty('cathedralRayTests') && !project.hasProperty('veilglowTests') && !project.hasProperty('shardbackTests') && !project.hasProperty('reefLifeTests') && !project.hasProperty('foodTests') && !project.hasProperty('spawnPoolTests') && !project.hasProperty('equipmentTests') && !project.hasProperty('weaponBalanceTests')) {
         runtimeOnly fg.deobf('dev.local:oculus-mc1.20.1:1.8.0')
         runtimeOnly fg.deobf('dev.local:embeddium:0.3.31+mc1.20.1')
         // ForgeGradle exposes Oculus's bundled jcpp; adding it twice breaks Java modules.
@@ -509,4 +509,16 @@ if (project.hasProperty('spawnPoolTests')) {
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+}
+
+// Optional measured balance report, isolated from production and regression fixtures.
+if (project.hasProperty('weaponBalanceTests')) {
+    sourceSets.main.java.srcDir 'src/weaponBalance/java'
+    sourceSets.main.resources.srcDir 'src/gameTest/resources'
+    minecraft.runs.gameTestServer {
+        workingDirectory project.file('build/weapon-balance-tests')
+        property 'forge.enabledGameTestNamespaces', 'tidalterror'
+        property 'forge.logging.console.level', 'info'
+        property 'tidalterror.weaponOutput', project.file('art/weapon-balance/native-1.20.1.json').absolutePath
+    }
 }

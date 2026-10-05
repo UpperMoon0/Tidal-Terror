@@ -103,7 +103,6 @@ def main():
         draw.text((i*400+20,15),name,fill=(35,30,45))
     board.save(ART/'native-orthographic.png')
     icons=[]
-    icons.append(icon(spear,spear_atlas,'reef_spear',True))
     for slot,name in [('head','reef_helmet'),('chest','reef_chestplate'),('legs','reef_leggings'),('feet','reef_boots')]:
         icons.append(icon(ray_art.faces_from(WORK/f'armor-{slot}-uv.txt'),armor_atlas,name))
     icons.append(icon([f for f in spear if '/tooth' in f['part']],spear_atlas,'crusher_tooth',True))

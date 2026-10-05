@@ -6,8 +6,6 @@ renders, alongside the supplied Shardback concept. Armor uses violet/lavender
 carapace, cobalt attached coral, ivory structural segments and slate joints. The
 spear has an ivory tooth, sandy hide bindings and a pale porous coral shaft.
 
-![Approved equipment concept](assets/reef-equipment-concept.png)
-
 ## Native geometry and artwork
 
 `tools/create_reef_equipment_models.py` generates 54 armor cuboids in four separate
@@ -25,7 +23,7 @@ texture source of truth.
 
 Built-in ImageGen supplied six flat pixel material tiles. Its full prompt is
 retained in [reef-equipment-material-prompt.txt](reef-equipment-material-prompt.txt)
-and its source image in [reef-equipment-materials.png](assets/reef-equipment-materials.png).
+and its source image in the optional local `docs/assets/reef-equipment-materials.png`.
 The material sheet contains violet, cobalt, ivory, slate, sandy hide and porous
 coral in two columns and three rows. It contains no painted anatomy or directional
 lighting. The concept and original full-resolution generations remain in the local
@@ -109,10 +107,6 @@ were visually inspected; both hands show the spear tip inside the viewport, and
 the third-person spear is upright. This is local verification; PR CI independently
 checks the complete native matrix before merge.
 
-![Native worn equipment and held spear](assets/reef-equipment-runtime.png)
+Artwork sources, concept references and runtime screenshots are optional local files ignored by Git. The release builds from committed game-ready textures; recreating artwork requires supplying those local source images.
 
-Additional framebuffer evidence:
-[main hand](assets/reef-equipment-first-person.png),
-[offhand](assets/reef-equipment-offhand.png),
-[creative tab](assets/reef-equipment-creative.png), and
-[resource reload and glint](assets/reef-equipment-reload.png).
+The spear uses the native 3D model in every item display context, including inventory and JEI. There is no separate 2D spear texture. Its particle sprite uses the model UV atlas.

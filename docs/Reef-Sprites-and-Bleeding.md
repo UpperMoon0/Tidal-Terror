@@ -6,8 +6,6 @@ exact prompts and retained source paths are in
 `python tools/export_reef_sprites.py` exports the sources to transparent 64×64
 item textures using 32×32 logical pixels and nearest-neighbor sampling.
 
-![Inventory-sized sprites](assets/reef-icons/preview.png)
-
 References were actual native-game Shardback and Crusher images, the actual
 front/side/back worn armor capture, and the user's vanilla armor silhouette
 reference. Purple segmented carapace and cobalt coral come from the Shardback;
@@ -65,10 +63,6 @@ particles in the native client particle engine, and the registered provider
 after full resource reload. The production JAR and all 13 release-tooling tests
 also passed locally. Eight equipment GameTests passed locally and in CI.
 
-![Native underwater blood](assets/reef-icons/blood-native.png)
-
-![Native JEI and equipment icons](assets/reef-icons/jei-native.png)
-
 ## Forward spear and book discovery (2026-10-06)
 
 The held spear points forward in third person, with an angled forward first-person hold in either hand. Successful Coral Crusher bites apply the base four-second bleed (two damage), including custom blood particles. Rejected hits do not apply it.
@@ -76,10 +70,6 @@ The held spear points forward in third person, with an angled forward first-pers
 The Tidal Terror tab includes Serration I, II, III and Hemorrhage I, II immediately after the spear. Native enchanted-book tooltips state the exact level bonus without restricting the description to a specific weapon. Vanilla enchanted-book/search behavior remains compatible.
 
 The updated isolated client passed eight framebuffer captures, including the forward spear in both hands and the actual book tooltips. All ten equipment GameTests passed locally.
-
-![Forward held spear](assets/reef-icons/spear-forward-native.png)
-
-![Native book tooltips](assets/reef-icons/books-native.png)
 
 ## Fang arrows and iron armor upgrades
 
@@ -91,4 +81,5 @@ Book tooltips describe only their general bleeding bonus. Spear tooltips explain
 
 The 2026-10-06 revision passed all thirteen equipment GameTests, nine native client framebuffer captures, thirteen release-tooling tests and clean release JAR guards. Native firing tests cover both vanilla ranged weapons and a registered Forge-style bow subclass; arrow tests cover dry-land bleeding, rejected hits, saved piercing and pickup.
 
-![Native gear and fang arrow tooltips](assets/reef-icons/gear-tooltips-native.png)
+
+Artwork sources, concept references and runtime screenshots are optional local files ignored by Git. The release builds from committed game-ready textures; recreating artwork requires supplying those local source images.
