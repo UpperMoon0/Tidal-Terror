@@ -76,3 +76,15 @@ Bleeding deals 1 damage every two seconds for four seconds. Serration adds 0.5 d
 Fang Arrows retain native projectile damage plus the base two-damage bleed on land or in water. This is a consumable one-heart bonus, cannot stack per arrow, cannot receive bleeding enchantments and consumes Crusher Teeth. Protection reduces the bonus; native arrow damage immunity remains in force. It fills an early specialist ammunition role without replacing stronger native damage enchantments.
 
 The current native audit uses only legal maximum bleeding enchantments and adds a same-tier Sharpness V iron sword alongside netherite sword and trident. Its sustained measurements include native attack cooldowns and damage immunity; they are controlled underwater scenarios rather than proof of every PvP matchup.
+
+
+All 18 current native audit scenarios passed. Generic-target results (health points):
+
+| Legal fully enchanted weapon | One hit, then wait 8s | Sustained hits over 8s | One hit vs netherite + Protection IV | Sustained vs netherite + Protection IV |
+| --- | ---: | ---: | ---: | ---: |
+| Reef Spear, Serration III + Hemorrhage II | 16 (6 physical + 10 bleed) | 56.5 | 4.136 | 6.373 |
+| Iron Sword, Sharpness V | 9 | 126 | 0.881 | 12.338 |
+| Netherite Sword, Sharpness V | 11 | 154 | 1.141 | 15.967 |
+| Trident, Impaling V against non-aquatic mob | 9 | 81 | 0.881 | 7.932 |
+
+Trident against an aquatic mob dealt 21.5 per single hit and 193.5 sustained. Fire Aspect contributes no underwater damage. Sustained attacks run through tick 160 and are read at tick 166; later bleed remaining after the final attack is not included. The maximum bleeding spear trades continuous damage for reach and delayed hit-and-retreat damage. Its magic damage remains valuable against armor, so bleeding strength and cadence were not buffed. These measurements justify the separate damage/bleeding builds; they do not establish parity in every matchup or eliminate the spear's intended underwater advantage.
