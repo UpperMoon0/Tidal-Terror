@@ -62,7 +62,9 @@ for name,label in {'crusher_tooth':'Crusher Tooth','shardback_plate':'Shardback 
     'reef_helmet':'Reef Helmet','reef_chestplate':'Reef Chestplate','reef_leggings':'Reef Leggings','reef_boots':'Reef Boots'}.items():
     lang['item.tidalterror.'+name]=label
 lang['effect.tidalterror.reef_bleeding']='Reef Bleeding'
-lang['tooltip.tidalterror.reef_spear']='Fully charged underwater hits: 2 bleeding damage over 4 seconds'
+lang['tooltip.tidalterror.reef_spear']='Fully charged underwater hits: %s bleeding damage over %s seconds'
+lang['enchantment.tidalterror.serration']='Serration'
+lang['enchantment.tidalterror.hemorrhage']='Hemorrhage'
 lang['tooltip.tidalterror.reef_armor']='5% less knockback per piece while grounded underwater'
 write(path.relative_to(RES),lang)
 print('Equipment acquisition, recipes, unlocks, language and models generated')

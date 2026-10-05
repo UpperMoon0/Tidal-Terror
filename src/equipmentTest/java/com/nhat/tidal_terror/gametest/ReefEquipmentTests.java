@@ -24,6 +24,49 @@ import net.minecraftforge.gametest.*;
 
 @GameTestHolder("tidalterror") @PrefixGameTestTemplate(false)
 public final class ReefEquipmentTests {
+    @GameTest(template="reef_life_pool",timeoutTicks=180)
+    public static void enchantedBleedingScalesAndKeepsChargedWaterGate(GameTestHelper h) {
+        pool(h); var p=player(h,true); var t=target(h);
+        var spear=p.getMainHandItem();
+        spear.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),3);
+        spear.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(),2);
+        p.attack(t);
+        var effect=t.getEffect(ModEffects.REEF_BLEEDING.get());
+        h.assertTrue(effect!=null&&effect.getAmplifier()==3&&effect.getDuration()==160,"Enchanted hit lost power/duration");
+        h.assertTrue(!effect.isVisible()&&effect.showIcon(),"Bleeding must suppress potion swirls but keep its status icon");
+        // A weaker spear must not replace an active stronger bleed.
+        charge(p);t.invulnerableTime=0;p.setItemSlot(EquipmentSlot.MAINHAND,new ItemStack(ModEquipment.REEF_SPEAR.get()));p.attack(t);
+        h.assertTrue(t.getEffect(ModEffects.REEF_BLEEDING.get()).getAmplifier()==3,"Weak hit downgraded strong bleed");
+        float health=t.getHealth();
+        h.runAfterDelay(20,()->near(h,t.getHealth(),health,"Enchanted bleed fired early"));
+        h.runAfterDelay(45,()->near(h,t.getHealth(),health-2.5,"Serration first pulse"));
+        h.runAfterDelay(85,()->near(h,t.getHealth(),health-5,"Serration second pulse"));
+        h.runAfterDelay(125,()->near(h,t.getHealth(),health-7.5,"Hemorrhage third pulse"));
+        h.runAfterDelay(165,()->{
+            near(h,t.getHealth(),health-10,"Combined enchanted bleed total");
+            h.assertTrue(!t.hasEffect(ModEffects.REEF_BLEEDING.get()),"Enhanced bleed did not expire");h.succeed();
+        });
+    }
+
+    @GameTest(template="reef_life_pool",timeoutTicks=40)
+    public static void spearEnchantmentsUseTableBooksAndNativeAnvil(GameTestHelper h) {
+        var serration=com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get();
+        var hemorrhage=com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get();
+        var spear=new ItemStack(ModEquipment.REEF_SPEAR.get());
+        h.assertTrue(serration.getMaxLevel()==3&&hemorrhage.getMaxLevel()==2&&serration.isCompatibleWith(hemorrhage),"Incorrect enchantment levels/compatibility");
+        for(var enchantment:List.of(serration,hemorrhage)) {
+            h.assertTrue(enchantment.canEnchant(spear)&&spear.canApplyAtEnchantingTable(enchantment),"Spear enchantment rejected");
+            h.assertTrue(!enchantment.canEnchant(new ItemStack(Items.IRON_SWORD))&&!enchantment.canEnchant(new ItemStack(ModEquipment.REEF_HELMET.get())),"Spear enchantment leaked to other equipment");
+            h.assertTrue(net.minecraft.world.item.enchantment.EnchantmentHelper.getAvailableEnchantmentResults(30,spear,false).stream().anyMatch(e->e.enchantment==enchantment),"Enchantment missing from native table candidates");
+            var p=h.makeMockSurvivalPlayer();
+            var anvil=new net.minecraft.world.inventory.AnvilMenu(0,p.getInventory(),net.minecraft.world.inventory.ContainerLevelAccess.create(h.getLevel(),h.absolutePos(new BlockPos(8,10,8))));
+            anvil.getSlot(0).set(spear.copy());
+            anvil.getSlot(1).set(EnchantedBookItem.createForEnchantment(new net.minecraft.world.item.enchantment.EnchantmentInstance(enchantment,1)));
+            anvil.createResult();
+            h.assertTrue(net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(enchantment,anvil.getSlot(2).getItem())==1,"Native anvil rejected spear book");
+        }
+        h.succeed();
+    }
     private static void pool(GameTestHelper h) {
         for(int x=0;x<=23;x++)for(int z=0;z<=23;z++)for(int y=3;y<=8;y++)
             h.setBlock(x,y,z,y==3?Blocks.SANDSTONE:Blocks.WATER);

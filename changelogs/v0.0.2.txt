@@ -7,4 +7,8 @@ Reef equipment and crafting rewards
 - Coral Crushers and Shardbacks now drop 1-2 teeth or plates in addition to their existing seafood, with Looting support. Materials remain materials when the mob dies burning.
 - Shardbacks also shed one plate during safe seabed foraging after 5-6 minutes of loaded underwater time. Molting cooldowns persist across saves and respect doMobLoot.
 - Added iron-and-dead-coral crafting recipes, recipe-book unlocks, repair materials, tooltips and creative-tab entries. Gear occupies an iron-to-diamond specialist branch rather than replacing diamond protection.
-- Added six native equipment regression tests, a native equipment model/UV audit, a reproducible ImageGen material assembly workflow and isolated client framebuffer verification.
+- Added vanilla-shaped armor sprites and mob-matched tooth/plate sprites generated from native-game references.
+- Bleeding uses custom blood droplets that disperse underwater, with no vanilla potion swirls.
+- Serration I-III increases bleed pulse damage; Hemorrhage I-II extends duration. Both spear-only enchantments support enchanting tables and books/anvils.
+- JEI is available in the development client without becoming a required release dependency.
+- Added eight native equipment regression tests, a native equipment model/UV audit, reproducible ImageGen sprite/material workflows and isolated client framebuffer verification.

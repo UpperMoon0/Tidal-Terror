@@ -4,9 +4,10 @@ No existing world is read or copied. Evidence returns to the source project's ar
 """
 from pathlib import Path
 import shutil
+import sys
 
 ROOT=Path(__file__).resolve().parents[1]
-snapshot=ROOT/'build/equipment-preview-project-v1'
+snapshot=ROOT/(sys.argv[1] if len(sys.argv)>1 else 'build/equipment-preview-project-v1')
 snapshot.mkdir(parents=True,exist_ok=True)
 for name in ('build.gradle','settings.gradle','gradle.properties','gradlew','gradlew.bat'):
     shutil.copy2(ROOT/name,snapshot/name)

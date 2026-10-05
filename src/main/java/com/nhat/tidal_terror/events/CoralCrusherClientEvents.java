@@ -13,6 +13,10 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = TidalTerror.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class CoralCrusherClientEvents {
     @SubscribeEvent
+    public static void registerParticles(net.minecraftforge.client.event.RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(com.nhat.tidal_terror.particles.ModParticles.BLOOD.get(), com.nhat.tidal_terror.client.BloodParticle.Provider::new);
+    }
+    @SubscribeEvent
     public static void registerReload(net.minecraftforge.client.event.RegisterClientReloadListenersEvent event) {
         event.registerReloadListener((net.minecraft.server.packs.resources.ResourceManagerReloadListener)
                 manager -> com.nhat.tidal_terror.client.ReefEquipmentClient.resetModels());

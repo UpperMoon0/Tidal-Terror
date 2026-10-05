@@ -40,6 +40,8 @@ public final class EquipmentPreview {
     private static long ready;
     private static final List<String> CAPTURES=new ArrayList<>();
     private static ArmorStand mannequin;
+    private static java.util.UUID bloodTarget;
+    private static boolean particleChecked;
 
     private static void equip(LivingEntity entity) {
         entity.setItemSlot(EquipmentSlot.HEAD,new ItemStack(ModEquipment.REEF_HELMET.get()));
@@ -112,6 +114,29 @@ public final class EquipmentPreview {
                     reloaded=true;MC.setScreen(new Board(true));
                     future=MC.reloadResourcePacks();return;
                 } else if(stage==4) MC.setScreen(new Board(true));
+                else if(stage==5) {
+                    MC.setScreen(null);MC.options.hideGui=false;
+                    if(!net.minecraftforge.fml.ModList.get().isLoaded("jei"))throw new IllegalStateException("JEI missing from development runtime");
+                    var server=MC.getSingleplayerServer();var id=MC.player.getUUID();
+                    future=CompletableFuture.runAsync(()->{
+                        server.setDifficulty(Difficulty.NORMAL,true);
+                        var level=server.overworld();var player=server.getPlayerList().getPlayer(id);
+                        var target=net.minecraft.world.entity.EntityType.DROWNED.create(level);
+                        target.setNoAi(true);target.setNoGravity(true);target.setPersistenceRequired();target.setPos(0,80,3);target.setYRot(180);
+                        target.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);target.setHealth(100);
+                        level.addFreshEntity(target);bloodTarget=target.getUUID();
+                        target.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get(),400,3,false,false,true));
+                        var spear=new ItemStack(ModEquipment.REEF_SPEAR.get());
+                        spear.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),3);
+                        spear.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(),2);
+                        player.setItemSlot(EquipmentSlot.MAINHAND,spear);player.setItemSlot(EquipmentSlot.OFFHAND,ItemStack.EMPTY);
+                    },server);
+                } else if(stage==6) {
+                    var server=MC.getSingleplayerServer();
+                    future=CompletableFuture.runAsync(()->server.overworld().getEntity(bloodTarget).discard(),server);
+                    MC.options.hideGui=false;
+                    MC.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(MC.player));
+                }
                 ready=System.nanoTime();frames=0;
             }
         }catch(Throwable error){fail(error);}
@@ -126,13 +151,22 @@ public final class EquipmentPreview {
                 var api=type.getMethod("getInstance").invoke(null);
                 if(!(boolean)type.getMethod("isShaderPackInUse").invoke(api))throw new IllegalStateException("Equipment shader preview inactive");
             }
-            String file=new String[]{"01-native-orthographic.png","02-underwater-first-person.png","03-underwater-offhand.png","04-creative-equipment.png","05-reload-and-glint.png"}[stage];
+            if(stage==5&&!particleChecked) {
+                boolean found=false;
+                for(var entity:MC.level.entitiesForRendering())if(entity.getUUID().equals(bloodTarget)&&entity instanceof LivingEntity living)
+                    found=living.isAlive()&&living.hasEffect(com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get());
+                if(!found)throw new IllegalStateException("Bleeding preview target missing from client");
+                var particle=MC.particleEngine.createParticle(com.nhat.tidal_terror.particles.ModParticles.BLOOD.get(),0,81,3,0,0,0);
+                if(!(particle instanceof com.nhat.tidal_terror.client.BloodParticle))throw new IllegalStateException("Blood particle provider missing after reload");
+                particleChecked=true;
+            }
+            String file=new String[]{"01-native-orthographic.png","02-underwater-first-person.png","03-underwater-offhand.png","04-creative-equipment.png","05-reload-and-glint.png","06-blood-particles.png","07-jei-inventory.png"}[stage];
             try(var image=Screenshot.takeScreenshot(MC.getMainRenderTarget())){image.writeToFile(OUT.resolve(file));}
             CAPTURES.add(file);System.out.println("REEF_EQUIPMENT_PREVIEW CAPTURE "+file);
             stage++;ready=0;
-            if(stage==5) {
-                Files.writeString(OUT.resolve("passed.txt"),"Native worn armor, held spear, first person, creative items, full resource reload, glint; fresh isolated world\n"+String.join("\n",CAPTURES));
-                System.out.println("REEF_EQUIPMENT_PREVIEW PASS five actual framebuffer captures");done=true;MC.stop();
+            if(stage==7) {
+                Files.writeString(OUT.resolve("passed.txt"),"Native worn armor, held spear, first person, creative items, resource reload, glint, registered blood particle, JEI inventory; fresh isolated world\n"+String.join("\n",CAPTURES));
+                System.out.println("REEF_EQUIPMENT_PREVIEW PASS seven actual framebuffer captures");done=true;MC.stop();
             }
         }catch(Throwable error){fail(error);}
     }

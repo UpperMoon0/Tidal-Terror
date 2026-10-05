@@ -25,6 +25,8 @@
   "item.tidalterror.reef_leggings": "Reef Leggings",
   "item.tidalterror.reef_boots": "Reef Boots",
   "effect.tidalterror.reef_bleeding": "Reef Bleeding",
-  "tooltip.tidalterror.reef_spear": "Fully charged underwater hits: 2 bleeding damage over 4 seconds",
+  "enchantment.tidalterror.serration": "Serration",
+  "enchantment.tidalterror.hemorrhage": "Hemorrhage",
+  "tooltip.tidalterror.reef_spear": "Fully charged underwater hits: %s bleeding damage over %s seconds",
   "tooltip.tidalterror.reef_armor": "5% less knockback per piece while grounded underwater"
 }

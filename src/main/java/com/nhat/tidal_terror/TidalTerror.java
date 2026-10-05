@@ -64,6 +64,8 @@ public class TidalTerror {
         ModFoods.register();
         ModEquipment.register();
         ModEffects.register(bus);
+        com.nhat.tidal_terror.enchantments.ModEnchantments.register(bus);
+        com.nhat.tidal_terror.particles.ModParticles.register(bus);
         ITEMS.register(bus);
         CREATIVE_MODE_TABS.register(bus);
         ModEntities.register(bus);

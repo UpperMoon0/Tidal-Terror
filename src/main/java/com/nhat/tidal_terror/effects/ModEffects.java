@@ -10,9 +10,10 @@ import net.minecraftforge.registries.*;
 public final class ModEffects {
     private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, TidalTerror.MODID);
     public static final RegistryObject<MobEffect> REEF_BLEEDING = EFFECTS.register("reef_bleeding", () -> new MobEffect(MobEffectCategory.HARMFUL, 0xAA4655) {
-        @Override public boolean isDurationEffectTick(int duration, int amplifier) { return duration == 40 || duration == 1; }
+        @Override public boolean isDurationEffectTick(int duration, int amplifier) { return duration % 40 == 1; }
         @Override public void applyEffectTick(LivingEntity entity, int amplifier) {
-            if (!entity.level().isClientSide) entity.hurt(entity.damageSources().magic(), 1);
+            if (!entity.level().isClientSide && entity.hurt(entity.damageSources().magic(), 1 + .5F * net.minecraft.util.Mth.clamp(amplifier, 0, 3)))
+                com.nhat.tidal_terror.particles.ModParticles.bleed(entity, 8 + 2 * net.minecraft.util.Mth.clamp(amplifier, 0, 3));
         }
     });
     private ModEffects() {}

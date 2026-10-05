@@ -35,8 +35,10 @@ lighting. The concept and original full-resolution generations remain in the loc
 name to every native face. The armor atlas contains 324 faces and 5,284 occupied
 texels; the spear atlas contains 90 faces and 438 occupied texels. Both 256×256
 atlases have zero overlapping UV islands, fully opaque occupied texels and
-transparent unused texels. Inventory icons are 64×64 renders of the same baked
-geometry and textures; material icons use the native tooth and chest-shell faces.
+transparent unused texels. The spear inventory icon renders the baked geometry.
+Armor and material icons are now independently generated sprites that follow
+vanilla item silhouettes and the actual worn armor/mob materials; see
+[the sprite and bleeding revision](Reef-Sprites-and-Bleeding.md).
 
 Forge's separate-transform item loader selects the flat spear icon for inventory
 and the native 3D model in hand, on the ground and in item frames. The armor uses

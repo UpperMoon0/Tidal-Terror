@@ -8,6 +8,9 @@
 - Each worn armor piece reduces knockback by 5% while grounded underwater, up to 20%.
 - Added tooth/plate loot alongside seafood, peaceful Shardback molts, iron-and-coral recipes, recipe unlocks and material repairs.
 - Added native equipment gameplay/model checks, exact-face texture tooling and isolated client previews.
+- Revised armor icons to vanilla silhouettes and material icons to their native mob appearance using referenced ImageGen sprites.
+- Added custom blood droplets/plumes with no potion swirls, and spear-only Serration I–III and Hemorrhage I–II enchantments for stronger/longer bleeding.
+- Added optional development-client JEI and native table/anvil/enchanted bleeding regressions.
 
 ## 0.0.1 â€” 2026-10-04
 

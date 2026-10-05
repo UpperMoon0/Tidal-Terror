@@ -118,6 +118,10 @@ def main():
     checks=dict(armor=armor_check,spear=spear_check,item_icons=7,icon_size=[64,64])
     (WORK/'texture-checks.json').write_text(json.dumps(checks,indent=2)+'\n')
     print('REEF_EQUIPMENT_TEXTURE PASS',json.dumps(checks))
+    # The revised vanilla-silhouette icons are independently generated assets.
+    if (ROOT/'tools/reef_sprite_sources.json').exists():
+        import export_reef_sprites
+        export_reef_sprites.main()
 
 
 if __name__=='__main__':main()

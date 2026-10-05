@@ -8,7 +8,7 @@ The workflows follow Endless's structure, adapted to Forge 1.20.1 and Java 17. T
 
 1. Change `mod_version` in `gradle.properties` and add nonempty `changelogs/vVERSION.txt` notes.
 2. Commit and push to `main`. The Release workflow compares the version with the previous revision. An untagged current version also runs, allowing the initial release and workflow repairs.
-3. Preflight rejects missing notes and tags belonging to another commit. Validation runs 64 native GameTests, the terrain audit, five model checks, release tooling tests, and a clean packaging check.
+3. Preflight rejects missing notes and tags belonging to another commit. Validation runs 66 native GameTests, the terrain audit, five model checks, release tooling tests, and a clean packaging check.
 4. A separate clean build produces the ordinary jar, verifies expanded metadata, dependencies, the icon and all resources, and rejects test/preview classes. The exact jar, SHA256SUMS, and source manifest are retained as an artifact and in a draft GitHub release.
 5. The same jar uploads to CurseForge project 1726637 using `CURSEFORGE_API_TOKEN`, marked Forge 1.20.1, Java 17, client/server, release, with required TerraBlender. A receipt containing its file ID and checksum is saved before the GitHub release becomes public.
 
