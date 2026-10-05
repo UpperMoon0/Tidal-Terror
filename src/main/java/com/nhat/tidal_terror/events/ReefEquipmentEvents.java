@@ -9,6 +9,16 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = TidalTerror.MODID)
 public final class ReefEquipmentEvents {
+    @SubscribeEvent public static void startBleeding(net.minecraftforge.event.entity.living.MobEffectEvent.Added event) {
+        if (!event.getEntity().level().isClientSide && event.getOldEffectInstance() == null
+                && event.getEffectInstance().getEffect() == com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get())
+            com.nhat.tidal_terror.effects.ModEffects.beginBleeding(event.getEntity());
+    }
+    @SubscribeEvent public static void finishBleeding(net.minecraftforge.event.entity.living.MobEffectEvent.Expired event) {
+        if (!event.getEntity().level().isClientSide && event.getEffectInstance() != null
+                && event.getEffectInstance().getEffect() == com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get())
+            com.nhat.tidal_terror.effects.ModEffects.clearBleedingClock(event.getEntity());
+    }
     @SubscribeEvent public static void enchantmentBookTooltip(net.minecraftforge.event.entity.player.ItemTooltipEvent event) {
         if (!event.getItemStack().is(net.minecraft.world.item.Items.ENCHANTED_BOOK)) return;
         var enchantments = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(event.getItemStack());

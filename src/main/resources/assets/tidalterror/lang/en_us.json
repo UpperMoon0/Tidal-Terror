@@ -34,7 +34,7 @@
   "item.tidalterror.fang_arrow": "Fang Arrow",
   "entity.tidalterror.fang_arrow": "Fang Arrow",
   "tooltip.tidalterror.fang_arrow": "Hits cause 2 bleeding damage over 4 seconds, on land or in water",
-  "tooltip.tidalterror.reef_spear_refresh": "You and the target must be in water; repeat hits refresh one bleed",
+  "tooltip.tidalterror.reef_spear_refresh": "You and the target must be in water; repeat hits refresh duration, not its pulse cooldown",
   "tooltip.tidalterror.reef_spear_repair": "Repair with Crusher Teeth",
   "tooltip.tidalterror.reef_armor_repair": "Repair with Shardback Plates"
 }

@@ -91,3 +91,5 @@ Development shaders are optional: run `python tools/install_dev_shaders.py` to i
 Reef Armor recipes upgrade the matching iron armor piece with three Shardback Plates and one dead coral block. Repair the spear with Crusher Teeth and the armor with Shardback Plates in an anvil. Gear tooltips explain the spear charge/water gate, bleed refresh, armor grounding bonus and repair materials.
 
 The Reef Spear uses its 3D model in inventory and JEI as well as in hand. See the [fully enchanted weapon comparison](docs/Reef-Weapon-Balance.md) and [repository file policy](docs/Repository-Hygiene.md). Artwork sources and screenshots are local optional files; the release uses committed game-ready assets.
+
+Repeated bleeding hits refresh duration while preserving the independent two-second pulse cooldown, including across entity saves.

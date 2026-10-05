@@ -83,3 +83,7 @@ The 2026-10-06 revision passed all thirteen equipment GameTests, nine native cli
 
 
 Artwork sources, concept references and runtime screenshots are optional local files ignored by Git. The release builds from committed game-ready textures; recreating artwork requires supplying those local source images.
+
+## Independent bleeding pulse clock
+
+Repeated hits now refresh effect duration without postponing the two-second damage pulse. Raising power or duration preserves that same clock. The server saves the remaining pulse ticks with the entity; legacy saves retain their prior pulse phase. A cured/removed effect starts a fresh clock when reapplied. Native damage immunity and all damage/enchantment values are unchanged. Two regression tests cover repeated native spear hits, power changes, expiry, milk curing and entity save/reload.

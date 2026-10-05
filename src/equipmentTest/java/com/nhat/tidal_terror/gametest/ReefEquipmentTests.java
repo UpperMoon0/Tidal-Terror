@@ -24,6 +24,53 @@ import net.minecraftforge.gametest.*;
 
 @GameTestHolder("tidalterror") @PrefixGameTestTemplate(false)
 public final class ReefEquipmentTests {
+    @GameTest(template="reef_life_pool",timeoutTicks=230)
+    public static void repeatedSpearHitsRefreshDurationWithoutDelayingPulses(GameTestHelper h) {
+        pool(h);var p=player(h,true);var t=target(h);var position=t.position();
+        float start=t.getHealth();double[] direct={0};
+        Runnable attack=()->{charge(p);t.invulnerableTime=0;float before=t.getHealth();p.attack(t);direct[0]+=before-t.getHealth();};
+        attack.run();
+        // Isolate pulse scheduling from native damage immunity after each weapon hit.
+        for(int tick=1;tick<=220;tick++)h.runAfterDelay(tick,()->{t.setPos(position);t.setDeltaMovement(Vec3.ZERO);t.invulnerableTime=0;});
+        for(int tick:new int[]{18,36,54})h.runAfterDelay(tick,()->{
+            // Increasing power/duration must preserve the next scheduled pulse too.
+            p.getMainHandItem().enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),3);
+            p.getMainHandItem().enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(),2);
+            attack.run();
+            h.assertTrue(t.getEffect(ModEffects.REEF_BLEEDING.get()).getDuration()==160,"Hit did not refresh duration");
+        });
+        h.runAfterDelay(30,()->near(h,t.getHealth(),start-direct[0],"Refresh caused an early/duplicate pulse"));
+        h.runAfterDelay(45,()->near(h,t.getHealth(),start-direct[0]-2.5,"Refresh postponed first pulse"));
+        h.runAfterDelay(85,()->near(h,t.getHealth(),start-direct[0]-5,"Refresh postponed second pulse"));
+        h.runAfterDelay(165,()->near(h,t.getHealth(),start-direct[0]-10,"Refreshed bleed lost cadence"));
+        h.runAfterDelay(220,()->{
+            near(h,t.getHealth(),start-direct[0]-12.5,"Extended bleed total");
+            h.assertTrue(!t.hasEffect(ModEffects.REEF_BLEEDING.get()),"Refreshed bleed did not expire");h.succeed();
+        });
+    }
+
+    @GameTest(template="reef_life_pool",timeoutTicks=140)
+    public static void bleedingPulseClockSurvivesSaveAndResetsAfterCure(GameTestHelper h) {
+        pool(h);var t=target(h);LivingEntity[] active={t};var position=t.position();
+        t.addEffect(new net.minecraft.world.effect.MobEffectInstance(ModEffects.REEF_BLEEDING.get(),80,0,false,false,true));
+        for(int tick=1;tick<=135;tick++)h.runAfterDelay(tick,()->{active[0].setPos(position);active[0].setDeltaMovement(Vec3.ZERO);});
+        h.runAfterDelay(25,()->{
+            var saved=new CompoundTag();t.saveWithoutId(saved);t.discard();
+            var loaded=EntityType.DROWNED.create(h.getLevel());loaded.load(saved);h.getLevel().addFreshEntity(loaded);active[0]=loaded;
+        });
+        h.runAfterDelay(45,()->near(h,active[0].getHealth(),99,"Save/load reset the pulse cooldown"));
+        h.runAfterDelay(46,()->{
+            h.assertTrue(active[0].curePotionEffects(new ItemStack(Items.MILK_BUCKET)),"Milk did not cure bleeding");
+            active[0].addEffect(new net.minecraft.world.effect.MobEffectInstance(ModEffects.REEF_BLEEDING.get(),80,0,false,false,true));
+        });
+        h.runAfterDelay(80,()->near(h,active[0].getHealth(),99,"New bleed inherited the cured pulse clock"));
+        h.runAfterDelay(92,()->near(h,active[0].getHealth(),98,"New bleed failed its first pulse"));
+        h.runAfterDelay(135,()->{
+            near(h,active[0].getHealth(),97,"New bleed total after cure");
+            h.assertTrue(!active[0].hasEffect(ModEffects.REEF_BLEEDING.get()),"New bleed did not expire");h.succeed();
+        });
+    }
+
     @GameTest(template="reef_life_pool",timeoutTicks=100)
     public static void fangArrowBleedsOnLandRejectsBlockedHitsAndPersistsPickup(GameTestHelper h) throws Exception {
         var p=h.makeMockSurvivalPlayer(); var t=h.spawn(EntityType.COW,10,10,8);t.setNoAi(true);t.setNoGravity(true);

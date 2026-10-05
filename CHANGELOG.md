@@ -17,6 +17,8 @@
 - Armor recipes now consume matching iron armor, three plates and dead coral; gear tooltips explain mechanics and material repairs.
 - Bleeding books show general bonuses without a spear-only line; ranged gear cannot receive bleeding enchantments.
 
+- Repeated bleeding hits refresh duration without resetting the independent two-second pulse cooldown; pulse timing survives saves and resets for a new effect after curing.
+
 ## 0.0.1 â€” 2026-10-04
 
 - Added Coral Cathedral: a deep ocean biome with giant branching, chalice, and sea-fan corals, irregular smaller colonies, dense coral gardens, sandy floors, and sandstone beneath.

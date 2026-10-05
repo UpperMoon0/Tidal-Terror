@@ -1,6 +1,6 @@
 # Fully enchanted Reef Spear balance
 
-Reviewed 2026-10-06 against 0.0.2. Damage is in health points (two points = one heart). This mod targets Forge 1.20.1; mace and vanilla netherite spear figures below refer to 1.21.11 and were source-checked, not run inside this mod.
+Reviewed 2026-10-06 against 0.0.2. The original measurements below preceded the pulse-timer fix; see the update at the end. Damage is in health points (two points = one heart). This mod targets Forge 1.20.1; mace and vanilla netherite spear figures below refer to 1.21.11 and were source-checked, not run inside this mod.
 
 ## Compatible maximum enchantments
 
@@ -24,7 +24,7 @@ A Density V critical smash can reach 38.25, 72 and 82.5 at those fall distances 
 
 Java 1.20.1 Impaling checks aquatic mob type rather than wetness: players and drowned receive no Impaling bonus merely by being underwater. The underwater measurements exclude Fire Aspect damage and falling criticals. On land, Reef Spear cannot start its special bleed, although an existing effect continues after leaving water. Its Sharpness V falling critical is 12, compared with the sword's 15, before Fire Aspect.
 
-## Native 1.20.1 measurements
+## Native 1.20.1 measurements before the timer fix
 
 The optional WeaponBalanceAudit calls native Player.attack with fully charged, maximally compatible enchanted items. Fourteen stationary targets are kept in water and separated to avoid sweep interference. Generic targets are drowned with base armor cleared; aquatic targets are guardians. Armored samples wear all four netherite pieces with Protection IV: 20 armor and 12 toughness. Damage comes from native health changes. Samples wait 166 ticks; sustained attacks occur from tick 0 through tick 160 at 18-tick spear/trident or 12-tick sword intervals.
 
@@ -42,7 +42,7 @@ Repeated same-strength effects refresh their duration to 160 ticks. The current 
 
 Bleeding uses magic damage. Armor and toughness do not reduce it, while Protection does. A single maximally enchanted spear hit followed by retreat is unusually efficient against heavy armor: about 3.9 times a sword's single underwater hit after waiting eight seconds. Continuous melee is substantially weaker than the sword, and trident remains better against its Impaling targets.
 
-## Verdict
+## Verdict before the timer fix
 
 The spear is **underpowered for continuous endgame melee**, with a useful underwater reach and hit-and-retreat niche. It is not a universal upgrade over a fully enchanted sword, trident or setup-driven mace/vanilla spear. This fits an iron-stage reef reward better than endgame equipment. The armor-bypassing bleed needs care in PvP because material progression is earlier than netherite.
 
@@ -55,3 +55,11 @@ With Java 17, run `./gradlew.bat -PweaponBalanceTests runGameTestServer`. The op
 Current-version values were verified against this mod and the official Forge 47.2.0 mapped Minecraft 1.20.1 classes. Newer formulas were checked in Mojang's official 1.21.11 server JAR and matching mappings: Items, Item.Properties.spear, ToolMaterial, KineticWeapon.damageEntities, Player.attack, Player.stabAttack and MaceItem.getAttackDamageBonus. Those newer formulas were source-checked rather than runtime-tested here.
 
 Official descriptions: [Java 1.21 mace and enchantments](https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21), [Java 1.21.11 spear and Lunge](https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-11). Official downloads and checksums are available through Mojang's [version manifest](https://piston-meta.mojang.com/mc/game/version_manifest_v2.json). Downloads, bytecode inspection output, reports and screenshots remain ignored local evidence.
+
+## Timer fix: updated native measurements
+
+The pulse countdown is now independent of effect duration and survives entity save/reload. Same-strength refreshes and stronger hits preserve the countdown; curing and reapplying creates a fresh one. Fifteen native equipment regression tests pass, including repeated real spear attacks, stronger enchantments, expiry, milk curing and save/reload.
+
+In the repeated 14-scenario audit, a single enchanted hit still deals 9 direct + 10 bleeding. Sustained unarmored spear damage is now 83.5 (78.5 direct + 5.0 bleeding), compared with 154 for the sword. Against full netherite/Protection IV, sustained spear damage is approximately 9.440. Native damage immunity can reject a pulse shortly after a stronger physical hit, or reduce a physical hit soon after a pulse; this timer fix leaves those rules unchanged. The scheduling regression isolates that immunity to prove hits do not postpone pulses.
+
+The recommendation to separate pulse cadence from duration has been implemented. No base damage, pulse damage, enchantment strength, reach or attack speed was increased. The spear remains an underwater progression specialist rather than a netherite sword replacement.

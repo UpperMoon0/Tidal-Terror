@@ -75,7 +75,7 @@ lang.pop('tooltip.tidalterror.spear_book',None)
 lang['item.tidalterror.fang_arrow']='Fang Arrow'
 lang['entity.tidalterror.fang_arrow']='Fang Arrow'
 lang['tooltip.tidalterror.fang_arrow']='Hits cause 2 bleeding damage over 4 seconds, on land or in water'
-lang['tooltip.tidalterror.reef_spear_refresh']='You and the target must be in water; repeat hits refresh one bleed'
+lang['tooltip.tidalterror.reef_spear_refresh']='You and the target must be in water; repeat hits refresh duration, not its pulse cooldown'
 lang['tooltip.tidalterror.reef_spear_repair']='Repair with Crusher Teeth'
 lang['tooltip.tidalterror.reef_armor_repair']='Repair with Shardback Plates'
 lang['tooltip.tidalterror.reef_armor']='Grounded underwater: 5% less knockback per piece (20% full set)'
