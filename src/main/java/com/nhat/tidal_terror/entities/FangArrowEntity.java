@@ -1,0 +1,28 @@
+package com.nhat.tidal_terror.entities;
+
+import com.nhat.tidal_terror.effects.ModEffects;
+import com.nhat.tidal_terror.items.ModEquipment;
+import com.nhat.tidal_terror.particles.ModParticles;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+
+/** Native arrow physics, piercing, pickup and save behavior; bleed only after accepted damage. */
+public final class FangArrowEntity extends AbstractArrow {
+    public FangArrowEntity(EntityType<? extends FangArrowEntity> type, Level level) { super(type, level); }
+    public FangArrowEntity(Level level, LivingEntity shooter) { super(ModEntities.FANG_ARROW.get(), shooter, level); }
+    @Override protected void doPostHurtEffects(LivingEntity victim) {
+        super.doPostHurtEffects(victim);
+        if (!level().isClientSide && victim.isAlive()) {
+            victim.addEffect(new MobEffectInstance(ModEffects.REEF_BLEEDING.get(), 80, 0, false, false, true));
+            ModParticles.bleed(victim, 12);
+        }
+    }
+    @Override public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket() {
+        return net.minecraftforge.network.NetworkHooks.getEntitySpawningPacket(this);
+    }
+    @Override protected ItemStack getPickupItem() { return new ItemStack(ModEquipment.FANG_ARROW.get()); }
+}

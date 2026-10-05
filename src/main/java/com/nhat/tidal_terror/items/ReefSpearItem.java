@@ -71,6 +71,8 @@ public final class ReefSpearItem extends Item {
         int power = net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(), stack), 0, 3);
         int extension = net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(), stack), 0, 2);
         text.add(Component.translatable("tooltip.tidalterror.reef_spear", (2 + extension) * (1 + .5F * power), 4 + 2 * extension).withStyle(ChatFormatting.AQUA));
+        text.add(Component.translatable("tooltip.tidalterror.reef_spear_refresh").withStyle(ChatFormatting.GRAY));
+        text.add(Component.translatable("tooltip.tidalterror.reef_spear_repair").withStyle(ChatFormatting.GRAY));
     }
     @Override public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(com.nhat.tidal_terror.client.ReefEquipmentClient.spear());

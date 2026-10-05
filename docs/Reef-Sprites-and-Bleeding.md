@@ -1,6 +1,6 @@
 # Reef sprites and bleeding
 
-The six item sprites were generated individually with built-in ImageGen. The
+The seven item sprites were generated individually with built-in ImageGen. The
 exact prompts and retained source paths are in
 [`tools/reef_sprite_sources.json`](../tools/reef_sprite_sources.json).
 `python tools/export_reef_sprites.py` exports the sources to transparent 64×64
@@ -43,7 +43,7 @@ seconds. The spear tooltip calculates its actual enchanted total and duration.
 A weaker hit cannot downgrade an active stronger effect. Enchantment values
 from edited NBT are clamped to the supported levels.
 
-Ten native equipment GameTests cover the original six equipment regressions
+Thirteen native equipment GameTests cover the original six equipment regressions
 plus enhanced bleed timing, stronger-effect preservation, suppressed potion
 particles, native enchanting-table candidates, actual anvil/book assembly, successful versus rejected Crusher bites, and all five creative book levels with native tooltip events.
 
@@ -73,10 +73,18 @@ also passed locally. Eight equipment GameTests passed locally and in CI.
 
 The held spear points forward in third person, with an angled forward first-person hold in either hand. Successful Coral Crusher bites apply the base four-second bleed (two damage), including custom blood particles. Rejected hits do not apply it.
 
-The Tidal Terror tab includes Serration I, II, III and Hemorrhage I, II immediately after the spear. Native enchanted-book tooltips state the exact level bonus and the charged underwater-hit requirement. Vanilla enchanted-book/search behavior remains compatible.
+The Tidal Terror tab includes Serration I, II, III and Hemorrhage I, II immediately after the spear. Native enchanted-book tooltips state the exact level bonus without restricting the description to a specific weapon. Vanilla enchanted-book/search behavior remains compatible.
 
 The updated isolated client passed eight framebuffer captures, including the forward spear in both hands and the actual book tooltips. All ten equipment GameTests passed locally.
 
 ![Forward held spear](assets/reef-icons/spear-forward-native.png)
 
 ![Native book tooltips](assets/reef-icons/books-native.png)
+
+## Fang arrows and iron armor upgrades
+
+Fang Arrow is an ArrowItem in minecraft:arrows, with a registered AbstractArrow projectile and native renderer. Exact Forge 1.20.1 / 47.2.0 bytecode confirms both BowItem and CrossbowItem call the ammunition createArrow factory. The projectile adds base bleeding only through native doPostHurtEffects, after damage succeeds. It needs no water and preserves normal flight, piercing, saves and pickup. Special arrows are consumed even with Infinity, matching native special-ammunition behavior.
+
+Compatibility follows the standard ArrowItem factory and arrow tag; weapons that bypass that factory or replace the projectile with a separate ammunition system need a specific adapter. A registered third-party-style BowItem fixture covers inherited bow behavior. Universal behavior for every modded bow is not claimed.
+
+Book tooltips describe only their general bleeding bonus. Spear tooltips explain full charge, both fighters in water, nonstacking refresh and Crusher Tooth repair. Armor tooltips explain 5% knockback reduction per piece while grounded underwater, 20% full set, and Shardback Plate repair. Armor crafting consumes the matching iron armor piece, three plates and one dead coral block.

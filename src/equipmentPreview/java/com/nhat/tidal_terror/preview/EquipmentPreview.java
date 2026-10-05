@@ -138,7 +138,8 @@ public final class EquipmentPreview {
                     future=CompletableFuture.runAsync(()->server.overworld().getEntity(bloodTarget).discard(),server);
                     MC.options.hideGui=false;
                     MC.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(MC.player));
-                } else if(stage==7) MC.setScreen(new BookBoard());
+                } else if(stage==7) {MC.resizeDisplay();MC.setScreen(new BookBoard());}
+                else if(stage==8) MC.setScreen(new GearBoard());
                 ready=System.nanoTime();frames=0;
             }
         }catch(Throwable error){fail(error);}
@@ -169,17 +170,27 @@ public final class EquipmentPreview {
                 if(!(particle instanceof com.nhat.tidal_terror.client.BloodParticle))throw new IllegalStateException("Blood particle provider missing after reload");
                 particleChecked=true;
             }
-            String file=new String[]{"01-native-orthographic.png","02-underwater-first-person.png","03-underwater-offhand.png","04-creative-equipment.png","05-reload-and-glint.png","06-blood-particles.png","07-jei-inventory.png","08-book-tooltips.png"}[stage];
+            String file=new String[]{"01-native-orthographic.png","02-underwater-first-person.png","03-underwater-offhand.png","04-creative-equipment.png","05-reload-and-glint.png","06-blood-particles.png","07-jei-inventory.png","08-book-tooltips.png","09-gear-tooltips.png"}[stage];
             try(var image=Screenshot.takeScreenshot(MC.getMainRenderTarget())){image.writeToFile(OUT.resolve(file));}
             CAPTURES.add(file);System.out.println("REEF_EQUIPMENT_PREVIEW CAPTURE "+file);
             stage++;ready=0;
-            if(stage==8) {
-                Files.writeString(OUT.resolve("passed.txt"),"Native worn armor, forward held spear, first person, creative items, resource reload, glint, registered blood particle, JEI inventory, book tooltips; isolated world\n"+String.join("\n",CAPTURES));
+            if(stage==9) {
+                Files.writeString(OUT.resolve("passed.txt"),"Native worn armor, forward held spear, first person, creative items, resource reload, glint, registered blood particle, JEI inventory, general book tooltips, gear/arrow tooltips; isolated world\n"+String.join("\n",CAPTURES));
                 System.out.println("REEF_EQUIPMENT_PREVIEW PASS eight actual framebuffer captures");done=true;MC.stop();
             }
         }catch(Throwable error){fail(error);}
     }
 
+    private static final class GearBoard extends Screen {
+        GearBoard() { super(Component.literal("Reef gear mechanics")); }
+        @Override public boolean isPauseScreen() { return false; }
+        @Override public void render(GuiGraphics g,int mouseX,int mouseY,float partialTick) {
+            g.fill(0,0,width,height,0xFFDDDCE4);
+            g.drawCenteredString(font,"REEF GEAR - ACTUAL NATIVE TOOLTIPS",width/2,16,0xFF30263C);
+            var items=new Item[]{ModEquipment.REEF_SPEAR.get(),ModEquipment.REEF_BOOTS.get(),ModEquipment.FANG_ARROW.get()};
+            for(int i=0;i<3;i++) {int y=60+i*100;var stack=new ItemStack(items[i]);g.renderItem(stack,30,y);g.renderTooltip(font,stack,60,y);}
+        }
+    }
     private static final class BookBoard extends Screen {
         BookBoard() { super(Component.literal("Spear Enchantment Books")); }
         @Override public boolean isPauseScreen() { return false; }

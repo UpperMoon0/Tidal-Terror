@@ -51,6 +51,7 @@ public class TidalTerror {
                         output.accept(ModFoods.COOKED_SHARDBACK_CLAW.get());
                         output.accept(ModEquipment.CRUSHER_TOOTH.get());
                         output.accept(ModEquipment.SHARDBACK_PLATE.get());
+                        output.accept(ModEquipment.FANG_ARROW.get());
                         output.accept(ModEquipment.REEF_SPEAR.get());
                         com.nhat.tidal_terror.enchantments.ModEnchantments.addBooks(output);
                         output.accept(ModEquipment.REEF_HELMET.get());

@@ -17,7 +17,6 @@ public final class ReefEquipmentEvents {
         if (power == 0 && duration == 0) return;
         if (power > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.serration_book", .5F * power).withStyle(net.minecraft.ChatFormatting.AQUA));
         if (duration > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.hemorrhage_book", 2 * duration, 4 + 2 * duration).withStyle(net.minecraft.ChatFormatting.AQUA));
-        event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.spear_book").withStyle(net.minecraft.ChatFormatting.GRAY));
     }
     @SubscribeEvent public static void bloodTrail(net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent event) {
         var entity = event.getEntity();

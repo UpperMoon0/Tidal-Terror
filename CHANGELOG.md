@@ -13,6 +13,9 @@
 - Added optional development-client JEI and native table/anvil/enchanted bleeding regressions.
 - Coral Crusher bites apply base bleeding; held spears point forward in both hands.
 - All five spear enchantment book levels appear beside the spear with level-specific bonus tooltips.
+- Added Fang Arrows: base bleeding on land/water, native bow/crossbow ammunition, four crafted from a Crusher Tooth, stick and feather.
+- Armor recipes now consume matching iron armor, three plates and dead coral; gear tooltips explain mechanics and material repairs.
+- Bleeding books show general bonuses without a spear-only line; ranged gear cannot receive bleeding enchantments.
 
 ## 0.0.1 â€” 2026-10-04
 

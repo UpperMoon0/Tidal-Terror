@@ -18,6 +18,7 @@ public final class ReefArmorItem extends ArmorItem {
 
     @Override public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> text, TooltipFlag flags) {
         text.add(Component.translatable("tooltip.tidalterror.reef_armor").withStyle(ChatFormatting.AQUA));
+        text.add(Component.translatable("tooltip.tidalterror.reef_armor_repair").withStyle(ChatFormatting.GRAY));
     }
 
     @Override public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {

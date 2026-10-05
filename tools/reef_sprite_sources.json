@@ -56,5 +56,14 @@
       "docs/assets/reef-icons/shardback-native-reference.png",
       "docs/assets/reef-equipment-runtime.png"
     ]
+  },
+  {
+    "name": "fang_arrow",
+    "path": "docs/assets/reef-icons/fang_arrow-source.png",
+    "prompt": "Create one production Minecraft inventory item sprite: FANG ARROW, a slender wooden arrow shaft with a single small ivory Coral Crusher fang replacing its flint arrowhead, sandy binding beneath fang and white feather fletching. Use first reference as exact tooth ivory palette and tapered material, second reference is real native Coral Crusher mob material. Diagonal shaft from lower left feather/nock to upper right fang tip, recognizable vanilla arrow inventory silhouette. One centered item only on truly transparent background, no text, no shadow, no glow. Chunky pixel art, strict logical 32x32 pixels, limited palette and crisp square pixel clusters suitable for nearest-neighbor export. Fang is small practical arrowhead, not oversized spear head. Wood brown, ivory tooth, dark slate outline. Fill 80 percent canvas.",
+    "references": [
+      "docs/assets/reef-icons/crusher_tooth-source.png",
+      "docs/assets/reef-icons/crusher-native-reference.png"
+    ]
   }
 ]

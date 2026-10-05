@@ -25,6 +25,63 @@ import net.minecraftforge.gametest.*;
 @GameTestHolder("tidalterror") @PrefixGameTestTemplate(false)
 public final class ReefEquipmentTests {
     @GameTest(template="reef_life_pool",timeoutTicks=100)
+    public static void fangArrowBleedsOnLandRejectsBlockedHitsAndPersistsPickup(GameTestHelper h) throws Exception {
+        var p=h.makeMockSurvivalPlayer(); var t=h.spawn(EntityType.COW,10,10,8);t.setNoAi(true);t.setNoGravity(true);
+        t.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100);t.setHealth(100);
+        var arrow=ModEquipment.FANG_ARROW.get().createArrow(h.getLevel(),new ItemStack(ModEquipment.FANG_ARROW.get()),p);
+        h.assertTrue(!t.isInWater(),"Arrow fixture must test dry land"); arrow.setDeltaMovement(1,0,0);
+        var hit=net.minecraft.world.entity.projectile.AbstractArrow.class.getDeclaredMethod("onHitEntity",net.minecraft.world.phys.EntityHitResult.class);hit.setAccessible(true);
+        hit.invoke(arrow,new net.minecraft.world.phys.EntityHitResult(t));
+        var bleed=t.getEffect(ModEffects.REEF_BLEEDING.get());
+        h.assertTrue(bleed!=null&&bleed.getDuration()==80&&bleed.getAmplifier()==0&&!bleed.isVisible(),"Land hit lost base blood effect");
+        float health=t.getHealth();
+        var blocked=h.spawn(EntityType.COW,12,10,8);blocked.setNoAi(true);blocked.setInvulnerable(true);
+        var rejected=ModEquipment.FANG_ARROW.get().createArrow(h.getLevel(),new ItemStack(ModEquipment.FANG_ARROW.get()),p);rejected.setDeltaMovement(1,0,0);
+        hit.invoke(rejected,new net.minecraft.world.phys.EntityHitResult(blocked));
+        h.assertTrue(!blocked.hasEffect(ModEffects.REEF_BLEEDING.get()),"Rejected arrow hit caused bleeding");
+        var saved=ModEquipment.FANG_ARROW.get().createArrow(h.getLevel(),new ItemStack(ModEquipment.FANG_ARROW.get()),p);
+        saved.setPierceLevel((byte)2);var nbt=new CompoundTag();saved.save(nbt);nbt.putBoolean("inGround",true);nbt.putByte("shake",(byte)0);
+        var loaded=(net.minecraft.world.entity.projectile.AbstractArrow)EntityType.create(nbt,h.getLevel()).orElseThrow();
+        h.assertTrue(loaded instanceof com.nhat.tidal_terror.entities.FangArrowEntity&&loaded.getPierceLevel()==2,"Saved fang arrow lost identity/piercing");
+        loaded.pickup=net.minecraft.world.entity.projectile.AbstractArrow.Pickup.ALLOWED;loaded.playerTouch(p);
+        h.assertTrue(p.getInventory().countItem(ModEquipment.FANG_ARROW.get())==1,"Embedded arrow did not return fang ammunition");
+        h.runAfterDelay(85,()->{near(h,t.getHealth(),health-2,"Arrow base bleed total on dry land");h.succeed();});
+    }
+    @GameTest(template="reef_life_pool",timeoutTicks=40)
+    public static void nativeBowsCrossbowsAndForgeBowSubclassFireFangAmmo(GameTestHelper h) {
+        for(var weapon:List.of(Items.BOW,Items.CROSSBOW,TestBowRegistration.BOW)) {
+            var p=net.minecraftforge.common.util.FakePlayerFactory.get(h.getLevel(),new com.mojang.authlib.GameProfile(UUID.randomUUID(),"FangBowTest"));var pos=h.absolutePos(new BlockPos(8,10,8));p.setPos(pos.getX(),pos.getY(),pos.getZ());
+            var stack=new ItemStack(weapon);p.setItemSlot(EquipmentSlot.MAINHAND,stack);p.getInventory().add(new ItemStack(ModEquipment.FANG_ARROW.get(),8));
+            h.assertTrue(((ProjectileWeaponItem)weapon).getAllSupportedProjectiles().test(new ItemStack(ModEquipment.FANG_ARROW.get())),"Weapon rejected arrow ammunition tag");
+            h.assertTrue(p.getProjectile(stack).is(ModEquipment.FANG_ARROW.get()),"Native ammunition selection failed");
+            for(var e:List.of(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get()))
+                h.assertTrue(!e.canEnchant(stack)&&!e.canEnchant(new ItemStack(ModEquipment.FANG_ARROW.get())),"Bleeding enchantment accepted ranged gear");
+            if(weapon instanceof CrossbowItem bow) {
+                bow.releaseUsing(stack,h.getLevel(),p,bow.getUseDuration(stack)-CrossbowItem.getChargeDuration(stack));
+                h.assertTrue(CrossbowItem.isCharged(stack)&&CrossbowItem.containsChargedProjectile(stack,ModEquipment.FANG_ARROW.get()),"Crossbow did not load fang ammunition");
+                CrossbowItem.performShooting(h.getLevel(),p,net.minecraft.world.InteractionHand.MAIN_HAND,stack,3.15F,0);
+            } else ((BowItem)weapon).releaseUsing(stack,h.getLevel(),p,weapon.getUseDuration(stack)-20);
+            var arrows=h.getLevel().getEntitiesOfClass(com.nhat.tidal_terror.entities.FangArrowEntity.class,new net.minecraft.world.phys.AABB(pos).inflate(5)).stream().filter(a->a.getOwner()==p).toList();
+            h.assertTrue(arrows.size()==1&&arrows.get(0).getDeltaMovement().length()>2,"Weapon did not fire a native fang arrow");
+            h.assertTrue(p.getInventory().countItem(ModEquipment.FANG_ARROW.get())==7,"Special arrow did not consume one ammunition");arrows.forEach(Entity::discard);
+        }
+        h.succeed();
+    }
+    @GameTest(template="reef_life_pool",timeoutTicks=40)
+    public static void gearTooltipsAndNativeMaterialAnvilRepair(GameTestHelper h) {
+        for(var item:List.of(ModEquipment.REEF_SPEAR.get(),ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get())) {
+            var stack=new ItemStack(item);stack.setDamageValue(100);var text=new ArrayList<net.minecraft.network.chat.Component>();
+            item.appendHoverText(stack,h.getLevel(),text,TooltipFlag.NORMAL);h.assertTrue(text.size()==(item instanceof ReefSpearItem?3:2),"Gear lost mechanic/repair tooltip");
+            var p=net.minecraftforge.common.util.FakePlayerFactory.get(h.getLevel(),new com.mojang.authlib.GameProfile(UUID.randomUUID(),"ReefRepairTest"));var anvil=new net.minecraft.world.inventory.AnvilMenu(0,p.getInventory());
+            anvil.getSlot(0).set(stack);anvil.getSlot(1).set(new ItemStack(item instanceof ReefSpearItem?ModEquipment.CRUSHER_TOOTH.get():ModEquipment.SHARDBACK_PLATE.get()));anvil.createResult();
+            var repaired=anvil.getSlot(2).getItem();h.assertTrue(repaired.is(item)&&repaired.getDamageValue()<100,"Native material anvil repair failed");
+        }
+        var recipe=(ShapedRecipe)h.getLevel().getRecipeManager().byKey(new ResourceLocation("tidalterror","fang_arrow")).orElseThrow();
+        var p=net.minecraftforge.common.util.FakePlayerFactory.get(h.getLevel(),new com.mojang.authlib.GameProfile(UUID.randomUUID(),"FangRecipeTest"));var grid=new TransientCraftingContainer(p.inventoryMenu,3,3);grid.setItem(0,new ItemStack(ModEquipment.CRUSHER_TOOTH.get()));grid.setItem(3,new ItemStack(Items.STICK));grid.setItem(6,new ItemStack(Items.FEATHER));
+        var result=recipe.assemble(grid,h.getLevel().registryAccess());h.assertTrue(recipe.matches(grid,h.getLevel())&&result.is(ModEquipment.FANG_ARROW.get())&&result.getCount()==4,"Fang arrow recipe failed");h.succeed();
+    }
+
+    @GameTest(template="reef_life_pool",timeoutTicks=100)
     public static void crusherBitesBleedOnlyAfterAcceptedDamage(GameTestHelper h) {
         pool(h);var victim=target(h);
         var shark=h.spawn(ModEntities.CORAL_CRUSHER.get(),8,4,8);shark.setNoAi(true);shark.setNoGravity(true);
@@ -52,14 +109,14 @@ public final class ReefEquipmentTests {
                 h.assertTrue(book.isPresent(),"Missing creative spear book level "+expected);
                 var lines=new ArrayList<net.minecraft.network.chat.Component>();
                 net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.ItemTooltipEvent(book.get(),h.makeMockSurvivalPlayer(),lines,TooltipFlag.Default.NORMAL));
-                h.assertTrue(lines.size()==2,"Book lost its bonus/applicability tooltip");
+                h.assertTrue(lines.size()==1,"Book must contain only its general bonus explanation");
                 var bonus=(net.minecraft.network.chat.contents.TranslatableContents)lines.get(0).getContents();
                 String key=enchantment==com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get()?"tooltip.tidalterror.serration_book":"tooltip.tidalterror.hemorrhage_book";
                 h.assertTrue(bonus.getKey().equals(key),"Wrong book explanation");
                 near(h,((Number)bonus.getArgs()[0]).doubleValue(),enchantment==com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get()?.5*expected:2*expected,"Book bonus did not reflect its level");
             }
         }
-        h.assertTrue(count==5&&tab.getDisplayItems().size()==24,"Wrong creative book/equipment count");h.succeed();
+        h.assertTrue(count==5&&tab.getDisplayItems().size()==25,"Wrong creative book/equipment count");h.succeed();
     }
     @GameTest(template="reef_life_pool",timeoutTicks=180)
     public static void enchantedBleedingScalesAndKeepsChargedWaterGate(GameTestHelper h) {
@@ -178,7 +235,7 @@ public final class ReefEquipmentTests {
                 var ingredient=recipe.getIngredients().get(y*recipe.getWidth()+x);
                 if(ingredient.isEmpty())continue;
                 ItemStack sample=ingredient.getItems()[0].copy();int index=y*3+x;grid.setItem(index,sample);
-                if(sample.is(Items.IRON_INGOT))iron=index;
+                if(sample.is(entry.getKey().equals("reef_spear")?Items.IRON_INGOT:switch(entry.getKey()){case "reef_helmet"->Items.IRON_HELMET;case "reef_chestplate"->Items.IRON_CHESTPLATE;case "reef_leggings"->Items.IRON_LEGGINGS;default->Items.IRON_BOOTS;}))iron=index;
                 if(ingredient.test(new ItemStack(Items.DEAD_TUBE_CORAL_BLOCK)))coral=index;
             }
             h.assertTrue(iron>=0&&coral>=0,"Missing iron/coral gate in "+entry.getKey());

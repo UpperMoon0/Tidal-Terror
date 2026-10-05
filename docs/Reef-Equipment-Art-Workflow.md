@@ -54,8 +54,8 @@ after 6,000 loaded underwater ticks; following cooldowns are 6,000–7,200 ticks
 Dry time does not advance that timer. Threatened/fleeing crabs wait until they can
 forage again. Cooldowns persist through NBT saves and molting respects `doMobLoot`.
 
-Every equipment recipe uses iron and a dead coral block. The spear also uses
-leather, and every armor piece uses Shardback plates. Acquiring the relevant mob
+The spear recipe uses iron, dead coral and leather. Each armor recipe consumes
+the matching iron armor piece, three Shardback Plates and a dead coral block. Acquiring the relevant mob
 material unlocks its recipe-book entries. This is an iron-to-diamond specialist
 branch; ordinary diamond armor retains greater protection and toughness.
 

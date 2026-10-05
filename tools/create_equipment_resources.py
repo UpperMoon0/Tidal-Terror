@@ -25,15 +25,16 @@ for mob, material in [('coral_crusher','crusher_tooth'), ('shardback','shardback
 
 recipes={
     'reef_spear':([' T ',' LI',' C '], 'crusher_tooth'),
-    'reef_helmet':(['PPP','ICI'], 'shardback_plate'),
-    'reef_chestplate':(['P P','PCP','PIP'], 'shardback_plate'),
-    'reef_leggings':(['PCP','PIP','P P'], 'shardback_plate'),
-    'reef_boots':(['P P','ICI'], 'shardback_plate'),
+    'reef_helmet':([' P ','PAP',' C '], 'shardback_plate'),
+    'reef_chestplate':([' P ','PAP',' C '], 'shardback_plate'),
+    'reef_leggings':([' P ','PAP',' C '], 'shardback_plate'),
+    'reef_boots':([' P ','PAP',' C '], 'shardback_plate'),
 }
 ingredients={'T':{'item':'tidalterror:crusher_tooth'},'P':{'item':'tidalterror:shardback_plate'},
              'C':{'tag':'tidalterror:coral_skeletons'},'I':{'item':'minecraft:iron_ingot'},'L':{'item':'minecraft:leather'}}
 for name,(pattern,unlock) in recipes.items():
     symbols=set(''.join(pattern)) - {' '}
+    if name != 'reef_spear': ingredients['A']={'item':'minecraft:iron_'+name.removeprefix('reef_')}
     write(f'data/tidalterror/recipes/{name}.json',{'type':'minecraft:crafting_shaped','category':'equipment',
         'pattern':pattern,'key':{s:ingredients[s] for s in sorted(symbols)},'result':{'item':'tidalterror:'+name}})
     write(f'data/tidalterror/advancements/recipes/equipment/{name}.json',{
@@ -42,7 +43,11 @@ for name,(pattern,unlock) in recipes.items():
             'has_the_recipe':{'trigger':'minecraft:recipe_unlocked','conditions':{'recipe':'tidalterror:'+name}}},
         'requirements':[['has_material','has_the_recipe']], 'rewards':{'recipes':['tidalterror:'+name]}})
 
-for name in ('crusher_tooth','shardback_plate','reef_helmet','reef_chestplate','reef_leggings','reef_boots'):
+write('data/tidalterror/recipes/fang_arrow.json', {'type':'minecraft:crafting_shaped','category':'equipment','pattern':['T','S','F'],'key':{'T':{'item':'tidalterror:crusher_tooth'},'S':{'item':'minecraft:stick'},'F':{'item':'minecraft:feather'}},'result':{'item':'tidalterror:fang_arrow','count':4}})
+write('data/minecraft/tags/items/arrows.json',{'replace':False,'values':['tidalterror:fang_arrow']})
+write('data/tidalterror/advancements/recipes/equipment/fang_arrow.json',{'parent':'minecraft:recipes/root','criteria':{'has_material':{'trigger':'minecraft:inventory_changed','conditions':{'items':[{'items':['tidalterror:crusher_tooth']}]}},'has_the_recipe':{'trigger':'minecraft:recipe_unlocked','conditions':{'recipe':'tidalterror:fang_arrow'}}},'requirements':[['has_material','has_the_recipe']],'rewards':{'recipes':['tidalterror:fang_arrow']}})
+
+for name in ('fang_arrow','crusher_tooth','shardback_plate','reef_helmet','reef_chestplate','reef_leggings','reef_boots'):
     write(f'assets/tidalterror/models/item/{name}.json',{'parent':'minecraft:item/generated','textures':{'layer0':'tidalterror:item/'+name}})
 # Native spear model in-hand; exported native icon in inventory using Forge's separate transforms.
 write('assets/tidalterror/models/item/reef_spear.json',{
@@ -67,7 +72,13 @@ lang['enchantment.tidalterror.serration']='Serration'
 lang['enchantment.tidalterror.hemorrhage']='Hemorrhage'
 lang['tooltip.tidalterror.serration_book']='+%s damage per bleeding pulse'
 lang['tooltip.tidalterror.hemorrhage_book']='+%s seconds of bleeding (%s seconds total)'
-lang['tooltip.tidalterror.spear_book']='Reef Spear: fully charged underwater hits only'
-lang['tooltip.tidalterror.reef_armor']='5% less knockback per piece while grounded underwater'
+lang.pop('tooltip.tidalterror.spear_book',None)
+lang['item.tidalterror.fang_arrow']='Fang Arrow'
+lang['entity.tidalterror.fang_arrow']='Fang Arrow'
+lang['tooltip.tidalterror.fang_arrow']='Hits cause 2 bleeding damage over 4 seconds, on land or in water'
+lang['tooltip.tidalterror.reef_spear_refresh']='You and the target must be in water; repeat hits refresh one bleed'
+lang['tooltip.tidalterror.reef_spear_repair']='Repair with Crusher Teeth'
+lang['tooltip.tidalterror.reef_armor_repair']='Repair with Shardback Plates'
+lang['tooltip.tidalterror.reef_armor']='Grounded underwater: 5% less knockback per piece (20% full set)'
 write(path.relative_to(RES),lang)
 print('Equipment acquisition, recipes, unlocks, language and models generated')
