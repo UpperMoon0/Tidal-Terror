@@ -15,7 +15,7 @@ public final class BloodParticle extends TextureSheetParticle {
         this.sprites = sprites;
         xd = dx; yd = dy; zd = dz;
         setSize(.02F, .02F);
-        quadSize = initialSize = .045F + random.nextFloat() * .035F;
+        quadSize = initialSize = .09F + random.nextFloat() * .05F;
         lifetime = 28 + random.nextInt(17);
         hasPhysics = true;
         setSpriteFromAge(sprites);
@@ -30,7 +30,7 @@ public final class BloodParticle extends TextureSheetParticle {
         xd *= drag; yd *= drag; zd *= drag;
         float progress = (float) age / lifetime;
         quadSize = initialSize * (water ? 1 + 1.8F * progress : 1);
-        alpha = (water ? .85F : 1) * (1 - progress) * (1 - progress);
+        alpha = (water ? .95F : 1) * Math.min(1, 2 * (1 - progress));
         setSpriteFromAge(sprites);
     }
     @Override public ParticleRenderType getRenderType() { return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT; }

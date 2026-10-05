@@ -28,14 +28,14 @@ def main():
         tile = Image.new('RGBA', (16, 16))
         draw = ImageDraw.Draw(tile)
         if stage == 0:
-            draw.rectangle((7, 3, 8, 10), fill=(148, 12, 24, 255))
-            draw.rectangle((5, 7, 10, 11), fill=(176, 18, 31, 255))
-            draw.rectangle((6, 8, 7, 10), fill=(220, 48, 53, 255))
+            draw.rectangle((7, 3, 8, 10), fill=(185, 12, 24, 255))
+            draw.rectangle((5, 7, 10, 11), fill=(208, 18, 31, 255))
+            draw.rectangle((6, 8, 7, 10), fill=(245, 48, 53, 255))
             draw.rectangle((7, 12, 8, 12), fill=(112, 8, 20, 255))
         else:
             for x,y in ((6,6),(9,7),(7,10),(11,10),(4,9)):
                 r=1 if stage==1 else 0
-                draw.rectangle((x-r,y-r,x+r,y+r), fill=(155, 15, 28, 180 if stage==1 else 110))
+                draw.rectangle((x-r,y-r,x+r,y+r), fill=(208, 15, 28, 210 if stage==1 else 150))
         tile.save(folder/f'blood_{stage}.png')
     (RES/'particles').mkdir(exist_ok=True)
     (RES/'particles/blood.json').write_text(json.dumps({'textures':[f'tidalterror:blood_{i}' for i in range(3)]}, indent=2)+'\n')

@@ -124,8 +124,10 @@ public final class EquipmentPreview {
                         var target=net.minecraft.world.entity.EntityType.DROWNED.create(level);
                         target.setNoAi(true);target.setNoGravity(true);target.setPersistenceRequired();target.setPos(0,80,3);target.setYRot(180);
                         target.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(100);target.setHealth(100);
-                        level.addFreshEntity(target);bloodTarget=target.getUUID();
-                        target.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get(),400,3,false,false,true));
+                        if(!level.addFreshEntity(target))throw new IllegalStateException("Could not add blood preview target");
+                        bloodTarget=target.getUUID();
+                        if(!target.addEffect(new net.minecraft.world.effect.MobEffectInstance(com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get(),400,3,false,false,true)))
+                            throw new IllegalStateException("Preview target rejected bleeding");
                         var spear=new ItemStack(ModEquipment.REEF_SPEAR.get());
                         spear.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),3);
                         spear.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(),2);
@@ -154,8 +156,15 @@ public final class EquipmentPreview {
             if(stage==5&&!particleChecked) {
                 boolean found=false;
                 for(var entity:MC.level.entitiesForRendering())if(entity.getUUID().equals(bloodTarget)&&entity instanceof LivingEntity living)
-                    found=living.isAlive()&&living.hasEffect(com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get());
+                    found=living.isAlive();
                 if(!found)throw new IllegalStateException("Bleeding preview target missing from client");
+                // Vanilla does not sync mob effect instances to observers. Verify the
+                // actual server-emitted blood reached the native client particle engine.
+                var field=MC.particleEngine.getClass().getDeclaredField("particles");field.setAccessible(true);
+                var queues=(java.util.Map<?,?>)field.get(MC.particleEngine);int blood=0;
+                for(var queue:queues.values())for(var p:(Iterable<?>)queue)if(p instanceof com.nhat.tidal_terror.client.BloodParticle)blood++;
+                if(blood==0)throw new IllegalStateException("Server blood particles never reached the client");
+                System.out.println("REEF_EQUIPMENT_PREVIEW BLOOD native particles="+blood);
                 var particle=MC.particleEngine.createParticle(com.nhat.tidal_terror.particles.ModParticles.BLOOD.get(),0,81,3,0,0,0);
                 if(!(particle instanceof com.nhat.tidal_terror.client.BloodParticle))throw new IllegalStateException("Blood particle provider missing after reload");
                 particleChecked=true;

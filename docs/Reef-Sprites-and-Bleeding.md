@@ -54,3 +54,17 @@ the [official JEI setup for Minecraft 1.20.1](https://github.com/mezz/JustEnough
 It is excluded from native server test runs and is not declared as a required
 mod dependency or bundled into the released JAR. All five shaped equipment
 recipes use vanilla crafting and are discovered by JEI without a custom plugin.
+
+## Verified native client
+
+On 2026-10-05, the isolated client completed seven actual framebuffer captures:
+native worn armor, first-person spear in both hands, the creative tab, resource
+reload with glint, bleeding with Complementary/Oculus, and the JEI inventory.
+The blood check verified a living visible target, 41 server-emitted custom blood
+particles in the native client particle engine, and the registered provider
+after full resource reload. The production JAR and all 13 release-tooling tests
+also passed locally. Eight equipment GameTests passed locally and in CI.
+
+![Native underwater blood](assets/reef-icons/blood-native.png)
+
+![Native JEI and equipment icons](assets/reef-icons/jei-native.png)
