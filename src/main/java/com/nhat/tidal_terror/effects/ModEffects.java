@@ -20,7 +20,10 @@ public final class ModEffects {
                     : Math.floorMod(entity.getEffect(REEF_BLEEDING.get()).getDuration() - 1, 40) + 1;
             remaining--;
             data.putInt(PULSE_TICKS, remaining <= 0 ? 40 : remaining);
-            if (remaining <= 0 && entity.hurt(entity.damageSources().magic(), 1 + .5F * net.minecraft.util.Mth.clamp(amplifier, 0, 3)))
+            if (remaining > 0) return;
+            float damage = 1 + .5F * net.minecraft.util.Mth.clamp(amplifier, 0, 3);
+            if (com.nhat.tidal_terror.items.ReefArmorItem.hasFullSet(entity)) damage *= .75F;
+            if (entity.hurt(entity.damageSources().magic(), damage))
                 com.nhat.tidal_terror.particles.ModParticles.bleed(entity, 8 + 2 * net.minecraft.util.Mth.clamp(amplifier, 0, 3));
         }
     });

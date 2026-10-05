@@ -25,7 +25,7 @@ Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather
 | --- | --- |
 | Reef Spear | 6 attack damage, 1.1 attack speed, 250 durability, and +1 block of entity reach in the main hand. Fully charged hits apply 2 bleeding damage over 4 seconds when both attacker and target are in water. Repeated hits refresh one bleeding effect. Supports damage or bleeding builds; Fire Aspect and Sweeping Edge are excluded. |
 | Fang Arrow | Native arrow damage plus 2 bleeding damage over 4 seconds on land or in water. Craft four with a Crusher Tooth, stick and feather. Supports bows, crossbows and modded weapons using standard arrow ammunition. Serration and Hemorrhage cannot enchant arrows or ranged weapons. |
-| Reef Armor | Helmet/chestplate/leggings/boots give 2/6/5/2 armor (15 total), zero toughness, and iron-equivalent durability. Each piece reduces knockback by 7.5% while standing on submerged ground, up to 30%. Works with mixed equipment; ordinary armor protection also applies on land. |
+| Reef Armor | Helmet/chestplate/leggings/boots give 2/6/5/2 armor (15 total), zero toughness, and iron-equivalent durability. Each piece reduces knockback by 5% while standing on submerged ground, up to 20%. Knockback reduction works with mixed equipment. The full set reduces bleeding damage by 25% on land and underwater; ordinary protection remains iron-tier. |
 
 The equipment inherits the mobs' materials: an ivory tooth and sandy bindings for the spear; violet Shardback carapace, cobalt coral, ivory segments and slate joints for armor. Diamond remains the stronger general defensive tier. See [equipment artwork and verification](docs/Reef-Equipment-Art-Workflow.md).
 

@@ -408,7 +408,7 @@ if (project.hasProperty('equipmentTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def log=file('build/equipment-gametest/logs/latest.log')
-            if (!log.exists() || !log.text.contains('15 GAME TESTS COMPLETE') || !log.text.contains('All 15 required tests passed'))
+            if (!log.exists() || !log.text.contains('16 GAME TESTS COMPLETE') || !log.text.contains('All 16 required tests passed'))
                 throw new GradleException('Reef equipment native tests did not pass; inspect the native server log.')
         }
     }

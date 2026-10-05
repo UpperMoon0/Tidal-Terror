@@ -41,6 +41,6 @@ public final class ReefEquipmentEvents {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.getType() == EquipmentSlot.Type.ARMOR && wearer.getItemBySlot(slot).getItem() instanceof ReefArmorItem) pieces++;
         }
-        event.setStrength(event.getStrength() * (1 - 0.075F * pieces));
+        event.setStrength(event.getStrength() * (1 - 0.05F * pieces));
     }
 }

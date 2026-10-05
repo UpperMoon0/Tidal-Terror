@@ -28,7 +28,7 @@
   "enchantment.tidalterror.serration": "Serration",
   "enchantment.tidalterror.hemorrhage": "Hemorrhage",
   "tooltip.tidalterror.reef_spear": "Bleed: %s damage every 2s for %ss",
-  "tooltip.tidalterror.reef_armor": "Seabed grip: 7.5% less knockback per piece (30% full set), grounded underwater",
+  "tooltip.tidalterror.reef_armor": "Grounded underwater: -5% knockback/piece (20% set)",
   "tooltip.tidalterror.serration_book": "+%s bleed damage every 2s",
   "tooltip.tidalterror.hemorrhage_book": "+%ss bleeding duration",
   "item.tidalterror.fang_arrow": "Fang Arrow",
@@ -36,5 +36,6 @@
   "tooltip.tidalterror.fang_arrow": "Bleed: 1 damage every 2s for 4s, on land or in water",
   "tooltip.tidalterror.reef_spear_refresh": "Fully charged; both in water. Refreshes bleed.",
   "tooltip.tidalterror.reef_spear_repair": "Repair: Crusher Teeth",
-  "tooltip.tidalterror.reef_armor_repair": "Repair: Shardback Plates"
+  "tooltip.tidalterror.reef_armor_repair": "Repair: Shardback Plates",
+  "tooltip.tidalterror.reef_armor_bleeding": "Full set: 25% less bleeding damage"
 }

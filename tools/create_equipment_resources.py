@@ -78,6 +78,7 @@ lang['tooltip.tidalterror.fang_arrow']='Bleed: 1 damage every 2s for 4s, on land
 lang['tooltip.tidalterror.reef_spear_refresh']='Fully charged; both in water. Refreshes bleed.'
 lang['tooltip.tidalterror.reef_spear_repair']='Repair: Crusher Teeth'
 lang['tooltip.tidalterror.reef_armor_repair']='Repair: Shardback Plates'
-lang['tooltip.tidalterror.reef_armor']='Seabed grip: 7.5% less knockback per piece (30% full set), grounded underwater'
+lang['tooltip.tidalterror.reef_armor_bleeding']='Full set: 25% less bleeding damage'
+lang['tooltip.tidalterror.reef_armor']='Grounded underwater: -5% knockback/piece (20% set)'
 write(path.relative_to(RES),lang)
 print('Equipment acquisition, recipes, unlocks, language and models generated')

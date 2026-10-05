@@ -3,7 +3,7 @@ Reef equipment and crafting rewards
 - Added a Crusher-tooth Reef Spear with a porous coral shaft, sandy hide bindings, a native 3D held model, and a matching inventory icon.
 - The spear has 6 attack damage, 1.1 attack speed, 250 durability and one additional block of main-hand entity reach. Fully charged hits with both fighters in water apply two bleeding damage over four seconds; repeated hits refresh without stacking.
 - Added four pieces of Shardback Reef Armor with native stepped violet shell models, cobalt coral growths, ivory supports and slate joints.
-- Reef Armor provides 15 total armor, zero toughness, iron-equivalent durability, and 7.5% less knockback per worn piece while grounded underwater (30% for a full set).
+- Reef Armor provides 15 total armor, zero toughness, iron-equivalent durability, and 5% less knockback per worn piece while grounded underwater (20% for a full set).
 - Coral Crushers and Shardbacks now drop 1-2 teeth or plates in addition to their existing seafood, with Looting support. Materials remain materials when the mob dies burning.
 - Shardbacks also shed one plate during safe seabed foraging after 5-6 minutes of loaded underwater time. Molting cooldowns persist across saves and respect doMobLoot.
 - Added iron-and-dead-coral crafting recipes, recipe-book unlocks, repair materials, tooltips and creative-tab entries. Gear occupies an iron-to-diamond specialist branch rather than replacing diamond protection.
@@ -22,5 +22,6 @@ Reef equipment and crafting rewards
 
 - Repeated bleeding hits refresh duration without resetting the independent two-second pulse cooldown; pulse timing survives saves and resets for a new effect after curing.
 
-- Iron-stage balance: armor matches iron protection (15 total) with 30% full-set seabed grip; bleeding enchantments conflict with Sharpness/Smite/Bane, and the spear excludes Fire Aspect.
+- Full Reef Armor grants 25% less bleeding damage on land and in water; partial sets do not. Protection stacks normally, and equipping/removing pieces updates the bonus immediately.
+- Iron-stage balance: armor matches iron protection (15 total) with 20% full-set seabed grip; bleeding enchantments conflict with Sharpness/Smite/Bane, and the spear excludes Fire Aspect.
 - Tooltips state bleeding damage every two seconds and enchanted duration; Hemorrhage books show only added duration. Fang Arrow remains a non-stacking two-damage bonus.

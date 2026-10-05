@@ -132,7 +132,7 @@ public final class ReefEquipmentTests {
         }
         for(var item:List.of(ModEquipment.REEF_SPEAR.get(),ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get())) {
             var stack=new ItemStack(item);stack.setDamageValue(100);var text=new ArrayList<net.minecraft.network.chat.Component>();
-            item.appendHoverText(stack,h.getLevel(),text,TooltipFlag.NORMAL);h.assertTrue(text.size()==(item instanceof ReefSpearItem?3:2),"Gear lost mechanic/repair tooltip");
+            item.appendHoverText(stack,h.getLevel(),text,TooltipFlag.NORMAL);h.assertTrue(text.size()==3,"Gear lost mechanic/repair tooltip");
             var p=net.minecraftforge.common.util.FakePlayerFactory.get(h.getLevel(),new com.mojang.authlib.GameProfile(UUID.randomUUID(),"ReefRepairTest"));var anvil=new net.minecraft.world.inventory.AnvilMenu(0,p.getInventory());
             anvil.getSlot(0).set(stack);anvil.getSlot(1).set(new ItemStack(item instanceof ReefSpearItem?ModEquipment.CRUSHER_TOOTH.get():ModEquipment.SHARDBACK_PLATE.get()));anvil.createResult();
             var repaired=anvil.getSlot(2).getItem();h.assertTrue(repaired.is(item)&&repaired.getDamageValue()<100,"Native material anvil repair failed");
@@ -346,11 +346,50 @@ public final class ReefEquipmentTests {
             h.assertTrue(piece.getMaxDamage()==ArmorMaterials.IRON.getDurabilityForType(piece.getType()),"Armor durability tier");
         }
         // Actual native knockback posts Forge's event and changes velocity.
-        wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),.7,"Full set anchor");
-        wearer.setItemSlot(EquipmentSlot.HEAD,ItemStack.EMPTY);wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),.775,"Three-piece anchor");
+        wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),.8,"Full set anchor");
+        wearer.setItemSlot(EquipmentSlot.HEAD,ItemStack.EMPTY);wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),.85,"Three-piece anchor");
         wearer.setOnGround(false);wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),1,"Swimming anchor leaked");
         var pos=h.absolutePos(new BlockPos(10,10,8));wearer.setPos(pos.getX(),pos.getY(),pos.getZ());wearer.tick();wearer.setOnGround(true);
         wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),1,"Dry anchor leaked");h.succeed();
+    }
+
+    @GameTest(template="reef_life_pool",timeoutTicks=100)
+    public static void shellProtectionRequiresFullSetAndOnlyReducesBleeding(GameTestHelper h) {
+        pool(h);
+        List<LivingEntity> victims=new ArrayList<>();
+        var gear=List.of(ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get());
+        for(int i=0;i<7;i++) {
+            var victim=target(h);victims.add(victim);
+            for(var piece:gear) {
+                var stack=new ItemStack(piece);
+                if(i==4)stack.enchant(Enchantments.ALL_DAMAGE_PROTECTION,4);
+                victim.setItemSlot(piece.getEquipmentSlot(),stack);
+            }
+            if(i==2||i==6)victim.setItemSlot(EquipmentSlot.FEET,ItemStack.EMPTY);
+            if(i==1) {var pos=h.absolutePos(new BlockPos(10,10,8));victim.setPos(pos.getX(),pos.getY(),pos.getZ());}
+            victim.tick();
+            h.assertTrue(victim.isInWater()!=(i==1),"Shell test water flag incorrect");
+            if(i==0) {
+                victim.hurt(h.getLevel().damageSources().magic(),2);
+                near(h,victim.getHealth(),98,"Shell reduced unrelated magic damage");
+                victim.setHealth(100);victim.invulnerableTime=0;
+            }
+            victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(ModEffects.REEF_BLEEDING.get(),80,i<3?0:3,false,false,true));
+        }
+        h.runAfterDelay(45,()->{
+            double[] first={.75,.75,1,1.875,.675,1.875,2.5};
+            for(int i=0;i<7;i++)near(h,victims.get(i).getHealth(),100-first[i],"Shell first damage scenario "+i);
+            victims.get(5).setItemSlot(EquipmentSlot.FEET,ItemStack.EMPTY);
+            victims.get(6).setItemSlot(EquipmentSlot.FEET,new ItemStack(ModEquipment.REEF_BOOTS.get()));
+        });
+        h.runAfterDelay(85,()->{
+            double[] total={1.5,1.5,2,3.75,1.35,4.375,4.375};
+            for(int i=0;i<7;i++) {
+                near(h,victims.get(i).getHealth(),100-total[i],"Shell total damage scenario "+i);
+                h.assertTrue(!victims.get(i).hasEffect(ModEffects.REEF_BLEEDING.get()),"Shell changed bleeding duration");
+            }
+            h.succeed();
+        });
     }
 
     @GameTest(template="reef_life_pool",timeoutTicks=40)
