@@ -26,7 +26,7 @@ public final class ReefEquipmentEvents {
         int duration = net.minecraft.util.Mth.clamp(enchantments.getOrDefault(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(), 0), 0, 2);
         if (power == 0 && duration == 0) return;
         if (power > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.serration_book", .5F * power).withStyle(net.minecraft.ChatFormatting.AQUA));
-        if (duration > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.hemorrhage_book", 2 * duration, 4 + 2 * duration).withStyle(net.minecraft.ChatFormatting.AQUA));
+        if (duration > 0) event.getToolTip().add(net.minecraft.network.chat.Component.translatable("tooltip.tidalterror.hemorrhage_book", 2 * duration).withStyle(net.minecraft.ChatFormatting.AQUA));
     }
     @SubscribeEvent public static void bloodTrail(net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent event) {
         var entity = event.getEntity();
@@ -41,6 +41,6 @@ public final class ReefEquipmentEvents {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.getType() == EquipmentSlot.Type.ARMOR && wearer.getItemBySlot(slot).getItem() instanceof ReefArmorItem) pieces++;
         }
-        event.setStrength(event.getStrength() * (1 - 0.05F * pieces));
+        event.setStrength(event.getStrength() * (1 - 0.075F * pieces));
     }
 }

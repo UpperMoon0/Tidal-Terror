@@ -1,6 +1,6 @@
 # Fully enchanted Reef Spear balance
 
-Reviewed 2026-10-06 against 0.0.2. The original measurements below preceded the pulse-timer fix; see the update at the end. Damage is in health points (two points = one heart). This mod targets Forge 1.20.1; mace and vanilla netherite spear figures below refer to 1.21.11 and were source-checked, not run inside this mod.
+Reviewed 2026-10-06 against unreleased 0.0.2. The original measurements below are historical: they preceded the timer fix and build restrictions. See the final iron-stage balance section for current rules. Damage is in health points (two points = one heart). This mod targets Forge 1.20.1; mace and vanilla netherite spear figures below refer to 1.21.11 and were source-checked, not run inside this mod.
 
 ## Compatible maximum enchantments
 
@@ -63,3 +63,16 @@ The pulse countdown is now independent of effect duration and survives entity sa
 In the repeated 14-scenario audit, a single enchanted hit still deals 9 direct + 10 bleeding. Sustained unarmored spear damage is now 83.5 (78.5 direct + 5.0 bleeding), compared with 154 for the sword. Against full netherite/Protection IV, sustained spear damage is approximately 9.440. Native damage immunity can reject a pulse shortly after a stronger physical hit, or reduce a physical hit soon after a pulse; this timer fix leaves those rules unchanged. The scheduling regression isolates that immunity to prove hits do not postpone pulses.
 
 The recommendation to separate pulse cadence from duration has been implemented. No base damage, pulse damage, enchantment strength, reach or attack speed was increased. The spear remains an underwater progression specialist rather than a netherite sword replacement.
+
+
+## Final iron-stage balance
+
+Reef equipment is an iron-stage reef specialization. Armor now uses iron's exact 2/6/5/2 protection and durability, with zero toughness and no global knockback resistance. Each piece reduces knockback strength by 7.5% only while grounded underwater (30% full set). Netherite's 40% global resistance, 20 armor and 12 toughness remain superior. Recipes still consume matching iron armor, three shell plates and dead coral; the added utility is seabed grip rather than greater universal protection.
+
+The spear remains 6 damage, 1.1 attack speed, 250 durability and +1 main-hand entity reach. Serration and Hemorrhage can combine with each other but conflict symmetrically with Sharpness, Smite and Bane of Arthropods. The spear also rejects Fire Aspect and Sweeping Edge at enchanting tables and survival anvils. Looting, Knockback, Unbreaking and Mending remain available. Existing command-created illegal enchantment combinations follow native command behavior; these restrictions govern normal acquisition.
+
+Bleeding deals 1 damage every two seconds for four seconds. Serration adds 0.5 damage per level to that event; Hemorrhage adds two seconds per level. Maximum bleeding therefore deals 2.5 every two seconds for eight seconds (10 total), not two damage every second. Damage immunity can suppress an event, Protection reduces its magic damage, and effects refresh without stacking or postponing the independent damage countdown. Player tooltips describe the interval directly rather than calling it a pulse.
+
+Fang Arrows retain native projectile damage plus the base two-damage bleed on land or in water. This is a consumable one-heart bonus, cannot stack per arrow, cannot receive bleeding enchantments and consumes Crusher Teeth. Protection reduces the bonus; native arrow damage immunity remains in force. It fills an early specialist ammunition role without replacing stronger native damage enchantments.
+
+The current native audit uses only legal maximum bleeding enchantments and adds a same-tier Sharpness V iron sword alongside netherite sword and trident. Its sustained measurements include native attack cooldowns and damage immunity; they are controlled underwater scenarios rather than proof of every PvP matchup.

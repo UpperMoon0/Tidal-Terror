@@ -27,6 +27,9 @@ public final class ModEnchantments {
             super(rarity, SPEAR, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
             this.levels = levels; this.cost = cost;
         }
+        @Override protected boolean checkCompatibility(Enchantment other) {
+            return super.checkCompatibility(other) && !(other instanceof DamageEnchantment);
+        }
         @Override public int getMaxLevel() { return levels; }
         @Override public int getMinCost(int level) { return cost + (level - 1) * 10; }
         @Override public int getMaxCost(int level) { return getMinCost(level) + 20; }

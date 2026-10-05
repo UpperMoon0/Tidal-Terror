@@ -4,8 +4,10 @@
 
 - Added the native 3D Reef Spear: Crusher tooth, coral skeleton shaft and sandy hide bindings; 6 damage, 1.1 attack speed, 250 durability and +1 block main-hand entity reach.
 - Fully charged underwater spear hits apply 2 bleeding damage over 4 seconds, refreshing without stacking.
-- Added four pieces of Shardback Reef Armor with violet shell plates, cobalt coral growths, ivory supports and slate joints; 16 armor, no toughness and iron durability.
-- Each worn armor piece reduces knockback by 5% while grounded underwater, up to 20%.
+- Iron-stage balance: armor matches iron protection (15 total) with 30% full-set seabed grip; bleeding enchantments conflict with Sharpness/Smite/Bane, and the spear excludes Fire Aspect.
+- Tooltips state bleeding damage every two seconds and enchanted duration; Hemorrhage books show only added duration. Fang Arrow remains a non-stacking two-damage bonus.
+- Added four pieces of Shardback Reef Armor with violet shell plates, cobalt coral growths, ivory supports and slate joints; 15 armor, no toughness and iron durability.
+- Each worn armor piece reduces knockback by 7.5% while grounded underwater, up to 30%.
 - Added tooth/plate loot alongside seafood, peaceful Shardback molts, iron-and-coral recipes, recipe unlocks and material repairs.
 - Added native equipment gameplay/model checks, exact-face texture tooling and isolated client previews.
 - Revised armor icons to vanilla silhouettes and material icons to their native mob appearance using referenced ImageGen sprites.

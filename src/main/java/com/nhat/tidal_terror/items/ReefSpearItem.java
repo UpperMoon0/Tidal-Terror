@@ -63,13 +63,14 @@ public final class ReefSpearItem extends Item {
     @Override public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) { return ingredient.is(ModEquipment.CRUSHER_TOOTH.get()); }
     @Override public int getEnchantmentValue() { return 14; }
     @Override public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        if (enchantment == Enchantments.FIRE_ASPECT || enchantment == Enchantments.SWEEPING_EDGE) return false;
         return enchantment.category == com.nhat.tidal_terror.enchantments.ModEnchantments.SPEAR
                 || (enchantment.category == EnchantmentCategory.WEAPON && enchantment != Enchantments.SWEEPING_EDGE)
                 || super.canApplyAtEnchantingTable(stack, enchantment);
     }
     @Override public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> text, TooltipFlag flags) {
         int duration = bleedingDuration(stack);
-        float damage = duration / 40 * (1 + .5F * bleedingPower(stack));
+        float damage = 1 + .5F * bleedingPower(stack);
         String shownDamage = damage == (int)damage ? Integer.toString((int)damage) : Float.toString(damage);
         text.add(Component.translatable("tooltip.tidalterror.reef_spear", shownDamage, duration / 20).withStyle(ChatFormatting.AQUA));
         text.add(Component.translatable("tooltip.tidalterror.reef_spear_refresh").withStyle(ChatFormatting.GRAY));

@@ -66,18 +66,18 @@ for name,label in {'crusher_tooth':'Crusher Tooth','shardback_plate':'Shardback 
     'reef_helmet':'Reef Helmet','reef_chestplate':'Reef Chestplate','reef_leggings':'Reef Leggings','reef_boots':'Reef Boots'}.items():
     lang['item.tidalterror.'+name]=label
 lang['effect.tidalterror.reef_bleeding']='Reef Bleeding'
-lang['tooltip.tidalterror.reef_spear']='Bleed: %s damage over %ss'
+lang['tooltip.tidalterror.reef_spear']='Bleed: %s damage every 2s for %ss'
 lang['enchantment.tidalterror.serration']='Serration'
 lang['enchantment.tidalterror.hemorrhage']='Hemorrhage'
-lang['tooltip.tidalterror.serration_book']='+%s damage per bleeding pulse'
-lang['tooltip.tidalterror.hemorrhage_book']='+%s seconds of bleeding (%s seconds total)'
+lang['tooltip.tidalterror.serration_book']='+%s bleed damage every 2s'
+lang['tooltip.tidalterror.hemorrhage_book']='+%ss bleeding duration'
 lang.pop('tooltip.tidalterror.spear_book',None)
 lang['item.tidalterror.fang_arrow']='Fang Arrow'
 lang['entity.tidalterror.fang_arrow']='Fang Arrow'
-lang['tooltip.tidalterror.fang_arrow']='Hits cause 2 bleeding damage over 4 seconds, on land or in water'
+lang['tooltip.tidalterror.fang_arrow']='Bleed: 1 damage every 2s for 4s, on land or in water'
 lang['tooltip.tidalterror.reef_spear_refresh']='Fully charged; both in water. Refreshes bleed.'
 lang['tooltip.tidalterror.reef_spear_repair']='Repair: Crusher Teeth'
-lang['tooltip.tidalterror.reef_armor_repair']='Repair with Shardback Plates'
-lang['tooltip.tidalterror.reef_armor']='Grounded underwater: 5% less knockback per piece (20% full set)'
+lang['tooltip.tidalterror.reef_armor_repair']='Repair: Shardback Plates'
+lang['tooltip.tidalterror.reef_armor']='Seabed grip: 7.5% less knockback per piece (30% full set), grounded underwater'
 write(path.relative_to(RES),lang)
 print('Equipment acquisition, recipes, unlocks, language and models generated')

@@ -11,7 +11,7 @@ public enum ReefArmorMaterial implements ArmorMaterial {
     INSTANCE;
     @Override public int getDurabilityForType(ArmorItem.Type type) { return ArmorMaterials.IRON.getDurabilityForType(type); }
     @Override public int getDefenseForType(ArmorItem.Type type) {
-        return switch (type) { case HELMET -> 2; case CHESTPLATE -> 6; case LEGGINGS -> 5; case BOOTS -> 3; };
+        return ArmorMaterials.IRON.getDefenseForType(type);
     }
     @Override public int getEnchantmentValue() { return 9; }
     @Override public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_TURTLE; }

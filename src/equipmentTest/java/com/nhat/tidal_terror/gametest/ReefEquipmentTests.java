@@ -125,7 +125,7 @@ public final class ReefEquipmentTests {
             spear.getItem().appendHoverText(spear,h.getLevel(),tooltip,TooltipFlag.NORMAL);
             var line=(net.minecraft.network.chat.contents.TranslatableContents)tooltip.get(0).getContents();
             h.assertTrue(line.getKey().equals("tooltip.tidalterror.reef_spear"),"Missing bleeding damage line");
-            double expected=new double[][]{{2,3,4},{3,4.5,6},{4,6,8},{5,7.5,10}}[power][extension];
+            double expected=new double[]{1,1.5,2,2.5}[power];
             near(h,Double.parseDouble(line.getArgs()[0].toString()),expected,"Tooltip did not update with bleeding enchantments");
             near(h,((Number)line.getArgs()[1]).doubleValue(),new int[]{4,6,8}[extension],"Tooltip bleeding duration did not update");
             h.assertTrue(!line.getArgs()[0].toString().endsWith(".0"),"Tooltip retained unnecessary decimal zeros");
@@ -220,6 +220,29 @@ public final class ReefEquipmentTests {
             anvil.createResult();
             h.assertTrue(net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(enchantment,anvil.getSlot(2).getItem())==1,"Native anvil rejected spear book");
         }
+        for(var damage:List.of(Enchantments.SHARPNESS,Enchantments.SMITE,Enchantments.BANE_OF_ARTHROPODS)) {
+            h.assertTrue(damage.canEnchant(spear),"Plain damage build rejected");
+            for(var bleed:List.of(serration,hemorrhage)) {
+                h.assertTrue(!bleed.isCompatibleWith(damage)&&!damage.isCompatibleWith(bleed),"Damage/bleeding compatibility must reject both directions");
+                for(boolean reverse:List.of(false,true)) {
+                    var existing=reverse?damage:bleed;var incoming=reverse?bleed:damage;
+                    var enchanted=spear.copy();enchanted.enchant(existing,1);
+                    var anvil=new net.minecraft.world.inventory.AnvilMenu(0,h.makeMockSurvivalPlayer().getInventory());
+                    anvil.getSlot(0).set(enchanted);anvil.getSlot(1).set(EnchantedBookItem.createForEnchantment(new net.minecraft.world.item.enchantment.EnchantmentInstance(incoming,1)));anvil.createResult();
+                    h.assertTrue(anvil.getSlot(2).getItem().isEmpty(),"Survival anvil accepted damage plus bleeding");
+                }
+            }
+        }
+        for(var forbidden:List.of(Enchantments.FIRE_ASPECT,Enchantments.SWEEPING_EDGE)) {
+            h.assertTrue(!forbidden.canEnchant(spear)&&!spear.canApplyAtEnchantingTable(forbidden),"Forbidden spear enchantment accepted at table");
+            var anvil=new net.minecraft.world.inventory.AnvilMenu(0,h.makeMockSurvivalPlayer().getInventory());
+            anvil.getSlot(0).set(spear.copy());anvil.getSlot(1).set(EnchantedBookItem.createForEnchantment(new net.minecraft.world.item.enchantment.EnchantmentInstance(forbidden,1)));anvil.createResult();
+            h.assertTrue(anvil.getSlot(2).getItem().isEmpty(),"Survival anvil accepted forbidden spear book");
+        }
+        var combined=spear.copy();combined.enchant(serration,3);
+        var anvil=new net.minecraft.world.inventory.AnvilMenu(0,h.makeMockSurvivalPlayer().getInventory());
+        anvil.getSlot(0).set(combined);anvil.getSlot(1).set(EnchantedBookItem.createForEnchantment(new net.minecraft.world.item.enchantment.EnchantmentInstance(hemorrhage,2)));anvil.createResult();
+        h.assertTrue(net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(hemorrhage,anvil.getSlot(2).getItem())==2,"Valid bleeding combination rejected");
         h.succeed();
     }
     private static void pool(GameTestHelper h) {
@@ -317,11 +340,14 @@ public final class ReefEquipmentTests {
         var armor=List.of(ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get());
         for(var piece:armor)wearer.setItemSlot(piece.getEquipmentSlot(),new ItemStack(piece));
         wearer.tick();wearer.setOnGround(true);
-        near(h,wearer.getArmorValue(),16,"Armor set defense");near(h,wearer.getAttributeValue(Attributes.ARMOR_TOUGHNESS),0,"Armor toughness");
-        for(var piece:armor)h.assertTrue(piece.getMaxDamage()==ArmorMaterials.IRON.getDurabilityForType(piece.getType()),"Armor durability tier");
+        near(h,wearer.getArmorValue(),15,"Armor set defense");near(h,wearer.getAttributeValue(Attributes.ARMOR_TOUGHNESS),0,"Armor toughness");
+        for(var piece:armor) {
+            near(h,piece.getDefense(),ArmorMaterials.IRON.getDefenseForType(piece.getType()),"Per-piece iron protection");
+            h.assertTrue(piece.getMaxDamage()==ArmorMaterials.IRON.getDurabilityForType(piece.getType()),"Armor durability tier");
+        }
         // Actual native knockback posts Forge's event and changes velocity.
-        wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),.8,"Full set anchor");
-        wearer.setItemSlot(EquipmentSlot.HEAD,ItemStack.EMPTY);wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),.85,"Three-piece anchor");
+        wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),.7,"Full set anchor");
+        wearer.setItemSlot(EquipmentSlot.HEAD,ItemStack.EMPTY);wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),.775,"Three-piece anchor");
         wearer.setOnGround(false);wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),1,"Swimming anchor leaked");
         var pos=h.absolutePos(new BlockPos(10,10,8));wearer.setPos(pos.getX(),pos.getY(),pos.getZ());wearer.tick();wearer.setOnGround(true);
         wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),1,"Dry anchor leaked");h.succeed();

@@ -22,7 +22,7 @@ public final class WeaponBalanceAudit {
     public static void measureFullyEnchantedUnderwaterWeapons(GameTestHelper h) {
         for(int x=0;x<=23;x++)for(int z=0;z<=23;z++)for(int y=3;y<=8;y++)h.setBlock(x,y,z,y==3?Blocks.SANDSTONE:Blocks.WATER);
         List<Sample> samples=new ArrayList<>();
-        for(var item:List.of(ModEquipment.REEF_SPEAR.get(),Items.NETHERITE_SWORD,Items.TRIDENT))
+        for(var item:List.of(ModEquipment.REEF_SPEAR.get(),Items.IRON_SWORD,Items.NETHERITE_SWORD,Items.TRIDENT))
             for(boolean armor:List.of(false,true))for(boolean sustained:List.of(false,true))samples.add(sample(h,item,armor,false,sustained,samples.size()));
         samples.add(sample(h,Items.TRIDENT,false,true,false,samples.size()));samples.add(sample(h,Items.TRIDENT,false,true,true,samples.size()));
         for(var s:samples)attack(s);
@@ -46,15 +46,15 @@ public final class WeaponBalanceAudit {
         var p=h.makeMockSurvivalPlayer();int x=3+(index%4)*5,z=3+(index/4)*5;var pos=h.absolutePos(new BlockPos(x,4,z));p.setPos(pos.getX()+.5,pos.getY(),pos.getZ()+.5);p.setNoGravity(true);
         var stack=new ItemStack(item);stack.enchant(Enchantments.UNBREAKING,3);stack.enchant(Enchantments.MENDING,1);
         if(item==Items.TRIDENT){stack.enchant(Enchantments.IMPALING,5);stack.enchant(Enchantments.LOYALTY,3);stack.enchant(Enchantments.CHANNELING,1);}
-        else {stack.enchant(Enchantments.SHARPNESS,5);stack.enchant(Enchantments.FIRE_ASPECT,2);stack.enchant(Enchantments.MOB_LOOTING,3);stack.enchant(Enchantments.KNOCKBACK,2);
-            if(item==Items.NETHERITE_SWORD)stack.enchant(Enchantments.SWEEPING_EDGE,3);
+        else {stack.enchant(Enchantments.MOB_LOOTING,3);stack.enchant(Enchantments.KNOCKBACK,2);
+            if(item instanceof SwordItem){stack.enchant(Enchantments.SHARPNESS,5);stack.enchant(Enchantments.FIRE_ASPECT,2);stack.enchant(Enchantments.SWEEPING_EDGE,3);}
             else {stack.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),3);stack.enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(),2);}}
         p.setItemSlot(EquipmentSlot.MAINHAND,stack);
         Mob target=aquatic?h.spawn(EntityType.GUARDIAN,x+2,4,z):h.spawn(EntityType.DROWNED,x+2,4,z);target.setNoAi(true);target.setNoGravity(true);
         target.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000);target.getAttribute(Attributes.ARMOR).setBaseValue(0);target.setHealth(1000);
         if(armor) {var gear=new Item[]{Items.NETHERITE_HELMET,Items.NETHERITE_CHESTPLATE,Items.NETHERITE_LEGGINGS,Items.NETHERITE_BOOTS};var slots=new EquipmentSlot[]{EquipmentSlot.HEAD,EquipmentSlot.CHEST,EquipmentSlot.LEGS,EquipmentSlot.FEET};
             for(int i=0;i<4;i++){var piece=new ItemStack(gear[i]);piece.enchant(Enchantments.ALL_DAMAGE_PROTECTION,4);target.setItemSlot(slots[i],piece);}}
-        target.tick();return new Sample(item==Items.TRIDENT?"Trident Impaling V":item==Items.NETHERITE_SWORD?"Netherite Sword Sharpness V":"Reef Spear Sharpness V Serration III Hemorrhage II",armor,aquatic,sustained,p,target,target.position(),target.getHealth(),new double[]{0},item==Items.NETHERITE_SWORD?12:18);
+        target.tick();return new Sample(item==Items.TRIDENT?"Trident Impaling V":item==Items.NETHERITE_SWORD?"Netherite Sword Sharpness V":item==Items.IRON_SWORD?"Iron Sword Sharpness V":"Reef Spear Serration III Hemorrhage II",armor,aquatic,sustained,p,target,target.position(),target.getHealth(),new double[]{0},item instanceof SwordItem?12:18);
     }
     private static void attack(Sample s) {
         for(int i=0;i<25;i++){s.player.setDeltaMovement(Vec3.ZERO);s.player.tick();}
