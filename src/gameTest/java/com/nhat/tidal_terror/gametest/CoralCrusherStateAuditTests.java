@@ -174,7 +174,8 @@ public class CoralCrusherStateAuditTests {
                         "Swimming control did not apply the state's speed");
             }
             if(player.getHealth()<health[0] && player.getLastDamageSource()!=null
-                    && player.getLastDamageSource().getEntity()==shark) {
+                    && player.getLastDamageSource().getEntity()==shark
+                    && player.getLastDamageSource().is(net.minecraft.world.damagesource.DamageTypes.MOB_ATTACK)) {
                 h.assertTrue(previous==CHARGE || previous==MELEE_WINDUP,"Damage outside an attack state: "+previous);
                 h.assertTrue(shark.getBehavior()==RECOVER,"A bite did not transition to recovery"); bitten[0]=true;
             }

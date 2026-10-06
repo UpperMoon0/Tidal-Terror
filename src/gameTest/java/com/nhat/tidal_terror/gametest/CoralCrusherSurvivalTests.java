@@ -80,6 +80,7 @@ public class CoralCrusherSurvivalTests {
         var position = helper.absoluteVec(new Vec3(14, 5, 10));
         player.setPos(position); pin(helper, player, position, 450);
         final int[] windup = {0}, hit = {-1};
+        final boolean[] bled = {false};
         final float[] health = {player.getHealth()};
         final double[] circleTravel = {0};
         final Vec3[] circleStart = {null};
@@ -93,7 +94,12 @@ public class CoralCrusherSurvivalTests {
                     circleTravel[0] = Math.max(circleTravel[0], shark.position().distanceToSqr(circleStart[0]));
                 }
                 if (player.getHealth() < health[0] && player.getLastDamageSource()!=null
-                        && player.getLastDamageSource().getEntity()==shark) {
+                        && player.getLastDamageSource().getEntity()==shark
+                        && player.getLastDamageSource().is(net.minecraft.world.damagesource.DamageTypes.MAGIC)) bled[0] = true;
+                // Credited bleed damage during recovery is not another physical bite.
+                if (player.getHealth() < health[0] && player.getLastDamageSource()!=null
+                        && player.getLastDamageSource().getEntity()==shark
+                        && player.getLastDamageSource().is(net.minecraft.world.damagesource.DamageTypes.MOB_ATTACK)) {
                     System.out.println("CRUSHER_BITE tick="+now+" state="+shark.getBehavior()+" health="+player.getHealth()
                             +" previous="+health[0]+" firstHit="+hit[0]);
                     helper.assertTrue(windup[0] >= CoralCrusherHuntGoal.WINDUP_TICKS - 1,
@@ -106,6 +112,7 @@ public class CoralCrusherSurvivalTests {
                 }
                 health[0] = player.getHealth();
                 if (hit[0] >= 0 && now == hit[0] + 40) {
+                    helper.assertTrue(bled[0], "The bite did not deal delayed bleeding during recovery");
                     helper.assertTrue(shark.getBehavior() == CoralCrusherEntity.Behavior.RECOVER,
                             "The committed bite must be followed by recovery");
                     player.discard(); shark.discard(); helper.succeed();
