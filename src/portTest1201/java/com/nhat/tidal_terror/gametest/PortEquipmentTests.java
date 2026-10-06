@@ -68,4 +68,49 @@ public final class PortEquipmentTests implements net.fabricmc.fabric.api.gametes
         h.assertTrue(bowCandidates.stream().noneMatch(entry->entry.enchantment==com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get()||entry.enchantment==com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get()),"Bleeding offered on ranged weapon table");
         h.succeed();
     }
+
+    // Exercise the native activation/serialization paths; testing a hand-written
+    // boolean guard alone would miss a mixin attached to the wrong constructor.
+    private static java.util.Set<net.minecraft.world.level.ChunkPos> repairs(GameTestHelper h) {
+        try {
+            var field=com.nhat.tidal_terror.worldgen.ReefWaterFinish.class.getDeclaredField("PENDING");field.setAccessible(true);
+            @SuppressWarnings("unchecked") var queues=(java.util.Map<net.minecraft.server.level.ServerLevel,java.util.Set<net.minecraft.world.level.ChunkPos>>)field.get(null);
+            return queues.computeIfAbsent(h.getLevel(),level->new java.util.HashSet<>());
+        } catch(ReflectiveOperationException failure){throw new RuntimeException(failure);}
+    }
+    private static net.minecraft.world.level.chunk.LevelChunk reloadChunk(GameTestHelper h,net.minecraft.world.level.chunk.LevelChunk chunk) {
+        var level=h.getLevel();var data=net.minecraft.world.level.chunk.storage.ChunkSerializer.write(level,chunk);
+        return ((net.minecraft.world.level.chunk.ImposterProtoChunk)net.minecraft.world.level.chunk.storage.ChunkSerializer.read(level,level.getPoiManager(),chunk.getPos(),data)).getWrapped();
+    }
+    @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=20)
+    public static void completedChunkRevisitPreservesPlayerBlocks(GameTestHelper h) {
+        var level=h.getLevel();var pos=new net.minecraft.world.level.ChunkPos(-2000,-2000);
+        var chunk=new net.minecraft.world.level.chunk.LevelChunk(level,pos);
+        var blocks=java.util.List.of(net.minecraft.world.level.block.Blocks.AIR,net.minecraft.world.level.block.Blocks.MAGMA_BLOCK,net.minecraft.world.level.block.Blocks.SOUL_SAND,net.minecraft.world.level.block.Blocks.BUBBLE_COLUMN);
+        for(int i=0;i<blocks.size();i++)chunk.setBlockState(new net.minecraft.core.BlockPos(pos.getMinBlockX()+i,20,pos.getMinBlockZ()),blocks.get(i).defaultBlockState(),false);
+        h.assertTrue(!repairs(h).contains(pos),"Existing full chunk was treated as new generation");
+        chunk=reloadChunk(h,chunk);
+        chunk.postProcessGeneration();
+        chunk.postProcessGeneration();
+        h.assertTrue(!repairs(h).contains(pos),"Revisiting completed terrain queued destructive water repair");
+        for(int i=0;i<blocks.size();i++)h.assertTrue(chunk.getBlockState(new net.minecraft.core.BlockPos(pos.getMinBlockX()+i,20,pos.getMinBlockZ())).is(blocks.get(i)),"Player construction changed on reload/revisit");
+        h.succeed();
+    }
+    @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=20)
+    public static void unfinishedGenerationRepairSurvivesReload(GameTestHelper h) {
+        var level=h.getLevel();var pos=new net.minecraft.world.level.ChunkPos(-2001,-2001);
+        var proto=new net.minecraft.world.level.chunk.ProtoChunk(pos,net.minecraft.world.level.chunk.UpgradeData.EMPTY,level,level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.BIOME),null);
+        var chunk=new net.minecraft.world.level.chunk.LevelChunk(level,proto,null);
+        h.assertTrue(repairs(h).contains(pos),"Newly generated terrain did not queue water repair");
+        var data=net.minecraft.world.level.chunk.storage.ChunkSerializer.write(level,chunk);
+        repairs(h).remove(pos); // Simulate loss of the in-memory queue on restart.
+        var restored=net.minecraft.world.level.chunk.storage.ChunkSerializer.read(level,level.getPoiManager(),pos,data);
+
+        h.assertTrue(repairs(h).contains(pos),"Saved unfinished repair did not resume");
+        repairs(h).remove(pos);
+        var wrapped=new net.minecraft.world.level.chunk.ImposterProtoChunk(chunk,false);
+        new net.minecraft.world.level.chunk.LevelChunk(level,wrapped,null);
+        h.assertTrue(!repairs(h).contains(pos),"A wrapper around existing full terrain was treated as generation");
+        h.succeed();
+    }
 }

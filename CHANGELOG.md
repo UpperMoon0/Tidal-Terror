@@ -2,6 +2,7 @@
 
 ## 0.0.3 — Unreleased
 
+- Restrict port reef water repair to unfinished generation or saved pending work, preserving player-built drained rooms and bubble elevators on revisit.
 - Added Fabric 1.20.1, Fabric/NeoForge 1.21.1 and NeoForge 26.1.2 ports with shared reef gameplay and unchanged equipment balance.
 - Adapted native entity/chunk persistence, modern enchantments/recipes and 26.1.2 rendering.
 - Added native port gameplay and client-loading checks plus verified five-target release packaging.
