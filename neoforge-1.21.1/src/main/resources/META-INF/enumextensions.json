@@ -1,0 +1,52 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/world/entity/MobCategory",
+      "name": "TIDALTERROR_CRUSHER",
+      "constructor": "(Ljava/lang/String;IZZI)V",
+      "parameters": [
+        "tidalterror:crusher",
+        2,
+        true,
+        false,
+        128
+      ]
+    },
+    {
+      "enum": "net/minecraft/world/entity/MobCategory",
+      "name": "TIDALTERROR_RAY",
+      "constructor": "(Ljava/lang/String;IZZI)V",
+      "parameters": [
+        "tidalterror:ray",
+        8,
+        true,
+        false,
+        128
+      ]
+    },
+    {
+      "enum": "net/minecraft/world/entity/MobCategory",
+      "name": "TIDALTERROR_VEILGLOW",
+      "constructor": "(Ljava/lang/String;IZZI)V",
+      "parameters": [
+        "tidalterror:veilglow",
+        12,
+        true,
+        false,
+        128
+      ]
+    },
+    {
+      "enum": "net/minecraft/world/entity/MobCategory",
+      "name": "TIDALTERROR_SHARDBACK",
+      "constructor": "(Ljava/lang/String;IZZI)V",
+      "parameters": [
+        "tidalterror:shardback",
+        10,
+        true,
+        false,
+        128
+      ]
+    }
+  ]
+}

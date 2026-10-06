@@ -1,0 +1,53 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+java { toolchain.languageVersion = JavaLanguageVersion.of(25); withSourcesJar() }
+base { archivesName = 'tidalterror-neoforge-26.1.2' }
+sourceSets.main.java {
+    exclude '**/MobCategoryAccess.java'
+}
+sourceSets.main.resources {
+    exclude 'META-INF/mods.toml'
+    exclude 'tidalterror.mixins.json'
+    exclude 'tidalterror.fabric.mixins.json'
+    exclude 'pack.mcmeta'
+    exclude 'data/tidalterror/recipes/**'
+    exclude 'data/tidalterror/loot_tables/**'
+    exclude 'data/tidalterror/advancements/**'
+    exclude 'data/tidalterror/tags/items/**'
+    exclude 'data/tidalterror/tags/entity_types/**'
+}
+neoForge {
+    version = '26.1.2.99'
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+    }
+    mods { tidalterror { sourceSet sourceSets.main } }
+}
+dependencies {
+    implementation 'dev.architectury:architectury-neoforge:20.1.16'
+    implementation 'com.github.glitchfiend:TerraBlender-neoforge:26.1.2-26.1.2.0.3'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+}
+processResources { from(rootProject.file('src/main/resources')) { include 'assets/**', 'tidalterror-icon.png'; exclude 'assets/tidalterror/models/item/reef_spear.json' }; inputs.property 'version', project.version; filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version } }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 25 }
+
+
+sourceSets.main.java.srcDir rootProject.file('common-modern/src/main/java')
+
+if(project.hasProperty('portTests')) {
+    sourceSets.main.java.srcDir rootProject.file('src/portTest26/java')
+    sourceSets.main.resources.srcDir rootProject.file('src/portTest121/resources')
+    processResources { exclude 'fabric.mod.json' }
+    neoForge.runs { portTest { type = 'gameTestServer'; gameDirectory = project.file('build/port-tests'); programArguments.addAll('--tests','tidalterror:*','--report',project.file('build/port-test-report.xml').absolutePath) } }
+}
+
+if (project.hasProperty('clientSmoke')) sourceSets.main.java.srcDir rootProject.file('src/clientSmokeNeo/java')
+
+sourceSets.main.java.srcDir rootProject.file('common-universal/src/main/java')
+
+sourceSets.main.java.srcDir rootProject.file('common-ports/src/main/java')
+
+sourceSets.main.java.srcDir rootProject.file('common/src/main/java')

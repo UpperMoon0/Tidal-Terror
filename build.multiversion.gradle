@@ -1,0 +1,41 @@
+buildscript {
+    configurations.classpath { resolutionStrategy.force 'com.google.code.gson:gson:2.11.0' }
+}
+plugins {
+    id 'dev.architectury.loom' version '1.11-SNAPSHOT' apply false
+    id 'architectury-plugin' version '3.4-SNAPSHOT'
+    id 'com.gradleup.shadow' version '8.3.6' apply false
+}
+architectury { minecraft = '1.20.1' }
+allprojects {
+    group = rootProject.mod_group_id
+    version = rootProject.mod_version
+    repositories {
+        mavenCentral()
+        maven { url = 'https://maven.fabricmc.net/' }
+        maven { url = 'https://maven.architectury.dev/' }
+        maven { url = 'https://maven.neoforged.net/releases' }
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.jamieswhiteshirt.com/libs-release/' }
+    }
+}
+subprojects {
+    if (name == 'common' || name.startsWith('neoforge-')) return
+    apply plugin: 'dev.architectury.loom'
+    apply plugin: 'architectury-plugin'
+    def modern = name.endsWith('1.21.1')
+    ext.mc = modern ? '1.21.1' : '1.20.1'
+    ext.api = modern ? '13.0.8' : '9.2.14'
+    ext.loader = modern ? '0.17.2' : '0.16.14'
+    ext.fabricApi = modern ? '0.116.5+1.21.1' : '0.92.5+1.20.1'
+    base { archivesName = "tidalterror-${project.name}" }
+    loom { silentMojangMappingsLicense() }
+    dependencies {
+        minecraft "net.minecraft:minecraft:${project.mc}"
+        mappings loom.officialMojangMappings()
+    }
+    java { toolchain.languageVersion = JavaLanguageVersion.of(modern ? 21 : 17); withSourcesJar() }
+    tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = modern ? 21 : 17 }
+    tasks.withType(JavaExec).configureEach { javaLauncher.set(javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(modern ? 21 : 17) }) }
+}
+tasks.register('buildAll') { dependsOn subprojects.findAll { !it.name.startsWith('common') }.collect { "${it.path}:build" } }

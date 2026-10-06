@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": "tidalterror:raw_shardback_claw",
+  "result": {
+    "id": "tidalterror:cooked_shardback_claw"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

@@ -1,0 +1,17 @@
+{
+  "type": "tidalterror:reef_armor_upgrade",
+  "category": "equipment",
+  "pattern": [
+    " P ",
+    "PAP",
+    " C "
+  ],
+  "key": {
+    "A": "minecraft:iron_helmet",
+    "C": "#tidalterror:coral_skeletons",
+    "P": "tidalterror:shardback_plate"
+  },
+  "result": {
+    "id": "tidalterror:reef_helmet"
+  }
+}

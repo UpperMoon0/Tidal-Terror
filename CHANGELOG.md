@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.0.2 — Unreleased
+## 0.0.3 — Unreleased
+
+- Added Fabric 1.20.1, Fabric/NeoForge 1.21.1 and NeoForge 26.1.2 ports with shared reef gameplay and unchanged equipment balance.
+- Adapted native entity/chunk persistence, modern enchantments/recipes and 26.1.2 rendering.
+- Added native port gameplay and client-loading checks plus verified five-target release packaging.
+
+## 0.0.2
 
 - Added the native 3D Reef Spear: Crusher tooth, coral skeleton shaft and sandy hide bindings; 6 damage, 1.1 attack speed, 250 durability and +1 block main-hand entity reach.
 - Fully charged underwater spear hits apply 2 bleeding damage over 4 seconds, refreshing without stacking.

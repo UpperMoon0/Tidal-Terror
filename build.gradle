@@ -558,3 +558,9 @@ if (nativeFixtureFlags.any { project.hasProperty(it) }) {
         }
     }
 }
+
+// Native geometry and AI shared with the other version/loader modules.
+sourceSets.main.java.srcDir 'common/src/main/java'
+sourceSets.main.java.srcDir 'common-versioned/src/main/java'
+
+sourceSets.main.java.srcDir 'common-universal/src/main/java'

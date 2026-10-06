@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": "tidalterror:raw_coral_crusher_steak",
+  "result": {
+    "id": "tidalterror:cooked_coral_crusher_steak"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "tidalterror",
+  "version": "${version}",
+  "name": "Tidal Terror",
+  "description": "Coral Cathedral biome, marine wildlife and reef equipment.",
+  "authors": [
+    "NsTut"
+  ],
+  "license": "MIT",
+  "icon": "tidalterror-icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.nhat.tidal_terror.fabric.TidalTerrorFabric",
+      "com.nhat.tidal_terror.gametest.PortTestSetup"
+    ],
+    "client": [
+      "com.nhat.tidal_terror.fabric.TidalTerrorFabricClient"
+    ],
+    "terrablender": [
+      "com.nhat.tidal_terror.fabric.TidalTerraBlender"
+    ],
+    "fabric-gametest": [
+      "com.nhat.tidal_terror.gametest.ReefLifeAiTests",
+      "com.nhat.tidal_terror.gametest.ReefSpawnPoolTests",
+      "com.nhat.tidal_terror.gametest.PortEquipmentTests"
+    ]
+  },
+  "mixins": [
+    "tidalterror.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.17.2",
+    "minecraft": "1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "architectury": ">=13.0.8",
+    "terrablender": ">=4.1.0.8"
+  }
+}

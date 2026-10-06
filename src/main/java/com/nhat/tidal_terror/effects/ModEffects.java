@@ -23,8 +23,7 @@ public final class ModEffects {
             remaining--;
             data.putInt(PULSE_TICKS, remaining <= 0 ? 40 : remaining);
             if (remaining > 0) return;
-            float damage = 1 + .5F * net.minecraft.util.Mth.clamp(amplifier, 0, 3);
-            if (com.nhat.tidal_terror.items.ReefArmorItem.hasFullSet(entity)) damage *= .75F;
+            float damage = com.nhat.tidal_terror.balance.ReefBalance.bleedingDamage(amplifier,com.nhat.tidal_terror.items.ReefArmorItem.hasFullSet(entity));
             var owner = bleedingAttacker(entity);
             var source = entity.damageSources().magic();
             if (owner != null) source = new net.minecraft.world.damagesource.DamageSource(source.typeHolder(), owner) {

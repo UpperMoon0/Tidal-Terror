@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m unittest discover -s tools -p 'test_release.py' -v
+      - run: python -m unittest discover -s tools -p 'test_*.py' -v
   native:
     name: Native ${{ matrix.suite }}
     runs-on: ubuntu-latest
@@ -84,9 +84,58 @@ jobs:
             build/*-model*/
             build/equipment-art/
           if-no-files-found: ignore
+  ports:
+    name: Port ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [fabric-1.20.1, fabric-1.21.1, neoforge-1.21.1, neoforge-26.1.2]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            17
+            25
+            21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Prepare isolated native test server
+        run: |
+          chmod +x gradlew
+          mkdir -p ${{ matrix.target }}/build/port-tests
+          echo 'eula=true' > ${{ matrix.target }}/build/port-tests/eula.txt
+          printf 'online-mode=false\nmax-tick-time=0\n' > ${{ matrix.target }}/build/port-tests/server.properties
+      - name: Native gameplay regressions with completion gate
+        run: python3 tools/ports.py test ${{ matrix.target }}
+      - name: Prepare fresh client resources
+        run: ./gradlew -Pmultiversion :${{ matrix.target }}:clean --no-daemon
+      - name: Native client startup and model loading
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: xvfb-run -a python3 tools/ports.py client ${{ matrix.target }}
+      - name: Clean production build without test sources
+        run: ./gradlew -Pmultiversion :${{ matrix.target }}:clean :${{ matrix.target }}:build --no-daemon --no-configuration-cache
+      - name: Verify production loader metadata, resources and fixture exclusion
+        run: |
+          version=$(sed -n 's/^mod_version=//p' gradle.properties | tr -d '\r')
+          python3 tools/ports.py jar ${{ matrix.target }} --jar ${{ matrix.target }}/build/libs/tidalterror-${{ matrix.target }}-${version}.jar --version "$version"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.target }}-evidence
+          path: |
+            build/port-evidence/${{ matrix.target }}/
+            ${{ matrix.target }}/build/port-test-report.xml
+            ${{ matrix.target }}/build/client-smoke.log
+            ${{ matrix.target }}/build/port-tests/logs/
+            ${{ matrix.target }}/build/libs/*.jar
+          if-no-files-found: ignore
   package:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -94,8 +143,12 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: |
+            17
+            25
+            21
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - run: ./gradlew clean build --no-daemon --no-configuration-cache
-      - run: python3 tools/release.py package --output build/release
+      - run: ./gradlew -Pmultiversion clean buildAll --no-daemon --no-configuration-cache
+      - run: python3 tools/release.py package --ports --output build/release

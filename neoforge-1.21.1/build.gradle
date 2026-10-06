@@ -1,0 +1,58 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+java { toolchain.languageVersion = JavaLanguageVersion.of(21); withSourcesJar() }
+base { archivesName = 'tidalterror-neoforge-1.21.1' }
+sourceSets.main.java {
+    srcDir rootProject.file('common/src/main/java')
+    srcDir rootProject.file('common-1.21.1/src/main/java')
+    exclude '**/MobCategoryAccess.java', '**/ReefTurtleObstructionMixin.java'
+}
+sourceSets.main.resources {
+    srcDir rootProject.file('common-1.21.1/src/main/resources')
+    exclude 'META-INF/mods.toml'
+    exclude 'tidalterror.mixins.json'
+    exclude 'tidalterror.fabric.mixins.json'
+    exclude 'pack.mcmeta'
+    exclude 'data/tidalterror/recipes/**'
+    exclude 'data/tidalterror/loot_tables/**'
+    exclude 'data/tidalterror/advancements/**'
+    exclude 'data/tidalterror/tags/items/**'
+    exclude 'data/tidalterror/tags/entity_types/**'
+}
+neoForge {
+    version = '21.1.228'
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+    }
+    mods { tidalterror { sourceSet sourceSets.main } }
+}
+dependencies {
+    implementation 'dev.architectury:architectury-neoforge:13.0.8'
+    implementation 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+}
+processResources { from(rootProject.file('src/main/resources')) { include 'assets/**', 'tidalterror-icon.png' }; inputs.property 'version', project.version; filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version } }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 21 }
+
+sourceSets.main.java.srcDir rootProject.file('common-versioned/src/main/java')
+sourceSets.main.java.srcDir rootProject.file('common-1201-1211/src/main/java')
+
+sourceSets.main.java.srcDir rootProject.file('common-modern/src/main/java')
+
+if(project.hasProperty('portTests')) {
+ sourceSets.main.java.srcDir rootProject.file('src/portTest121/java')
+ sourceSets.main.java.srcDir rootProject.file('src/portTestNeo121/java')
+ sourceSets.main.java.exclude '**/PortTestSetup.java'
+ sourceSets.main.resources.srcDir rootProject.file('src/portTest121/resources')
+ processResources { exclude 'fabric.mod.json' }
+ neoForge.runs { portTest { type = 'gameTestServer'; gameDirectory = project.file('build/port-tests'); systemProperty 'neoforge.enabledGameTestNamespaces', 'tidalterror' } }
+}
+
+if (project.hasProperty('clientSmoke')) sourceSets.main.java.srcDir rootProject.file('src/clientSmokeNeo/java')
+
+sourceSets.main.java.srcDir rootProject.file('common-universal/src/main/java')
+
+sourceSets.main.java.srcDir rootProject.file('common-ports/src/main/java')

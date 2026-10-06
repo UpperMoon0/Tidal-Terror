@@ -1,0 +1,33 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "tidalterror:item/reef_spear",
+    "model": {
+      "type": "tidalterror:reef_spear"
+    },
+    "transformation": {
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "left_rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        -1,
+        -1
+      ],
+      "right_rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": "tidalterror:raw_cathedral_ray_wing",
+  "result": {
+    "id": "tidalterror:cooked_cathedral_ray_wing"
+  },
+  "experience": 0.35,
+  "cookingtime": 600
+}

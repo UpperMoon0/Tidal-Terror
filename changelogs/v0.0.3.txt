@@ -1,0 +1,7 @@
+Tidal Terror 0.0.3
+
+- Added Fabric 1.20.1, Fabric and NeoForge 1.21.1, and NeoForge 26.1.2 builds alongside Forge 1.20.1.
+- Shared reef geometry, navigation, creature goals, equipment tuning and modern enchantment support across compatible runtimes.
+- Ported Coral Cathedral generation, four marine mobs, seafood, loot, peaceful molts, Reef Armor, Reef Spear, Fang Arrows and custom blood particles without changing equipment balance.
+- Adapted modern enchantment data, armor-upgrade components, native save formats and 26.1.2 render-state/item/equipment definitions.
+- Added native port gameplay tests, client resource/model loading checks, production archive verification and an immutable five-target release matrix.

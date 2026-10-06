@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": {
+    "item": "tidalterror:raw_cathedral_ray_wing"
+  },
+  "result": {
+    "id": "tidalterror:cooked_cathedral_ray_wing"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}
