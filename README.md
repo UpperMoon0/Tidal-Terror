@@ -15,6 +15,24 @@ Explore **Coral Cathedral**, a deep ocean biome with towering coral formations, 
 
 All four have custom spawn eggs in the **Tidal Terror** creative tab. The Crusher egg randomly chooses either skin. Each creature drops its own raw seafood, with a cooked version obtainable in a furnace, smoker, or campfire. Steak, ray wing, jellyfish gel, and crab claw restore more hunger after cooking.
 
+## Reef equipment (0.0.2)
+
+Coral Cathedral supplies an **iron-to-diamond specialist equipment branch**. Coral Crushers drop 1–2 **Crusher Teeth**, and Shardbacks drop 1–2 **Shardback Plates**, alongside seafood. Looting can increase the material drops. Living Shardbacks also shed a plate while safely foraging on submerged sediment after 5–6 minutes of loaded underwater time; keep a respectful distance so they can forage. The initial molt takes five minutes, and cooldowns persist across saves.
+
+Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather**. Upgrade each matching iron armor piece with **three Shardback Plates and one dead coral block** at a crafting table. Any of the five vanilla dead coral block varieties works. Isolate a coral block from adjacent water to let it die, then mine the dead block with a pickaxe; Silk Touch is not required for the dead block. Collecting teeth or plates unlocks their recipes in the recipe book. Teeth repair the spear; plates repair the armor.
+
+| Equipment | Strength and specialty |
+| --- | --- |
+| Reef Spear | 6 attack damage, 1.1 attack speed, 250 durability, and +1 block of entity reach in the main hand. Fully charged hits apply 2 bleeding damage over 4 seconds when both attacker and target are in water. Repeated hits refresh one bleeding effect. Supports damage or bleeding builds; Fire Aspect and Sweeping Edge are excluded. |
+| Fang Arrow | Native arrow damage plus 2 bleeding damage over 4 seconds on land or in water. Craft four with a Crusher Tooth, stick and feather. Supports bows, crossbows and modded weapons using standard arrow ammunition. Serration and Hemorrhage cannot enchant arrows or ranged weapons. |
+| Reef Armor | Helmet/chestplate/leggings/boots give 2/6/5/2 armor (15 total), zero toughness, and iron-equivalent durability. Each piece reduces knockback by 5% while standing on submerged ground, up to 20%. Knockback reduction works with mixed equipment. The full set reduces bleeding damage by 25% on land and underwater; ordinary protection remains iron-tier. |
+
+The equipment inherits the mobs' materials: an ivory tooth and sandy bindings for the spear; violet Shardback carapace, cobalt coral, ivory segments and slate joints for armor. Diamond remains the stronger general defensive tier. See [equipment artwork and verification](docs/Reef-Equipment-Art-Workflow.md).
+
+**Serration I–III** adds 0.5 damage per level every two seconds. **Hemorrhage I–II** extends bleeding to six/eight seconds. Both are spear-only enchantments available through tables and books/anvils, and can be combined with each other. Both conflict with Sharpness, Smite and Bane of Arthropods, creating a choice between immediate damage and stronger bleeding. All five book levels appear beside the spear in the Tidal Terror creative tab; book tooltips explain their level-specific bleeding bonuses. The spear tooltip shows enchanted damage every two seconds and duration. Coral Crusher bites also cause the base bleed: two damage over four seconds, with the same custom blood particles. The spear points forward in both hands. Bleeding produces custom blood droplets and dispersing underwater plumes with a dedicated status icon. See [sprite references, bleeding and enchantment details](docs/Reef-Sprites-and-Bleeding.md).
+
+JEI loads automatically in the development client (`runClient`) for recipe inspection. It is optional development tooling and is not bundled into the release.
+
 ## Install and explore
 
 Requires **Minecraft 1.20.1**, **Forge 47.2.0 or newer in the 47.x series**, **Java 17**, and **[TerraBlender for Forge](https://www.curseforge.com/minecraft/mc-mods/terrablender)** for Minecraft 1.20.1, version **3.0.1.6 or newer in the 3.0.x series**. TerraBlender is required and is not bundled. Install both mods in the instance's `mods` folder; multiplayer needs both on the server and clients. This repository provides the Forge build.
@@ -60,8 +78,20 @@ Generate biome and feature data with `./gradlew.bat runData`. Generated registry
 ./gradlew.bat -PreefLifeTests runGameTestServer
 ./gradlew.bat -PfoodTests runGameTestServer
 ./gradlew.bat -PspawnPoolTests runGameTestServer
+./gradlew.bat -PequipmentTests runGameTestServer
+./gradlew.bat -PcoralCrusherModelTests verifyReefEquipmentModel
 ```
 
 Run each test property separately; test fixtures are excluded from normal release builds. The Validate workflow also runs the terrain audit in an isolated server with its documented seed and required server settings.
 
+For equipment screenshots, prepare the optional development shaders, run `python tools/prepare_equipment_preview.py`, then use its printed client command. It opens a separate fresh preview world, captures native worn/held models, underwater first person in both hands, the creative tab and resource reload/glint, then exits. It does not open the ordinary development world.
+
 Development shaders are optional: run `python tools/install_dev_shaders.py` to install the pinned Oculus, Embeddium, and Complementary development dependencies. Downloaded dependencies are excluded from Git and the release jar.
+
+Reef Armor recipes upgrade the matching iron armor piece with three Shardback Plates and one dead coral block, preserving enchantments, name, damage, repair cost, trim and saved item data. Repair the spear with Crusher Teeth and the armor with Shardback Plates in an anvil. Gear tooltips explain the spear charge/water gate, bleed refresh, armor grounding bonus and repair materials.
+
+The Reef Spear uses its 3D model in inventory and JEI as well as in hand. See the [fully enchanted weapon comparison](docs/Reef-Weapon-Balance.md) and [repository file policy](docs/Repository-Hygiene.md). Artwork sources and screenshots are local optional files; the release uses committed game-ready assets.
+
+Repeated bleeding hits refresh duration while preserving the independent two-second pulse cooldown, including across entity saves.
+
+Bleeding saves the attacker UUID and attributes lethal damage to that owner when resolvable, preserving native Looting and XP credit through victim save/reload.

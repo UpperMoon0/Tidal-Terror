@@ -42,6 +42,10 @@ public class ReefFoodTests {
             var drops=h.getLevel().getEntitiesOfClass(ItemEntity.class,mob.getBoundingBox().inflate(3));
             int count=0;
             for(var drop:drops) {
+                if (drop.getItem().is(com.nhat.tidal_terror.items.ModEquipment.CRUSHER_TOOTH.get())
+                        || drop.getItem().is(com.nhat.tidal_terror.items.ModEquipment.SHARDBACK_PLATE.get())) {
+                    drop.discard(); continue;
+                }
                 h.assertTrue(drop.getItem().is(food(burning?"cooked":"raw",FOODS[i])),"Unexpected death drop: "+drop.getItem());
                 count+=drop.getItem().getCount(); drop.discard();
             }

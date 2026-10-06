@@ -204,12 +204,14 @@ public final class ReefNativeAudit {
             tab.buildContents(new net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters(level.enabledFeatures(),true,level.registryAccess()));
             var expectedItems=Set.of("coral_crusher_spawn_egg","cathedral_ray_spawn_egg","veilglow_spawn_egg","shardback_spawn_egg",
                     "raw_coral_crusher_steak","cooked_coral_crusher_steak","raw_cathedral_ray_wing","cooked_cathedral_ray_wing",
-                    "raw_veilglow_gel","cooked_veilglow_gel","raw_shardback_claw","cooked_shardback_claw");
+                    "raw_veilglow_gel","cooked_veilglow_gel","raw_shardback_claw","cooked_shardback_claw",
+                    "crusher_tooth","shardback_plate","fang_arrow","reef_spear","reef_helmet","reef_chestplate","reef_leggings","reef_boots","enchanted_book");
             var actualItems=tab.getDisplayItems().stream().map(stack -> net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem()).getPath()).collect(java.util.stream.Collectors.toSet());
-            require(tab.getDisplayItems().size()==12 && actualItems.equals(expectedItems),"Wrong creative tab contents: "+actualItems);
+            require(tab.getDisplayItems().size()==25 && actualItems.equals(expectedItems),"Wrong creative tab contents: "+actualItems);
             require(!net.minecraftforge.registries.ForgeRegistries.ITEMS.containsKey(new net.minecraft.resources.ResourceLocation("tidalterror","example_item")),"Template item remains");
             require(!net.minecraftforge.registries.ForgeRegistries.BLOCKS.containsKey(new net.minecraft.resources.ResourceLocation("tidalterror","example_block")),"Template block remains");
-            System.out.println("REEF_AUDIT CREATIVE_TAB PASS all four spawn eggs and eight raw/cooked foods");
+            require(tab.getDisplayItems().stream().filter(stack -> stack.is(net.minecraft.world.item.Items.ENCHANTED_BOOK)).count()==5,"Missing spear enchantment book levels");
+            System.out.println("REEF_AUDIT CREATIVE_TAB PASS all four spawn eggs, eight raw/cooked foods, seven equipment/material items and five spear books");
             require(!SpawnPlacements.checkSpawnRules(ModEntities.CORAL_CRUSHER.get(),level,MobSpawnType.NATURAL,
                     spawn.atY(level.getSeaLevel()),level.random),"Surface spawn allowed");
             Files.createDirectories(Path.of("../reef-audit-v4"));

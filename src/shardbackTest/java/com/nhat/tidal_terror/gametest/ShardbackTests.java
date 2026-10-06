@@ -53,6 +53,21 @@ public class ShardbackTests {
  @GameTest(template="reef_life_pool",timeoutTicks=240)
  public static void walksOnSeabedAndBreathes(GameTestHelper helper){
   pool(helper);var crab=helper.spawn(ModEntities.SHARDBACK.get(),10,4,10);
+  long seed=crab.getRandom().nextLong();crab.getRandom().setSeed(seed);
+  System.out.println("SHARDBACK_TEST walksOnSeabedAndBreathes seed="+seed);
+  helper.onEachTick(()->{
+   if(crab.getHealth()!=16 || !helper.getLevel().noCollision(crab)) {
+    var box=crab.getBoundingBox();var solids=new java.util.ArrayList<String>();
+    for(var pos:BlockPos.betweenClosed(BlockPos.containing(box.minX+.001,box.minY+.001,box.minZ+.001),
+      BlockPos.containing(box.maxX-.001,box.maxY-.001,box.maxZ-.001)))
+     if(!helper.getLevel().getBlockState(pos).getCollisionShape(helper.getLevel(),pos).isEmpty())
+      solids.add(helper.relativePos(pos)+"="+helper.getLevel().getBlockState(pos));
+    helper.assertTrue(false,"Seabed crab collision/damage: seed="+seed+" tick="+crab.tickCount+" health="+crab.getHealth()
+      +" position="+crab.position()+" box="+box+" solids="+solids+" eye="+crab.getEyePosition()
+      +" water="+crab.isInWater()+" air="+crab.getAirSupply()+" behavior="+crab.getBehavior()
+      +" damage="+crab.getLastDamageSource());
+   }
+  });
   var start=crab.position();var destination=helper.absolutePos(new BlockPos(15,4,10));
   helper.runAfterDelay(5,()->{
    helper.assertTrue(crab.getNavigation().moveTo(destination.getX()+.5,destination.getY(),destination.getZ()+.5,1),"Native seabed path failed");

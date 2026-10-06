@@ -138,6 +138,7 @@ public class CoralCrusherStateAuditTests {
     @GameTest(template="crusher_combat_pool", batch="crusher_cycle_audit", timeoutTicks=1400)
     public static void auditsCompleteEncounterAndRetreat(GameTestHelper h) {
         var shark=h.spawn(ModEntities.CORAL_CRUSHER.get(),12,12,10);
+        shark.getRandom().setSeed(7142026L);
         var position=new Vec3[]{h.absoluteVec(new Vec3(25,12,10))};
         var player=swimmer(h,position,1390);
         // Let patrol actually run before revealing a survival swimmer.
@@ -173,7 +174,9 @@ public class CoralCrusherStateAuditTests {
                 h.assertTrue(Math.abs(shark.getSpeed()-expected*shark.getAttributeValue(Attributes.MOVEMENT_SPEED)*.02)<.00001,
                         "Swimming control did not apply the state's speed");
             }
-            if(player.getHealth()<health[0]) {
+            if(player.getHealth()<health[0] && player.getLastDamageSource()!=null
+                    && player.getLastDamageSource().getEntity()==shark
+                    && player.getLastDamageSource().is(net.minecraft.world.damagesource.DamageTypes.MOB_ATTACK)) {
                 h.assertTrue(previous==CHARGE || previous==MELEE_WINDUP,"Damage outside an attack state: "+previous);
                 h.assertTrue(shark.getBehavior()==RECOVER,"A bite did not transition to recovery"); bitten[0]=true;
             }

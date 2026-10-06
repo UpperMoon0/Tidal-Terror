@@ -58,3 +58,11 @@ Desktop.ini
 
 # Parked Git metadata must never be committed.
 /.git_dis/
+
+# Local concept art, generation references and runtime screenshots.
+# Keep the public README banner; shipped textures live in src/main/resources.
+/docs/assets/*
+!/docs/assets/tidal-terror-banner.png
+
+# Unused original Forge MDK changelog.
+/changelog.txt

@@ -17,6 +17,7 @@ public class ShardbackEntity extends PathfinderMob {
  private static final EntityDataAccessor<Byte> BEHAVIOR=SynchedEntityData.defineId(ShardbackEntity.class,EntityDataSerializers.BYTE);
  private ShardbackForageGoal forageGoal;
  private int pinchCooldown;
+ private int moltCooldown = 6000;
  @Override protected void defineSynchedData(){super.defineSynchedData();entityData.define(BEHAVIOR,(byte)0);}
  public Behavior getBehavior(){return Behavior.values()[entityData.get(BEHAVIOR)];}
  void setBehavior(Behavior state){entityData.set(BEHAVIOR,(byte)state.ordinal());}
@@ -42,7 +43,25 @@ public class ShardbackEntity extends PathfinderMob {
    forageGoal.startle(source.getEntity() instanceof LivingEntity living?living:null);
   return hit;
  }
- @Override public void tick(){super.tick();if(pinchCooldown>0)pinchCooldown--;}
+ @Override public void tick(){
+  super.tick();if(pinchCooldown>0)pinchCooldown--;
+  if(!level().isClientSide&&isAlive()&&isInWater()){
+   if(moltCooldown>0)moltCooldown--;
+   if(moltCooldown==0&&getBehavior()==Behavior.FORAGE&&onGround()
+     &&isSeabed(level().getBlockState(blockPosition().below()))){
+    if(level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
+     spawnAtLocation(com.nhat.tidal_terror.items.ModEquipment.SHARDBACK_PLATE.get());
+    moltCooldown=6000+getRandom().nextInt(1201);
+   }
+  }
+ }
+ @Override public void addAdditionalSaveData(net.minecraft.nbt.CompoundTag tag){
+  super.addAdditionalSaveData(tag);tag.putInt("ReefMoltCooldown",moltCooldown);
+ }
+ @Override public void readAdditionalSaveData(net.minecraft.nbt.CompoundTag tag){
+  super.readAdditionalSaveData(tag);
+  moltCooldown=tag.contains("ReefMoltCooldown")?net.minecraft.util.Mth.clamp(tag.getInt("ReefMoltCooldown"),0,7200):6000;
+ }
  @Override public void playerTouch(Player player){
   super.playerTouch(player);
   if(!level().isClientSide&&isAlive()&&isInWater()&&getBehavior()==Behavior.THREATEN

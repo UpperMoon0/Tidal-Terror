@@ -67,6 +67,15 @@ public class CoralCrusherEntity extends WaterAnimal {
     }
     public boolean isRetreating() { return getBehavior() == Behavior.FLEE; }
 
+    @Override public boolean doHurtTarget(net.minecraft.world.entity.Entity target) {
+        boolean hit = super.doHurtTarget(target);
+        if (hit && !level().isClientSide && target instanceof LivingEntity victim && victim.isAlive()) {
+            com.nhat.tidal_terror.effects.ModEffects.applyBleeding(victim, this, 80, 0);
+            com.nhat.tidal_terror.particles.ModParticles.bleed(victim, 12);
+        }
+        return hit;
+    }
+
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean damaged = super.hurt(source, amount);

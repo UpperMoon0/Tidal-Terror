@@ -40,7 +40,8 @@ class ArtifactTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.folder = Path(self.temp.name)
-        self.jar = self.folder/'tidalterror-0.0.1.jar'
+        self.version = release.current()
+        self.jar = self.folder/f'tidalterror-{self.version}.jar'
         self.entries = {}
         props = release.properties((release.ROOT/'gradle.properties').read_text())
         for dirname in ('src/main/resources','src/generated/resources'):
@@ -58,30 +59,30 @@ class ArtifactTests(unittest.TestCase):
             for name,content in self.entries.items(): jar.writestr(name,content)
     def test_valid_production_resources(self):
         self.write_jar()
-        self.assertEqual(len(release.verify_jar(self.jar,'0.0.1')),64)
+        self.assertEqual(len(release.verify_jar(self.jar,self.version)),64)
     def test_missing_resource(self):
         del self.entries['tidalterror.mixins.json']
         self.write_jar()
-        with self.assertRaises(AssertionError): release.verify_jar(self.jar,'0.0.1')
+        with self.assertRaises(AssertionError): release.verify_jar(self.jar,self.version)
     def test_wrong_version(self):
         self.write_jar()
-        with self.assertRaises(AssertionError): release.verify_jar(self.jar,'0.0.2')
+        with self.assertRaises(AssertionError): release.verify_jar(self.jar,self.version+'-wrong')
     def test_fixture_leak(self):
         source=next((release.ROOT/'src/gameTest').rglob('*.java'))
         package=release.re.search(r'^package\s+([\w.]+)\s*;',source.read_text(),release.re.M)[1]
         self.entries[package.replace('.','/')+'/'+source.stem+'.class']=b'fixture'
         self.write_jar()
-        with self.assertRaises(AssertionError): release.verify_jar(self.jar,'0.0.1')
+        with self.assertRaises(AssertionError): release.verify_jar(self.jar,self.version)
     def test_bundle_tampering_and_wrong_commit(self):
         self.write_jar()
         digest=hashlib.sha256(self.jar.read_bytes()).hexdigest()
-        manifest=dict(version='0.0.1',commit='source',sha256=digest,curseforge_project=release.PROJECT_ID)
+        manifest=dict(version=self.version,commit='source',sha256=digest,curseforge_project=release.PROJECT_ID)
         (self.folder/'release-manifest.json').write_text(json.dumps(manifest))
         (self.folder/'SHA256SUMS').write_text(f'{digest}  {self.jar.name}\n')
-        release.verify_bundle(self.folder,'0.0.1','source')
-        with self.assertRaises(AssertionError): release.verify_bundle(self.folder,'0.0.1','different')
+        release.verify_bundle(self.folder,self.version,'source')
+        with self.assertRaises(AssertionError): release.verify_bundle(self.folder,self.version,'different')
         self.entries['extra.txt']=b'tampered';self.write_jar()
-        with self.assertRaises(AssertionError): release.verify_bundle(self.folder,'0.0.1','source')
+        with self.assertRaises(AssertionError): release.verify_bundle(self.folder,self.version,'source')
 
 if __name__ == '__main__':
     unittest.main()

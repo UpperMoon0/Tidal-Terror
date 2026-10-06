@@ -35,6 +35,10 @@ public class ModEntities {
                     com.nhat.tidal_terror.entities.cathedral_ray.CathedralRayEntity::new, RAY_POOL)
                     .sized(4.75f, 0.5f).build("cathedral_ray"));
 
+    public static final RegistryObject<EntityType<FangArrowEntity>> FANG_ARROW =
+            ENTITY_TYPES.register("fang_arrow", () -> EntityType.Builder.<FangArrowEntity>of(FangArrowEntity::new, MobCategory.MISC)
+                    .sized(.5F, .5F).clientTrackingRange(4).updateInterval(20).build("fang_arrow"));
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

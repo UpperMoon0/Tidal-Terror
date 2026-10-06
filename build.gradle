@@ -121,6 +121,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven { url = 'https://maven.blamejared.com/'; content { includeGroup 'mezz.jei' } }
     maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     flatDir { dirs '.dependencies/shaders' }
     // Put repositories for dependencies here
@@ -133,7 +134,16 @@ repositories {
     // }
 }
 
+configurations {
+    localRuntime { canBeConsumed = false; canBeResolved = false }
+    runtimeClasspath.extendsFrom localRuntime
+}
+
 dependencies {
+    // Optional developer tooling; never published as a required dependency.
+    if (!project.properties.keySet().any { it.endsWith('Tests') }) {
+        localRuntime fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    }
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     // Specify the version of Minecraft to use.
     // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
@@ -144,7 +154,7 @@ dependencies {
     implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:1.20.1-3.0.1.6")
     if (file('.dependencies/shaders/oculus-mc1.20.1-1.8.0.jar').exists()
             && file('.dependencies/shaders/embeddium-0.3.31+mc1.20.1.jar').exists()
-            && !project.hasProperty('reefTests') && !project.hasProperty('coralCrusherTests') && !project.hasProperty('cathedralRayTests') && !project.hasProperty('veilglowTests') && !project.hasProperty('shardbackTests') && !project.hasProperty('reefLifeTests') && !project.hasProperty('foodTests') && !project.hasProperty('spawnPoolTests')) {
+            && !project.hasProperty('reefTests') && !project.hasProperty('coralCrusherTests') && !project.hasProperty('cathedralRayTests') && !project.hasProperty('veilglowTests') && !project.hasProperty('shardbackTests') && !project.hasProperty('reefLifeTests') && !project.hasProperty('foodTests') && !project.hasProperty('spawnPoolTests') && !project.hasProperty('equipmentTests') && !project.hasProperty('weaponBalanceTests')) {
         runtimeOnly fg.deobf('dev.local:oculus-mc1.20.1:1.8.0')
         runtimeOnly fg.deobf('dev.local:embeddium:0.3.31+mc1.20.1')
         // ForgeGradle exposes Oculus's bundled jcpp; adding it twice breaks Java modules.
@@ -380,6 +390,43 @@ if (project.hasProperty('coralCrusherModelTests')) {
         classpath = sourceSets.modelTest.runtimeClasspath
         mainClass = 'com.nhat.tidal_terror.entities.shardback.ShardbackModelCheck'
     }
+    tasks.register('verifyReefEquipmentModel', JavaExec) {
+        dependsOn tasks.named('modelTestClasses')
+        classpath = sourceSets.modelTest.runtimeClasspath
+        mainClass = 'com.nhat.tidal_terror.client.EquipmentModelCheck'
+    }
+}
+
+if (project.hasProperty('equipmentTests')) {
+    sourceSets.main.java.srcDir 'src/equipmentTest/java'
+    sourceSets.main.resources.srcDir 'src/gameTest/resources'
+    minecraft.runs.gameTestServer {
+        workingDirectory project.file('build/equipment-gametest')
+        property 'forge.enabledGameTestNamespaces', 'tidalterror'
+        property 'forge.logging.console.level', 'info'
+    }
+    tasks.matching { it.name == 'runGameTestServer' }.configureEach {
+        doLast {
+            def log=file('build/equipment-gametest/logs/latest.log')
+            if (!log.exists() || !log.text.contains('18 GAME TESTS COMPLETE') || !log.text.contains('All 18 required tests passed'))
+                throw new GradleException('Reef equipment native tests did not pass; inspect the native server log.')
+        }
+    }
+}
+
+if (project.hasProperty('equipmentPreview')) {
+    sourceSets.main.java.srcDir 'src/equipmentPreview/java'
+    minecraft.runs.client {
+        workingDirectory project.file('build/equipment-client-preview')
+        property 'forge.logging.console.level', 'info'
+        args '--width', '1280', '--height', '720'
+    }
+    tasks.matching { it.name == 'runClient' }.configureEach {
+        doLast {
+            def passed=file(project.findProperty('equipmentEvidence') ?: 'art/reef-equipment/runtime/passed.txt')
+            if (!passed.exists()) throw new GradleException('Reef equipment framebuffer preview did not complete.')
+        }
+    }
 }
 
 if (project.hasProperty('shardbackTests')) {
@@ -435,7 +482,7 @@ if (project.hasProperty('reefLifeTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def log=file('build/reef-life-gametest/logs/latest.log')
-            if (!log.exists() || !log.text.contains('14 GAME TESTS COMPLETE') || !log.text.contains('All 14 required tests passed'))
+            if (!log.exists() || !log.text.contains('15 GAME TESTS COMPLETE') || !log.text.contains('All 15 required tests passed'))
                 throw new GradleException('Reef life native tests did not pass')
         }
     }
@@ -462,4 +509,52 @@ if (project.hasProperty('spawnPoolTests')) {
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+}
+
+// Optional measured balance report, isolated from production and regression fixtures.
+if (project.hasProperty('weaponBalanceTests')) {
+    sourceSets.main.java.srcDir 'src/weaponBalance/java'
+    sourceSets.main.resources.srcDir 'src/gameTest/resources'
+    minecraft.runs.gameTestServer {
+        workingDirectory project.file('build/weapon-balance-tests')
+        property 'forge.enabledGameTestNamespaces', 'tidalterror'
+        property 'forge.logging.console.level', 'info'
+        property 'tidalterror.weaponOutput', project.file('art/weapon-balance/native-1.20.1.json').absolutePath
+    }
+}
+
+// Forge's userdev GameTest launcher reads DedicatedServerProperties; without
+// server.properties it creates a random normal world around the test rooms.
+def nativeFixtureFlags = ['coralCrusherTests', 'cathedralRayTests', 'veilglowTests',
+        'shardbackTests', 'reefLifeTests', 'foodTests', 'spawnPoolTests',
+        'equipmentTests', 'weaponBalanceTests']
+if (nativeFixtureFlags.any { project.hasProperty(it) }) {
+    sourceSets.main.java.srcDir 'src/nativeTestSupport/java'
+    tasks.matching { it.name == 'runGameTestServer' }.configureEach {
+        doFirst {
+            def directory = project.file(minecraft.runs.gameTestServer.workingDirectory).canonicalFile
+            def buildRoot = layout.buildDirectory.get().asFile.canonicalFile
+            def world = new File(directory, 'gametest-flat-world').canonicalFile
+            if (!directory.toPath().startsWith(buildRoot.toPath())
+                    || !world.toPath().startsWith(directory.toPath()) || world == directory)
+                throw new GradleException('Refusing to reset a GameTest world outside its private build directory')
+            // Reset only this named test world, preserving ordinary world/ and
+            // every developer client/save. A failed run cannot leave actors behind.
+            project.delete(world)
+            directory.mkdirs()
+            def properties = new Properties()
+            properties.setProperty('level-name', 'gametest-flat-world')
+            properties.setProperty('level-seed', '0')
+            properties.setProperty('level-type', 'minecraft:flat')
+            properties.setProperty('generate-structures', 'false')
+            properties.setProperty('online-mode', 'false')
+            properties.setProperty('max-tick-time', '0')
+            properties.setProperty('view-distance', '5')
+            properties.setProperty('simulation-distance', '5')
+            new File(directory, 'server.properties').withOutputStream {
+                properties.store(it, 'Isolated native regression world')
+            }
+            new File(directory, 'eula.txt').text = 'eula=true\n'
+        }
+    }
 }

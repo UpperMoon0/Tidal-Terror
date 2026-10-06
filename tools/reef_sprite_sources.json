@@ -1,0 +1,69 @@
+[
+  {
+    "name": "reef_helmet",
+    "path": "docs/assets/reef-icons/reef_helmet-source.png",
+    "prompt": "Use case: stylized-concept. Production Minecraft inventory pixel-art sprite on genuinely transparent background. One centered isolated item only, fills about 75% of square canvas. Crisp coarse square pixel clusters, nearest-neighbor aesthetic at logical 32x32 resolution, small limited palette, dark one-pixel outline, flat front view matching vanilla inventory sprites, top-left lighting, NO 3D mannequin render, no text or shadow. Reference 1 is the ACTUAL worn reef armor: violet/lavender segmented Shardback carapace, cobalt blue coral accents, ivory limb plates, slate joints. Reference 2 is actual crab material source. Reference 3 fixes GENERAL VANILLA ARMOR ITEM SILHOUETTES only; DO NOT copy its turquoise palette. Match armor colors/panels exactly: purple dominates helmet/chest, ivory dominates leggings/boots, tiny cobalt accents only. Item to generate: helmet, compact vanilla arch silhouette with a dark empty face opening and short cheek guards; NO neck or body.",
+    "references": [
+      "docs/assets/reef-equipment-runtime.png",
+      "docs/assets/reef-icons/shardback-native-reference.png",
+      "docs/assets/reef-icons/vanilla-silhouettes.png"
+    ]
+  },
+  {
+    "name": "reef_chestplate",
+    "path": "docs/assets/reef-icons/reef_chestplate-source.png",
+    "prompt": "Use case: stylized-concept. Production Minecraft inventory pixel-art sprite on genuinely transparent background. One centered isolated item only, fills about 75% of square canvas. Crisp coarse square pixel clusters, nearest-neighbor aesthetic at logical 32x32 resolution, small limited palette, dark one-pixel outline, flat front view matching vanilla inventory sprites, top-left lighting, NO 3D mannequin render, no text or shadow. Reference 1 is the ACTUAL worn reef armor: violet/lavender segmented Shardback carapace, cobalt blue coral accents, ivory limb plates, slate joints. Reference 2 is actual crab material source. Reference 3 fixes GENERAL VANILLA ARMOR ITEM SILHOUETTES only; DO NOT copy its turquoise palette. Match armor colors/panels exactly: purple dominates helmet/chest, ivory dominates leggings/boots, tiny cobalt accents only. Item to generate: chestplate, vanilla sleeveless shirt silhouette with wide short shoulder caps and a clear neck notch; NO head, arms or waist belt.",
+    "references": [
+      "docs/assets/reef-equipment-runtime.png",
+      "docs/assets/reef-icons/shardback-native-reference.png",
+      "docs/assets/reef-icons/vanilla-silhouettes.png"
+    ]
+  },
+  {
+    "name": "reef_leggings",
+    "path": "docs/assets/reef-icons/reef_leggings-source.png",
+    "prompt": "Use case: stylized-concept. Production Minecraft inventory pixel-art sprite on genuinely transparent background. One centered isolated item only, fills about 75% of square canvas. Crisp coarse square pixel clusters, nearest-neighbor aesthetic at logical 32x32 resolution, small limited palette, dark one-pixel outline, flat front view matching vanilla inventory sprites, top-left lighting, NO 3D mannequin render, no text or shadow. Reference 1 is the ACTUAL worn reef armor: violet/lavender segmented Shardback carapace, cobalt blue coral accents, ivory limb plates, slate joints. Reference 2 is actual crab material source. Reference 3 fixes GENERAL VANILLA ARMOR ITEM SILHOUETTES only; DO NOT copy its turquoise palette. Match armor colors/panels exactly: purple dominates helmet/chest, ivory dominates leggings/boots, tiny cobalt accents only. Item to generate: leggings, vanilla inverted U silhouette: a joined purple hip band, two long separate ivory leg guards, dark gap between legs; NO feet.",
+    "references": [
+      "docs/assets/reef-equipment-runtime.png",
+      "docs/assets/reef-icons/shardback-native-reference.png",
+      "docs/assets/reef-icons/vanilla-silhouettes.png"
+    ]
+  },
+  {
+    "name": "reef_boots",
+    "path": "docs/assets/reef-icons/reef_boots-source.png",
+    "prompt": "Use case: stylized-concept. Production Minecraft inventory pixel-art sprite on genuinely transparent background. One centered isolated item only, fills about 75% of square canvas. Crisp coarse square pixel clusters, nearest-neighbor aesthetic at logical 32x32 resolution, small limited palette, dark one-pixel outline, flat front view matching vanilla inventory sprites, top-left lighting, NO 3D mannequin render, no text or shadow. Reference 1 is the ACTUAL worn reef armor: violet/lavender segmented Shardback carapace, cobalt blue coral accents, ivory limb plates, slate joints. Reference 2 is actual crab material source. Reference 3 fixes GENERAL VANILLA ARMOR ITEM SILHOUETTES only; DO NOT copy its turquoise palette. Match armor colors/panels exactly: purple dominates helmet/chest, ivory dominates leggings/boots, tiny cobalt accents only. Item to generate: boots, vanilla pair of separate ankle boots, ivory toe armor and purple cuffs; NO legs above cuffs.",
+    "references": [
+      "docs/assets/reef-equipment-runtime.png",
+      "docs/assets/reef-icons/shardback-native-reference.png",
+      "docs/assets/reef-icons/vanilla-silhouettes.png"
+    ]
+  },
+  {
+    "name": "crusher_tooth",
+    "path": "docs/assets/reef-icons/crusher_tooth-source.png",
+    "prompt": "Use case: stylized-concept. Production Minecraft item inventory sprite, ONE detached Crusher tooth centered on genuine transparent background. Reference 1 is actual in-game Coral Crusher native model; reference 2 is the actual worn spear tooth (the pale elongated tooth at spear tip). Depict one ivory/off-white thick long triangular shark tooth with broad squared slightly worn root, tapered sharp point, subtle cream shaded planes and tiny slate-brown root discoloration. Single tooth only: NO jaws, no meat, no handle, no blue skin, no text. Dark restrained pixel outline, top-left lighting, crisp coarse block pixel clusters at logical 32x32 resolution enlarged nearest-neighbor. Fill 75 percent of canvas with a diagonal tooth angled from lower-left root to upper-right point, clearly reads as a tooth in a 16px item slot. Must match the real Crusher's pale teeth and the actual spear tip, avoid ornamental fantasy crystal.",
+    "references": [
+      "docs/assets/reef-icons/crusher-native-reference.png",
+      "docs/assets/reef-equipment-runtime.png"
+    ]
+  },
+  {
+    "name": "shardback_plate",
+    "path": "docs/assets/reef-icons/shardback_plate-source.png",
+    "prompt": "Use case: stylized-concept. Production Minecraft inventory material sprite, ONE detached Shardback carapace plate centered on genuinely transparent background. Reference 1 is the ACTUAL in-game Shardback crab; reference 2 shows armor crafted from the same plates. Reproduce crab material: broad low-domed segmented violet/lavender shell fragment with stepped rim, darker plum underside, a small cobalt blue coral nub along one edge, a chipped ivory inner edge. This is an organic CRAB SHELL PLATE, not a flat cube, gemstone, purple ingot, fish scale, whole crab, or armor. Squarish diagonal shell shard silhouette recognizable at 16px. Crisp coarse square pixel clusters at logical 32x32 resolution, limited palette matching the crab's pixels, dark restrained outline and simple top-left lighting. Fill 75 percent of square canvas; transparent padding; no background, text, shadow, extra objects.",
+    "references": [
+      "docs/assets/reef-icons/shardback-native-reference.png",
+      "docs/assets/reef-equipment-runtime.png"
+    ]
+  },
+  {
+    "name": "fang_arrow",
+    "path": "docs/assets/reef-icons/fang_arrow-source.png",
+    "prompt": "Create one production Minecraft inventory item sprite: FANG ARROW, a slender wooden arrow shaft with a single small ivory Coral Crusher fang replacing its flint arrowhead, sandy binding beneath fang and white feather fletching. Use first reference as exact tooth ivory palette and tapered material, second reference is real native Coral Crusher mob material. Diagonal shaft from lower left feather/nock to upper right fang tip, recognizable vanilla arrow inventory silhouette. One centered item only on truly transparent background, no text, no shadow, no glow. Chunky pixel art, strict logical 32x32 pixels, limited palette and crisp square pixel clusters suitable for nearest-neighbor export. Fang is small practical arrowhead, not oversized spear head. Wood brown, ivory tooth, dark slate outline. Fill 80 percent canvas.",
+    "references": [
+      "docs/assets/reef-icons/crusher_tooth-source.png",
+      "docs/assets/reef-icons/crusher-native-reference.png"
+    ]
+  }
+]
