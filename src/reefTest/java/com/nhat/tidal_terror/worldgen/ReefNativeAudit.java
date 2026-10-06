@@ -181,8 +181,8 @@ public final class ReefNativeAudit {
             }
             // Random water-column samples can legitimately miss the thin sandy band.
             // Exercise both real habitats through the same native placement/finalize path.
-            verifyNativeSkin(level,player,clearWater,true);
-            verifyNativeSkin(level,player,clearWater,false);
+            verifyNativeSkin(level,player,clearWater,true,minX,minZ);
+            verifyNativeSkin(level,player,clearWater,false,minX,minZ);
             int sharkCount=0, sandySharks=0, blueSharks=0;
             for(var entity:level.getAllEntities())if(entity instanceof CoralCrusherEntity shark) {
                 sharkCount++;
@@ -294,8 +294,12 @@ public final class ReefNativeAudit {
         } finally { if(!defer){for(var chunk:forced)level.setChunkForced(chunk.x,chunk.z,false);forced.clear();pending=null;server.halt(false);} }
     }
     private static void verifyNativeSkin(net.minecraft.server.level.ServerLevel level,ServerPlayer player,
-            List<BlockPos> clearWater,boolean sandy) {
-        BlockPos site=clearWater.stream().filter(pos->CoralCrusherEntity.sandyAtSpawn(level,pos)==sandy)
+            List<BlockPos> clearWater,boolean sandy,int minX,int minZ) {
+        // Group members wander horizontally. Keep their chunks inside the active
+        // fixture so freshly added entities participate in the aggregate lookup.
+        BlockPos site=clearWater.stream()
+                .filter(pos->pos.getX()>=minX+16 && pos.getX()<minX+96 && pos.getZ()>=minZ+16 && pos.getZ()<minZ+96)
+                .filter(pos->CoralCrusherEntity.sandyAtSpawn(level,pos)==sandy)
                 .findFirst().orElseThrow(()->new AssertionError("No clear native habitat for sandy="+sandy));
         player.setPos(site.getX()+45,site.getY(),site.getZ()+.5);
         level.random.setSeed(sandy?7142026L:7142027L);
@@ -307,6 +311,8 @@ public final class ReefNativeAudit {
                     (mob,chunk)->{
                         require(mob instanceof CoralCrusherEntity shark && shark.isSandy()==sandy,
                                 "Native finalizeSpawn chose wrong habitat skin at "+mob.blockPosition());
+                        require(level.getEntity(mob.getUUID())==mob,"Habitat shark not visible in active fixture at "+mob.blockPosition());
+                        System.out.println("REEF_AUDIT HABITAT_ENTITY sandy="+sandy+" pos="+mob.blockPosition());
                         created[0]++;
                     });
         require(created[0]>0,"Native spawner failed explicit habitat sandy="+sandy+" at "+site);
