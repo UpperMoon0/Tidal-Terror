@@ -69,3 +69,5 @@ The archive gate verifies loader/Minecraft/Java metadata, required companion mod
 `python tools/release.py package --ports --output build/release` verifies and packages all five normal jars plus one immutable source/version manifest and checksum list. Missing targets, wrong loader/Java metadata, fixture leaks or altered artifacts stop packaging.
 
 The version-driven release workflow retains draft/tag reservation and resumable CurseForge receipts. It reserves the complete immutable bundle, publishes the original Forge jar, then uploads each port with its exact loader, Minecraft version, Java version and required dependencies. The GitHub release remains a draft until all five upload receipts match their artifacts and source commit. PR CI never publishes. Merge/publication is a separate action.
+
+The original native terrain audit explicitly exercises clear generated sandy and open-water shark habitats through NaturalSpawner, with deterministic fixture randomness. Both skin/finalize assertions remain required; random bulk water-column samples alone need not hit the narrow sandy spawn band. No spawn rules or population settings change for this audit.

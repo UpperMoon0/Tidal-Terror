@@ -179,6 +179,10 @@ public final class ReefNativeAudit {
                 NaturalSpawner.spawnCategoryForPosition(MobCategory.WATER_CREATURE,level,pos);
                 for(var reefPool:ModEntities.reefPools())NaturalSpawner.spawnCategoryForPosition(reefPool,level,pos);
             }
+            // Random water-column samples can legitimately miss the thin sandy band.
+            // Exercise both real habitats through the same native placement/finalize path.
+            verifyNativeSkin(level,player,clearWater,true);
+            verifyNativeSkin(level,player,clearWater,false);
             int sharkCount=0, sandySharks=0, blueSharks=0;
             for(var entity:level.getAllEntities())if(entity instanceof CoralCrusherEntity shark) {
                 sharkCount++;
@@ -288,6 +292,25 @@ public final class ReefNativeAudit {
             error.printStackTrace();
             System.out.println("REEF_AUDIT FAIL "+error);
         } finally { if(!defer){for(var chunk:forced)level.setChunkForced(chunk.x,chunk.z,false);forced.clear();pending=null;server.halt(false);} }
+    }
+    private static void verifyNativeSkin(net.minecraft.server.level.ServerLevel level,ServerPlayer player,
+            List<BlockPos> clearWater,boolean sandy) {
+        BlockPos site=clearWater.stream().filter(pos->CoralCrusherEntity.sandyAtSpawn(level,pos)==sandy)
+                .findFirst().orElseThrow(()->new AssertionError("No clear native habitat for sandy="+sandy));
+        player.setPos(site.getX()+45,site.getY(),site.getZ()+.5);
+        level.random.setSeed(sandy?7142026L:7142027L);
+        int[] created={0};
+        for(int attempt=0;attempt<64 && created[0]==0;attempt++)
+            NaturalSpawner.spawnCategoryForPosition(ModEntities.CORAL_CRUSHER.get().getCategory(),level,
+                    level.getChunkAt(site),site,
+                    (type,pos,chunk)->type==ModEntities.CORAL_CRUSHER.get() && CoralCrusherEntity.sandyAtSpawn(level,pos)==sandy,
+                    (mob,chunk)->{
+                        require(mob instanceof CoralCrusherEntity shark && shark.isSandy()==sandy,
+                                "Native finalizeSpawn chose wrong habitat skin at "+mob.blockPosition());
+                        created[0]++;
+                    });
+        require(created[0]>0,"Native spawner failed explicit habitat sandy="+sandy+" at "+site);
+        System.out.println("REEF_AUDIT HABITAT_SKIN sandy="+sandy+" created="+created[0]+" site="+site);
     }
     private static void require(boolean condition,String message) { if(!condition)throw new AssertionError(message); }
     private static int solidSeabed(net.minecraft.server.level.ServerLevel level,BlockPos column){
