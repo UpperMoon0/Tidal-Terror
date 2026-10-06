@@ -10,6 +10,10 @@ architectury { minecraft = '1.20.1' }
 allprojects {
     group = rootProject.mod_group_id
     version = rootProject.mod_version
+    tasks.withType(org.gradle.api.tasks.bundling.AbstractArchiveTask).configureEach {
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
     repositories {
         mavenCentral()
         maven { url = 'https://libraries.minecraft.net/'; content { includeGroup 'com.mojang' } }
