@@ -38,6 +38,7 @@ if (project.hasProperty('portTests')) {
 }
 
 if (project.hasProperty('clientSmoke')) {
+    sourceSets.main.java.srcDir rootProject.file('src/trimClient1211/java')
     sourceSets.main.java.srcDir rootProject.file('src/clientSmokeFabric/java')
     processResources {
         doLast {
@@ -57,3 +58,5 @@ dependencies {
 }
 
 if (project.hasProperty("portTests")) sourceSets.main.java.srcDir rootProject.file("src/spawnTargetTest/java")
+
+sourceSets.main.java.srcDir rootProject.file('fabric-shared/src/main/java')

@@ -53,6 +53,8 @@ public final class PortEquipmentTests {
     }
     @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=20)
     public static void equipmentRepairsAndRestrictions(GameTestHelper h) {
+        for(var armor:java.util.List.of(ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get()))
+            h.assertTrue(new ItemStack(armor).is(net.minecraft.tags.ItemTags.TRIMMABLE_ARMOR),"Reef armor missing native trimmable tag");
         var spear=new ItemStack(ModEquipment.REEF_SPEAR.get());
         h.assertTrue(spear.getItem().isValidRepairItem(spear,new ItemStack(ModEquipment.CRUSHER_TOOTH.get())),"Spear does not repair with teeth");
         h.assertTrue(!h.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION).value().canEnchant(new ItemStack(net.minecraft.world.item.Items.BOW)),"Serration applies to bows");
@@ -70,6 +72,11 @@ public final class PortEquipmentTests {
             var recipe=com.nhat.tidal_terror.recipes.ModRecipes.ARMOR_UPGRADE.get().codec().codec().parse(h.getLevel().registryAccess().createSerializationContext(com.mojang.serialization.JsonOps.INSTANCE),json).getOrThrow();
             var iron=new ItemStack(net.minecraft.world.item.Items.IRON_HELMET);
             iron.setDamageValue(37);iron.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,net.minecraft.network.chat.Component.literal("Inherited helmet"));iron.set(net.minecraft.core.component.DataComponents.REPAIR_COST,9);
+            var registry=h.getLevel().registryAccess();
+            var trim=new net.minecraft.world.item.armortrim.ArmorTrim(
+                registry.registryOrThrow(net.minecraft.core.registries.Registries.TRIM_MATERIAL).getHolderOrThrow(net.minecraft.world.item.armortrim.TrimMaterials.GOLD),
+                registry.registryOrThrow(net.minecraft.core.registries.Registries.TRIM_PATTERN).getHolderOrThrow(net.minecraft.world.item.armortrim.TrimPatterns.SENTRY));
+            iron.set(net.minecraft.core.component.DataComponents.TRIM,trim);
             iron.enchant(enchantments.getOrThrow(net.minecraft.world.item.enchantment.Enchantments.PROTECTION),3);
             var grid=new java.util.ArrayList<ItemStack>(java.util.Collections.nCopies(9,ItemStack.EMPTY));grid.set(4,iron);
             for(int index:new int[]{1,3,5})grid.set(index,new ItemStack(ModEquipment.SHARDBACK_PLATE.get()));
@@ -79,6 +86,7 @@ public final class PortEquipmentTests {
             var upgraded=recipe.assemble(input, h.getLevel().registryAccess());
             h.assertTrue(upgraded.is(ModEquipment.REEF_HELMET.get())&&upgraded.getDamageValue()==37,"Upgrade erased wear or returned wrong armor");
             h.assertTrue(upgraded.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME).equals(iron.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME)),"Upgrade erased name");
+            h.assertTrue(upgraded.get(net.minecraft.core.component.DataComponents.TRIM).equals(trim),"Upgrade erased trim");
             h.assertTrue(upgraded.get(net.minecraft.core.component.DataComponents.REPAIR_COST)==9,"Upgrade erased repair cost");
             h.assertTrue(upgraded.get(net.minecraft.core.component.DataComponents.ENCHANTMENTS).equals(iron.get(net.minecraft.core.component.DataComponents.ENCHANTMENTS)),"Upgrade erased enchantments");
         } catch (java.io.IOException failure) { throw new RuntimeException(failure); }

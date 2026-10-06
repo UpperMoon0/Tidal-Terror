@@ -53,6 +53,17 @@ public final class PortEquipmentTests implements net.fabricmc.fabric.api.gametes
     }
     @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=20)
     public static void equipmentRepairsAndRestrictions(GameTestHelper h) {
+        for(var armor:java.util.List.of(ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get()))
+            h.assertTrue(new ItemStack(armor).is(net.minecraft.tags.ItemTags.TRIMMABLE_ARMOR),"Reef armor missing native trimmable tag");
+        var registry=h.getLevel().registryAccess();
+        var trim=new net.minecraft.world.item.armortrim.ArmorTrim(
+            registry.registryOrThrow(net.minecraft.core.registries.Registries.TRIM_MATERIAL).getHolderOrThrow(net.minecraft.world.item.armortrim.TrimMaterials.GOLD),
+            registry.registryOrThrow(net.minecraft.core.registries.Registries.TRIM_PATTERN).getHolderOrThrow(net.minecraft.world.item.armortrim.TrimPatterns.SENTRY));
+        for(var armor:java.util.List.of(ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get())) {
+            var trimmed=new ItemStack(armor);
+            h.assertTrue(net.minecraft.world.item.armortrim.ArmorTrim.setTrim(registry,trimmed,trim),"Native trim setter rejected Reef Armor");
+            h.assertTrue(net.minecraft.world.item.armortrim.ArmorTrim.getTrim(registry,trimmed).orElseThrow().equals(trim),"Native trim getter lost Reef Armor trim");
+        }
         var spear=new ItemStack(ModEquipment.REEF_SPEAR.get());
         h.assertTrue(spear.getItem().isValidRepairItem(spear,new ItemStack(ModEquipment.CRUSHER_TOOTH.get())),"Spear does not repair with teeth");
         h.assertTrue(!com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get().canEnchant(new ItemStack(net.minecraft.world.item.Items.BOW)),"Serration applies to bows");

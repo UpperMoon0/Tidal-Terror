@@ -29,6 +29,13 @@ class ClientLoadingTests(unittest.TestCase):
         with self.assertRaises(ValueError): ports.verify_client('BUILD SUCCESSFUL')
         ports.verify_client('TIDAL_PORT_CLIENT_READY: resources loaded')
 
+    def test_fabric_requires_complete_native_trim_cases(self):
+        for count in (256,288):
+            with self.subTest(count=count):
+                for log in ('TIDAL_PORT_CLIENT_READY:',f'TIDAL_FABRIC_TRIMS_PASS: {count-1} cases\nTIDAL_PORT_CLIENT_READY:'):
+                    with self.assertRaises(ValueError):ports.verify_client(log,count)
+                ports.verify_client(f'TIDAL_FABRIC_TRIMS_PASS: {count} cases\nTIDAL_PORT_CLIENT_READY:',count)
+
 class MatrixBundleTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.folder=Path(self.temp.name)

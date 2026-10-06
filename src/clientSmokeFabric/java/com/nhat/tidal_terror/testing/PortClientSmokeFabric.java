@@ -17,6 +17,7 @@ public final class PortClientSmokeFabric implements net.fabricmc.api.ClientModIn
         models.bakeLayer(com.nhat.tidal_terror.client.ReefSpearModel.LAYER);
         for(var slot:new net.minecraft.world.entity.EquipmentSlot[]{net.minecraft.world.entity.EquipmentSlot.HEAD,net.minecraft.world.entity.EquipmentSlot.CHEST,net.minecraft.world.entity.EquipmentSlot.LEGS,net.minecraft.world.entity.EquipmentSlot.FEET})
             models.bakeLayer(com.nhat.tidal_terror.client.ReefArmorModel.layer(slot));
+        ReefTrimClientCheck.run();
         org.slf4j.LoggerFactory.getLogger("TidalPortSmoke").info("TIDAL_PORT_CLIENT_READY: JEI, native resources and nine model layers loaded");
         game.stop();
     }

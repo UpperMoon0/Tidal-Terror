@@ -5,6 +5,7 @@ Version 0.0.3 retains Forge 1.20.1 and adds Fabric 1.20.1, Fabric/NeoForge 1.21.
 ## Source ownership
 
 - `src/main` and `src/generated` remain the original Forge entry point, Forge adapters and authoritative artwork/1.20.1 data.
+- `fabric-shared` owns the Fabric armor trim geometry/UV adapter shared between versions; each Fabric leaf handles its native trim storage and vertex API.
 - `common` owns authoritative Java-only equipment tuning: spear durability/damage/speed, bleed interval/duration/damage and the armor bleed multiplier. Every runtime and spear tooltip calls these values.
 - `common-1201` owns the identical Forge/Fabric 1.20.1 models, renderers, entities, armor material, arrow item, upgrade recipe and turtle placement mixin. Model generators write into this shared root.
 - `common-universal` owns reef geometry, navigation helpers, shared shark/crab/jelly goals and structure/water postprocessing hooks that compile across all five runtimes. The complete shark behavior algorithm lives here; `CoralCrusherRuntime` adapters contain only damage-call, collision-box, water-check, drowned-name and minimum-height API differences.
@@ -52,7 +53,7 @@ Water repair is queued only when an unfinished `ProtoChunk` becomes a full chunk
 
 Port test launchers must report every required native test passed. Fabric and 26.1.2 also require an XML report with the expected number of unique successful cases. NeoForge 1.21.1 uses its native completion log because its server accepts no `--report` option. A zero process exit after a startup exception is rejected.
 
-`-PclientSmoke` checks completed native resource loading, particle/renderer registration and baking of all nine mob/equipment layers and construction of all four native NeoForge armor models, then exits its own client. Run `python tools/ports.py client TARGET`; CI supplies Xvfb/Mesa on Linux. This is a loading check, not an assertion about final in-world screenshots or shader compatibility.
+`-PclientSmoke` checks completed native resource loading, particle/renderer registration and baking of all nine mob/equipment layers and construction of all four native NeoForge armor models, then exits its own client. Run `python tools/ports.py client TARGET`; CI supplies Xvfb/Mesa on Linux. Fabric client checks additionally render the production trim pass against the loaded native atlas: 256 pattern/slot/age/glint cases on 1.20.1 and 288 on 1.21.1, plus untrimmed controls. They compare emitted shell/trim positions, check inner versus outer atlas selection, and require the UV faces to sample opaque trim pixels. `fabric-shared` reuses trim geometry cloning and projection; version adapters handle native cube emission, trim storage and decal render types. Native equipment fixtures check the loaded trimmable tag; production archive checks retain the tag and exclude the client fixtures. These are native render-emission checks, not final in-world screenshot or shader-compatibility verification.
 
 After tests or client checks, **clean the target before a production build**:
 

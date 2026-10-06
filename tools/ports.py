@@ -88,6 +88,10 @@ def verify_jar(path, target, version):
             if name.startswith('reef_') and name!='reef_spear': assert data['type']=='tidalterror:reef_armor_upgrade'
         for name in ('coral_crusher','shardback','cathedral_ray','veilglow'):
             json.loads(jar.read(f'data/tidalterror/{loot}/entities/{name}.json'))
+        trim_folder='item' if modern else 'items'
+        trimmable=json.loads(jar.read(f'data/minecraft/tags/{trim_folder}/trimmable_armor.json'))
+        assert not trimmable.get('replace',False)
+        assert all('tidalterror:reef_'+slot in trimmable['values'] for slot in ('helmet','chestplate','leggings','boots'))
         biome=json.loads(jar.read('data/tidalterror/worldgen/biome/coral_cathedral.json'))
         assert all('tidalterror:'+name in biome['spawners'] for name in ('crusher','ray','veilglow','shardback'))
         for name in ('shardback_plate','crusher_tooth','reef_helmet','reef_chestplate','reef_leggings','reef_boots'):
@@ -133,9 +137,11 @@ def run_tests(target):
     verify_results(log_path.read_text(encoding='utf-8'),TARGETS[target]['tests'],None if target=='neoforge-1.21.1' else report)
     print(f'{target}: all {TARGETS[target]["tests"]} native tests verified')
 
-def verify_client(log):
+def verify_client(log, trim_cases=None):
     if 'TIDAL_PORT_CLIENT_READY:' not in log:
         raise ValueError('Native client did not complete resource/model loading')
+    if trim_cases is not None and f'TIDAL_FABRIC_TRIMS_PASS: {trim_cases} ' not in log:
+        raise ValueError('Fabric client did not complete all native armor trim regressions')
     if re.search(r"(Couldn't parse item model|Unable to load model|Missing textures in model|Failed to load texture|Mixin apply.*failed|Reported exception thrown)", log, re.I):
         raise ValueError('Client resource or rendering setup failed')
 
@@ -156,7 +162,8 @@ def run_client(target):
     evidence.mkdir(parents=True,exist_ok=True)
     shutil.copy2(log_path,evidence/log_path.name)
     if code: raise ValueError(f'Native client exited {code}')
-    verify_client(log_path.read_text(encoding='utf-8'))
+    client_log=log_path.read_text(encoding='utf-8')
+    verify_client(client_log, {'fabric-1.20.1':256,'fabric-1.21.1':288}.get(target))
     print(f'{target}: native client resources and model layers verified')
 
 def main():

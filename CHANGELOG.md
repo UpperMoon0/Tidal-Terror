@@ -2,6 +2,8 @@
 
 ## 0.0.3 — Unreleased
 
+- Restore Reef Armor trim rendering on Fabric 1.20.1 and 1.21.1, using the shell geometry with vanilla trim UVs; add native trimmable tags and client regressions for every vanilla pattern, armor slot, age and glint state.
+
 - Make Coral Cathedral rare through broad seeded patch selection (4.36% of ocean area measured across five seeds), retaining large reef regions.
 - Target natural crab spawn attempts toward submerged sediment instead of random water-column heights, retaining native caps and safety checks; add native spawner regressions across all five runtimes.
 - Fix ray seabed/coral escape clearance and whole-wing navigation shortcuts across all targets; add native obstacle regressions.

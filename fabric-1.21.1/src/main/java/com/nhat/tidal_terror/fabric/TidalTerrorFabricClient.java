@@ -33,11 +33,9 @@ public final class TidalTerrorFabricClient implements ClientModInitializer {
             poses.pushPose();poses.translate(.5,.5,.5);poses.mulPose(com.mojang.math.Axis.XP.rotationDegrees(180));
             model.render(poses,ItemRenderer.getFoilBufferDirect(buffers,RenderType.entityCutoutNoCull(ResourceLocation.fromNamespaceAndPath("tidalterror","textures/item/reef_spear_model.png")),false,stack.hasFoil()),light,overlay);poses.popPose();
         });
-        ArmorRenderer.register((poses,buffers,stack,entity,slot,light,context)->{
-            var model=new ReefArmorModel(ReefModelCache.layer(ReefArmorModel.layer(slot)));
-            context.copyPropertiesTo(model);
-            ArmorRenderer.renderPart(poses,buffers,light,stack,model,ResourceLocation.fromNamespaceAndPath("tidalterror","textures/models/armor/reef.png"));
-        },ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get());
+        ArmorRenderer.register((poses,buffers,stack,entity,slot,light,context)->
+            ReefArmorTrimRenderer.renderArmor(poses,buffers,light,stack,entity.level().registryAccess(),slot,context),
+            ModEquipment.REEF_HELMET.get(),ModEquipment.REEF_CHESTPLATE.get(),ModEquipment.REEF_LEGGINGS.get(),ModEquipment.REEF_BOOTS.get());
         ItemTooltipCallback.EVENT.register((stack,context,flags,lines)->{
             if(!stack.is(net.minecraft.world.item.Items.ENCHANTED_BOOK))return;
 
