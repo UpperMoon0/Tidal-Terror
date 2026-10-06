@@ -29,10 +29,10 @@ public final class ReefSpearItem extends Item {
     private final Multimap<Attribute, AttributeModifier> modifiers;
 
     public ReefSpearItem() {
-        super(new Properties().durability(250));
+        super(new Properties().durability(com.nhat.tidal_terror.balance.ReefBalance.SPEAR_DURABILITY));
         modifiers = ImmutableMultimap.<Attribute, AttributeModifier>builder()
-                .put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Spear damage", 5, AttributeModifier.Operation.ADDITION))
-                .put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Spear speed", -2.9, AttributeModifier.Operation.ADDITION))
+                .put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Spear damage", com.nhat.tidal_terror.balance.ReefBalance.SPEAR_DAMAGE_BONUS, AttributeModifier.Operation.ADDITION))
+                .put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Spear speed", com.nhat.tidal_terror.balance.ReefBalance.SPEAR_SPEED_BONUS, AttributeModifier.Operation.ADDITION))
                 .put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(REACH_UUID, "Spear reach", 1, AttributeModifier.Operation.ADDITION))
                 .build();
     }
@@ -69,7 +69,7 @@ public final class ReefSpearItem extends Item {
     }
     @Override public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> text, TooltipFlag flags) {
         int duration = bleedingDuration(stack);
-        float damage = 1 + .5F * bleedingPower(stack);
+        float damage = com.nhat.tidal_terror.balance.ReefBalance.bleedingDamage(bleedingPower(stack),false);
         String shownDamage = damage == (int)damage ? Integer.toString((int)damage) : Float.toString(damage);
         text.add(Component.translatable("tooltip.tidalterror.reef_spear", shownDamage, duration / 20).withStyle(ChatFormatting.AQUA));
         text.add(Component.translatable("tooltip.tidalterror.reef_spear_refresh").withStyle(ChatFormatting.GRAY));
@@ -79,7 +79,7 @@ public final class ReefSpearItem extends Item {
         return net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(), stack), 0, 3);
     }
     private static int bleedingDuration(ItemStack stack) {
-        return 80 + 40 * net.minecraft.util.Mth.clamp(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(), stack), 0, 2);
+        return com.nhat.tidal_terror.balance.ReefBalance.bleedingDuration(EnchantmentHelper.getItemEnchantmentLevel(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(), stack));
     }
     @Override public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(com.nhat.tidal_terror.client.ReefEquipmentClient.spear());

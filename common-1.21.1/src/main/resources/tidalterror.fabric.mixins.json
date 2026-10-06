@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.nhat.tidal_terror.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ReefDistributionMixin", "CrabSpawnTargetMixin", "ReefWaterPostprocessMixin",
+    "ReefTurtlePlacementMixin",
+    "ReefShipwreckPlacementMixin",
+    "ReefRuinedPortalPlacementMixin",
+    "MobCategoryAccess",
+    "EntityDataMixin",
+    "BleedingLifecycleMixin",
+    "ReefAnimalRulesMixin",
+    "ReefChunkFinishMixin",
+    "ReefChunkSaveMixin",
+    "ReefAttackChargeMixin",
+    "SpearEnchantmentSupportMixin",
+    "ReefTurtleObstructionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "tidalterror-1.21.1-refmap.json"
+}

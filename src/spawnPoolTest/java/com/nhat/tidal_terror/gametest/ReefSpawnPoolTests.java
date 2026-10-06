@@ -12,6 +12,23 @@ import java.util.*;
 
 @GameTestHolder("tidalterror") @PrefixGameTestTemplate(false)
 public class ReefSpawnPoolTests {
+    @GameTest(template="coral_crusher_pool", timeoutTicks=200, batch="reef_distribution")
+    public static void reefRarityPreservesNativeBiomes(GameTestHelper h) {
+        ReefDistributionTests.verify(h,h.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS));
+    }
+
+    @GameTest(template="coral_crusher_pool", timeoutTicks=200, batch="crab_spawn")
+    public static void crabNaturalSpawnTargetsSeabed(GameTestHelper h) {
+        CrabSpawnTargetTests.verify(h,h.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(ReefWorldgen.BIOME),level->{
+            var player=new net.minecraft.server.level.ServerPlayer(level.getServer(),level,new com.mojang.authlib.GameProfile(UUID.randomUUID(),"crab-spawn-test"));
+            player.connection=new net.minecraft.server.network.ServerGamePacketListenerImpl(level.getServer(),new net.minecraft.network.Connection(net.minecraft.network.protocol.PacketFlow.SERVERBOUND),player){
+                @Override public void send(net.minecraft.network.protocol.Packet<?> packet){}
+                @Override public void send(net.minecraft.network.protocol.Packet<?> packet,net.minecraft.network.PacketSendListener listener){}
+            };
+            level.addNewPlayer(player);return player;
+        });
+    }
+
     @GameTest(template="coral_crusher_pool", timeoutTicks=40)
     public static void nativeCategoriesAndBiomeData(GameTestHelper h) throws Exception {
         var types=List.of(ModEntities.CORAL_CRUSHER.get(),ModEntities.CATHEDRAL_RAY.get(),

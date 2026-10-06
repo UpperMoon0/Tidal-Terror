@@ -17,7 +17,7 @@ All four have custom spawn eggs in the **Tidal Terror** creative tab. The Crushe
 
 ## Reef equipment (0.0.2)
 
-Coral Cathedral supplies an **iron-to-diamond specialist equipment branch**. Coral Crushers drop 1–2 **Crusher Teeth**, and Shardbacks drop 1–2 **Shardback Plates**, alongside seafood. Looting can increase the material drops. Living Shardbacks also shed a plate while safely foraging on submerged sediment after 5–6 minutes of loaded underwater time; keep a respectful distance so they can forage. The initial molt takes five minutes, and cooldowns persist across saves.
+Coral Cathedral supplies an **iron-to-diamond specialist equipment branch**. Coral Crushers drop 1â€“2 **Crusher Teeth**, and Shardbacks drop 1â€“2 **Shardback Plates**, alongside seafood. Looting can increase the material drops. Living Shardbacks also shed a plate while safely foraging on submerged sediment after 5â€“6 minutes of loaded underwater time; keep a respectful distance so they can forage. The initial molt takes five minutes, and cooldowns persist across saves.
 
 Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather**. Upgrade each matching iron armor piece with **three Shardback Plates and one dead coral block** at a crafting table. Any of the five vanilla dead coral block varieties works. Isolate a coral block from adjacent water to let it die, then mine the dead block with a pickaxe; Silk Touch is not required for the dead block. Collecting teeth or plates unlocks their recipes in the recipe book. Teeth repair the spear; plates repair the armor.
 
@@ -29,19 +29,29 @@ Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather
 
 The equipment inherits the mobs' materials: an ivory tooth and sandy bindings for the spear; violet Shardback carapace, cobalt coral, ivory segments and slate joints for armor. Diamond remains the stronger general defensive tier. See [equipment artwork and verification](docs/Reef-Equipment-Art-Workflow.md).
 
-**Serration I–III** adds 0.5 damage per level every two seconds. **Hemorrhage I–II** extends bleeding to six/eight seconds. Both are spear-only enchantments available through tables and books/anvils, and can be combined with each other. Both conflict with Sharpness, Smite and Bane of Arthropods, creating a choice between immediate damage and stronger bleeding. All five book levels appear beside the spear in the Tidal Terror creative tab; book tooltips explain their level-specific bleeding bonuses. The spear tooltip shows enchanted damage every two seconds and duration. Coral Crusher bites also cause the base bleed: two damage over four seconds, with the same custom blood particles. The spear points forward in both hands. Bleeding produces custom blood droplets and dispersing underwater plumes with a dedicated status icon. See [sprite references, bleeding and enchantment details](docs/Reef-Sprites-and-Bleeding.md).
+**Serration Iâ€“III** adds 0.5 damage per level every two seconds. **Hemorrhage Iâ€“II** extends bleeding to six/eight seconds. Both are spear-only enchantments available through tables and books/anvils, and can be combined with each other. Both conflict with Sharpness, Smite and Bane of Arthropods, creating a choice between immediate damage and stronger bleeding. All five book levels appear beside the spear in the Tidal Terror creative tab; book tooltips explain their level-specific bleeding bonuses. The spear tooltip shows enchanted damage every two seconds and duration. Coral Crusher bites also cause the base bleed: two damage over four seconds, with the same custom blood particles. The spear points forward in both hands. Bleeding produces custom blood droplets and dispersing underwater plumes with a dedicated status icon. See [sprite references, bleeding and enchantment details](docs/Reef-Sprites-and-Bleeding.md).
 
 JEI loads automatically in the development client (`runClient`) for recipe inspection. It is optional development tooling and is not bundled into the release.
 
 ## Install and explore
 
-Requires **Minecraft 1.20.1**, **Forge 47.2.0 or newer in the 47.x series**, **Java 17**, and **[TerraBlender for Forge](https://www.curseforge.com/minecraft/mc-mods/terrablender)** for Minecraft 1.20.1, version **3.0.1.6 or newer in the 3.0.x series**. TerraBlender is required and is not bundled. Install both mods in the instance's `mods` folder; multiplayer needs both on the server and clients. This repository provides the Forge build.
+Choose the jar matching your Minecraft version and loader. Version **0.0.3 adds four ports** alongside the original Forge build:
 
-Find Coral Cathedral in newly generated ocean chunks, or use `/locate biome tidalterror:coral_cathedral` with commands enabled. Existing chunks retain their terrain and structures. Reef structure fixes affect future generation. Dolphins, turtles, and tropical fish can spawn at reef depths alongside the new creatures.
+| Minecraft | Loader | Java | Required companion mods |
+| --- | --- | --- | --- |
+| 1.20.1 | Forge 47.2+ | 17 | TerraBlender 3.0.1.6+ |
+| 1.20.1 | Fabric Loader 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+, TerraBlender 3.0.1.6+ |
+| 1.21.1 | Fabric Loader 0.17.2+ | 21 | Fabric API, Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
+| 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
+| 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+, TerraBlender 26.1.2.0.3+ |
+
+Install companion mods for the **same Minecraft version and loader** on both the server and clients. Fabric 1.20.1 includes Reach Entity Attributes 2.4.0 for the spear's extra reach; the newer versions use Minecraft's native reach attribute. Architectury API, Fabric API and TerraBlender are separate downloads.
+
+Coral Cathedral targets roughly 5% of ocean area with default biome settings. Its region scale stays unchanged. Find it in newly generated ocean chunks, or use `/locate biome tidalterror:coral_cathedral` with commands enabled. Existing chunks retain their terrain and structures. Reef structure fixes affect future generation. Dolphins, turtles, and tropical fish can spawn at reef depths alongside the new creatures.
 
 Coral Crushers ignore Creative and Spectator players. Use Survival or Adventure to try their hunting behavior. Shaders are optional and are not required to play.
 
-Download **0.0.1** from [GitHub Releases](https://github.com/UpperMoon0/Tidal-Terror/releases/tag/v0.0.1). The [CurseForge project](https://www.curseforge.com/minecraft/mc-mods/tidal-terror) and its first file are awaiting moderator review. See the [changelog](CHANGELOG.md) for release changes.
+Downloads are available from [GitHub Releases](https://github.com/UpperMoon0/Tidal-Terror/releases) and [CurseForge](https://www.curseforge.com/minecraft/mc-mods/tidal-terror). Check the file's Minecraft version and loader. See the [changelog](CHANGELOG.md) for release changes.
 
 ## Feedback and license
 
@@ -51,16 +61,26 @@ Author: **NsTut**. Licensed under the [MIT License](LICENSE.txt). The original F
 
 ## Development
 
-Requires Java 17. The Gradle wrapper downloads the Forge development dependencies on the first build.
+The original Forge development commands use Java 17. The Gradle wrapper downloads development dependencies on the first build. Ports use Java 21 to run Gradle, with Java 17, 21 or 25 compilation/runtime toolchains selected for each target.
 
 ```powershell
 ./gradlew.bat build
 ./gradlew.bat runClient
 ```
 
-The release jar is written to `build/libs`. On Linux or macOS, use `./gradlew` instead.
+The Forge release jar is written to `build/libs`. Port jars are written to each target module's `build/libs`. On Linux or macOS, use `./gradlew` instead.
 
-To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.txt`, and push to `main`. CI runs native regression checks and packaging verification, then uploads to CurseForge and creates the matching GitHub release. Publication requires the repository secret `CURSEFORGE_API_TOKEN`.
+```powershell
+./gradlew.bat -Pmultiversion buildAll
+./gradlew.bat -Pmultiversion :fabric-1.20.1:runClient
+./gradlew.bat -Pmultiversion :fabric-1.21.1:runClient
+./gradlew.bat -Pmultiversion :neoforge-1.21.1:runClient
+./gradlew.bat -Pmultiversion :neoforge-26.1.2:runClient
+```
+
+See [multi-version architecture and verification](docs/Multi-Version-Ports.md) for source ownership, runtime checks and release packaging.
+
+To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.txt`, and push to `main`. CI runs native regression checks and packaging verification, then uploads all five verified jars to CurseForge and creates the matching GitHub release only after every upload has a matching receipt. Publication requires the repository secret `CURSEFORGE_API_TOKEN`.
 
 Generate biome and feature data with `./gradlew.bat runData`. Generated registry JSON is tracked; runtime worlds and generator caches are ignored.
 

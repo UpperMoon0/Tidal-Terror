@@ -3,7 +3,10 @@ import shutil,subprocess
 root=Path.cwd();snapshot=root/'build/reef-explore-project-v5';snapshot.mkdir(exist_ok=True)
 for name in ['build.gradle','settings.gradle','gradle.properties','gradlew','gradlew.bat']:
  shutil.copy2(root/name,snapshot/name)
-for name in ['gradle','src/main','src/generated','src/explore','.dependencies/shaders']:
+for name in ['common','common-versioned','common-universal','common-1201','gradle','src/main','src/generated','src/explore','.dependencies/shaders']:
+ for obsolete in (snapshot / name).rglob("*"):
+     if obsolete.is_file() and not (root / name / obsolete.relative_to(snapshot / name)).exists():
+         obsolete.unlink()
  shutil.copytree(root/name,snapshot/name,dirs_exist_ok=True)
 run=snapshot/'run';(run/'shaderpacks').mkdir(parents=True,exist_ok=True);(run/'config').mkdir(exist_ok=True)
 shutil.copy2(root/'run/shaderpacks/ComplementaryReimagined_r5.9.3.zip',run/'shaderpacks')

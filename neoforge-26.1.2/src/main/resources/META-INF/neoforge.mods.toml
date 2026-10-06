@@ -1,0 +1,37 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="tidalterror"
+version="${version}"
+displayName="Tidal Terror"
+authors="NsTut"
+description="Coral Cathedral biome, marine wildlife and reef equipment."
+logoFile="tidalterror-icon.png"
+enumExtensions="META-INF/enumextensions.json"
+[[mixins]]
+config="tidalterror.neoforge.mixins.json"
+[[dependencies.tidalterror]]
+modId="neoforge"
+type="required"
+versionRange="[26.1.2.99,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.tidalterror]]
+modId="minecraft"
+type="required"
+versionRange="[26.1.2]"
+ordering="NONE"
+side="BOTH"
+[[dependencies.tidalterror]]
+modId="architectury"
+type="required"
+versionRange="[20.1.16,)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.tidalterror]]
+modId="terrablender"
+type="required"
+versionRange="[26.1.2-26.1.2.0.3,)"
+ordering="AFTER"
+side="BOTH"

@@ -11,7 +11,7 @@ snapshot=ROOT/(sys.argv[1] if len(sys.argv)>1 else 'build/equipment-preview-proj
 snapshot.mkdir(parents=True,exist_ok=True)
 for name in ('build.gradle','settings.gradle','gradle.properties','gradlew','gradlew.bat'):
     shutil.copy2(ROOT/name,snapshot/name)
-for name in ('gradle','src/main','src/generated','src/equipmentPreview','.dependencies/shaders'):
+for name in ('common','common-versioned','common-universal','common-1201','gradle','src/main','src/generated','src/equipmentPreview','.dependencies/shaders'):
     # Reused snapshots must not retain resources removed from production.
     for target in (snapshot/name).rglob('*'):
         if target.is_file() and not (ROOT/name/target.relative_to(snapshot/name)).exists():

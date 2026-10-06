@@ -33,6 +33,7 @@ public final class ReefNativeAudit {
     private static net.minecraft.server.MinecraftServer pending;
     private static int ticks;
     private static boolean prepared;
+    private static BlockPos auditCenter;
     private static final Set<net.minecraft.world.level.ChunkPos> forced=new HashSet<>();
     @SubscribeEvent public static void started(ServerStartedEvent event) {
         pending=event.getServer();
@@ -45,24 +46,37 @@ public final class ReefNativeAudit {
         }
         audit(pending);
     }
+    private static boolean largeAuditReef(ReefTerrain terrain,int x,int z) {
+        if(!terrain.giant(x,z))return false;
+        int reef=0,deep=0;
+        for(int dx=-2048;dx<=2048;dx+=64)for(int dz=-2048;dz<=2048;dz+=64)
+            if(terrain.reef(x+dx,z+dz)){reef++;if(terrain.floor(x+dx,z+dz)<=-40)deep++;}
+        return reef>200 && deep>32;
+    }
     private static void audit(net.minecraft.server.MinecraftServer server){
         var level = server.overworld();
         boolean defer=false;
         try {
-            var found = level.getChunkSource().getGenerator().getBiomeSource().findBiomeHorizontal(
-                    0, 32, 0, 8000, 16, holder -> holder.is(ReefWorldgen.BIOME), RandomSource.create(7142026), true,
-                    level.getChunkSource().randomState().sampler());
-            require(found != null, "Reef missing from native Overworld biome source");
-            BlockPos center = found.getFirst();
             var terrain=new ReefTerrain(level,level.getChunkSource().getGenerator());
-            // Select a genuine deep interior, not merely the first reef shoreline.
-            outer: for(int radius=0;radius<=2400;radius+=32)
-                for(int dx=-radius;dx<=radius;dx+=32)for(int dz=-radius;dz<=radius;dz+=32) {
-                    if(Math.max(Math.abs(dx),Math.abs(dz))!=radius)continue;
-                    int x=center.getX()+dx,z=center.getZ()+dz;
-                    if(terrain.giant(x,z)) { center=new BlockPos(x,32,z);break outer; }
-                }
-            require(terrain.floor(center.getX(),center.getZ())<=-40,"No deep reef interior");
+            if(auditCenter==null) {
+                var found=level.getChunkSource().getGenerator().getBiomeSource().findBiomeHorizontal(
+                        0,32,0,16000,16,holder->holder.is(ReefWorldgen.BIOME),RandomSource.create(7142026),true,
+                        level.getChunkSource().randomState().sampler());
+                require(found!=null,"Reef missing from native Overworld biome source");
+                BlockPos nearest=found.getFirst();
+                // A rare biome's nearest edge fragment need not have a deep basin.
+                // Select a genuinely large fixture; keep every terrain/footprint
+                // assertion below unchanged and latch it across chunk preparation.
+                outer: for(int radius=0;radius<=16000;radius+=64)
+                    for(int edge=-radius;edge<=radius;edge+=64)
+                        for(int side=0;side<4;side++) {
+                            int x=nearest.getX()+(side<2?(side==0?-radius:radius):edge);
+                            int z=nearest.getZ()+(side<2?edge:(side==2?-radius:radius));
+                            if(largeAuditReef(terrain,x,z)){auditCenter=new BlockPos(x,32,z);break outer;}
+                        }
+                require(auditCenter!=null,"No large deep reef fixture within the bounded search");
+            }
+            BlockPos center=auditCenter;
             System.out.println("REEF_AUDIT biome="+center);
             int minX = (center.getX() >> 4) * 16 - 48;
             int minZ = (center.getZ() >> 4) * 16 - 48;
@@ -165,6 +179,10 @@ public final class ReefNativeAudit {
                 NaturalSpawner.spawnCategoryForPosition(MobCategory.WATER_CREATURE,level,pos);
                 for(var reefPool:ModEntities.reefPools())NaturalSpawner.spawnCategoryForPosition(reefPool,level,pos);
             }
+            // Random water-column samples can legitimately miss the thin sandy band.
+            // Exercise both real habitats through the same native placement/finalize path.
+            verifyNativeSkin(level,player,clearWater,true,minX,minZ);
+            verifyNativeSkin(level,player,clearWater,false,minX,minZ);
             int sharkCount=0, sandySharks=0, blueSharks=0;
             for(var entity:level.getAllEntities())if(entity instanceof CoralCrusherEntity shark) {
                 sharkCount++;
@@ -274,6 +292,31 @@ public final class ReefNativeAudit {
             error.printStackTrace();
             System.out.println("REEF_AUDIT FAIL "+error);
         } finally { if(!defer){for(var chunk:forced)level.setChunkForced(chunk.x,chunk.z,false);forced.clear();pending=null;server.halt(false);} }
+    }
+    private static void verifyNativeSkin(net.minecraft.server.level.ServerLevel level,ServerPlayer player,
+            List<BlockPos> clearWater,boolean sandy,int minX,int minZ) {
+        // Group members wander horizontally. Keep their chunks inside the active
+        // fixture so freshly added entities participate in the aggregate lookup.
+        BlockPos site=clearWater.stream()
+                .filter(pos->pos.getX()>=minX+16 && pos.getX()<minX+96 && pos.getZ()>=minZ+16 && pos.getZ()<minZ+96)
+                .filter(pos->CoralCrusherEntity.sandyAtSpawn(level,pos)==sandy)
+                .findFirst().orElseThrow(()->new AssertionError("No clear native habitat for sandy="+sandy));
+        player.setPos(site.getX()+45,site.getY(),site.getZ()+.5);
+        level.random.setSeed(sandy?7142026L:7142027L);
+        int[] created={0};
+        for(int attempt=0;attempt<64 && created[0]==0;attempt++)
+            NaturalSpawner.spawnCategoryForPosition(ModEntities.CORAL_CRUSHER.get().getCategory(),level,
+                    level.getChunkAt(site),site,
+                    (type,pos,chunk)->type==ModEntities.CORAL_CRUSHER.get() && CoralCrusherEntity.sandyAtSpawn(level,pos)==sandy,
+                    (mob,chunk)->{
+                        require(mob instanceof CoralCrusherEntity shark && shark.isSandy()==sandy,
+                                "Native finalizeSpawn chose wrong habitat skin at "+mob.blockPosition());
+                        require(level.getEntity(mob.getUUID())==mob,"Habitat shark not visible in active fixture at "+mob.blockPosition());
+                        System.out.println("REEF_AUDIT HABITAT_ENTITY sandy="+sandy+" pos="+mob.blockPosition());
+                        created[0]++;
+                    });
+        require(created[0]>0,"Native spawner failed explicit habitat sandy="+sandy+" at "+site);
+        System.out.println("REEF_AUDIT HABITAT_SKIN sandy="+sandy+" created="+created[0]+" site="+site);
     }
     private static void require(boolean condition,String message) { if(!condition)throw new AssertionError(message); }
     private static int solidSeabed(net.minecraft.server.level.ServerLevel level,BlockPos column){

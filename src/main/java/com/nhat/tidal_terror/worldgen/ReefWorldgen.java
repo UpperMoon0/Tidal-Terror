@@ -56,7 +56,7 @@ public final class ReefWorldgen {
                     SurfaceRules.ifTrue(SurfaceRules.isBiome(BIOME), SurfaceRules.sequence(
                             SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.state(net.minecraft.world.level.block.Blocks.SAND.defaultBlockState())),
                             SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.state(net.minecraft.world.level.block.Blocks.SAND.defaultBlockState())))));
-            Regions.register(new Region(id("reefs"), RegionType.OVERWORLD, 18) {
+            Regions.register(new Region(id("reefs"), RegionType.OVERWORLD, com.nhat.tidal_terror.balance.ReefBalance.REEF_REGION_WEIGHT) {
                 @Override public void addBiomes(net.minecraft.core.Registry<Biome> registry,
                         java.util.function.Consumer<com.mojang.datafixers.util.Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
                     addModifiedVanillaOverworldBiomes(mapper, builder -> {

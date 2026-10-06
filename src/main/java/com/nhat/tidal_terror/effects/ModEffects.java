@@ -19,12 +19,11 @@ public final class ModEffects {
             var data = entity.getPersistentData();
             // Legacy saves have no independent countdown; retain their existing pulse phase.
             int remaining = data.contains(PULSE_TICKS) ? data.getInt(PULSE_TICKS)
-                    : Math.floorMod(entity.getEffect(REEF_BLEEDING.get()).getDuration() - 1, 40) + 1;
+                    : Math.floorMod(entity.getEffect(REEF_BLEEDING.get()).getDuration() - 1, com.nhat.tidal_terror.balance.ReefBalance.BLEED_INTERVAL) + 1;
             remaining--;
-            data.putInt(PULSE_TICKS, remaining <= 0 ? 40 : remaining);
+            data.putInt(PULSE_TICKS, remaining <= 0 ? com.nhat.tidal_terror.balance.ReefBalance.BLEED_INTERVAL : remaining);
             if (remaining > 0) return;
-            float damage = 1 + .5F * net.minecraft.util.Mth.clamp(amplifier, 0, 3);
-            if (com.nhat.tidal_terror.items.ReefArmorItem.hasFullSet(entity)) damage *= .75F;
+            float damage = com.nhat.tidal_terror.balance.ReefBalance.bleedingDamage(amplifier,com.nhat.tidal_terror.items.ReefArmorItem.hasFullSet(entity));
             var owner = bleedingAttacker(entity);
             var source = entity.damageSources().magic();
             if (owner != null) source = new net.minecraft.world.damagesource.DamageSource(source.typeHolder(), owner) {
@@ -44,7 +43,7 @@ public final class ModEffects {
     public static boolean isBleedingDamage(LivingEntity entity) { return DAMAGING_BLEED.get() == entity; }
     /** Called only for a newly added effect, never a refresh or amplifier update. */
     public static void beginBleeding(LivingEntity entity) {
-        entity.getPersistentData().putInt(PULSE_TICKS, 40);
+        entity.getPersistentData().putInt(PULSE_TICKS, com.nhat.tidal_terror.balance.ReefBalance.BLEED_INTERVAL);
         entity.getPersistentData().remove(ATTACKER);
     }
     public static void clearBleedingClock(LivingEntity entity) {

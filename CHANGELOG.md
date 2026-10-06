@@ -1,6 +1,24 @@
 # Changelog
 
-## 0.0.2 — Unreleased
+## 0.0.3 — Unreleased
+
+- Restore Reef Armor trim rendering on Fabric 1.20.1 and 1.21.1, using the shell geometry with vanilla trim UVs; add native trimmable tags and client regressions for every vanilla pattern, armor slot, age and glint state.
+
+- Make Coral Cathedral rare through broad seeded patch selection (4.36% of ocean area measured across five seeds), retaining large reef regions.
+- Target natural crab spawn attempts toward submerged sediment instead of random water-column heights, retaining native caps and safety checks; add native spawner regressions across all five runtimes.
+- Fix ray seabed/coral escape clearance and whole-wing navigation shortcuts across all targets; add native obstacle regressions.
+- Include JEI in every port development environment, with client-loading checks and no production dependency.
+
+- Fix 26.1.2 Reef Armor's native head/hat hierarchy crash and restore the special spear's hand-centering transform; construct armor models in client regression checks.
+
+- Fix the NeoForge 26.1.2 normal-world generation crash caused by reversed pumpkin/sugar-cane feature ordering; add native Overworld biome-graph regression coverage.
+- Share identical 1.20.1 gameplay/rendering classes, the shark behavior algorithm and modern resources; use authoritative shared equipment tuning without changing balance.
+- Restrict port reef water repair to unfinished generation or saved pending work, preserving player-built drained rooms and bubble elevators on revisit.
+- Added Fabric 1.20.1, Fabric/NeoForge 1.21.1 and NeoForge 26.1.2 ports with shared reef gameplay and unchanged equipment balance.
+- Adapted native entity/chunk persistence, modern enchantments/recipes and 26.1.2 rendering.
+- Added native port gameplay and client-loading checks plus verified five-target release packaging.
+
+## 0.0.2
 
 - Added the native 3D Reef Spear: Crusher tooth, coral skeleton shaft and sandy hide bindings; 6 damage, 1.1 attack speed, 250 durability and +1 block main-hand entity reach.
 - Fully charged underwater spear hits apply 2 bleeding damage over 4 seconds, refreshing without stacking.

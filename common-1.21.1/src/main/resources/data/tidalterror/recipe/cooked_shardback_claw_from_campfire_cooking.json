@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "ingredient": {
+    "item": "tidalterror:raw_shardback_claw"
+  },
+  "result": {
+    "id": "tidalterror:cooked_shardback_claw"
+  },
+  "experience": 0.35,
+  "cookingtime": 600
+}

@@ -319,8 +319,8 @@ if (project.hasProperty('cathedralRayTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def rayLog = file('build/cathedral-ray-gametest/logs/latest.log')
-            if (!rayLog.exists() || !rayLog.text.contains('10 GAME TESTS COMPLETE')
-                    || !rayLog.text.contains('All 10 required tests passed')) {
+            if (!rayLog.exists() || !rayLog.text.contains('12 GAME TESTS COMPLETE')
+                    || !rayLog.text.contains('All 12 required tests passed')) {
                 throw new GradleException('Ray GameTests did not complete; inspect the native server log.')
             }
         }
@@ -490,6 +490,7 @@ if (project.hasProperty('reefLifeTests')) {
 
 if (project.hasProperty('spawnPoolTests')) {
     sourceSets.main.java.srcDir 'src/spawnPoolTest/java'
+    sourceSets.main.java.srcDir 'src/spawnTargetTest/java'
     sourceSets.main.resources.srcDir 'src/gameTest/resources'
     minecraft.runs.gameTestServer {
         workingDirectory project.file('build/spawn-pool-gametest')
@@ -499,7 +500,7 @@ if (project.hasProperty('spawnPoolTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def log=file('build/spawn-pool-gametest/logs/latest.log')
-            if (!log.exists() || !log.text.contains('2 GAME TESTS COMPLETE') || !log.text.contains('All 2 required tests passed'))
+            if (!log.exists() || !log.text.contains('4 GAME TESTS COMPLETE') || !log.text.contains('All 4 required tests passed'))
                 throw new GradleException('Reef spawn pool tests did not pass; inspect the native server log.')
         }
     }
@@ -558,3 +559,11 @@ if (nativeFixtureFlags.any { project.hasProperty(it) }) {
         }
     }
 }
+
+// Native geometry and AI shared with the other version/loader modules.
+sourceSets.main.java.srcDir 'common/src/main/java'
+sourceSets.main.java.srcDir 'common-versioned/src/main/java'
+
+sourceSets.main.java.srcDir 'common-universal/src/main/java'
+
+sourceSets.main.java.srcDir 'common-1201/src/main/java'

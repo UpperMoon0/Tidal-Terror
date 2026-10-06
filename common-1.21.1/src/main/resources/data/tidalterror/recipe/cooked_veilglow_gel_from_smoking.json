@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": {
+    "item": "tidalterror:raw_veilglow_gel"
+  },
+  "result": {
+    "id": "tidalterror:cooked_veilglow_gel"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

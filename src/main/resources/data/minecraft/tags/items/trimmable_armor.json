@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "tidalterror:reef_helmet",
+    "tidalterror:reef_chestplate",
+    "tidalterror:reef_leggings",
+    "tidalterror:reef_boots"
+  ]
+}

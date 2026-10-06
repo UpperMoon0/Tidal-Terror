@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " T ",
+    " LI",
+    " C "
+  ],
+  "key": {
+    "C": "#tidalterror:coral_skeletons",
+    "I": "minecraft:iron_ingot",
+    "L": "minecraft:leather",
+    "T": "tidalterror:crusher_tooth"
+  },
+  "result": {
+    "id": "tidalterror:reef_spear"
+  }
+}

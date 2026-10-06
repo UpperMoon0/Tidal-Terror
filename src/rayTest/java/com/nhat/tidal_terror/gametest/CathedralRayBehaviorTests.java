@@ -77,9 +77,10 @@ public class CathedralRayBehaviorTests {
             h.assertTrue(ray.getBehavior()==CRUISE,"Creative player attracted curiosity without cooldown");
             player.setGameMode(GameType.SURVIVAL);
         });
-        h.runAtTickTime(80,()->{
+        // Allow the glider to finish turning after the creative visitor becomes curious.
+        h.runAtTickTime(110,()->{
             h.assertTrue(ray.getBehavior()==CURIOUS,"Calm swimmer did not attract curiosity");
-            h.assertTrue(ray.position().distanceToSqr(start)>.25,"Curious ray did not approach");
+            h.assertTrue(ray.position().distanceToSqr(start)>.25,"Curious ray did not approach: start="+start+" now="+ray.position()+" path="+ray.getNavigation().getPath()+" done="+ray.getNavigation().isDone()+" delta="+ray.getDeltaMovement()+" wanted="+ray.getMoveControl().getWantedX()+","+ray.getMoveControl().getWantedY()+","+ray.getMoveControl().getWantedZ());
             h.assertTrue(ray.distanceToSqr(player)>=25,"Curiosity crowded the player");
             h.assertTrue(player.getHealth()==health && ray.getTarget()==null,"Ray attacked swimmer");
         });
@@ -149,4 +150,40 @@ public class CathedralRayBehaviorTests {
         });
         h.runAtTickTime(210,()->{ player.discard(); h.succeed(); });
     }
+ @GameTest(template="coral_crusher_pool", batch="ray_obstacles_floor",timeoutTicks=220)
+ public static void rayLeavesSeabed(GameTestHelper h) {
+  pool(h);for(int x=1;x<19;x++)for(int z=1;z<19;z++)h.setBlock(new BlockPos(x,3,z),Blocks.STONE);var r=h.spawn(ModEntities.CATHEDRAL_RAY.get(),10,4,10);
+  r.setNoAi(true);r.setNoGravity(true);var start=r.position();
+  h.runAfterDelay(5,()->{
+   try {
+    var goal=new com.nhat.tidal_terror.entities.cathedral_ray.CathedralRaySwimGoal(r);
+    var move=goal.getClass().getDeclaredMethod("navigate",net.minecraft.world.phys.Vec3.class,double.class);move.setAccessible(true);
+    h.assertTrue((boolean)move.invoke(goal,h.absoluteVec(new net.minecraft.world.phys.Vec3(10.5,8,15.5)),1.0),"Ray rejected a clear escape from the seabed");
+   }catch(ReflectiveOperationException e){throw new RuntimeException(e);}
+   r.setNoAi(false);
+  });
+  h.runAfterDelay(160,()->{
+   h.assertTrue(r.position().distanceToSqr(start)>4,"Ray remained stuck on seabed");
+   h.assertTrue(r.isInWater()&&h.getLevel().noCollision(r)&&r.isAlive(),"Ray escape clipped or left water");h.succeed();
+  });
+ }
+ @GameTest(template="coral_crusher_pool", batch="ray_obstacles_wings",timeoutTicks=220)
+ public static void rayShortcutChecksWings(GameTestHelper h) {
+  pool(h);var r=h.spawn(ModEntities.CATHEDRAL_RAY.get(),10,6,6);r.setNoAi(true);r.setNoGravity(true);
+  h.setBlock(new BlockPos(12,6,11),Blocks.STONE);
+  h.runAfterDelay(5,()->{
+   try {
+    var nav=r.getNavigation();Class<?> owner=nav.getClass();java.lang.reflect.Method shortcut=null;
+    while(shortcut==null&&owner!=null){try{shortcut=owner.getDeclaredMethod("canMoveDirectly",net.minecraft.world.phys.Vec3.class,net.minecraft.world.phys.Vec3.class);}catch(NoSuchMethodException e){owner=owner.getSuperclass();}}
+    shortcut.setAccessible(true);
+    var start=r.position().add(0,r.getBbHeight()*.5,0);
+    var blocked=h.absoluteVec(new net.minecraft.world.phys.Vec3(10.5,6,15.5));
+    h.assertTrue(!(boolean)shortcut.invoke(nav,start,blocked),"Ray shortcut ignores coral under its wings");
+    h.setBlock(new BlockPos(12,6,11),Blocks.WATER);
+    h.assertTrue((boolean)shortcut.invoke(nav,start,blocked),"Ray rejected a clear wide-water shortcut");h.succeed();
+   }catch(ReflectiveOperationException e){throw new RuntimeException(e);}
+  });
+ }
+
+
 }

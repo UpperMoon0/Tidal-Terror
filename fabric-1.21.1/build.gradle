@@ -1,0 +1,62 @@
+plugins { id 'com.gradleup.shadow' }
+architectury { platformSetupLoomIde(); fabric() }
+configurations {
+    common { canBeResolved = true; canBeConsumed = false }
+    shadowBundle { canBeResolved = true; canBeConsumed = false }
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+}
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${project.loader}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabricApi}"
+    modImplementation "dev.architectury:architectury-fabric:${project.api}"
+    modImplementation 'com.github.glitchfiend:TerraBlender-fabric:1.21.1-4.1.0.8'
+    common(project(path: ':common-1.21.1', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common-1.21.1', configuration: 'transformProductionFabric')
+}
+processResources { inputs.property 'clientSmoke', project.hasProperty('clientSmoke'); inputs.property 'version', project.version; filesMatching('fabric.mod.json') { expand version: project.version } }
+shadowJar { configurations = [project.configurations.shadowBundle]; archiveClassifier = 'dev-shadow' }
+remapJar { inputFile.set shadowJar.archiveFile }
+loom { runs { client { client(); runDir 'run/client' }; server { server(); runDir 'run/server' } } }
+
+if (project.hasProperty('portTests')) {
+    sourceSets.main.java.srcDir rootProject.file('src/portTest121/java')
+    sourceSets.main.resources.srcDir rootProject.file('src/portTest121/resources')
+    loom.runs {
+        portTest {
+            server()
+            runDir 'build/port-tests'
+            property 'fabric-api.gametest', 'true'
+            property 'fabric-api.gametest.report-file', project.file('build/port-test-report.xml').absolutePath
+        }
+    }
+    processResources {
+        exclude 'fabric.mod.json'
+        doLast { copy { from rootProject.file('src/portTest121/resources/fabric.mod.json'); into destinationDir; expand version: project.version } }
+    }
+}
+
+if (project.hasProperty('clientSmoke')) {
+    sourceSets.main.java.srcDir rootProject.file('src/trimClient1211/java')
+    sourceSets.main.java.srcDir rootProject.file('src/clientSmokeFabric/java')
+    processResources {
+        doLast {
+            def metadata = new File(destinationDir, 'fabric.mod.json')
+            def json = new groovy.json.JsonSlurper().parse(metadata)
+            json.entrypoints.client.add('com.nhat.tidal_terror.testing.PortClientSmokeFabric')
+            metadata.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(json))
+        }
+    }
+}
+
+// Recipe viewer for interactive development only; not bundled or required by the mod.
+dependencies {
+    if (!project.hasProperty("portTests")) {
+        modLocalRuntime "mezz.jei:jei-1.21.1-fabric:19.21.0.247"
+    }
+}
+
+if (project.hasProperty("portTests")) sourceSets.main.java.srcDir rootProject.file("src/spawnTargetTest/java")
+
+sourceSets.main.java.srcDir rootProject.file('fabric-shared/src/main/java')

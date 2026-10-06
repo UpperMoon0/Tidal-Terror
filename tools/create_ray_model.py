@@ -5,7 +5,7 @@ from pathlib import Path
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'src/main/java/com/nhat/tidal_terror/entities/cathedral_ray/CathedralRayModel.java'
+OUT = ROOT / 'common-1201/src/main/java/com/nhat/tidal_terror/entities/cathedral_ray/CathedralRayModel.java'
 boxes=[]
 def box(part,x,y,z,w,h,d):
     boxes.append(dict(part=part,x=x,y=y,z=z,w=w,h=h,d=d))

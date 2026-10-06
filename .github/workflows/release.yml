@@ -8,6 +8,7 @@ on:
       - gradle.properties
       - .github/workflows/**
       - tools/release.py
+      - tools/ports.py
   workflow_dispatch:
 permissions:
   contents: write
@@ -43,7 +44,7 @@ jobs:
   build:
     needs: verify
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,11 +52,15 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: |
+            17
+            25
+            21
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - run: ./gradlew clean build --no-daemon --no-configuration-cache
-      - run: python3 tools/release.py package --output build/release
+      - run: ./gradlew -Pmultiversion clean buildAll --no-daemon --no-configuration-cache
+      - run: python3 tools/release.py package --ports --output build/release
       - uses: actions/upload-artifact@v4
         with:
           name: tidal-terror-release
@@ -105,8 +110,76 @@ jobs:
           CF_FILE_ID: ${{ steps.curseforge.outputs.curseforge-version }}
           CF_FILE_URL: ${{ steps.curseforge.outputs.curseforge-url }}
         run: python3 tools/release.py receipt --output build/release
-  release:
+  publish-ports:
     needs: [publish-curseforge, version-change]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: fabric-1.20.1
+            loader: fabric
+            minecraft: '1.20.1'
+            java: '17'
+            dependencies: terrablender(required) | architectury-api(required) | fabric-api(required)
+          - target: fabric-1.21.1
+            loader: fabric
+            minecraft: '1.21.1'
+            java: '21'
+            dependencies: terrablender(required) | architectury-api(required) | fabric-api(required)
+          - target: neoforge-1.21.1
+            loader: neoforge
+            minecraft: '1.21.1'
+            java: '21'
+            dependencies: terrablender(required) | architectury-api(required)
+          - target: neoforge-26.1.2
+            loader: neoforge
+            minecraft: '26.1.2'
+            java: '25'
+            dependencies: terrablender(required) | architectury-api(required)
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: tidal-terror-release
+          path: build/release
+      - name: Verify reservation and resumable upload receipt
+        id: prepared
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/release.py prepare-port --target ${{ matrix.target }} --output build/release
+      - name: Publish verified port to CurseForge
+        id: curseforge
+        if: steps.prepared.outputs.upload == 'true'
+        uses: Kira-NT/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3
+        with:
+          curseforge-id: 1726637
+          curseforge-token: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          files: build/release/tidalterror-${{ matrix.target }}-${{ needs.version-change.outputs.value }}.jar
+          name: Tidal Terror ${{ needs.version-change.outputs.value }} - ${{ matrix.target }}
+          version: ${{ needs.version-change.outputs.value }}
+          version-type: release
+          changelog-file: changelogs/v${{ needs.version-change.outputs.value }}.txt
+          loaders: ${{ matrix.loader }}
+          game-versions: ${{ matrix.minecraft }}
+          game-version-filter: none
+          environment: client | server
+          java: ${{ matrix.java }}
+          curseforge-dependencies: ${{ matrix.dependencies }}
+          retry-attempts: 1
+          fail-mode: fail
+      - name: Record successful port upload
+        if: steps.prepared.outputs.upload == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CF_FILE_ID: ${{ steps.curseforge.outputs.curseforge-version }}
+          CF_FILE_URL: ${{ steps.curseforge.outputs.curseforge-url }}
+        run: python3 tools/release.py receipt-port --target ${{ matrix.target }} --output build/release
+  release:
+    needs: [publish-curseforge, publish-ports, version-change]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

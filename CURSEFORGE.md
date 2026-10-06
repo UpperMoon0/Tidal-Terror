@@ -32,12 +32,17 @@ This is a specialist branch between iron and diamond. Teeth repair the spear; pl
 
 ## Requirements and installation
 
-- **Minecraft Java Edition 1.20.1**
-- **Forge 47.2.0 or newer within the 47.x series**
-- **Java 17**
-- **[TerraBlender for Forge](https://www.curseforge.com/minecraft/mc-mods/terrablender)**, Minecraft 1.20.1 version 3.0.1.6 or newer within the 3.0.x series
+Choose a file for your exact Minecraft version and loader:
 
-Place Tidal Terror and TerraBlender in your instance's `mods` folder. For multiplayer, install both on the server and every connecting client. This build targets Forge; Fabric and NeoForge builds are not provided.
+| Minecraft | Loader | Java | Companion mods |
+| --- | --- | --- | --- |
+| 1.20.1 | Forge 47.2+ | 17 | TerraBlender 3.0.1.6+ |
+| 1.20.1 | Fabric 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+, TerraBlender 3.0.1.6+ |
+| 1.21.1 | Fabric 0.17.2+ | 21 | Fabric API, Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
+| 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
+| 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+, TerraBlender 26.1.2.0.3+ |
+
+Place the matching Tidal Terror jar and required companion mods in your instance's `mods` folder. Multiplayer needs them on the server and every client. Use companion builds for the same Minecraft version and loader. Fabric 1.20.1 bundles Reach Entity Attributes for the spear; newer versions use native reach.
 
 Shaders are optional. Development previews use Oculus, Embeddium, and Complementary Reimagined; these are separate downloads and are not bundled with Tidal Terror.
 
@@ -53,6 +58,6 @@ Created by **NsTut**.
 
 Licensed under the [MIT License](https://github.com/UpperMoon0/Tidal-Terror/blob/main/LICENSE.txt).
 
-Report bugs on the [issue tracker](https://github.com/UpperMoon0/Tidal-Terror/issues). Include your Minecraft, Forge, TerraBlender, and Tidal Terror versions, other installed mods, steps to reproduce, and the relevant log or crash report. For generation issues, also include the world seed and coordinates.
+Report bugs on the [issue tracker](https://github.com/UpperMoon0/Tidal-Terror/issues). Include your Minecraft, loader, companion mod, and Tidal Terror versions, other installed mods, steps to reproduce, and the relevant log or crash report. For generation issues, also include the world seed and coordinates.
 
 [Source and development notes](https://github.com/UpperMoon0/Tidal-Terror) · [Changelog](https://github.com/UpperMoon0/Tidal-Terror/blob/main/CHANGELOG.md)
