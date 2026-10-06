@@ -18,9 +18,8 @@ public final class RayWaterNavigation extends WaterBoundPathNavigation {
     }
 
     @Override protected boolean canMoveDirectly(Vec3 start, Vec3 end) {
-        // Navigation supplies a body-center origin; clearance uses feet positions.
-        return clearSegment(mob, start.add(0, -mob.getBbHeight() * .5, 0),
-                end.add(0, -mob.getBbHeight() * .5, 0));
+        // Native navigation supplies a body-center origin and a feet destination.
+        return clearSegment(mob, start.add(0, -mob.getBbHeight() * .5, 0), end);
     }
 
     @Override protected void followThePath() {

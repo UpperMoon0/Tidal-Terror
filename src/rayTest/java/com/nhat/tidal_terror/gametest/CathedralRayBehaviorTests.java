@@ -176,7 +176,7 @@ public class CathedralRayBehaviorTests {
     while(shortcut==null&&owner!=null){try{shortcut=owner.getDeclaredMethod("canMoveDirectly",net.minecraft.world.phys.Vec3.class,net.minecraft.world.phys.Vec3.class);}catch(NoSuchMethodException e){owner=owner.getSuperclass();}}
     shortcut.setAccessible(true);
     var start=r.position().add(0,r.getBbHeight()*.5,0);
-    var blocked=h.absoluteVec(new net.minecraft.world.phys.Vec3(10.5,6+r.getBbHeight()*.5,15.5));
+    var blocked=h.absoluteVec(new net.minecraft.world.phys.Vec3(10.5,6,15.5));
     h.assertTrue(!(boolean)shortcut.invoke(nav,start,blocked),"Ray shortcut ignores coral under its wings");
     h.setBlock(new BlockPos(12,6,11),Blocks.WATER);
     h.assertTrue((boolean)shortcut.invoke(nav,start,blocked),"Ray rejected a clear wide-water shortcut");h.succeed();
