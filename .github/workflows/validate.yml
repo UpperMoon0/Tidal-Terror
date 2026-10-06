@@ -5,6 +5,9 @@ on:
     branches-ignore: [main]
   workflow_dispatch:
   workflow_call:
+concurrency:
+  group: tidal-validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

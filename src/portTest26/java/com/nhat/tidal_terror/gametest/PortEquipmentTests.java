@@ -80,6 +80,11 @@ public final class PortEquipmentTests {
             h.assertTrue(upgraded.get(net.minecraft.core.component.DataComponents.REPAIR_COST)==9,"Upgrade erased repair cost");
             h.assertTrue(upgraded.get(net.minecraft.core.component.DataComponents.ENCHANTMENTS).equals(iron.get(net.minecraft.core.component.DataComponents.ENCHANTMENTS)),"Upgrade erased enchantments");
         } catch (java.io.IOException failure) { throw new RuntimeException(failure); }
+        var attacker=new net.minecraft.server.level.ServerPlayer(h.getLevel().getServer(),h.getLevel(),new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(),"spear-parity"),net.minecraft.server.level.ClientInformation.createDefault());
+        var struck=victim(h);
+        h.assertTrue(spear.hurtEnemy(struck,attacker),"Native spear hit did not count as weapon use");
+        spear.postHurtEnemy(struck,attacker);
+        h.assertTrue(spear.getDamageValue()==1,"Native hit durability was lost or charged twice");
         h.succeed();
     }
 }
