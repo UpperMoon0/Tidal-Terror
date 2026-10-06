@@ -338,7 +338,7 @@ if (project.hasProperty('veilglowTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def log = file('build/veilglow-gametest/logs/latest.log')
-            if (!log.exists() || !log.text.contains('3 GAME TESTS COMPLETE') || !log.text.contains('All 3 required tests passed'))
+            if (!log.exists() || !log.text.contains('4 GAME TESTS COMPLETE') || !log.text.contains('All 4 required tests passed'))
                 throw new GradleException('Veilglow GameTests did not pass; inspect the native log.')
         }
     }
@@ -440,7 +440,7 @@ if (project.hasProperty('shardbackTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def log = file('build/shardback-gametest/logs/latest.log').text
-            if (!log.contains('3 GAME TESTS COMPLETE') || !log.contains('All 3 required tests passed'))
+            if (!log.contains('4 GAME TESTS COMPLETE') || !log.contains('All 4 required tests passed'))
                 throw new GradleException('Shardback native tests did not pass')
         }
     }
@@ -465,7 +465,7 @@ if (project.hasProperty('foodTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def log = file('build/food-gametest/logs/latest.log')
-            if (!log.exists() || !log.text.contains('3 GAME TESTS COMPLETE') || !log.text.contains('All 3 required tests passed'))
+            if (!log.exists() || !log.text.contains('4 GAME TESTS COMPLETE') || !log.text.contains('All 4 required tests passed'))
                 throw new GradleException('Reef food native tests did not pass')
         }
     }
@@ -500,7 +500,7 @@ if (project.hasProperty('spawnPoolTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def log=file('build/spawn-pool-gametest/logs/latest.log')
-            if (!log.exists() || !log.text.contains('3 GAME TESTS COMPLETE') || !log.text.contains('All 3 required tests passed'))
+            if (!log.exists() || !log.text.contains('4 GAME TESTS COMPLETE') || !log.text.contains('All 4 required tests passed'))
                 throw new GradleException('Reef spawn pool tests did not pass; inspect the native server log.')
         }
     }

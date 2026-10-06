@@ -10,6 +10,11 @@ import net.minecraft.world.level.*;
 import java.util.*;
 
 public class ReefSpawnPoolTests {
+    @GameTest(template="tidalterror:coral_crusher_pool", timeoutTicks=200, batch="reef_distribution")
+    public static void reefRarityPreservesNativeBiomes(GameTestHelper h) {
+        ReefDistributionTests.verify(h,h.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS));
+    }
+
     @GameTest(template="tidalterror:coral_crusher_pool", timeoutTicks=200, batch="crab_spawn")
     public static void crabNaturalSpawnTargetsSeabed(GameTestHelper h) {
         CrabSpawnTargetTests.verify(h,h.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(ReefWorldgen.BIOME),level->{var player=h.makeMockServerPlayerInLevel();player.teleportTo(level,player.getX(),player.getY(),player.getZ(),player.getYRot(),player.getXRot());return player;});

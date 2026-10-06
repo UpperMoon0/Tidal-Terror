@@ -2,7 +2,7 @@
 
 ## 0.0.3 — Unreleased
 
-- Reduce Coral Cathedral frequency toward 5% of ocean area (5.66% measured across five seeds), retaining the existing region scale.
+- Make Coral Cathedral rare through broad seeded patch selection (4.36% of ocean area measured across five seeds), retaining large reef regions.
 - Target natural crab spawn attempts toward submerged sediment instead of random water-column heights, retaining native caps and safety checks; add native spawner regressions across all five runtimes.
 - Fix ray seabed/coral escape clearance and whole-wing navigation shortcuts across all targets; add native obstacle regressions.
 - Include JEI in every port development environment, with client-loading checks and no production dependency.

@@ -4,7 +4,7 @@
   "package": "com.nhat.tidal_terror.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "CrabSpawnTargetMixin", "ReefWaterPostprocessMixin",
+    "ReefDistributionMixin", "CrabSpawnTargetMixin", "ReefWaterPostprocessMixin",
     "ReefTurtlePlacementMixin",
     "ReefShipwreckPlacementMixin",
     "ReefRuinedPortalPlacementMixin",

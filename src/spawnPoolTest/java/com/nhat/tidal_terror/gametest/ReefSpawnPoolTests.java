@@ -12,6 +12,11 @@ import java.util.*;
 
 @GameTestHolder("tidalterror") @PrefixGameTestTemplate(false)
 public class ReefSpawnPoolTests {
+    @GameTest(template="coral_crusher_pool", timeoutTicks=200, batch="reef_distribution")
+    public static void reefRarityPreservesNativeBiomes(GameTestHelper h) {
+        ReefDistributionTests.verify(h,h.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS));
+    }
+
     @GameTest(template="coral_crusher_pool", timeoutTicks=200, batch="crab_spawn")
     public static void crabNaturalSpawnTargetsSeabed(GameTestHelper h) {
         CrabSpawnTargetTests.verify(h,h.getLevel().registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(ReefWorldgen.BIOME),level->{
