@@ -1,5 +1,6 @@
 Tidal Terror 0.0.3
 
+- Fixed a NeoForge 26.1.2 world-generation crash caused by incompatible pumpkin/sugar-cane feature ordering; added native biome-graph regression coverage.
 - Added Fabric 1.20.1, Fabric and NeoForge 1.21.1, and NeoForge 26.1.2 builds alongside Forge 1.20.1.
 - Shared reef geometry, navigation, creature goals, equipment tuning and modern enchantment support across compatible runtimes.
 - Ported Coral Cathedral generation, four marine mobs, seafood, loot, peaceful molts, Reef Armor, Reef Spear, Fang Arrows and custom blood particles without changing equipment balance.

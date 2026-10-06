@@ -4,6 +4,7 @@ public final class PortTestBootstrap {
  @net.neoforged.bus.api.SubscribeEvent public static void register(net.neoforged.neoforge.event.RegisterGameTestsEvent event){
   var environment=event.registerEnvironment(net.minecraft.resources.Identifier.fromNamespaceAndPath("tidalterror","equipment"),new net.minecraft.gametest.framework.TestEnvironmentDefinition.AllOf());
   java.util.Map<String,java.util.function.Consumer<net.minecraft.gametest.framework.GameTestHelper>> tests=java.util.Map.ofEntries(
+   java.util.Map.entry("normal_overworld_feature_order",PortWorldgenTests::normalOverworldFeatureOrder),
    java.util.Map.entry("completed_chunk_revisit",PortEquipmentTests::completedChunkRevisitPreservesPlayerBlocks),
    java.util.Map.entry("unfinished_generation_reload",PortEquipmentTests::unfinishedGenerationRepairSurvivesReload),
    java.util.Map.entry("refresh_clock",PortEquipmentTests::refreshRetainsClockAndUpdatedDamage),
