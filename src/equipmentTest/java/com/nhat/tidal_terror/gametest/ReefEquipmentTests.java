@@ -90,7 +90,7 @@ public final class ReefEquipmentTests {
         public void damage(net.minecraftforge.event.entity.living.LivingDamageEvent event) {
             if(event.getEntity().getUUID().equals(watched)) {
                 var owner=event.getSource().getEntity();
-                String hit="tick="+event.getEntity().tickCount+", amount="+event.getAmount()+", source="+event.getSource().getMsgId()+", owner="+(owner==null?"none":owner.getType());
+                String hit="terrain="+terrainAt(event.getEntity())+", tick="+event.getEntity().tickCount+", amount="+event.getAmount()+", source="+event.getSource().getMsgId()+", owner="+(owner==null?"none":owner.getType());
                 hits.add(hit);System.out.println("BLEED_SAVE_CURE_DAMAGE "+hit);
             }
         }
@@ -291,6 +291,15 @@ public final class ReefEquipmentTests {
         var mob=h.spawn(EntityType.DROWNED,10,4,8);mob.setNoAi(true);mob.setNoGravity(true);
         mob.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100);mob.getAttribute(Attributes.ARMOR).setBaseValue(0);mob.setHealth(100);
         mob.tick();return mob;
+    }
+    private static String terrainAt(LivingEntity mob) {
+        var level=mob.level();var box=mob.getBoundingBox();var solids=new ArrayList<String>();
+        for(var pos:BlockPos.betweenClosed(BlockPos.containing(box.minX-.001,box.minY-.001,box.minZ-.001),
+                BlockPos.containing(box.maxX+.001,box.maxY+.001,box.maxZ+.001)))
+            if(!level.getBlockState(pos).getCollisionShape(level,pos).isEmpty())
+                solids.add(pos+"="+level.getBlockState(pos));
+        return "position="+mob.position()+" box="+box+" eye="+mob.getEyePosition()+" solids="+solids+" eyeBlock="+level.getBlockState(BlockPos.containing(mob.getEyePosition()))
+                +" inWall="+mob.isInWall()+" clear="+level.noCollision(mob);
     }
     private static void near(GameTestHelper h,double a,double b,String message) { h.assertTrue(Math.abs(a-b)<.001,message+": "+a+" != "+b); }
 
@@ -519,7 +528,7 @@ public final class ReefEquipmentTests {
         h.succeedWhen(()->{
             var drops=h.getLevel().getEntitiesOfClass(ItemEntity.class,crab.getBoundingBox().inflate(8),e->e.getItem().is(ModEquipment.SHARDBACK_PLATE.get()));
             h.assertTrue(drops.size()==1,"Waiting for peaceful forage molt");
-            h.assertTrue(crab.isAlive()&&crab.getHealth()==16,"Molting harmed the crab");
+            h.assertTrue(crab.isAlive()&&crab.getHealth()==16,"Molting harmed the crab; terrain="+terrainAt(crab)+" damage="+crab.getLastDamageSource());
             var saved=new CompoundTag();crab.addAdditionalSaveData(saved);
             h.assertTrue(saved.getInt("ReefMoltCooldown")>5800,"Molt cooldown not reset");
             var copy=ModEntities.SHARDBACK.get().create(h.getLevel());copy.readAdditionalSaveData(saved);
