@@ -172,4 +172,8 @@ def main():
         if not args.jar or not args.version:parser.error('jar verification needs --jar and --version')
         print(verify_jar(args.jar,args.target,args.version))
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    # JEI timings use Unicode units; Windows redirected output defaults to cp1252.
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    main()

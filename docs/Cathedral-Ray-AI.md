@@ -33,7 +33,8 @@ sampled at quarter-block intervals, checking loaded water throughout the entire
 occupied collision box. No extra block of water below or inflated collision
 margin is required: a ray resting against coral or the seabed can leave.
 Native center-line shortcuts are replaced with whole-wing swept checks, and
-waypoints use a 0.4-block horizontal tolerance rather than half the wingspan. This protects the 4.75-block wingspan against narrow coral openings.
+wide-mob waypoint skipping is allowed only when the whole body can reach the
+following waypoint. Blocked corners and final arrivals use a 0.4-block tolerance. This protects the 4.75-block wingspan against narrow coral openings.
 Unreachable routes are rejected; the ray is never teleported through obstacles.
 If trapped with no safe route, it may remain still until a route becomes free.
 

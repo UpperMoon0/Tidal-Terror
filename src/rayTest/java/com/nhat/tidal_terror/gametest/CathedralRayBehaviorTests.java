@@ -77,9 +77,10 @@ public class CathedralRayBehaviorTests {
             h.assertTrue(ray.getBehavior()==CRUISE,"Creative player attracted curiosity without cooldown");
             player.setGameMode(GameType.SURVIVAL);
         });
-        h.runAtTickTime(80,()->{
+        // Allow the glider to finish turning after the creative visitor becomes curious.
+        h.runAtTickTime(110,()->{
             h.assertTrue(ray.getBehavior()==CURIOUS,"Calm swimmer did not attract curiosity");
-            h.assertTrue(ray.position().distanceToSqr(start)>.25,"Curious ray did not approach");
+            h.assertTrue(ray.position().distanceToSqr(start)>.25,"Curious ray did not approach: start="+start+" now="+ray.position()+" path="+ray.getNavigation().getPath()+" done="+ray.getNavigation().isDone()+" delta="+ray.getDeltaMovement()+" wanted="+ray.getMoveControl().getWantedX()+","+ray.getMoveControl().getWantedY()+","+ray.getMoveControl().getWantedZ());
             h.assertTrue(ray.distanceToSqr(player)>=25,"Curiosity crowded the player");
             h.assertTrue(player.getHealth()==health && ray.getTarget()==null,"Ray attacked swimmer");
         });

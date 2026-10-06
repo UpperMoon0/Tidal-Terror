@@ -17,7 +17,7 @@ dependencies {
     common(project(path: ':common-1.20.1', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common-1.20.1', configuration: 'transformProductionFabric')
 }
-processResources { inputs.property 'version', project.version; filesMatching('fabric.mod.json') { expand version: project.version } }
+processResources { inputs.property 'clientSmoke', project.hasProperty('clientSmoke'); inputs.property 'version', project.version; filesMatching('fabric.mod.json') { expand version: project.version } }
 shadowJar { configurations = [project.configurations.shadowBundle]; archiveClassifier = 'dev-shadow' }
 remapJar { inputFile.set shadowJar.archiveFile }
 loom { runs { client { client(); runDir 'run/client' }; server { server(); runDir 'run/server' } } }

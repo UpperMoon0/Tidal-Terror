@@ -172,7 +172,7 @@ public class ReefLifeAiTests {
  }
 
 
- @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=220)
+ @GameTest(template="tidalterror:reef_life_pool",batch="ray_obstacles",timeoutTicks=220)
  public static void rayLeavesSeabed(GameTestHelper h) {
   water(h,true);var r=h.spawn(ModEntities.CATHEDRAL_RAY.get(),10,4,10);
   r.setNoAi(true);r.setNoGravity(true);var start=r.position();
@@ -189,7 +189,7 @@ public class ReefLifeAiTests {
    h.assertTrue(r.isInWater()&&h.getLevel().noCollision(r)&&r.isAlive(),"Ray escape clipped or left water");h.succeed();
   });
  }
- @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=220)
+ @GameTest(template="tidalterror:reef_life_pool",batch="ray_obstacles",timeoutTicks=220)
  public static void rayShortcutChecksWings(GameTestHelper h) {
   water(h,false);var r=h.spawn(ModEntities.CATHEDRAL_RAY.get(),10,6,6);r.setNoAi(true);r.setNoGravity(true);
   h.setBlock(12,6,11,Blocks.STONE);

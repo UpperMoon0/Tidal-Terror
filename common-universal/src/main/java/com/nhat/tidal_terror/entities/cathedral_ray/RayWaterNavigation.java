@@ -23,9 +23,15 @@ public final class RayWaterNavigation extends WaterBoundPathNavigation {
     }
 
     @Override protected void followThePath() {
-        // Vanilla's width/2 tolerance can skip corners over two blocks early.
+        // Keep smooth wide-mob steering, but never skip a corner through coral.
         Vec3 next = path.getNextEntityPos(mob);
-        if (Math.abs(mob.getX() - next.x) < .4 && Math.abs(mob.getZ() - next.z) < .4
+        int following = path.getNextNodeIndex() + 1;
+        double tolerance = mob.getBbWidth() * .5;
+        boolean close = Math.abs(mob.getX() - next.x) < tolerance
+                && Math.abs(mob.getZ() - next.z) < tolerance && Math.abs(mob.getY() - next.y) < 1;
+        if (close && following < path.getNodeCount()
+                && clearSegment(mob, mob.position(), path.getEntityPosAtNode(mob, following))) path.advance();
+        else if (Math.abs(mob.getX() - next.x) < .4 && Math.abs(mob.getZ() - next.z) < .4
                 && Math.abs(mob.getY() - next.y) < .5) path.advance();
         doStuckDetection(getTempMobPos());
     }
