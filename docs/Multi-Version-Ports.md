@@ -52,7 +52,7 @@ Water repair is queued only when an unfinished `ProtoChunk` becomes a full chunk
 
 Port test launchers must report every required native test passed. Fabric and 26.1.2 also require an XML report with the expected number of unique successful cases. NeoForge 1.21.1 uses its native completion log because its server accepts no `--report` option. A zero process exit after a startup exception is rejected.
 
-`-PclientSmoke` checks completed native resource loading, particle/renderer registration and baking of all nine mob/equipment layers, then exits its own client. Run `python tools/ports.py client TARGET`; CI supplies Xvfb/Mesa on Linux. This is a loading check, not an assertion about final in-world screenshots or shader compatibility.
+`-PclientSmoke` checks completed native resource loading, particle/renderer registration and baking of all nine mob/equipment layers and construction of all four native NeoForge armor models, then exits its own client. Run `python tools/ports.py client TARGET`; CI supplies Xvfb/Mesa on Linux. This is a loading check, not an assertion about final in-world screenshots or shader compatibility.
 
 After tests or client checks, **clean the target before a production build**:
 

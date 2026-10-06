@@ -10,3 +10,5 @@ Tidal Terror 0.0.3
 - Restrict port reef water repair to unfinished generation and saved pending work; preserve drained rooms and bubble elevators when chunks are revisited.
 
 - Share identical Forge/Fabric 1.20.1 classes, one cross-version shark behavior body and 44 modern resources; centralize spear and bleeding tuning without balance changes.
+
+- Fix 26.1.2 Reef Armor's native head/hat hierarchy crash and restore the special spear's hand-centering transform; construct armor models in client regression checks.

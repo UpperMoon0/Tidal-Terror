@@ -2,6 +2,8 @@
 
 ## 0.0.3 — Unreleased
 
+- Fix 26.1.2 Reef Armor's native head/hat hierarchy crash and restore the special spear's hand-centering transform; construct armor models in client regression checks.
+
 - Fix the NeoForge 26.1.2 normal-world generation crash caused by reversed pumpkin/sugar-cane feature ordering; add native Overworld biome-graph regression coverage.
 - Share identical 1.20.1 gameplay/rendering classes, the shark behavior algorithm and modern resources; use authoritative shared equipment tuning without changing balance.
 - Restrict port reef water repair to unfinished generation or saved pending work, preserving player-built drained rooms and bubble elevators on revisit.

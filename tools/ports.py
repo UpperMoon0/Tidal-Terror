@@ -105,6 +105,8 @@ def verify_jar(path, target, version):
             model=json.loads(jar.read('assets/tidalterror/items/reef_spear.json'))
             assert model['model']['type']=='minecraft:special'
             assert model['model']['model']['type']=='tidalterror:reef_spear'
+            assert model['model']['transformation']['translation']==[.5,.5,.5], 'Special spear must cancel native item centering'
+            assert model['model']['transformation']['scale']==[1,-1,-1], 'Special spear must use entity-model axes'
             assert 'parent' not in json.loads(jar.read('assets/tidalterror/models/item/reef_spear.json'))
     return hashlib.sha256(path.read_bytes()).hexdigest()
 

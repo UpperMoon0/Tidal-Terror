@@ -17,7 +17,8 @@ public final class ReefArmorModel extends HumanoidModel<net.minecraft.client.ren
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
         PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.ZERO);
-        root.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
+        // Native 26.1.2 HumanoidModel looks up head.getChild("hat").
+        head.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
         PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.ZERO);
         PartDefinition rightArm = root.addOrReplaceChild("right_arm", CubeListBuilder.create(), PartPose.offset(-5,2,0));
         PartDefinition leftArm = root.addOrReplaceChild("left_arm", CubeListBuilder.create(), PartPose.offset(5,2,0));
