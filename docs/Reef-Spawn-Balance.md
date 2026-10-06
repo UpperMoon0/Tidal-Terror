@@ -14,6 +14,8 @@ Each mod species has its own native spawn category on every supported loader:
 | Veilglow | tidalterror_veilglow | 12 | 2-4 |
 | Shardback | tidalterror_shardback | 10 | 1-3 |
 
+The table lists Forge 1.20.1 serialized names; ports use namespaced IDs with the same caps.
+
 Entity types and biome spawn entries use the same categories. The native
 natural-spawner dispatch, global counting, local player caps and category
 codec remain responsible for spawning. No manual spawn loop bypasses caps.

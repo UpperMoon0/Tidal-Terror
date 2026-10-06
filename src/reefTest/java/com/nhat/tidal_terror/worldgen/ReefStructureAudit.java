@@ -21,12 +21,17 @@ public final class ReefStructureAudit {
         var generator = level.getChunkSource().getGenerator();
         var terrain = new ReefTerrain(level, generator);
         BlockPos reef = null, outside = null;
-        for (int distance = 128; distance <= 2048; distance += 32) {
-            int x = center.getX() + distance, z = center.getZ();
-            if (reef == null && terrain.giant(x, z)) reef = new BlockPos(x, 25, z);
-            if (outside == null && !terrain.reef(x, z)) outside = new BlockPos(x, 25, z);
-            if (reef != null && outside != null) break;
-        }
+        // Search every direction: a rare reef need not extend east of the audit
+        // center. Keep distinct sites away from the already-inspected volume.
+        outer: for(int distance=160;distance<=4096;distance+=32)
+            for(int ray=0;ray<16;ray++) {
+                double angle=ray*Math.PI/8;
+                int x=center.getX()+(int)Math.round(Math.cos(angle)*distance);
+                int z=center.getZ()+(int)Math.round(Math.sin(angle)*distance);
+                if(reef==null && terrain.giant(x,z))reef=new BlockPos(x,25,z);
+                if(outside==null && !terrain.reef(x,z))outside=new BlockPos(x,25,z);
+                if(reef!=null && outside!=null)break outer;
+            }
         check(reef != null && outside != null, "Missing structure test sites");
         int tests = 0;
         for (var site : new BlockPos[]{reef, outside}) {
