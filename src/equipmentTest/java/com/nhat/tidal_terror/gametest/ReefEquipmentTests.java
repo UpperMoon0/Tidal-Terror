@@ -27,8 +27,15 @@ public final class ReefEquipmentTests {
     @GameTest(template="reef_life_pool",timeoutTicks=230)
     public static void repeatedSpearHitsRefreshDurationWithoutDelayingPulses(GameTestHelper h) {
         pool(h);var p=player(h,true);var t=target(h);var position=t.position();
-        float start=t.getHealth();double[] direct={0};
-        Runnable attack=()->{charge(p);t.invulnerableTime=0;float before=t.getHealth();p.attack(t);direct[0]+=before-t.getHealth();};
+        float start=t.getHealth();double[] direct={0};var playerPosition=p.position();
+        Runnable attack=()->{
+            // This fixture measures refresh timing, with both native actors held in water.
+            for(int tick=0;tick<25;tick++){p.setPos(playerPosition);p.setNoGravity(true);p.setDeltaMovement(Vec3.ZERO);p.tick();}
+            t.setPos(position);t.setDeltaMovement(Vec3.ZERO);t.invulnerableTime=0;
+            h.assertTrue(p.isInWater()&&t.isInWater()&&p.getAttackStrengthScale(.5F)>=.99F&&t.isAlive(),
+                    "Invalid refresh fixture: playerWater="+p.isInWater()+", targetWater="+t.isInWater()+", charge="+p.getAttackStrengthScale(.5F)+", health="+t.getHealth());
+            float before=t.getHealth();p.attack(t);direct[0]+=before-t.getHealth();
+        };
         attack.run();
         // Isolate pulse scheduling from native damage immunity after each weapon hit.
         for(int tick=1;tick<=220;tick++)h.runAfterDelay(tick,()->{t.setPos(position);t.setDeltaMovement(Vec3.ZERO);t.invulnerableTime=0;});

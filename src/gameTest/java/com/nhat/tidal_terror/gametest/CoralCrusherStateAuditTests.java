@@ -138,6 +138,7 @@ public class CoralCrusherStateAuditTests {
     @GameTest(template="crusher_combat_pool", batch="crusher_cycle_audit", timeoutTicks=1400)
     public static void auditsCompleteEncounterAndRetreat(GameTestHelper h) {
         var shark=h.spawn(ModEntities.CORAL_CRUSHER.get(),12,12,10);
+        shark.getRandom().setSeed(7142026L);
         var position=new Vec3[]{h.absoluteVec(new Vec3(25,12,10))};
         var player=swimmer(h,position,1390);
         // Let patrol actually run before revealing a survival swimmer.
