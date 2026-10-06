@@ -1,6 +1,8 @@
 package com.nhat.tidal_terror.balance;
-/** Equipment tuning shared by every Minecraft version and loader. */
+/** World generation and equipment tuning shared by every Minecraft version and loader. */
 public final class ReefBalance {
+    // Default TerraBlender region size is retained: large patches, fewer occurrences.
+    public static final int REEF_REGION_WEIGHT=1;
     public static final int BLEED_INTERVAL=40;
     public static final int SPEAR_DURABILITY=250;
     public static final double SPEAR_DAMAGE_BONUS=5;

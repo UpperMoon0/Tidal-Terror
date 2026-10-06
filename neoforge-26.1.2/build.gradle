@@ -65,3 +65,5 @@ dependencies {
         localRuntime "mezz.jei:jei-26.1.2-neoforge:29.43.0.107"
     }
 }
+
+if (project.hasProperty("portTests")) sourceSets.main.java.srcDir rootProject.file("src/spawnTargetTest/java")

@@ -56,3 +56,5 @@ dependencies {
         modLocalRuntime "mezz.jei:jei-1.20.1-fabric:15.20.0.118"
     }
 }
+
+if (project.hasProperty("portTests")) sourceSets.main.java.srcDir rootProject.file("src/spawnTargetTest/java")

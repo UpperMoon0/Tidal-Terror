@@ -32,7 +32,7 @@ public class ReefLifeAiTests {
   p.setPos(h.absoluteVec(new net.minecraft.world.phys.Vec3(20,6,20)));
   for(int i=0;i<65;i++)p.tick();p.doTick();return p;
  }
- @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=240)
+ @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=240,batch="reef_peaceful")
  public static void jellyPulseAndLooseBloom(GameTestHelper h){
   water(h,false);var a=h.spawn(ModEntities.VEILGLOW.get(),10,6,10);
   // A stationary wet leader tests following without an independently wandering target.
@@ -77,7 +77,7 @@ public class ReefLifeAiTests {
    h.assertTrue(h.getLevel().noCollision(j)&&j.isInWater(),"Escape clipped terrain or left water");h.succeed();
   });
  }
- @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=240)
+ @GameTest(template="tidalterror:reef_life_pool",timeoutTicks=240,batch="reef_peaceful")
  public static void crabForagesWithoutChangingSediment(GameTestHelper h){
   // Keep this short feeding-cycle assertion on a reproducible browsing route.
   water(h,true);var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);c.getRandom().setSeed(7142026L);var start=c.position();boolean[] fed={false};double[] furthest={0};

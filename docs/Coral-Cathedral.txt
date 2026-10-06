@@ -6,7 +6,7 @@ All building materials are vanilla blocks.
 
 Terrain:
 - Warm, lukewarm, deep lukewarm, normal and deep oceans are mapped to the reef inside
-  the TerraBlender reef region. Region weight is 18. Cold/frozen oceans and land mappings remain native.
+  the TerraBlender reef region. Shared region weight is 1 (approximately 5-6% of ocean area with default settings). Cold/frozen oceans and land mappings remain native.
 - ReefTerrain samples the native biome source without requesting distant chunks.
 - The reef interior floor undulates around Y -49; sea level is 63.
   Shoreward slopes interpolate over 192 blocks, with a refined distance to the biome boundary.

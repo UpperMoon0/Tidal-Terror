@@ -6,7 +6,7 @@ public final class PortTestBootstrap {
   var result=new java.util.ArrayList<net.minecraft.gametest.framework.TestFunction>();
   for(var clazz:java.util.List.of(PortEquipmentTests.class,ReefLifeAiTests.class,ReefSpawnPoolTests.class))for(var method:clazz.getDeclaredMethods()){
    var metadata=method.getAnnotation(net.minecraft.gametest.framework.GameTest.class);if(metadata==null)continue;
-   result.add(new net.minecraft.gametest.framework.TestFunction("tidalterror:ports","tidalterror:"+clazz.getSimpleName().toLowerCase(java.util.Locale.ROOT)+"."+method.getName().toLowerCase(java.util.Locale.ROOT),metadata.template(),metadata.timeoutTicks(),metadata.setupTicks(),metadata.required(),helper->{
+   result.add(new net.minecraft.gametest.framework.TestFunction(metadata.batch().equals("defaultBatch")?"tidalterror:ports":"tidalterror:"+metadata.batch(),"tidalterror:"+clazz.getSimpleName().toLowerCase(java.util.Locale.ROOT)+"."+method.getName().toLowerCase(java.util.Locale.ROOT),metadata.template(),metadata.timeoutTicks(),metadata.setupTicks(),metadata.required(),helper->{
     try{method.invoke(null,helper);}catch(java.lang.reflect.InvocationTargetException e){if(e.getCause() instanceof RuntimeException cause)throw cause;throw new RuntimeException(e.getCause());}catch(ReflectiveOperationException e){throw new RuntimeException(e);}
    }));
   }return result;

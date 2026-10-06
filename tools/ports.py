@@ -14,10 +14,10 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGETS = {
-    'fabric-1.20.1': dict(minecraft='1.20.1', loader='fabric', java=17, tests=21),
-    'fabric-1.21.1': dict(minecraft='1.21.1', loader='fabric', java=21, tests=21),
-    'neoforge-1.21.1': dict(minecraft='1.21.1', loader='neoforge', java=21, tests=21),
-    'neoforge-26.1.2': dict(minecraft='26.1.2', loader='neoforge', java=25, tests=20),
+    'fabric-1.20.1': dict(minecraft='1.20.1', loader='fabric', java=17, tests=22),
+    'fabric-1.21.1': dict(minecraft='1.21.1', loader='fabric', java=21, tests=22),
+    'neoforge-1.21.1': dict(minecraft='1.21.1', loader='neoforge', java=21, tests=22),
+    'neoforge-26.1.2': dict(minecraft='26.1.2', loader='neoforge', java=25, tests=21),
 }
 
 def verify_results(log, expected, report=None):
