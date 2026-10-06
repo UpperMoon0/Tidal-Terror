@@ -49,3 +49,10 @@ if (project.hasProperty('clientSmoke')) {
         }
     }
 }
+
+// Recipe viewer for interactive development only; not bundled or required by the mod.
+dependencies {
+    if (!project.hasProperty("portTests")) {
+        modLocalRuntime "mezz.jei:jei-1.20.1-fabric:15.62.0.219"
+    }
+}

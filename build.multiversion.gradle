@@ -16,6 +16,7 @@ allprojects {
     }
     repositories {
         mavenCentral()
+        maven { url = "https://maven.blamejared.com/"; content { includeGroup "mezz.jei"; includeGroup "net.mezzdev.config" } }
         maven { url = 'https://libraries.minecraft.net/'; content { includeGroup 'com.mojang' } }
         maven { url = 'https://maven.fabricmc.net/'; content { includeGroupByRegex 'net\\.fabricmc.*' } }
         maven { url = 'https://maven.architectury.dev/'; content { includeGroupByRegex 'dev\\.architectury.*' } }

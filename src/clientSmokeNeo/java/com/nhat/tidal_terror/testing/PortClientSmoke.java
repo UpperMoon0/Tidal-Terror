@@ -9,6 +9,7 @@ public final class PortClientSmoke {
         var game=net.minecraft.client.Minecraft.getInstance();
         if(done || game.screen == null || game.getOverlay()!=null) return;
         done=true;
+        if (!net.neoforged.fml.ModList.get().isLoaded("jei")) throw new IllegalStateException("Development client is missing JEI");
         var models=game.getEntityModels();
         models.bakeLayer(com.nhat.tidal_terror.entities.coral_crusher.ModModelLayers.CORAL_CRUSHER_LAYER);
         models.bakeLayer(com.nhat.tidal_terror.entities.cathedral_ray.CathedralRayModel.LAYER);
@@ -17,7 +18,7 @@ public final class PortClientSmoke {
         models.bakeLayer(com.nhat.tidal_terror.client.ReefSpearModel.LAYER);
         for(var slot:new net.minecraft.world.entity.EquipmentSlot[]{net.minecraft.world.entity.EquipmentSlot.HEAD,net.minecraft.world.entity.EquipmentSlot.CHEST,net.minecraft.world.entity.EquipmentSlot.LEGS,net.minecraft.world.entity.EquipmentSlot.FEET})
             new com.nhat.tidal_terror.client.ReefArmorModel(models.bakeLayer(com.nhat.tidal_terror.client.ReefArmorModel.layer(slot)));
-        org.slf4j.LoggerFactory.getLogger("TidalPortSmoke").info("TIDAL_PORT_CLIENT_READY: native resources and nine model layers loaded");
+        org.slf4j.LoggerFactory.getLogger("TidalPortSmoke").info("TIDAL_PORT_CLIENT_READY: JEI, native resources and nine model layers loaded");
         game.stop();
     }
 }

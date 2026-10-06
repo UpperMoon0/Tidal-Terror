@@ -319,8 +319,8 @@ if (project.hasProperty('cathedralRayTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def rayLog = file('build/cathedral-ray-gametest/logs/latest.log')
-            if (!rayLog.exists() || !rayLog.text.contains('10 GAME TESTS COMPLETE')
-                    || !rayLog.text.contains('All 10 required tests passed')) {
+            if (!rayLog.exists() || !rayLog.text.contains('12 GAME TESTS COMPLETE')
+                    || !rayLog.text.contains('All 12 required tests passed')) {
                 throw new GradleException('Ray GameTests did not complete; inspect the native server log.')
             }
         }

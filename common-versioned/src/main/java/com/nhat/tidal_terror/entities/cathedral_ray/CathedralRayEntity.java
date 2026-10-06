@@ -9,7 +9,6 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -45,7 +44,7 @@ public class CathedralRayEntity extends WaterAnimal {
     }
 
     @Override protected PathNavigation createNavigation(Level level) {
-        return new WaterBoundPathNavigation(this, level);
+        return new RayWaterNavigation(this, level);
     }
 
     @Override public void travel(Vec3 input) {

@@ -2,6 +2,9 @@
 
 ## 0.0.3 — Unreleased
 
+- Fix ray seabed/coral escape clearance and whole-wing navigation shortcuts across all targets; add native obstacle regressions.
+- Include JEI in every port development environment, with client-loading checks and no production dependency.
+
 - Fix 26.1.2 Reef Armor's native head/hat hierarchy crash and restore the special spear's hand-centering transform; construct armor models in client regression checks.
 
 - Fix the NeoForge 26.1.2 normal-world generation crash caused by reversed pumpkin/sugar-cane feature ordering; add native Overworld biome-graph regression coverage.

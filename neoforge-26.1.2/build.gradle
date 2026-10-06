@@ -53,3 +53,15 @@ sourceSets.main.java.srcDir rootProject.file('common-ports/src/main/java')
 sourceSets.main.java.srcDir rootProject.file('common/src/main/java')
 
 sourceSets.main.resources.srcDir rootProject.file('common-modern/src/main/resources')
+
+configurations {
+    localRuntime { canBeConsumed = false; canBeResolved = false }
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+// Recipe viewer for interactive development only; not bundled or required by the mod.
+dependencies {
+    if (!project.hasProperty("portTests")) {
+        localRuntime "mezz.jei:jei-26.1.2-neoforge:29.43.0.107"
+    }
+}

@@ -160,4 +160,38 @@ public class ReefLifeAiTests {
   });
  }
 
+
+ public static void rayLeavesSeabed(GameTestHelper h) {
+  water(h,true);var r=h.spawn(ModEntities.CATHEDRAL_RAY.get(),10,4,10);
+  r.setNoAi(true);r.setNoGravity(true);var start=r.position();
+  h.runAfterDelay(5,()->{
+   try {
+    var goal=new com.nhat.tidal_terror.entities.cathedral_ray.CathedralRaySwimGoal(r);
+    var move=goal.getClass().getDeclaredMethod("navigate",net.minecraft.world.phys.Vec3.class,double.class);move.setAccessible(true);
+    h.assertTrue((boolean)move.invoke(goal,h.absoluteVec(new net.minecraft.world.phys.Vec3(10.5,8,17.5)),1.0),"Ray rejected a clear escape from the seabed");
+   }catch(ReflectiveOperationException e){throw new RuntimeException(e);}
+   r.setNoAi(false);
+  });
+  h.runAfterDelay(160,()->{
+   h.assertTrue(r.position().distanceToSqr(start)>4,"Ray remained stuck on seabed");
+   h.assertTrue(r.isInWater()&&h.getLevel().noCollision(r)&&r.isAlive(),"Ray escape clipped or left water");h.succeed();
+  });
+ }
+ public static void rayShortcutChecksWings(GameTestHelper h) {
+  water(h,false);var r=h.spawn(ModEntities.CATHEDRAL_RAY.get(),10,6,6);r.setNoAi(true);r.setNoGravity(true);
+  h.setBlock(12,6,11,Blocks.STONE);
+  h.runAfterDelay(5,()->{
+   try {
+    var nav=r.getNavigation();Class<?> owner=nav.getClass();java.lang.reflect.Method shortcut=null;
+    while(shortcut==null&&owner!=null){try{shortcut=owner.getDeclaredMethod("canMoveDirectly",net.minecraft.world.phys.Vec3.class,net.minecraft.world.phys.Vec3.class);}catch(NoSuchMethodException e){owner=owner.getSuperclass();}}
+    shortcut.setAccessible(true);
+    var start=r.position().add(0,r.getBbHeight()*.5,0);
+    var blocked=h.absoluteVec(new net.minecraft.world.phys.Vec3(10.5,6+r.getBbHeight()*.5,17.5));
+    h.assertTrue(!(boolean)shortcut.invoke(nav,start,blocked),"Ray shortcut ignores coral under its wings");
+    h.setBlock(12,6,11,Blocks.WATER);
+    h.assertTrue((boolean)shortcut.invoke(nav,start,blocked),"Ray rejected a clear wide-water shortcut");h.succeed();
+   }catch(ReflectiveOperationException e){throw new RuntimeException(e);}
+  });
+ }
+
 }

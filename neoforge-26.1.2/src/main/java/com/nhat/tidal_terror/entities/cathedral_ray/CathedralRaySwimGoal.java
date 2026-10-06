@@ -4,7 +4,6 @@ import com.nhat.tidal_terror.entities.coral_crusher.CoralCrusherEntity;
 import java.util.Comparator;
 import java.util.EnumSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
@@ -172,11 +171,9 @@ public final class CathedralRaySwimGoal extends Goal {
         }
     }
     private boolean clearance(Vec3 point) {
-        BlockPos pos = BlockPos.containing(point);
-        return ray.level().hasChunkAt(pos) && ray.level().getFluidState(pos).is(FluidTags.WATER)
-                && ray.level().getFluidState(pos.above()).is(FluidTags.WATER)
-                && ray.level().getFluidState(pos.below()).is(FluidTags.WATER)
-                && ray.level().noCollision(ray, ray.getBoundingBox().move(point.subtract(ray.position())).inflate(.25, .25, .25));
+        // Check occupied water, not an extra block below or an inflated margin.
+        // A ray resting beside coral or on the seabed must be able to leave.
+        return com.nhat.tidal_terror.entities.ReefNavigation.clear(ray, point, false);
     }
     private boolean navigate(Vec3 destination, double speed) {
         if (!clearance(destination)) return false;
@@ -188,7 +185,7 @@ public final class CathedralRaySwimGoal extends Goal {
         Vec3 previous = ray.position();
         for (int i = 0; i < path.getNodeCount(); i++) {
             Vec3 point = path.getEntityPosAtNode(ray, i);
-            int steps = Math.max(1, (int)Math.ceil(previous.distanceTo(point)));
+            int steps = Math.max(1, (int)Math.ceil(previous.distanceTo(point) * 4));
             for (int step = 1; step <= steps; step++)
                 if (!clearance(previous.lerp(point, (double)step / steps))) return false;
             previous = point;
