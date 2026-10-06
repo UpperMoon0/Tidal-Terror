@@ -95,6 +95,9 @@ def verify_jar(path, target, version):
         assert 'assets/tidalterror/textures/item/reef_spear_model.png' in names
         assert 'assets/tidalterror/textures/item/reef_spear.png' not in names
         if modern:
+            for resource in (ROOT/'common-modern/src/main/resources').rglob('*.json'):
+                entry=resource.relative_to(ROOT/'common-modern/src/main/resources').as_posix()
+                assert jar.read(entry)==resource.read_bytes(), 'Shared modern resource missing or changed: '+entry
             for name in ('serration','hemorrhage'):
                 enchant=json.loads(jar.read(f'data/tidalterror/enchantment/{name}.json'))
                 assert enchant['supported_items']=='#tidalterror:bleeding_weapons'

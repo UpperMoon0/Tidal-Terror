@@ -56,3 +56,5 @@ if (project.hasProperty('clientSmoke')) sourceSets.main.java.srcDir rootProject.
 sourceSets.main.java.srcDir rootProject.file('common-universal/src/main/java')
 
 sourceSets.main.java.srcDir rootProject.file('common-ports/src/main/java')
+
+sourceSets.main.resources.srcDir rootProject.file('common-modern/src/main/resources')

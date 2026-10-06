@@ -113,7 +113,7 @@ code+='''  return LayerDefinition.create(mesh,256,256);
  public void renderAll(PoseStack pose,VertexConsumer out,int light,int overlay,float r,float g,float b,float a){renderToBuffer(pose,out,light,overlay,r,g,b,a);}
 }
 '''
-out=ROOT/'src/main/java/com/nhat/tidal_terror/entities/shardback/ShardbackModel.java'
+out=ROOT/'common-1201/src/main/java/com/nhat/tidal_terror/entities/shardback/ShardbackModel.java'
 out.parent.mkdir(parents=True,exist_ok=True);out.write_text(code)
 work=ROOT/'build/shardback-art';work.mkdir(parents=True,exist_ok=True)
 (work/'box-layout.json').write_text(json.dumps(boxes,indent=2))

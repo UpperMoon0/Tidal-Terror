@@ -22,7 +22,7 @@ Reparent the head and tail to the body. Put pivots at the neck, jaw hinges, and 
 
 For a translated joint, compensating the local cube position by the opposite pivot translation preserves its world position. With rotated parents, use the full inverse parent transform rather than subtracting offsets blindly. Verify the result through native model baking and rendered vertices.
 
-The baseline is preserved in `src/modelTest/java/com/nhat/tidal_terror/entities/coral_crusher/OriginalCoralCrusherModel.java`. The working rig is `src/main/java/com/nhat/tidal_terror/entities/coral_crusher/CoralCrusherModel.java`. `CoralCrusherAnimationCheck` compares sorted rendered position/UV signatures at rest against the baseline. That comparison passed: rig repair preserved the rest shape and UVs.
+The baseline is preserved in `src/modelTest/java/com/nhat/tidal_terror/entities/coral_crusher/OriginalCoralCrusherModel.java`. The working rig is `common-1201/src/main/java/com/nhat/tidal_terror/entities/coral_crusher/CoralCrusherModel.java`. `CoralCrusherAnimationCheck` compares sorted rendered position/UV signatures at rest against the baseline. That comparison passed: rig repair preserved the rest shape and UVs.
 
 ## Procedural animation
 

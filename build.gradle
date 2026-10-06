@@ -564,3 +564,5 @@ sourceSets.main.java.srcDir 'common/src/main/java'
 sourceSets.main.java.srcDir 'common-versioned/src/main/java'
 
 sourceSets.main.java.srcDir 'common-universal/src/main/java'
+
+sourceSets.main.java.srcDir 'common-1201/src/main/java'

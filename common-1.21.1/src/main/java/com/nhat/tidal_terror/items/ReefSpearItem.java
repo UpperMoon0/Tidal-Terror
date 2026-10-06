@@ -28,8 +28,8 @@ public final class ReefSpearItem extends Item {
     private static final UUID REACH_UUID = UUID.fromString("533e7a35-85a6-4f4b-919e-45761e28ea29");
     public ReefSpearItem() {
         super(new Properties().durability(com.nhat.tidal_terror.balance.ReefBalance.SPEAR_DURABILITY).attributes(net.minecraft.world.item.component.ItemAttributeModifiers.builder()
-            .add(Attributes.ATTACK_DAMAGE,new AttributeModifier(BASE_ATTACK_DAMAGE_ID,5,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
-            .add(Attributes.ATTACK_SPEED,new AttributeModifier(BASE_ATTACK_SPEED_ID,-2.9,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+            .add(Attributes.ATTACK_DAMAGE,new AttributeModifier(BASE_ATTACK_DAMAGE_ID,com.nhat.tidal_terror.balance.ReefBalance.SPEAR_DAMAGE_BONUS,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+            .add(Attributes.ATTACK_SPEED,new AttributeModifier(BASE_ATTACK_SPEED_ID,com.nhat.tidal_terror.balance.ReefBalance.SPEAR_SPEED_BONUS,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
             .add(Attributes.ENTITY_INTERACTION_RANGE,new AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("tidalterror","spear_reach"),1,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build()));
     }
 
@@ -56,7 +56,7 @@ public final class ReefSpearItem extends Item {
 
     @Override public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> text, TooltipFlag flags) {
         int duration = bleedingDuration(stack);
-        float damage = 1 + .5F * bleedingPower(stack);
+        float damage = com.nhat.tidal_terror.balance.ReefBalance.bleedingDamage(bleedingPower(stack),false);
         String shownDamage = damage == (int)damage ? Integer.toString((int)damage) : Float.toString(damage);
         text.add(Component.translatable("tooltip.tidalterror.reef_spear", shownDamage, duration / 20).withStyle(ChatFormatting.AQUA));
         text.add(Component.translatable("tooltip.tidalterror.reef_spear_refresh").withStyle(ChatFormatting.GRAY));

@@ -5,11 +5,12 @@ Version 0.0.3 retains Forge 1.20.1 and adds Fabric 1.20.1, Fabric/NeoForge 1.21.
 ## Source ownership
 
 - `src/main` and `src/generated` remain the original Forge entry point, Forge adapters and authoritative artwork/1.20.1 data.
-- `common` owns Java-only equipment balance constants, compiled for Java 17.
-- `common-universal` owns reef geometry, navigation helpers, shared crab/jelly goals and structure/water postprocessing hooks that have identical APIs across all five runtimes.
+- `common` owns authoritative Java-only equipment tuning: spear durability/damage/speed, bleed interval/duration/damage and the armor bleed multiplier. Every runtime and spear tooltip calls these values.
+- `common-1201` owns the identical Forge/Fabric 1.20.1 models, renderers, entities, armor material, arrow item, upgrade recipe and turtle placement mixin. Model generators write into this shared root.
+- `common-universal` owns reef geometry, navigation helpers, shared shark/crab/jelly goals and structure/water postprocessing hooks that compile across all five runtimes. The complete shark behavior algorithm lives here; `CoralCrusherRuntime` adapters contain only damage-call, collision-box, water-check, drowned-name and minimum-height API differences.
 - `common-versioned` owns the remaining identical Minecraft 1.20.1/1.21.1 renderer and feature sources, including the ray.
 - `common-ports` owns identical Architectury particle registration, spawn categories, attack-charge access and chunk-finish hooks across the four ports.
-- `common-1201-1211` owns identical 1.20.1/1.21.1 port adapters and registration. `common-modern` owns 1.21.1/26.1.2 spear enchantment support, turtle placement and supported-seabed navigation.
+- `common-1201-1211` owns identical 1.20.1/1.21.1 port adapters and registration. `common-modern` owns 1.21.1/26.1.2 spear enchantment support, turtle placement and supported-seabed navigation, plus 44 identical modern JSON resources compiled into both versions. Different recipe/component/item/equipment formats remain in their native version folders. Archive verification checks that every shared resource is packaged byte-for-byte.
 - `common-1.20.1` and `common-1.21.1` own version-specific entities, equipment, codecs and render APIs. The two 1.21.1 loaders compile the same gameplay sources.
 - `fabric-*` and `neoforge-*` own loader initialization, events, metadata and launch configuration. The substantial 26.1.2 API changes keep its remaining entity serialization, data components, render states and special-item renderer in the 26.1.2 target.
 

@@ -18,9 +18,9 @@ public final class ModEffects {
             var data = com.nhat.tidal_terror.platform.ReefEntityData.get(entity);
             // Legacy saves have no independent countdown; retain their existing pulse phase.
             int remaining = data.contains(PULSE_TICKS) ? data.getIntOr(PULSE_TICKS, 0)
-                    : Math.floorMod(entity.getEffect(bleeding()).getDuration() - 1, 40) + 1;
+                    : Math.floorMod(entity.getEffect(bleeding()).getDuration() - 1, com.nhat.tidal_terror.balance.ReefBalance.BLEED_INTERVAL) + 1;
             remaining--;
-            data.putInt(PULSE_TICKS, remaining <= 0 ? 40 : remaining);
+            data.putInt(PULSE_TICKS, remaining <= 0 ? com.nhat.tidal_terror.balance.ReefBalance.BLEED_INTERVAL : remaining);
             if (remaining > 0) return true;
             float damage = com.nhat.tidal_terror.balance.ReefBalance.bleedingDamage(amplifier,com.nhat.tidal_terror.items.ReefArmorItem.hasFullSet(entity));
             var owner = bleedingAttacker(entity);
@@ -43,7 +43,7 @@ public final class ModEffects {
     public static boolean isBleedingDamage(LivingEntity entity) { return DAMAGING_BLEED.get() == entity; }
     /** Called only for a newly added effect, never a refresh or amplifier update. */
     public static void beginBleeding(LivingEntity entity) {
-        com.nhat.tidal_terror.platform.ReefEntityData.get(entity).putInt(PULSE_TICKS, 40);
+        com.nhat.tidal_terror.platform.ReefEntityData.get(entity).putInt(PULSE_TICKS, com.nhat.tidal_terror.balance.ReefBalance.BLEED_INTERVAL);
         com.nhat.tidal_terror.platform.ReefEntityData.get(entity).remove(ATTACKER);
     }
     public static void clearBleedingClock(LivingEntity entity) {

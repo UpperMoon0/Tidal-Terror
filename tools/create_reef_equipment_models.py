@@ -6,7 +6,7 @@ Material names in part paths drive the exact-face texture assembly.
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'src/main/java/com/nhat/tidal_terror/client'
+OUT = ROOT / 'common-1201/src/main/java/com/nhat/tidal_terror/client'
 OUT.mkdir(parents=True, exist_ok=True)
 SIZE = 256
 

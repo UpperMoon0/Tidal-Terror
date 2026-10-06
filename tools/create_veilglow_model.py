@@ -110,7 +110,7 @@ code+='''        return LayerDefinition.create(mesh,256,256);
     public void renderAll(PoseStack pose,VertexConsumer out,int light,int overlay,float r,float g,float b,float a) {root.render(pose,out,light,overlay,r,g,b,a);}
 }
 '''
-p=ROOT/'src/main/java/com/nhat/tidal_terror/entities/veilglow/VeilglowModel.java';p.parent.mkdir(parents=True,exist_ok=True);p.write_text(code)
+p=ROOT/'common-1201/src/main/java/com/nhat/tidal_terror/entities/veilglow/VeilglowModel.java';p.parent.mkdir(parents=True,exist_ok=True);p.write_text(code)
 work=ROOT/'build/veilglow-art';work.mkdir(parents=True,exist_ok=True)
 (work/'box-layout.json').write_text(json.dumps(boxes,indent=2))
 print('Generated',len(boxes),'cubes; 6 ribbon chains; atlas height',v+row)
