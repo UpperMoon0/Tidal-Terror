@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public final class ReefSpearItem extends Item {
     private static final UUID REACH_UUID = UUID.fromString("533e7a35-85a6-4f4b-919e-45761e28ea29");
     public ReefSpearItem() {
-        super(com.nhat.tidal_terror.TidalTerror.properties("reef_spear").component(net.minecraft.core.component.DataComponents.WEAPON,new net.minecraft.world.item.component.Weapon(0)).durability(com.nhat.tidal_terror.balance.ReefBalance.SPEAR_DURABILITY).enchantable(14).repairable(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,net.minecraft.resources.Identifier.fromNamespaceAndPath("tidalterror","reef_spear_repairs"))).attributes(net.minecraft.world.item.component.ItemAttributeModifiers.builder()
+        super(com.nhat.tidal_terror.TidalTerror.properties("reef_spear").component(net.minecraft.core.component.DataComponents.WEAPON,new net.minecraft.world.item.component.Weapon(1)).durability(com.nhat.tidal_terror.balance.ReefBalance.SPEAR_DURABILITY).enchantable(14).repairable(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,net.minecraft.resources.Identifier.fromNamespaceAndPath("tidalterror","reef_spear_repairs"))).attributes(net.minecraft.world.item.component.ItemAttributeModifiers.builder()
             .add(Attributes.ATTACK_DAMAGE,new AttributeModifier(BASE_ATTACK_DAMAGE_ID,5,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
             .add(Attributes.ATTACK_SPEED,new AttributeModifier(BASE_ATTACK_SPEED_ID,-2.9,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
             .add(Attributes.ENTITY_INTERACTION_RANGE,new AttributeModifier(net.minecraft.resources.Identifier.fromNamespaceAndPath("tidalterror","spear_reach"),1,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build()));
@@ -42,7 +42,7 @@ public final class ReefSpearItem extends Item {
             ModEffects.applyBleeding(target, player, duration, power);
             com.nhat.tidal_terror.particles.ModParticles.bleed(target, 12);
         }
-        stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
+        // Native Weapon components charge one durability after a successful hit.
     }
 
     @Override public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miner) {
