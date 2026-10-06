@@ -102,6 +102,25 @@ public class ReefLifeAiTests {
    h.assertTrue(c.getTarget()==null&&c.isInWater()&&h.getLevel().noCollision(c),"Crab attacked, beached or clipped cover");h.succeed();
   });
  }
+ @GameTest(template="reef_life_pool",timeoutTicks=240)
+ public static void crabFinishesShelterRouteWhenSlowed(GameTestHelper h){
+  water(h,true);for(int z=11;z<=18;z++)for(int y=4;y<=7;y++)h.setBlock(16,y,z,Blocks.STONE);
+  var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);var predator=shark(h,6);
+  c.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).setBaseValue(.1);
+  c.setYRot(0);c.setNoAi(true);
+  h.runAfterDelay(5,()->{h.assertTrue(predator.isInWater(),"Shelter predator fixture is dry");c.setNoAi(false);});
+  net.minecraft.world.level.pathfinder.Path[] escape={null};
+  h.runAfterDelay(15,()->{
+   escape[0]=c.getNavigation().getPath();
+   h.assertTrue(escape[0]!=null&&escape[0].canReach(),"Slowed crab did not plan an escape");
+  });
+  h.runAfterDelay(45,()->h.assertTrue(c.getBehavior()==ShardbackEntity.Behavior.SHELTER
+    || c.getNavigation().getPath()==escape[0],"Crab abandoned a reachable shelter before arriving"));
+  h.runAfterDelay(180,()->{
+   h.assertTrue(c.getBehavior()==ShardbackEntity.Behavior.SHELTER,"Slowed crab never settled in shelter; position="+c.position());
+   h.assertTrue(c.getHealth()==16&&c.isInWater()&&h.getLevel().noCollision(c),"Slowed shelter route harmed or stranded the crab");h.succeed();
+  });
+ }
  @GameTest(template="reef_life_pool",timeoutTicks=160)
  public static void crabWarnsThenContactPinchesAndRetreats(GameTestHelper h){
   water(h,true);var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);var p=player(h,GameType.SURVIVAL);
@@ -129,17 +148,24 @@ public class ReefLifeAiTests {
   });
  }
  @GameTest(template="reef_life_pool",timeoutTicks=140)
- public static void crabCannotRouteAcrossUnsupportedWater(GameTestHelper h){
+ public static void crabCannotRouteAcrossUnsupportedWater(GameTestHelper h) throws Exception {
   water(h,true);
   for(int x=13;x<=15;x++)for(int z=0;z<=23;z++)h.setBlock(x,3,z,Blocks.WATER);
   var c=h.spawn(ModEntities.SHARDBACK.get(),10,4,10);
+  var shortcut=net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation.class.getDeclaredMethod(
+    "canMoveDirectly",net.minecraft.world.phys.Vec3.class,net.minecraft.world.phys.Vec3.class);
+  shortcut.setAccessible(true);
   h.runAfterDelay(5,()->{
    var destination=h.absoluteVec(new net.minecraft.world.phys.Vec3(19.5,4,10.5));
+   try {
+    h.assertTrue(!(boolean)shortcut.invoke(c.getNavigation(),c.position().add(0,c.getBbHeight()*.5,0),destination),
+      "Native waypoint shortcut crosses unsupported water");
+   }catch(ReflectiveOperationException e){throw new RuntimeException(e);}
    h.assertTrue(!com.nhat.tidal_terror.entities.ReefNavigation.move(c,destination,1,true),"Crab accepted a floating path across an unsupported seabed gap");
   });
   h.runAfterDelay(100,()->{
    h.assertTrue(c.getX()<h.absolutePos(new net.minecraft.core.BlockPos(13,4,0)).getX(),"Crab crossed the unsupported gap");
-   h.assertTrue(c.isInWater()&&c.isAlive()&&h.getLevel().noCollision(c),"Crab left water or clipped while avoiding the gap");h.succeed();
+   h.assertTrue(c.isInWater()&&c.isAlive()&&h.getLevel().noCollision(c),"Crab left water or clipped while avoiding the gap; position="+c.position()+" health="+c.getHealth()+" water="+c.isInWater()+" clear="+h.getLevel().noCollision(c)+" damage="+c.getLastDamageSource());h.succeed();
   });
  }
 

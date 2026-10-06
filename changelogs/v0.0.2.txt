@@ -28,3 +28,6 @@ Reef equipment and crafting rewards
 - Corrected public equipment documentation and added save/cure damage-source diagnostics.
 - Iron-stage balance: armor matches iron protection (15 total) with 20% full-set seabed grip; bleeding enchantments conflict with Sharpness/Smite/Bane, and the spear excludes Fire Aspect.
 - Tooltips state bleeding damage every two seconds and enchanted duration; Hemorrhage books show only added duration. Fang Arrow remains a non-stacking two-damage bonus.
+
+- Crab navigation checks full underwater body clearance and supported waypoints; reachable shelter routes are no longer abandoned at the replanning deadline.
+- Native regressions run in verified fresh flat worlds, preventing random terrain and natural spawning from contaminating equipment and creature fixtures.

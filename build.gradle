@@ -482,7 +482,7 @@ if (project.hasProperty('reefLifeTests')) {
     tasks.matching { it.name == 'runGameTestServer' }.configureEach {
         doLast {
             def log=file('build/reef-life-gametest/logs/latest.log')
-            if (!log.exists() || !log.text.contains('14 GAME TESTS COMPLETE') || !log.text.contains('All 14 required tests passed'))
+            if (!log.exists() || !log.text.contains('15 GAME TESTS COMPLETE') || !log.text.contains('All 15 required tests passed'))
                 throw new GradleException('Reef life native tests did not pass')
         }
     }
@@ -520,5 +520,41 @@ if (project.hasProperty('weaponBalanceTests')) {
         property 'forge.enabledGameTestNamespaces', 'tidalterror'
         property 'forge.logging.console.level', 'info'
         property 'tidalterror.weaponOutput', project.file('art/weapon-balance/native-1.20.1.json').absolutePath
+    }
+}
+
+// Forge's userdev GameTest launcher reads DedicatedServerProperties; without
+// server.properties it creates a random normal world around the test rooms.
+def nativeFixtureFlags = ['coralCrusherTests', 'cathedralRayTests', 'veilglowTests',
+        'shardbackTests', 'reefLifeTests', 'foodTests', 'spawnPoolTests',
+        'equipmentTests', 'weaponBalanceTests']
+if (nativeFixtureFlags.any { project.hasProperty(it) }) {
+    sourceSets.main.java.srcDir 'src/nativeTestSupport/java'
+    tasks.matching { it.name == 'runGameTestServer' }.configureEach {
+        doFirst {
+            def directory = project.file(minecraft.runs.gameTestServer.workingDirectory).canonicalFile
+            def buildRoot = layout.buildDirectory.get().asFile.canonicalFile
+            def world = new File(directory, 'gametest-flat-world').canonicalFile
+            if (!directory.toPath().startsWith(buildRoot.toPath())
+                    || !world.toPath().startsWith(directory.toPath()) || world == directory)
+                throw new GradleException('Refusing to reset a GameTest world outside its private build directory')
+            // Reset only this named test world, preserving ordinary world/ and
+            // every developer client/save. A failed run cannot leave actors behind.
+            project.delete(world)
+            directory.mkdirs()
+            def properties = new Properties()
+            properties.setProperty('level-name', 'gametest-flat-world')
+            properties.setProperty('level-seed', '0')
+            properties.setProperty('level-type', 'minecraft:flat')
+            properties.setProperty('generate-structures', 'false')
+            properties.setProperty('online-mode', 'false')
+            properties.setProperty('max-tick-time', '0')
+            properties.setProperty('view-distance', '5')
+            properties.setProperty('simulation-distance', '5')
+            new File(directory, 'server.properties').withOutputStream {
+                properties.store(it, 'Isolated native regression world')
+            }
+            new File(directory, 'eula.txt').text = 'eula=true\n'
+        }
     }
 }

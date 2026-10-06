@@ -72,6 +72,9 @@ public final class ShardbackForageGoal extends Goal {
    if(reachedCover&&crab.getNavigation().isDone()&&(danger==null||crab.position().distanceToSqr(danger)>16)){change(SHELTER);return;}
    if(reachedCover&&crab.getNavigation().isDone())reachedCover=false;
    change(FLEE);
+   // A reachable shelter is a destination, not a direction to keep extending.
+   // Slow turns or movement can take longer than the normal replanning interval.
+   if(reachedCover&&!crab.getNavigation().isDone())return;
    if(route==0){route=30;Vec3 d=ReefNavigation.away(crab,danger);var candidates=new ArrayList<Vec3>();
     for(int i=0;i<10;i++){
      Vec3 p=seabed(crab.position().add(ReefNavigation.rotate(d,(i%2==0?1:-1)*(i/2)*.3).scale(4+i%2)));
