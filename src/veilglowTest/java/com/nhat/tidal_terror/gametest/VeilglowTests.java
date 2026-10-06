@@ -105,13 +105,20 @@ public class VeilglowTests {
 
     @GameTest(template="reef_life_pool", timeoutTicks=240)
     public static void swimmingUsesNavigation(GameTestHelper helper) {
+        // The shared template is empty: falling must not count as swimming.
+        for(int x=0;x<=23;x++)for(int z=0;z<=23;z++)for(int y=3;y<=14;y++)
+            helper.setBlock(x,y,z,Blocks.WATER);
         var ray=helper.spawn(ModEntities.VEILGLOW.get(),10,5,10);
         var destination=helper.absolutePos(new BlockPos(10,6,15));
-        ray.getNavigation().moveTo(destination.getX()+.5,destination.getY(),destination.getZ()+.5,1);
+        helper.runAfterDelay(5,()->{
+            helper.assertTrue(ray.isInWater(),"Swimming fixture never entered water");
+            helper.assertTrue(ray.getNavigation().moveTo(destination.getX()+.5,destination.getY(),destination.getZ()+.5,1),
+                    "Native swimming path was rejected");
+        });
         var start=ray.position();
         helper.runAfterDelay(140,()->{
             helper.assertTrue(ray.position().distanceTo(start)>0.5,"Veilglow did not swim using native navigation");
-            helper.assertTrue(ray.isAlive() && ray.getTarget()==null,"Veilglow must remain peaceful and alive underwater");
+            helper.assertTrue(ray.isAlive() && ray.isInWater() && ray.getTarget()==null && helper.getLevel().noCollision(ray),"Veilglow must remain peaceful, clear of terrain and alive underwater");
             System.out.println("VEILGLOW_TEST swimmingUsesNavigation PASS distance="+ray.position().distanceTo(start));
             helper.succeed();
         });
