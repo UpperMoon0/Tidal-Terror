@@ -36,6 +36,8 @@ public final class ReefEquipmentEvents {
     }
     @SubscribeEvent public static void anchor(LivingKnockBackEvent event) {
         var wearer = event.getEntity();
+        // Attacker credit must not add knockback that ownerless bleeding never had.
+        if (com.nhat.tidal_terror.effects.ModEffects.isBleedingDamage(wearer)) { event.setCanceled(true); return; }
         if (!wearer.isInWater() || !wearer.onGround()) return;
         int pieces = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {

@@ -27,8 +27,9 @@ disabled; a dedicated blood-drop status icon remains visible.
 ## Spear enchantments
 
 Both are available through enchanting tables and enchanted books/anvils, only
-on the Reef Spear. They are compatible with each other and existing weapon
-enchantments. They retain the charged underwater-hit gate and refresh one
+on the Reef Spear. They are compatible with each other, but conflict with
+Sharpness, Smite and Bane of Arthropods. Looting, Knockback, Unbreaking and Mending
+remain supported. The spear excludes Fire Aspect and Sweeping Edge. They retain the charged underwater-hit gate and refresh one
 effect rather than stacking independent bleeds.
 
 | Enchantment | Bonus |
@@ -37,7 +38,7 @@ effect rather than stacking independent bleeds.
 | Hemorrhage I–II | Extends duration to six/eight seconds, adding one/two pulses. |
 
 Together at maximum level, four 2.5-damage pulses deal 10 damage over eight
-seconds. The spear tooltip calculates its actual enchanted total and duration.
+seconds. The spear tooltip displays enchanted damage every two seconds and duration.
 A weaker hit cannot downgrade an active stronger effect. Enchantment values
 from edited NBT are clamped to the supported levels.
 
@@ -77,7 +78,7 @@ Fang Arrow is an ArrowItem in minecraft:arrows, with a registered AbstractArrow 
 
 Compatibility follows the standard ArrowItem factory and arrow tag; weapons that bypass that factory or replace the projectile with a separate ammunition system need a specific adapter. A registered third-party-style BowItem fixture covers inherited bow behavior. Universal behavior for every modded bow is not claimed.
 
-Book tooltips describe only their general bleeding bonus. Spear tooltips explain full charge, both fighters in water, nonstacking refresh and Crusher Tooth repair. Armor tooltips explain 5% knockback reduction per piece while grounded underwater, 20% full set, and Shardback Plate repair. Armor crafting consumes the matching iron armor piece, three plates and one dead coral block.
+Book tooltips describe only their general bleeding bonus. Spear tooltips explain full charge, both fighters in water, nonstacking refresh and Crusher Tooth repair. Armor tooltips explain 5% knockback reduction per piece while grounded underwater, 20% full set, the full-set 25% bleeding-damage reduction on land and underwater, and Shardback Plate repair. Armor crafting consumes the matching iron armor piece, three plates and one dead coral block, preserving the input armor’s saved item data and damage.
 
 The 2026-10-06 revision passed all thirteen equipment GameTests, nine native client framebuffer captures, thirteen release-tooling tests and clean release JAR guards. Native firing tests cover both vanilla ranged weapons and a registered Forge-style bow subclass; arrow tests cover dry-land bleeding, rejected hits, saved piercing and pickup.
 
@@ -90,4 +91,11 @@ Repeated hits now refresh effect duration without postponing the two-second dama
 
 ## Compact spear tooltip
 
-The spear shows `Bleed: 2 damage over 4s` normally, `5 damage over 4s` with Serration III, and `10 damage over 8s` with Serration III + Hemorrhage II. The condition line is `Fully charged; both in water. Refreshes bleed.` Repair stays on its own short line. Hover text reads the current item enchantments and shares power/duration lookup with the actual hit effect. Native tooltip checks cover all twelve level combinations, including fractional totals and removing unnecessary decimal zeros.
+The spear shows `Bleed: 1 damage every 2s for 4s` normally, `2.5 damage every 2s for 4s` with Serration III, and `2.5 damage every 2s for 8s` with Serration III + Hemorrhage II. The condition line is `Fully charged; both in water. Refreshes bleed.` Repair stays on its own short line. Hover text reads the current item enchantments and shares power/duration lookup with the actual hit effect. Native tooltip checks cover all twelve level combinations, including fractional totals and removing unnecessary decimal zeros.
+
+
+## Armor data and lethal bleeding credit
+
+Armor upgrade recipes retain the iron piece's serialized NBT/capability data instead of returning a fresh item. Damage is preserved because the new armor uses the same durability as iron. A dedicated shaped serializer keeps ordinary crafting layout, recipe-book and network behavior.
+
+Spear hits, Fang Arrows and Crusher bites save the bleeding attacker UUID on the victim. Each damage event resolves that owner and uses the same magic damage type with the attacker attached, allowing native Looting and player XP credit. The UUID survives victim saves. Online players can be resolved after dimension changes; unresolved/offline owners fall back to ownerless magic rather than fabricated credit. Weaker applications cannot take ownership of an active stronger bleed. Fresh effects after curing and natural expiry clear old ownership. No bleed damage, cadence or balance value changes are introduced by this fix.

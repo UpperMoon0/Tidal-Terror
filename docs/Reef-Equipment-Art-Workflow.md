@@ -38,8 +38,8 @@ Armor and material icons are now independently generated sprites that follow
 vanilla item silhouettes and the actual worn armor/mob materials; see
 [the sprite and bleeding revision](Reef-Sprites-and-Bleeding.md).
 
-Forge's separate-transform item loader selects the flat spear icon for inventory
-and the native 3D model in hand, on the ground and in item frames. The armor uses
+The native spear model renders in inventory, in hand, on the ground and in item
+frames. The unused flat spear texture has been removed. The armor uses
 the native humanoid armor hooks and inherits the wearer's pose. Model caches reset
 after resource reload. Client renderer classes are initialized only on the client.
 
@@ -59,8 +59,8 @@ branch; ordinary diamond armor retains greater protection and toughness.
 
 | Item | Stats and behavior |
 | --- | --- |
-| Reef Spear | 6 damage, 1.1 attack speed, 250 durability, +1 main-hand entity reach. Charged successful hits apply one 80-tick bleed when both fighters are in water. Two pulses deal 1 damage each at approximately 2 and 4 seconds; equal-strength hits refresh duration. Ordinary magic-damage defenses and immunity still apply. Repairs with teeth; weapon enchantments except Sweeping Edge. |
-| Reef Armor | Defense 2/6/5/3 for helmet/chest/legs/boots, zero toughness and iron durability. Native knockback is multiplied by `1 - 0.05 × worn pieces` only when the wearer is in water and grounded. Mixed sets work. Repairs with plates. |
+| Reef Spear | 6 damage, 1.1 attack speed, 250 durability, +1 main-hand entity reach. Charged successful hits apply one 80-tick bleed when both fighters are in water. Two pulses deal 1 damage each at approximately 2 and 4 seconds; equal-strength hits refresh duration. Ordinary magic-damage defenses and immunity still apply. Repairs with teeth; damage or bleeding enchantment builds; no Fire Aspect or Sweeping Edge. |
+| Reef Armor | Defense 2/6/5/2 (15 total) for helmet/chest/legs/boots, zero toughness and iron durability. Native knockback is multiplied by `1 - 0.05 × worn pieces` only when the wearer is in water and grounded. Knockback works with mixed sets; all four pieces additionally reduce bleeding damage by 25% on land and underwater. Repairs with plates. Armor upgrades preserve the iron input’s saved data and damage. |
 
 ## Reproduction and verification
 

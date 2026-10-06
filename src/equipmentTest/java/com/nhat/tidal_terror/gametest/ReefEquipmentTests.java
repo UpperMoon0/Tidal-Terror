@@ -52,23 +52,41 @@ public final class ReefEquipmentTests {
     @GameTest(template="reef_life_pool",timeoutTicks=140)
     public static void bleedingPulseClockSurvivesSaveAndResetsAfterCure(GameTestHelper h) {
         pool(h);var t=target(h);LivingEntity[] active={t};var position=t.position();
+        var journal=new SaveCureDamageJournal(t.getUUID());
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(journal);
         t.addEffect(new net.minecraft.world.effect.MobEffectInstance(ModEffects.REEF_BLEEDING.get(),80,0,false,false,true));
+        t.getPersistentData().putUUID("tidalterror:bleeding_attacker",UUID.randomUUID());
         for(int tick=1;tick<=135;tick++)h.runAfterDelay(tick,()->{active[0].setPos(position);active[0].setDeltaMovement(Vec3.ZERO);});
         h.runAfterDelay(25,()->{
             var saved=new CompoundTag();t.saveWithoutId(saved);t.discard();
             var loaded=EntityType.DROWNED.create(h.getLevel());loaded.load(saved);h.getLevel().addFreshEntity(loaded);active[0]=loaded;
         });
-        h.runAfterDelay(45,()->near(h,active[0].getHealth(),99,"Save/load reset the pulse cooldown"));
+        h.runAfterDelay(45,()->near(h,active[0].getHealth(),99,"Save/load reset the pulse cooldown; "+journal.hits));
         h.runAfterDelay(46,()->{
             h.assertTrue(active[0].curePotionEffects(new ItemStack(Items.MILK_BUCKET)),"Milk did not cure bleeding");
             active[0].addEffect(new net.minecraft.world.effect.MobEffectInstance(ModEffects.REEF_BLEEDING.get(),80,0,false,false,true));
+            h.assertTrue(!active[0].getPersistentData().hasUUID("tidalterror:bleeding_attacker"),"Cure/reapply inherited old attacker credit");
         });
-        h.runAfterDelay(80,()->near(h,active[0].getHealth(),99,"New bleed inherited the cured pulse clock"));
-        h.runAfterDelay(92,()->near(h,active[0].getHealth(),98,"New bleed failed its first pulse"));
+        h.runAfterDelay(80,()->near(h,active[0].getHealth(),99,"New bleed inherited the cured pulse clock; "+journal.hits));
+        h.runAfterDelay(92,()->near(h,active[0].getHealth(),98,"New bleed failed its first pulse; "+journal.hits));
         h.runAfterDelay(135,()->{
-            near(h,active[0].getHealth(),97,"New bleed total after cure");
+            net.minecraftforge.common.MinecraftForge.EVENT_BUS.unregister(journal);
+            near(h,active[0].getHealth(),97,"New bleed total after cure; "+journal.hits);
             h.assertTrue(!active[0].hasEffect(ModEffects.REEF_BLEEDING.get()),"New bleed did not expire");h.succeed();
         });
+    }
+
+    public static final class SaveCureDamageJournal {
+        final UUID watched; final List<String> hits=new ArrayList<>();
+        SaveCureDamageJournal(UUID watched) { this.watched=watched; }
+        @net.minecraftforge.eventbus.api.SubscribeEvent
+        public void damage(net.minecraftforge.event.entity.living.LivingDamageEvent event) {
+            if(event.getEntity().getUUID().equals(watched)) {
+                var owner=event.getSource().getEntity();
+                String hit="tick="+event.getEntity().tickCount+", amount="+event.getAmount()+", source="+event.getSource().getMsgId()+", owner="+(owner==null?"none":owner.getType());
+                hits.add(hit);System.out.println("BLEED_SAVE_CURE_DAMAGE "+hit);
+            }
+        }
     }
 
     @GameTest(template="reef_life_pool",timeoutTicks=100)
@@ -80,6 +98,7 @@ public final class ReefEquipmentTests {
         var hit=net.minecraft.world.entity.projectile.AbstractArrow.class.getDeclaredMethod("onHitEntity",net.minecraft.world.phys.EntityHitResult.class);hit.setAccessible(true);
         hit.invoke(arrow,new net.minecraft.world.phys.EntityHitResult(t));
         var bleed=t.getEffect(ModEffects.REEF_BLEEDING.get());
+        h.assertTrue(t.getPersistentData().getUUID("tidalterror:bleeding_attacker").equals(p.getUUID()),"Arrow lost shooter credit");
         h.assertTrue(bleed!=null&&bleed.getDuration()==80&&bleed.getAmplifier()==0&&!bleed.isVisible(),"Land hit lost base blood effect");
         float health=t.getHealth();
         var blocked=h.spawn(EntityType.COW,12,10,8);blocked.setNoAi(true);blocked.setInvulnerable(true);
@@ -149,6 +168,7 @@ public final class ReefEquipmentTests {
         h.assertTrue(shark.doHurtTarget(victim),"Native Crusher bite rejected");
         var effect=victim.getEffect(ModEffects.REEF_BLEEDING.get());
         h.assertTrue(effect!=null&&effect.getDuration()==80&&effect.getAmplifier()==0&&!effect.isVisible(),"Crusher bite did not apply base bleeding without potion swirls");
+        h.assertTrue(victim.getPersistentData().getUUID("tidalterror:bleeding_attacker").equals(shark.getUUID()),"Crusher lost bite ownership");
         float health=victim.getHealth();
         var rejected=target(h);rejected.setInvulnerable(true);
         h.assertTrue(!shark.doHurtTarget(rejected)&&!rejected.hasEffect(ModEffects.REEF_BLEEDING.get()),"Rejected bite caused bleeding");
@@ -188,10 +208,13 @@ public final class ReefEquipmentTests {
         p.attack(t);
         var effect=t.getEffect(ModEffects.REEF_BLEEDING.get());
         h.assertTrue(effect!=null&&effect.getAmplifier()==3&&effect.getDuration()==160,"Enchanted hit lost power/duration");
+        h.assertTrue(t.getPersistentData().getUUID("tidalterror:bleeding_attacker").equals(p.getUUID()),"Spear lost attacker UUID");
         h.assertTrue(!effect.isVisible()&&effect.showIcon(),"Bleeding must suppress potion swirls but keep its status icon");
         // A weaker spear must not replace an active stronger bleed.
         charge(p);t.invulnerableTime=0;p.setItemSlot(EquipmentSlot.MAINHAND,new ItemStack(ModEquipment.REEF_SPEAR.get()));p.attack(t);
         h.assertTrue(t.getEffect(ModEffects.REEF_BLEEDING.get()).getAmplifier()==3,"Weak hit downgraded strong bleed");
+        var other=h.makeMockSurvivalPlayer();ModEffects.applyBleeding(t,other,80,0);
+        h.assertTrue(t.getPersistentData().getUUID("tidalterror:bleeding_attacker").equals(p.getUUID()),"Weak hit stole strong bleed credit");
         float health=t.getHealth();
         h.runAfterDelay(20,()->near(h,t.getHealth(),health,"Enchanted bleed fired early"));
         h.runAfterDelay(45,()->near(h,t.getHealth(),health-2.5,"Serration first pulse"));
@@ -351,6 +374,77 @@ public final class ReefEquipmentTests {
         wearer.setOnGround(false);wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),1,"Swimming anchor leaked");
         var pos=h.absolutePos(new BlockPos(10,10,8));wearer.setPos(pos.getX(),pos.getY(),pos.getZ());wearer.tick();wearer.setOnGround(true);
         wearer.setDeltaMovement(Vec3.ZERO);wearer.knockback(1,1,0);near(h,Math.abs(wearer.getDeltaMovement().x),1,"Dry anchor leaked");h.succeed();
+    }
+
+    @GameTest(template="reef_life_pool",timeoutTicks=40)
+    public static void armorUpgradePreservesItemDataAndNetworkRecipe(GameTestHelper h) {
+        var player=net.minecraftforge.common.util.FakePlayerFactory.get(h.getLevel(),new com.mojang.authlib.GameProfile(UUID.randomUUID(),"ArmorUpgrade"));
+        for(String kind:List.of("helmet","chestplate","leggings","boots")) {
+            var recipe=(ShapedRecipe)h.getLevel().getRecipeManager().byKey(new ResourceLocation("tidalterror","reef_"+kind)).orElseThrow();
+            h.assertTrue(recipe instanceof com.nhat.tidal_terror.recipes.ReefArmorUpgradeRecipe,"Armor upgrade uses destructive ordinary crafting");
+            var grid=new TransientCraftingContainer(player.inventoryMenu,3,3);ItemStack iron=null;
+            for(int i=0;i<recipe.getIngredients().size();i++) {
+                var ingredient=recipe.getIngredients().get(i);if(ingredient.isEmpty())continue;
+                var stack=ingredient.getItems()[0].copy();grid.setItem(i,stack);
+                if(stack.getItem() instanceof ArmorItem)iron=stack;
+            }
+            h.assertTrue(iron!=null,"Missing iron input");
+            iron.enchant(Enchantments.ALL_DAMAGE_PROTECTION,4);iron.enchant(Enchantments.BINDING_CURSE,1);
+            iron.setHoverName(net.minecraft.network.chat.Component.literal("Precious "+kind));iron.setDamageValue(iron.getMaxDamage()-1);
+            iron.getOrCreateTag().putInt("RepairCost",39);iron.getOrCreateTag().putString("ModdedMarker","keep me");
+            var trim=new CompoundTag();trim.putString("material","minecraft:quartz");trim.putString("pattern","minecraft:coast");iron.getOrCreateTag().put("Trim",trim);
+            var before=iron.save(new CompoundTag());
+            h.assertTrue(recipe.matches(grid,h.getLevel()),"Decorated/damaged armor rejected by crafting");
+            var output=recipe.assemble(grid,h.getLevel().registryAccess());
+            h.assertTrue(output.getTag().equals(iron.getTag())&&output.getDamageValue()==output.getMaxDamage()-1,"Upgrade lost armor NBT or repaired damage");
+            h.assertTrue(iron.save(new CompoundTag()).equals(before),"Upgrade mutated the input stack");
+            var serializer=com.nhat.tidal_terror.recipes.ModRecipes.ARMOR_UPGRADE.get();
+            var buffer=new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
+            try {
+                serializer.toNetwork(buffer,(com.nhat.tidal_terror.recipes.ReefArmorUpgradeRecipe)recipe);
+                var received=serializer.fromNetwork(recipe.getId(),buffer);
+                h.assertTrue(received!=null&&received.matches(grid,h.getLevel())&&received.assemble(grid,h.getLevel().registryAccess()).getTag().equals(iron.getTag()),"Network recipe lost upgrade behavior");
+            } finally {buffer.release();}
+            output.getOrCreateTag().putString("ModdedMarker","changed");
+            h.assertTrue(iron.getTag().getString("ModdedMarker").equals("keep me"),"Upgrade aliased the source NBT");
+        }
+        h.succeed();
+    }
+
+    @GameTest(template="reef_life_pool",timeoutTicks=155)
+    public static void lethalBleedingKeepsLootingAndXpAfterSaveAndPlayerCreditExpiry(GameTestHelper h) {
+        pool(h);var owner=player(h,true);
+        h.assertTrue(h.getLevel().addFreshEntity(owner),"Could not register native player owner");
+        owner.getMainHandItem().enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get(),3);
+        owner.getMainHandItem().enchant(com.nhat.tidal_terror.enchantments.ModEnchantments.HEMORRHAGE.get(),2);
+        owner.getMainHandItem().enchant(Enchantments.MOB_LOOTING,3);
+        LivingEntity[] victims={target(h),target(h)};
+        for(var victim:victims) {
+            var loot=new CompoundTag();loot.putString("DeathLootTable","tidalterror:bleed_credit_probe");((Mob)victim).readAdditionalSaveData(loot);
+            victim.setNoGravity(true);((Mob)victim).setNoAi(true);victim.setHealth(13);
+            charge(owner);owner.attack(victim);
+            near(h,victim.getHealth(),7,"Kill credit fixture physical hit");
+        }
+        var far=h.absolutePos(new BlockPos(21,4,21));owner.setPos(far.getX(),far.getY(),far.getZ());
+        h.runAfterDelay(35,()->{for(var victim:victims)victim.setDeltaMovement(Vec3.ZERO);});
+        h.runAfterDelay(45,()->{for(var victim:victims)near(h,victim.getDeltaMovement().horizontalDistanceSqr(),0,"Credited bleed added knockback");});
+        h.runAfterDelay(105,()->{
+            var saved=new CompoundTag();victims[1].saveWithoutId(saved);victims[1].discard();
+            var loaded=EntityType.DROWNED.create(h.getLevel());loaded.load(saved);h.getLevel().addFreshEntity(loaded);victims[1]=loaded;
+            h.assertTrue(loaded.getPersistentData().getUUID("tidalterror:bleeding_attacker").equals(owner.getUUID()),"Bleed owner did not survive serialization");
+        });
+        h.runAfterDelay(145,()->{
+            for(var victim:victims) {
+                h.assertTrue(!victim.isAlive()&&victim.getLastDamageSource().getEntity()==owner,"Lethal bleed lost player after credit timeout/save");
+                h.assertTrue(victim.getLastDamageSource().typeHolder().equals(h.getLevel().damageSources().magic().typeHolder())&&victim.getLastDamageSource().getSourcePosition()==null,"Credit changed native magic defenses/positionless damage");
+            }
+            var bounds=new net.minecraft.world.phys.AABB(h.absolutePos(new BlockPos(10,4,8))).inflate(8);
+            int apples=h.getLevel().getEntitiesOfClass(ItemEntity.class,bounds).stream().filter(e->e.getItem().is(Items.APPLE)).mapToInt(e->e.getItem().getCount()).sum();
+            h.assertTrue(apples==8,"Lethal bleed lost native Looting III rewards: "+apples);
+            int xp=h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.ExperienceOrb.class,bounds).stream().mapToInt(orb->{var saved=new CompoundTag();orb.saveWithoutId(saved);return orb.getValue()*saved.getInt("Count");}).sum();
+            h.assertTrue(xp>=10,"Lethal bleed lost player XP: "+xp);
+            owner.discard();h.succeed();
+        });
     }
 
     @GameTest(template="reef_life_pool",timeoutTicks=100)

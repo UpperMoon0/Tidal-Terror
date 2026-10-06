@@ -35,7 +35,7 @@ ingredients={'T':{'item':'tidalterror:crusher_tooth'},'P':{'item':'tidalterror:s
 for name,(pattern,unlock) in recipes.items():
     symbols=set(''.join(pattern)) - {' '}
     if name != 'reef_spear': ingredients['A']={'item':'minecraft:iron_'+name.removeprefix('reef_')}
-    write(f'data/tidalterror/recipes/{name}.json',{'type':'minecraft:crafting_shaped','category':'equipment',
+    write(f'data/tidalterror/recipes/{name}.json',{'type':'minecraft:crafting_shaped' if name=='reef_spear' else 'tidalterror:reef_armor_upgrade','category':'equipment',
         'pattern':pattern,'key':{s:ingredients[s] for s in sorted(symbols)},'result':{'item':'tidalterror:'+name}})
     write(f'data/tidalterror/advancements/recipes/equipment/{name}.json',{
         'parent':'minecraft:recipes/root','criteria':{

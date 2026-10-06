@@ -3,7 +3,6 @@ package com.nhat.tidal_terror.entities;
 import com.nhat.tidal_terror.effects.ModEffects;
 import com.nhat.tidal_terror.items.ModEquipment;
 import com.nhat.tidal_terror.particles.ModParticles;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -17,7 +16,7 @@ public final class FangArrowEntity extends AbstractArrow {
     @Override protected void doPostHurtEffects(LivingEntity victim) {
         super.doPostHurtEffects(victim);
         if (!level().isClientSide && victim.isAlive()) {
-            victim.addEffect(new MobEffectInstance(ModEffects.REEF_BLEEDING.get(), 80, 0, false, false, true));
+            ModEffects.applyBleeding(victim, getOwner(), 80, 0);
             ModParticles.bleed(victim, 12);
         }
     }

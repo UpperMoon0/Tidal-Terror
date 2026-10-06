@@ -70,8 +70,7 @@ public class CoralCrusherEntity extends WaterAnimal {
     @Override public boolean doHurtTarget(net.minecraft.world.entity.Entity target) {
         boolean hit = super.doHurtTarget(target);
         if (hit && !level().isClientSide && target instanceof LivingEntity victim && victim.isAlive()) {
-            victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(
-                    com.nhat.tidal_terror.effects.ModEffects.REEF_BLEEDING.get(), 80, 0, false, false, true));
+            com.nhat.tidal_terror.effects.ModEffects.applyBleeding(victim, this, 80, 0);
             com.nhat.tidal_terror.particles.ModParticles.bleed(victim, 12);
         }
         return hit;

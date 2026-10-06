@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -48,7 +47,7 @@ public final class ReefSpearItem extends Item {
             // Native equal-strength effects refresh duration without stacking damage.
             int power = bleedingPower(stack);
             int duration = bleedingDuration(stack);
-            target.addEffect(new MobEffectInstance(ModEffects.REEF_BLEEDING.get(), duration, power, false, false, true));
+            ModEffects.applyBleeding(target, player, duration, power);
             com.nhat.tidal_terror.particles.ModParticles.bleed(target, 12);
         }
         stack.hurtAndBreak(1, attacker, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));

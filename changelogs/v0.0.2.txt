@@ -23,5 +23,8 @@ Reef equipment and crafting rewards
 - Repeated bleeding hits refresh duration without resetting the independent two-second pulse cooldown; pulse timing survives saves and resets for a new effect after curing.
 
 - Full Reef Armor grants 25% less bleeding damage on land and in water; partial sets do not. Protection stacks normally, and equipping/removing pieces updates the bonus immediately.
+- Armor upgrades preserve input enchantments, name, wear, repair cost, trims and other serialized item data; dedicated shaped recipes synchronize normally.
+- Bleeding preserves attacker UUID through victim saves and attributes lethal magic damage for native Looting/XP rewards; weaker applications cannot steal a stronger bleed.
+- Corrected public equipment documentation and added save/cure damage-source diagnostics.
 - Iron-stage balance: armor matches iron protection (15 total) with 20% full-set seabed grip; bleeding enchantments conflict with Sharpness/Smite/Bane, and the spear excludes Fire Aspect.
 - Tooltips state bleeding damage every two seconds and enchanted duration; Hemorrhage books show only added duration. Fang Arrow remains a non-stacking two-damage bonus.

@@ -88,3 +88,12 @@ All 18 current native audit scenarios passed. Generic-target results (health poi
 | Trident, Impaling V against non-aquatic mob | 9 | 81 | 0.881 | 7.932 |
 
 Trident against an aquatic mob dealt 21.5 per single hit and 193.5 sustained. Fire Aspect contributes no underwater damage. Sustained attacks run through tick 160 and are read at tick 166; later bleed remaining after the final attack is not included. The maximum bleeding spear trades continuous damage for reach and delayed hit-and-retreat damage. Its magic damage remains valuable against armor, so bleeding strength and cadence were not buffed. These measurements justify the separate damage/bleeding builds; they do not establish parity in every matchup or eliminate the spear's intended underwater advantage.
+
+
+## Reviewer balance concerns: assessment only
+
+No values changed in response to this review. Twelve plates require 6–12 ordinary crab kills without Looting. With one undisturbed loaded crab, the first molt takes five minutes and the next eleven take 5–6 minutes each: 60–71 minutes at best, plus delays until safe seabed foraging resumes. Molting supports renewable/passive acquisition; several crabs can contribute concurrently. The speed gap is real and deserves normal-play acquisition measurements before changing drop rates or timers.
+
+The armor supplies iron protection, conditional seabed grip and full-set bleeding protection. It provides no breathing or swimming assistance, so deep travel still uses vanilla preparations. Its current purpose is reef combat; adding exploration abilities would be a separate progression decision.
+
+The maximum spear single-hit audit waits eight seconds for delayed damage. Its 4.136 damage against full netherite/Protection IV versus an iron sword's 0.881 immediate hit demonstrates the armor-bypassing retreat niche, not a complete duel comparison. Sustained measurements favor the sword, but do not measure real spacing, pursuit, healing, blocking or retreat. PvP tests remain warranted before any bleed-strength increase. This review makes no combat/stat/acquisition adjustments.

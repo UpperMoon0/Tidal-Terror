@@ -5,6 +5,9 @@
 - Added the native 3D Reef Spear: Crusher tooth, coral skeleton shaft and sandy hide bindings; 6 damage, 1.1 attack speed, 250 durability and +1 block main-hand entity reach.
 - Fully charged underwater spear hits apply 2 bleeding damage over 4 seconds, refreshing without stacking.
 - Full Reef Armor grants 25% less bleeding damage on land and in water; partial sets do not. Protection stacks normally, and equipping/removing pieces updates the bonus immediately.
+- Armor upgrades preserve input enchantments, name, wear, repair cost, trims and other serialized item data; dedicated shaped recipes synchronize normally.
+- Bleeding preserves attacker UUID through victim saves and attributes lethal magic damage for native Looting/XP rewards; weaker applications cannot steal a stronger bleed.
+- Corrected public equipment documentation and added save/cure damage-source diagnostics.
 - Iron-stage balance: armor matches iron protection (15 total) with 20% full-set seabed grip; bleeding enchantments conflict with Sharpness/Smite/Bane, and the spear excludes Fire Aspect.
 - Tooltips state bleeding damage every two seconds and enchanted duration; Hemorrhage books show only added duration. Fang Arrow remains a non-stacking two-damage bonus.
 - Added four pieces of Shardback Reef Armor with violet shell plates, cobalt coral growths, ivory supports and slate joints; 15 armor, no toughness and iron durability.
