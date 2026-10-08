@@ -13,6 +13,8 @@ import java.util.*;
 
 /** Bounded sparse generation for the opt-in deep preset. Never widens dense arrays. */
 public final class DeepProvinceGenerator {
+    private static final java.util.concurrent.atomic.AtomicInteger ADMISSION_BUILDS=new java.util.concurrent.atomic.AtomicInteger();
+    public static int admissionBuilds() { return ADMISSION_BUILDS.get(); }
     private record PlanKey(long seed,int height,int style) {}
     private static final Map<PlanKey,CoralGeometry.Plan> PLANS=new LinkedHashMap<>(64,.75f,true) {
         @Override protected boolean removeEldestEntry(Map.Entry<PlanKey,CoralGeometry.Plan> e) { return size()>64; }
@@ -24,7 +26,7 @@ public final class DeepProvinceGenerator {
     public static void prepare(WorldGenLevel context,ChunkAccess chunk) {
         if(PREPARED.containsKey(chunk)) return;
         var sections=build(context,chunk);
-        if(!sections.isEmpty()) PREPARED.put(chunk,sections);
+        PREPARED.put(chunk,sections);
     }
 
     public static void generate(ServerLevel level,LevelChunk chunk,ProtoChunk proto) {
@@ -32,7 +34,7 @@ public final class DeepProvinceGenerator {
         if(!(source instanceof ReefProvinceAccess access) || !access.deep()) return;
         var sections=PREPARED.remove(proto);
         // Compatibility fallback for a generator that omitted the basin feature.
-        if(sections==null) sections=build(level,chunk);
+        if(sections==null) { ADMISSION_BUILDS.incrementAndGet();sections=build(level,chunk); }
         if(sections.isEmpty()) return;
         int mx=chunk.getPos().getMinBlockX(),mz=chunk.getPos().getMinBlockZ();
         var vertical=EndlessVerticalEngine.world(level);

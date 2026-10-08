@@ -48,6 +48,7 @@ public final class ProvinceExplorer {
             if(!started)return;started=false;var cpu=new LinkedHashMap<String,Double>();
             for(long id:CPU.getAllThreadIds()){var info=CPU.getThreadInfo(id);if(info==null)continue;String name=info.getThreadName();if(name.equals("Render thread")||name.equals("Server thread")||name.startsWith("Worker-Main"))cpu.merge(name,Math.max(0,CPU.getThreadCpuTime(id)-cpuStart.getOrDefault(id,0L))/1e6,Double::sum);}
             var result=new LinkedHashMap<String,Object>();result.put("save",SAVE);result.put("elapsedMs",(System.nanoTime()-startAt)/1e6);result.put("frames",stats(frames));result.put("serverTicks",stats(ticks));result.put("cpuMs",cpu);
+            try { result.put("admissionBuilds",DeepProvinceGenerator.class.getMethod("admissionBuilds").invoke(null)); } catch(NoSuchMethodException baseline) { result.put("admissionBuilds",null); }
             result.put("logicalMin",com.nstut.endless.heights.EndlessHeights.getMinBuildHeight());result.put("logicalMax",com.nstut.endless.heights.EndlessHeights.getMaxBuildHeight());
             Files.writeString(OUT.resolve("performance-metrics.json"),new GsonBuilder().setPrettyPrinting().create().toJson(result));System.out.println("PROVINCE_PERFORMANCE_COMPLETE "+result);
         }

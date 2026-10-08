@@ -19,7 +19,7 @@ public final class CrabSpawnTarget {
                 var terrain=new ReefTerrain(level,level.getChunkSource().getGenerator());
                 if(terrain.provinceSample(sampled.getX(),sampled.getZ())!=null) {
                     int bottom=terrain.floor(sampled.getX(),sampled.getZ());
-                    return new BlockPos(sampled.getX(),bottom+15+level.random.nextInt(60),sampled.getZ());
+                    return new BlockPos(sampled.getX(),bottom+15+level.getRandom().nextInt(60),sampled.getZ());
                 }
             }
             return sampled;

@@ -634,7 +634,7 @@ if (project.hasProperty('provincePrototype')) {
             def path = new File(destinationDir, 'tidalterror.mixins.json')
             def config = new groovy.json.JsonSlurper().parse(path)
             config.mixins.remove('ReefDistributionMixin')
-            config.mixins.addAll(['ProvinceRandomStateMixin', 'ProvinceClimateSamplerMixin', 'DeepProvinceChunkMixin', 'DeepProvinceBiomeMixin', 'DeepProvinceHeightMixin'])
+            config.mixins.addAll(['ProvinceRandomStateMixin', 'ProvinceClimateSamplerMixin', 'DeepProvinceChunkMixin', 'DeepProvincePreparationMixin', 'DeepProvinceBiomeMixin', 'DeepProvinceHeightMixin'])
             path.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(config)) + '\n'
             def oceanTag = new File(destinationDir, 'data/minecraft/tags/worldgen/biome/is_ocean.json')
             def ocean = new groovy.json.JsonSlurper().parse(oceanTag)

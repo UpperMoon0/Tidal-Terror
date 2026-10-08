@@ -90,6 +90,8 @@ public final class DeepProvinceAudit {
             try { vertical.installGeneratedPage(pagePos,duplicate); } catch(IllegalStateException expected) { refused=true; }
             require(refused,"Bulk admission overwrote an existing page");
             require(level.getBlockState(points.get(0).below()).is(Blocks.SAND),"Duplicate admission damaged existing terrain");
+            require(DeepProvinceGenerator.admissionBuilds()==0,"Deep sections built on admission instead of workers");
+            System.out.println("DEEP_ADMISSION_WORKER_PASS builds="+DeepProvinceGenerator.admissionBuilds());
             ready=true;
         } catch(Throwable error) { finish(error); }
     }
