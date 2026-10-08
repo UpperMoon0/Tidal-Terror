@@ -22,7 +22,7 @@ public final class DeepProvinceGenerator {
     private static final Map<ChunkAccess,Map<Integer,LevelChunkSection>> PREPARED=
         Collections.synchronizedMap(new WeakHashMap<>());
 
-    /** RAW_GENERATION runs on native generation workers; the protochunk owns this preparation. */
+    /** Prepare only a requested FULL protochunk, on a native worker before main-thread admission. */
     public static void prepare(WorldGenLevel context,ChunkAccess chunk) {
         if(PREPARED.containsKey(chunk)) return;
         var sections=build(context,chunk);

@@ -28,9 +28,6 @@ public final class ReefProvinceBiomeSource extends BiomeSource implements ReefPr
     public ReefProvinceBiomeSource(BiomeSource delegate, Holder<Biome> cathedral, Holder<Biome> wastes,boolean deep) {
         this.delegate = delegate; this.cathedral = cathedral; this.wastes = wastes; this.deep=deep;
     }
-    @Override public void prepareDeepSections(net.minecraft.world.level.WorldGenLevel level,net.minecraft.world.level.chunk.ChunkAccess chunk) {
-        if(deep) DeepProvinceGenerator.prepare(level,chunk);
-    }
     @Override public boolean deep() { return deep; }
     @Override protected Codec<? extends BiomeSource> codec() { return CODEC; }
     @Override protected Stream<Holder<Biome>> collectPossibleBiomes() {

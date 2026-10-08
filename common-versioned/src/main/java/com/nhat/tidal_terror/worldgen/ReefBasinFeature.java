@@ -40,8 +40,6 @@ public final class ReefBasinFeature extends Feature<NoneFeatureConfiguration>{
     return source.getNoiseBiome(qx,qy,qz,sampler);
    },level.getLevel().getChunkSource().randomState().sampler());
   }
-  if(placed && c.chunkGenerator().getBiomeSource() instanceof ReefProvinceAccess access && access.deep())
-   access.prepareDeepSections(level,level.getChunk(mx>>4,mz>>4));
   return placed;
  }
 }

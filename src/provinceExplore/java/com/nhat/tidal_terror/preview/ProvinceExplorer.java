@@ -37,17 +37,21 @@ public final class ProvinceExplorer {
         private static final boolean ACTIVE=Boolean.getBoolean("tidalterror.performanceMetrics");
         private static final java.lang.management.ThreadMXBean CPU=java.lang.management.ManagementFactory.getThreadMXBean();
         private static volatile boolean started;
-        private static long frameAt,tickAt,startAt;
-        private static final List<Double> frames=new ArrayList<>(),ticks=new ArrayList<>();
+        private static long frameAt,tickAt,tickStartAt,startAt;
+        private static boolean skipFrame;
+        private static final List<Double> frames=new ArrayList<>(),ticks=new ArrayList<>(),tickIntervals=new ArrayList<>();
+        private static final List<Map<String,Object>> moves=new ArrayList<>();
         private static final Map<Long,Long> cpuStart=new HashMap<>();
         static synchronized void start(){if(!ACTIVE||started)return;startAt=System.nanoTime();for(long id:CPU.getAllThreadIds())cpuStart.put(id,Math.max(0,CPU.getThreadCpuTime(id)));started=true;}
-        static synchronized void frame(){if(!started)return;long now=System.nanoTime();if(frameAt!=0)frames.add((now-frameAt)/1e6);frameAt=now;}
-        static synchronized void server(TickEvent.Phase phase){if(!started)return;if(phase==TickEvent.Phase.START)tickAt=System.nanoTime();else if(tickAt!=0){ticks.add((System.nanoTime()-tickAt)/1e6);tickAt=0;}}
+        static synchronized void frame(){if(!started)return;long now=System.nanoTime();if(frameAt!=0 && !skipFrame)frames.add((now-frameAt)/1e6);skipFrame=false;frameAt=now;}
+        static synchronized void server(TickEvent.Phase phase){if(!started)return;if(phase==TickEvent.Phase.START){tickAt=System.nanoTime();if(tickStartAt!=0)tickIntervals.add((tickAt-tickStartAt)/1e6);tickStartAt=tickAt;}else if(tickAt!=0){ticks.add((System.nanoTime()-tickAt)/1e6);tickAt=0;}}
+        static synchronized void capture(){skipFrame=true;}
+        static synchronized void move(int shot,long requested,long began,long finished){if(!ACTIVE)return;var record=new LinkedHashMap<String,Object>();record.put("pose",NAMES[shot]);record.put("responseMs",(finished-requested)/1e6);record.put("queueMs",(began-requested)/1e6);record.put("executionMs",(finished-began)/1e6);moves.add(record);}
         static Map<String,Object> stats(List<Double> values){var sorted=new ArrayList<>(values);Collections.sort(sorted);var map=new LinkedHashMap<String,Object>();map.put("count",sorted.size());if(!sorted.isEmpty()){for(int p:new int[]{50,95,99})map.put("p"+p+"Ms",sorted.get(Math.min(sorted.size()-1,(int)Math.ceil(sorted.size()*p/100.0)-1)));map.put("maxMs",sorted.get(sorted.size()-1));map.put("totalMs",sorted.stream().mapToDouble(Double::doubleValue).sum());}return map;}
         static synchronized void finish() throws Exception {
             if(!started)return;started=false;var cpu=new LinkedHashMap<String,Double>();
             for(long id:CPU.getAllThreadIds()){var info=CPU.getThreadInfo(id);if(info==null)continue;String name=info.getThreadName();if(name.equals("Render thread")||name.equals("Server thread")||name.startsWith("Worker-Main"))cpu.merge(name,Math.max(0,CPU.getThreadCpuTime(id)-cpuStart.getOrDefault(id,0L))/1e6,Double::sum);}
-            var result=new LinkedHashMap<String,Object>();result.put("save",SAVE);result.put("elapsedMs",(System.nanoTime()-startAt)/1e6);result.put("frames",stats(frames));result.put("serverTicks",stats(ticks));result.put("cpuMs",cpu);
+            var result=new LinkedHashMap<String,Object>();result.put("save",SAVE);result.put("elapsedMs",(System.nanoTime()-startAt)/1e6);result.put("frames",stats(frames));result.put("serverTicks",stats(ticks));result.put("serverTickIntervals",stats(tickIntervals));result.put("moves",moves);result.put("cpuMs",cpu);
             try { result.put("admissionBuilds",DeepProvinceGenerator.class.getMethod("admissionBuilds").invoke(null)); } catch(NoSuchMethodException baseline) { result.put("admissionBuilds",null); }
             result.put("logicalMin",com.nstut.endless.heights.EndlessHeights.getMinBuildHeight());result.put("logicalMax",com.nstut.endless.heights.EndlessHeights.getMaxBuildHeight());
             Files.writeString(OUT.resolve("performance-metrics.json"),new GsonBuilder().setPrettyPrinting().create().toJson(result));System.out.println("PROVINCE_PERFORMANCE_COMPLETE "+result);
@@ -109,7 +113,9 @@ public final class ProvinceExplorer {
                 var server=MC.getSingleplayerServer(); var uuid=MC.player.getUUID();
                 int offset=(int)Math.round(DISTANCES[index]*ReefProvinceLayout.SCALE);
                 int x=cx+offset, z=cz, shot=index;
+                long requested=System.nanoTime();
                 move=CompletableFuture.runAsync(()->{
+                    long began=System.nanoTime();
                     var level=server.overworld(); var player=server.getPlayerList().getPlayer(uuid);
                     if (!(level.getChunkSource().getGenerator().getBiomeSource() instanceof ReefProvinceAccess))
                         throw new IllegalStateException("Exploration save has the wrong generator");
@@ -135,6 +141,7 @@ public final class ProvinceExplorer {
                     double y=shot==4?75:shot==3?(DEEP?floor+65:-8):Math.min(48,floor+12);
                     player.teleportTo(level,x+.5,y,z+.5,90,shot==3?-12:shot==4?25:32);
                     player.getAbilities().flying=true; player.onUpdateAbilities();
+                    Metrics.move(shot,requested,began,System.nanoTime());
                 },server);
                 return;
             }
@@ -163,6 +170,7 @@ public final class ProvinceExplorer {
                 if(!readinessLogged) {
                     readinessLogged=true;
                     System.out.println("PROVINCE_EXPLORER WAIT visible="+pos+" block="+MC.level.getBlockState(pos));
+                    Metrics.capture();
                     try(var diagnostic=Screenshot.takeScreenshot(MC.getMainRenderTarget())) {
                         diagnostic.writeToFile(OUT.resolve("waiting-"+NAMES[index]+".png"));
                     }
@@ -170,6 +178,7 @@ public final class ProvinceExplorer {
                 return;
             }
             String file=String.format("%02d-%s.png",index+1,NAMES[index]);
+            Metrics.capture();
             try(var image=Screenshot.takeScreenshot(MC.getMainRenderTarget())) { image.writeToFile(OUT.resolve(file)); }
             Map<String,Object> record=new LinkedHashMap<>();
             record.put("file",file); record.put("x",x); record.put("z",z); record.put("floor",floor);
