@@ -1,0 +1,10 @@
+Tidal Terror 0.0.4 (unreleased)
+
+- Require Endless 0.9.3 on Forge 1.20.1; generic logical-floor fog and sparse engine changes are supplied by Endless PR #24.
+- Add opt-in TerraBlender-free Reef Province prototype presets. Preserve the Cathedral's 1,024-block radius and scale the surrounding rim and Sunken Wastes proportionally.
+- Add an Endless-backed basin foundation down to -512, deep water through the former vanilla bedrock barrier, and continuous bedrock following the seabed. Ordinary outside terrain retains vanilla bedrock.
+- Cache exact native seabed heights by chunk and calculate noise outside the shared LRU lock. Prepare sparse sections only for requested FULL chunks, on generation workers, then install them through Endless's bulk API without a snapshot encode/decode round trip.
+- Add native fresh/cold generation, lighting/halo, existing-page refusal and worker-admission regressions, plus a paired in-game performance fixture.
+- Resolve NeoForge's external tooling from its authoritative repository rather than incomplete Maven Central classifier artifacts.
+
+The deep presets are experimental Forge 1.20.1 builds (-PprovincePrototype), require new worlds, and remain blocked from production promotion by structure/cave integration, full garden parity and other loader/version deep adapters. This draft has not been merged or published.

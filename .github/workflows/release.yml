@@ -104,7 +104,7 @@ jobs:
           game-version-filter: none
           environment: client | server
           java: '17'
-          curseforge-dependencies: terrablender(required)
+          curseforge-dependencies: terrablender(required) | nstut-endless(required)
           retry-attempts: 1
           fail-mode: fail
       - name: Record successful CurseForge upload
