@@ -1,0 +1,555 @@
+{
+  "aggregation": "Mean of two per-run p95/p99/CPU values; maximum of per-run maxima. Negative change means lower.",
+  "order": [
+    "baseline-e",
+    "optimized-e",
+    "optimized-f",
+    "baseline-f"
+  ],
+  "summary": {
+    "baseline": {
+      "frameP95MeanMs": 141.63445000000002,
+      "frameP99MeanMs": 300.47775,
+      "frameWorstMs": 1029.2087,
+      "tickP95MeanMs": 64.4073,
+      "tickWorstMs": 289.004,
+      "heartbeatP95MeanMs": 101.4718,
+      "heartbeatWorstMs": 2219.179,
+      "renderCpuCoresMean": 0.27146408475394607,
+      "serverCpuCoresMean": 0.37413001211299457,
+      "workerCpuCoresMean": 0.8174993065184797
+    },
+    "optimized": {
+      "frameP95MeanMs": 54.498850000000004,
+      "frameP99MeanMs": 152.5817,
+      "frameWorstMs": 2761.9781,
+      "tickP95MeanMs": 84.53800000000001,
+      "tickWorstMs": 400.7518,
+      "heartbeatP95MeanMs": 97.19239999999999,
+      "heartbeatWorstMs": 488.799,
+      "renderCpuCoresMean": 0.2420752228542432,
+      "serverCpuCoresMean": 0.35324721332556164,
+      "workerCpuCoresMean": 0.7203525815095466
+    }
+  },
+  "changePercent": {
+    "frameP95MeanMs": -61.521473059696994,
+    "frameP99MeanMs": -49.22030000557446,
+    "frameWorstMs": 168.35938133830388,
+    "tickP95MeanMs": 31.255308016327344,
+    "tickWorstMs": 38.666523646731534,
+    "heartbeatP95MeanMs": -4.217329346675635,
+    "heartbeatWorstMs": -77.97388133178981,
+    "renderCpuCoresMean": -10.826058970688813,
+    "serverCpuCoresMean": -5.581695697036437,
+    "workerCpuCoresMean": -11.883401519036896
+  },
+  "runs": {
+    "baseline-e": {
+      "metrics": {
+        "save": "Province Bench Baseline E",
+        "elapsedMs": 126506.6429,
+        "frames": {
+          "count": 4749,
+          "p50Ms": 17.3799,
+          "p95Ms": 66.8156,
+          "p99Ms": 162.1108,
+          "maxMs": 1029.2087,
+          "totalMs": 125106.415
+        },
+        "serverTicks": {
+          "count": 2217,
+          "p50Ms": 15.8002,
+          "p95Ms": 60.2644,
+          "p99Ms": 103.2809,
+          "maxMs": 236.6771,
+          "totalMs": 50198.8688
+        },
+        "serverTickIntervals": {
+          "count": 2216,
+          "p50Ms": 49.9966,
+          "p95Ms": 71.5084,
+          "p99Ms": 139.5785,
+          "maxMs": 2163.5984,
+          "totalMs": 126446.3701
+        },
+        "moves": [
+          {
+            "pose": "outer-wastes",
+            "responseMs": 11.6255,
+            "queueMs": 10.131,
+            "executionMs": 1.4945
+          },
+          {
+            "pose": "inner-wastes",
+            "responseMs": 55.8662,
+            "queueMs": 55.1569,
+            "executionMs": 0.7093
+          },
+          {
+            "pose": "rim-passage",
+            "responseMs": 0.2618,
+            "queueMs": 0.0676,
+            "executionMs": 0.1942
+          },
+          {
+            "pose": "cathedral",
+            "responseMs": 0.2482,
+            "queueMs": 0.021,
+            "executionMs": 0.2272
+          },
+          {
+            "pose": "cathedral-surface",
+            "responseMs": 0.2463,
+            "queueMs": 0.1277,
+            "executionMs": 0.1186
+          }
+        ],
+        "cpuMs": {
+          "Render thread": 36875.0,
+          "Worker-Main-1": 38031.25,
+          "Worker-Main-2": 37500.0,
+          "Worker-Main-3": 38187.5,
+          "Server thread": 50015.625
+        },
+        "logicalMin": -1024,
+        "logicalMax": 1024
+      },
+      "receipt": {
+        "variant": "baseline",
+        "save": "Province Bench Baseline E",
+        "dependencySha256": "e6d2e4773772f686092ee2d6b206d99727bcfdfe1b760cb71d601f0d56d2c783",
+        "fixtureSha256": "1fd44e41a8e3f537c45421d827d0991ff2dc0760c3c1776dbcb023bf080e0844",
+        "buildConfigurationSha256": "fa59fa7a77c192b13a84b032ba98f6e346edc1ed11bd19e37f8b6c9715f1f29a",
+        "sourceSha256": "63ba33384c6d81addc805eaee826d2010fc4f89f05804781b6c280a95ab5b664",
+        "processElapsedSec": 197.56760716438293,
+        "command": [
+          "D:\\Workspaces\\Minecraft Projects\\MC Mods\\Tidal-Terror\\build\\deep-province-workspace\\gradlew.bat",
+          "-PprovincePrototype",
+          "-PdeepProvinceExplore",
+          "-PprovinceProfile",
+          "-PperformanceSave=Province Bench Baseline E",
+          "runClient",
+          "--offline"
+        ]
+      },
+      "manifest": [
+        {
+          "file": "01-outer-wastes.png",
+          "x": -52845,
+          "z": 43535,
+          "floor": 7,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "02-inner-wastes.png",
+          "x": -53755,
+          "z": 43535,
+          "floor": -244,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "03-rim-passage.png",
+          "x": -54381,
+          "z": 43535,
+          "floor": -380,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "04-cathedral.png",
+          "x": -55689,
+          "z": 43535,
+          "floor": -447,
+          "biome": "tidalterror:coral_cathedral"
+        },
+        {
+          "file": "05-cathedral-surface.png",
+          "x": -55689,
+          "z": 43535,
+          "floor": -447,
+          "biome": "tidalterror:coral_cathedral"
+        }
+      ]
+    },
+    "optimized-e": {
+      "metrics": {
+        "save": "Province Bench Optimized E",
+        "elapsedMs": 126514.5394,
+        "frames": {
+          "count": 5481,
+          "p50Ms": 16.7992,
+          "p95Ms": 49.6725,
+          "p99Ms": 144.0818,
+          "maxMs": 2761.9781,
+          "totalMs": 125149.739
+        },
+        "serverTicks": {
+          "count": 2488,
+          "p50Ms": 11.2409,
+          "p95Ms": 75.4509,
+          "p99Ms": 135.6798,
+          "maxMs": 302.4273,
+          "totalMs": 61319.0327
+        },
+        "serverTickIntervals": {
+          "count": 2488,
+          "p50Ms": 49.9756,
+          "p95Ms": 85.7767,
+          "p99Ms": 141.3518,
+          "maxMs": 302.8521,
+          "totalMs": 126423.9886
+        },
+        "moves": [
+          {
+            "pose": "outer-wastes",
+            "responseMs": 11.2902,
+            "queueMs": 5.8259,
+            "executionMs": 5.4643
+          },
+          {
+            "pose": "inner-wastes",
+            "responseMs": 14.2151,
+            "queueMs": 13.9828,
+            "executionMs": 0.2323
+          },
+          {
+            "pose": "rim-passage",
+            "responseMs": 0.2587,
+            "queueMs": 0.0475,
+            "executionMs": 0.2112
+          },
+          {
+            "pose": "cathedral",
+            "responseMs": 0.2496,
+            "queueMs": 0.0527,
+            "executionMs": 0.1969
+          },
+          {
+            "pose": "cathedral-surface",
+            "responseMs": 0.1651,
+            "queueMs": 0.0502,
+            "executionMs": 0.1149
+          }
+        ],
+        "cpuMs": {
+          "Render thread": 31000.0,
+          "Worker-Main-1": 29156.25,
+          "Worker-Main-2": 30843.75,
+          "Worker-Main-3": 30375.0,
+          "Server thread": 41234.375
+        },
+        "admissionBuilds": 0,
+        "logicalMin": -1024,
+        "logicalMax": 1024
+      },
+      "receipt": {
+        "variant": "optimized",
+        "save": "Province Bench Optimized E",
+        "dependencySha256": "13ce17daadf41a8edca7f2fe8b23edfefc1a2c4f57d0592cd9053136b4c70d0c",
+        "fixtureSha256": "1fd44e41a8e3f537c45421d827d0991ff2dc0760c3c1776dbcb023bf080e0844",
+        "buildConfigurationSha256": "48922aff8137737bc4656e4716ae21b3ce93830773e2bc73c0b5f07f8c0517c5",
+        "sourceSha256": "60999848bf9d0531663564281ffbc085cf2c85c8269228bb709dedbb37a43cdd",
+        "processElapsedSec": 194.366446018219,
+        "command": [
+          "D:\\Workspaces\\Minecraft Projects\\MC Mods\\Tidal-Terror\\build\\deep-province-workspace\\gradlew.bat",
+          "-PprovincePrototype",
+          "-PdeepProvinceExplore",
+          "-PprovinceProfile",
+          "-PperformanceSave=Province Bench Optimized E",
+          "runClient",
+          "--offline"
+        ]
+      },
+      "manifest": [
+        {
+          "file": "01-outer-wastes.png",
+          "x": -52845,
+          "z": 43535,
+          "floor": 7,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "02-inner-wastes.png",
+          "x": -53755,
+          "z": 43535,
+          "floor": -244,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "03-rim-passage.png",
+          "x": -54381,
+          "z": 43535,
+          "floor": -380,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "04-cathedral.png",
+          "x": -55689,
+          "z": 43535,
+          "floor": -447,
+          "biome": "tidalterror:coral_cathedral"
+        },
+        {
+          "file": "05-cathedral-surface.png",
+          "x": -55689,
+          "z": 43535,
+          "floor": -447,
+          "biome": "tidalterror:coral_cathedral"
+        }
+      ]
+    },
+    "optimized-f": {
+      "metrics": {
+        "save": "Province Bench Optimized F",
+        "elapsedMs": 126701.9118,
+        "frames": {
+          "count": 5253,
+          "p50Ms": 16.9146,
+          "p95Ms": 59.3252,
+          "p99Ms": 161.0816,
+          "maxMs": 1654.4814,
+          "totalMs": 124832.643
+        },
+        "serverTicks": {
+          "count": 2416,
+          "p50Ms": 14.8492,
+          "p95Ms": 93.6251,
+          "p99Ms": 159.7798,
+          "maxMs": 400.7518,
+          "totalMs": 71461.5904
+        },
+        "serverTickIntervals": {
+          "count": 2416,
+          "p50Ms": 49.9134,
+          "p95Ms": 108.6081,
+          "p99Ms": 183.5749,
+          "maxMs": 488.799,
+          "totalMs": 126698.5442
+        },
+        "moves": [
+          {
+            "pose": "outer-wastes",
+            "responseMs": 130.51,
+            "queueMs": 129.5561,
+            "executionMs": 0.9539
+          },
+          {
+            "pose": "inner-wastes",
+            "responseMs": 19.9148,
+            "queueMs": 19.517,
+            "executionMs": 0.3978
+          },
+          {
+            "pose": "rim-passage",
+            "responseMs": 0.2755,
+            "queueMs": 0.0314,
+            "executionMs": 0.2441
+          },
+          {
+            "pose": "cathedral",
+            "responseMs": 0.7889,
+            "queueMs": 0.3705,
+            "executionMs": 0.4184
+          },
+          {
+            "pose": "cathedral-surface",
+            "responseMs": 13.4469,
+            "queueMs": 13.3546,
+            "executionMs": 0.0923
+          }
+        ],
+        "cpuMs": {
+          "Render thread": 30296.875,
+          "Worker-Main-1": 32046.875,
+          "Worker-Main-2": 28984.375,
+          "Worker-Main-3": 31000.0,
+          "Server thread": 48218.75
+        },
+        "admissionBuilds": 0,
+        "logicalMin": -1024,
+        "logicalMax": 1024
+      },
+      "receipt": {
+        "variant": "optimized",
+        "save": "Province Bench Optimized F",
+        "dependencySha256": "13ce17daadf41a8edca7f2fe8b23edfefc1a2c4f57d0592cd9053136b4c70d0c",
+        "fixtureSha256": "1fd44e41a8e3f537c45421d827d0991ff2dc0760c3c1776dbcb023bf080e0844",
+        "buildConfigurationSha256": "48922aff8137737bc4656e4716ae21b3ce93830773e2bc73c0b5f07f8c0517c5",
+        "sourceSha256": "60999848bf9d0531663564281ffbc085cf2c85c8269228bb709dedbb37a43cdd",
+        "processElapsedSec": 236.95575547218323,
+        "command": [
+          "D:\\Workspaces\\Minecraft Projects\\MC Mods\\Tidal-Terror\\build\\deep-province-workspace\\gradlew.bat",
+          "-PprovincePrototype",
+          "-PdeepProvinceExplore",
+          "-PprovinceProfile",
+          "-PperformanceSave=Province Bench Optimized F",
+          "runClient",
+          "--offline"
+        ]
+      },
+      "manifest": [
+        {
+          "file": "01-outer-wastes.png",
+          "x": -52845,
+          "z": 43535,
+          "floor": 7,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "02-inner-wastes.png",
+          "x": -53755,
+          "z": 43535,
+          "floor": -244,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "03-rim-passage.png",
+          "x": -54381,
+          "z": 43535,
+          "floor": -380,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "04-cathedral.png",
+          "x": -55689,
+          "z": 43535,
+          "floor": -447,
+          "biome": "tidalterror:coral_cathedral"
+        },
+        {
+          "file": "05-cathedral-surface.png",
+          "x": -55689,
+          "z": 43535,
+          "floor": -447,
+          "biome": "tidalterror:coral_cathedral"
+        }
+      ]
+    },
+    "baseline-f": {
+      "metrics": {
+        "save": "Province Bench Baseline F",
+        "elapsedMs": 131056.8263,
+        "frames": {
+          "count": 2143,
+          "p50Ms": 30.3117,
+          "p95Ms": 216.4533,
+          "p99Ms": 438.8447,
+          "maxMs": 799.5622,
+          "totalMs": 126879.664
+        },
+        "serverTicks": {
+          "count": 2309,
+          "p50Ms": 16.2865,
+          "p95Ms": 68.5502,
+          "p99Ms": 138.8598,
+          "maxMs": 289.004,
+          "totalMs": 60294.1717
+        },
+        "serverTickIntervals": {
+          "count": 2309,
+          "p50Ms": 45.6191,
+          "p95Ms": 131.4352,
+          "p99Ms": 257.5375,
+          "maxMs": 2219.179,
+          "totalMs": 131042.3256
+        },
+        "moves": [
+          {
+            "pose": "outer-wastes",
+            "responseMs": 996.9202,
+            "queueMs": 987.5203,
+            "executionMs": 9.3999
+          },
+          {
+            "pose": "inner-wastes",
+            "responseMs": 129.5571,
+            "queueMs": 127.7517,
+            "executionMs": 1.8054
+          },
+          {
+            "pose": "rim-passage",
+            "responseMs": 51.3679,
+            "queueMs": 51.1301,
+            "executionMs": 0.2378
+          },
+          {
+            "pose": "cathedral",
+            "responseMs": 51.7913,
+            "queueMs": 51.5478,
+            "executionMs": 0.2435
+          },
+          {
+            "pose": "cathedral-surface",
+            "responseMs": 3.6757,
+            "queueMs": 3.2407,
+            "executionMs": 0.435
+          }
+        ],
+        "cpuMs": {
+          "Render thread": 32953.125,
+          "Worker-Main-1": 32843.75,
+          "Worker-Main-2": 33171.875,
+          "Worker-Main-4": 30453.125,
+          "Server thread": 46250.0
+        },
+        "logicalMin": -1024,
+        "logicalMax": 1024
+      },
+      "receipt": {
+        "variant": "baseline",
+        "save": "Province Bench Baseline F",
+        "dependencySha256": "e6d2e4773772f686092ee2d6b206d99727bcfdfe1b760cb71d601f0d56d2c783",
+        "fixtureSha256": "1fd44e41a8e3f537c45421d827d0991ff2dc0760c3c1776dbcb023bf080e0844",
+        "buildConfigurationSha256": "fa59fa7a77c192b13a84b032ba98f6e346edc1ed11bd19e37f8b6c9715f1f29a",
+        "sourceSha256": "63ba33384c6d81addc805eaee826d2010fc4f89f05804781b6c280a95ab5b664",
+        "processElapsedSec": 256.1112060546875,
+        "command": [
+          "D:\\Workspaces\\Minecraft Projects\\MC Mods\\Tidal-Terror\\build\\deep-province-workspace\\gradlew.bat",
+          "-PprovincePrototype",
+          "-PdeepProvinceExplore",
+          "-PprovinceProfile",
+          "-PperformanceSave=Province Bench Baseline F",
+          "runClient",
+          "--offline"
+        ]
+      },
+      "manifest": [
+        {
+          "file": "01-outer-wastes.png",
+          "x": -52845,
+          "z": 43535,
+          "floor": 7,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "02-inner-wastes.png",
+          "x": -53755,
+          "z": 43535,
+          "floor": -244,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "03-rim-passage.png",
+          "x": -54381,
+          "z": 43535,
+          "floor": -380,
+          "biome": "tidalterror:sunken_wastes"
+        },
+        {
+          "file": "04-cathedral.png",
+          "x": -55689,
+          "z": 43535,
+          "floor": -447,
+          "biome": "tidalterror:coral_cathedral"
+        },
+        {
+          "file": "05-cathedral-surface.png",
+          "x": -55689,
+          "z": 43535,
+          "floor": -447,
+          "biome": "tidalterror:coral_cathedral"
+        }
+      ]
+    }
+  }
+}
