@@ -23,7 +23,9 @@ public final class CoralCathedralFeature extends Feature<NoneFeatureConfiguratio
    long seed=seed(level.getSeed(),gx,gz);Random r=new Random(seed);
    int cx=gx*88+44+r.nextInt(13)-6,cz=gz*88+44+r.nextInt(13)-6;
    if(!terrain.giant(cx,cz))continue;int base=terrain.anchorFloor(cx,cz)+1,style=r.nextInt(3);
-   int height=level.getSeaLevel()-base-2-r.nextInt(5);if(Math.floorMod(gx+gz,3)!=0)height-=12+r.nextInt(20);
+   int height=level.getSeaLevel()-base-2-r.nextInt(5);
+   if(c.chunkGenerator().getBiomeSource() instanceof ReefProvinceAccess access && access.deep())height=Math.min(height,110-r.nextInt(5));
+   if(Math.floorMod(gx+gz,3)!=0)height-=12+r.nextInt(20);
    Key k=new Key(seed,height,style);CoralGeometry.Plan plan;
    synchronized(CACHE){plan=CACHE.computeIfAbsent(k,key->CoralGeometry.build(key.seed,key.height,key.style));}
    for(var e:plan.blocks().entrySet()){
@@ -61,7 +63,7 @@ public final class CoralCathedralFeature extends Feature<NoneFeatureConfiguratio
   // plants return AIR in native neighbour-shape processing; retain their water.
   BlockPos.MutableBlockPos p=new BlockPos.MutableBlockPos();
   for(int x=mx;x<mx+16;x++)for(int z=mz;z<mz+16;z++){
-   if(!terrain.reef(x,z))continue;
+   if(!terrain.province(x,z))continue;
    int floor=terrain.floor(x,z);
    for(int y=level.getMinBuildHeight();y<level.getSeaLevel();y++){
     p.set(x,y,z);var state=level.getBlockState(p);

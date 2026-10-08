@@ -37,5 +37,8 @@
   "tooltip.tidalterror.reef_spear_refresh": "Fully charged; both in water. Refreshes bleed.",
   "tooltip.tidalterror.reef_spear_repair": "Repair: Crusher Teeth",
   "tooltip.tidalterror.reef_armor_repair": "Repair: Shardback Plates",
-  "tooltip.tidalterror.reef_armor_bleeding": "Set bonus: 25% less bleeding damage"
+  "tooltip.tidalterror.reef_armor_bleeding": "Set bonus: 25% less bleeding damage",
+  "biome.tidalterror.sunken_wastes": "Sunken Wastes",
+  "generator.tidalterror.reef_province": "Reef Province (Prototype)",
+  "generator.tidalterror.reef_province_deep": "Deep Reef Province (Endless Prototype)"
 }

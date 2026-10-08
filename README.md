@@ -115,3 +115,5 @@ The Reef Spear uses its 3D model in inventory and JEI as well as in hand. See th
 Repeated bleeding hits refresh duration while preserving the independent two-second pulse cooldown, including across entity saves.
 
 Bleeding saves the attacker UUID and attributes lethal damage to that owner when resolvable, preserving native Looting and XP credit through victim save/reload.
+
+Experimental worldgen: [Sunken Wastes and Reef Province draft/prototype](docs/Sunken-Wastes-Province.md) adds a surrounding desert ring through separate Forge 1.20.1 world presets. The latest prototype requires Endless 0.9.3 and offers **Deep Reef Province (Endless Prototype)**: a Cathedral seabed near Y -448, continuous descending Wastes, and bedrock beneath the deep basin. Ordinary terrain outside the province keeps its vanilla bedrock. Create a new world with Endless's minimum height at or below -512. This experimental build runs without TerraBlender; the published multi-loader release still uses the requirements above.

@@ -44,6 +44,7 @@ class ArtifactTests(unittest.TestCase):
         self.jar = self.folder/f'tidalterror-{self.version}.jar'
         self.entries = {}
         props = release.properties((release.ROOT/'gradle.properties').read_text())
+        props['terrablender_required'] = 'true'  # Normal release metadata.
         for dirname in ('src/main/resources','src/generated/resources'):
             base=release.ROOT/dirname
             for path in base.rglob('*'):

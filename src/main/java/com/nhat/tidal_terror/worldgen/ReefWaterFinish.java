@@ -54,7 +54,7 @@ public final class ReefWaterFinish {
             if(chunk==null || !chunk.getFullStatus().isOrAfter(net.minecraft.server.level.FullChunkStatus.BLOCK_TICKING))continue;
             BlockPos.MutableBlockPos p=new BlockPos.MutableBlockPos();
             for(int x=pos.getMinBlockX();x<=pos.getMaxBlockX();x++)for(int z=pos.getMinBlockZ();z<=pos.getMaxBlockZ();z++){
-                if(!terrain.reef(x,z))continue;
+                if(!terrain.province(x,z))continue;
                 // Read the generated sediment, including after reload. Native
                 // noise-height reconstruction is expensive and is unnecessary
                 // for a basin whose continuous sand layer already exists.

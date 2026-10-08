@@ -11,10 +11,17 @@ public final class ReefBasinFeature extends Feature<NoneFeatureConfiguration>{
   ReefTerrain.captureOriginal(level,c.chunkGenerator(),mx,mz);
   BlockPos.MutableBlockPos p=new BlockPos.MutableBlockPos();boolean placed=false;
   for(int x=mx;x<mx+16;x++)for(int z=mz;z<mz+16;z++){
-   if(!t.reef(x,z))continue;int floor=t.floor(x,z),sand=6+(int)Math.floorMod((long)x*31+z*17,3);
-   for(int y=level.getMinBuildHeight();y<level.getSeaLevel();y++){
-    p.set(x,y,z);var old=level.getBlockState(p);if(old.is(Blocks.BEDROCK))continue;
-    var state=y>floor?Blocks.WATER.defaultBlockState():y>floor-sand?Blocks.SAND.defaultBlockState():Blocks.SANDSTONE.defaultBlockState();
+   if(!t.province(x,z))continue;int floor=t.floor(x,z),sand=6+(int)Math.floorMod((long)x*31+z*17,3);
+   // Accepted province rings can cross native coastal land. Sculpt the whole
+   // original surface column so excavation cannot leave floating land above water.
+   int top=t.provinceSample(x,z)==null?level.getSeaLevel():Math.min(level.getMaxBuildHeight(),Math.max(floor+1,
+       Math.max(level.getSeaLevel(),level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE_WG,x,z))));
+   for(int y=level.getMinBuildHeight();y<top;y++){
+    p.set(x,y,z);var old=level.getBlockState(p);
+    boolean deep=c.chunkGenerator().getBiomeSource() instanceof ReefProvinceAccess access && access.deep();
+    if(old.is(Blocks.BEDROCK) && !deep)continue;
+    var state=y>floor?(y<level.getSeaLevel()?Blocks.WATER.defaultBlockState():Blocks.AIR.defaultBlockState()):y>floor-sand?Blocks.SAND.defaultBlockState():Blocks.SANDSTONE.defaultBlockState();
+    if(deep && ReefProvinceLayout.bedrock(level.getSeed(),x,y,z,floor))state=Blocks.BEDROCK.defaultBlockState();
     if(!old.equals(state))level.setBlock(p,state,2);
    }
    placed=true;
@@ -28,9 +35,13 @@ public final class ReefBasinFeature extends Feature<NoneFeatureConfiguration>{
    var source=c.chunkGenerator().getBiomeSource();
    chunk.fillBiomesFromNoise((qx,qy,qz,sampler)->{
     int x=net.minecraft.core.QuartPos.toBlock(qx),y=net.minecraft.core.QuartPos.toBlock(qy),z=net.minecraft.core.QuartPos.toBlock(qz);
-    return y<level.getSeaLevel() && t.reef(x,z) && y>t.floor(x,z)?reef:source.getNoiseBiome(qx,qy,qz,sampler);
+    if(y<level.getSeaLevel() && t.province(x,z) && y>t.floor(x,z))
+     return t.provinceSample(x,z)!=null?source.getNoiseBiome(qx,8,qz,sampler):reef;
+    return source.getNoiseBiome(qx,qy,qz,sampler);
    },level.getLevel().getChunkSource().randomState().sampler());
   }
+  if(placed && c.chunkGenerator().getBiomeSource() instanceof ReefProvinceAccess access && access.deep())
+   access.prepareDeepSections(level,level.getChunk(mx>>4,mz>>4));
   return placed;
  }
 }

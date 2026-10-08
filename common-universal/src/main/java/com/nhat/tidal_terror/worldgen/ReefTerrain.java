@@ -6,13 +6,10 @@ import java.util.*;
 /** Climate sampling never requests distant chunks during decoration. */
 public final class ReefTerrain {
  private record ChunkKey(ChunkGenerator generator,long seed,int x,int z){}
- private record PointKey(ChunkGenerator generator,long seed,int x,int z){}
  private static final Map<ChunkKey,int[]> ORIGINAL=Collections.synchronizedMap(new LinkedHashMap<>(2048,.75F,true){
   @Override protected boolean removeEldestEntry(Map.Entry<ChunkKey,int[]> e){return size()>2048;}
  });
- private static final Map<PointKey,Integer> NOISE=Collections.synchronizedMap(new LinkedHashMap<>(4096,.75F,true){
-  @Override protected boolean removeEldestEntry(Map.Entry<PointKey,Integer> e){return size()>4096;}
- });
+ private static final ChunkColumnCache<ChunkKey> NOISE=new ChunkColumnCache<>(2048);
  public static void captureOriginal(WorldGenLevel level,ChunkGenerator generator,int mx,int mz){
   int[] heights=new int[256];
   for(int x=0;x<16;x++)for(int z=0;z<16;z++)heights[x*16+z]=level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,mx+x,mz+z)-1;
@@ -20,14 +17,19 @@ public final class ReefTerrain {
  }
  private int originalFloor(int x,int z,boolean anchor){
   if(!anchor){int[] heights=ORIGINAL.get(new ChunkKey(generator,level.getSeed(),x>>4,z>>4));if(heights!=null)return heights[(x&15)*16+(z&15)];}
-  PointKey key=new PointKey(generator,level.getSeed(),x,z);
-  synchronized(NOISE){return NOISE.computeIfAbsent(key,k->generator.getBaseHeight(x,z,net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,
-      level,level.getLevel().getChunkSource().randomState())-1);}
+  ChunkKey key=new ChunkKey(generator,level.getSeed(),x>>4,z>>4);
+  return NOISE.get(key,(x&15)*16+(z&15),()->generator.getBaseHeight(x,z,net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,
+      level,level.getLevel().getChunkSource().randomState())-1);
  }
  private final Map<Long,Integer> anchors=new HashMap<>();
  public int anchorFloor(int x,int z){long key=((long)x<<32)^(z&0xffffffffL);return anchors.computeIfAbsent(key,k->calculateFloor(x,z,true));}
  private final WorldGenLevel level;private final ChunkGenerator generator;private final Map<Long,Boolean> samples=new HashMap<>();private final Map<Long,Integer> floors=new HashMap<>();
  public ReefTerrain(WorldGenLevel level,ChunkGenerator generator){this.level=level;this.generator=generator;}
+ public ReefProvinceLayout.Sample provinceSample(int x,int z){
+  var source=generator.getBiomeSource();
+  return source instanceof ReefProvinceAccess access?access.province(level.getSeed(),x,z,level.getLevel().getChunkSource().randomState().sampler()):null;
+ }
+ public boolean province(int x,int z){return provinceSample(x,z)!=null||reef(x,z);}
  public boolean reef(int x,int z){
   int qx=QuartPos.fromBlock(x),qz=QuartPos.fromBlock(z);long key=((long)qx<<32)^(qz&0xffffffffL);
   return samples.computeIfAbsent(key,k->generator.getBiomeSource().getNoiseBiome(qx,8,qz,level.getLevel().getChunkSource().randomState().sampler()).is(ReefWorldgen.BIOME));
@@ -37,6 +39,9 @@ public final class ReefTerrain {
   return floors.computeIfAbsent(key,k->calculateFloor(x,z,false));
  }
  private int calculateFloor(int x,int z,boolean anchor){
+  var province=provinceSample(x,z);
+  if(province!=null){int nativeFloor=province.radius()<ReefProvinceLayout.OUTER-ReefProvinceLayout.EDGE_BLEND?0:originalFloor(x,z,true);
+   return generator.getBiomeSource() instanceof ReefProvinceAccess access && access.deep()?ReefProvinceLayout.deepFloor(province,x,z,nativeFloor):ReefProvinceLayout.floor(province,x,z,nativeFloor);}
   double edge=1;
   for(int i=0;i<8;i++){
    double a=i*Math.PI/4;
