@@ -5,6 +5,7 @@ The input directories must be baseline-e, optimized-e, optimized-f, baseline-f.
 """
 import argparse
 import json
+import struct
 from pathlib import Path
 from statistics import mean
 
@@ -13,6 +14,7 @@ def report(root):
     runs = {}
     fixtures = set()
     manifests = []
+    dimensions = set()
     for label in ("baseline-e", "optimized-e", "optimized-f", "baseline-f"):
         directory = root / label
         metrics = json.loads((directory / "performance-metrics.json").read_text())
@@ -21,6 +23,11 @@ def report(root):
         variant = label.split("-")[0]
         assert receipt["variant"] == variant
         assert len(manifest) == len(metrics["moves"]) == 5
+        for capture in manifest:
+            with (directory / capture["file"]).open("rb") as stream:
+                header = stream.read(24)
+            assert header[:8] == b"\x89PNG\r\n\x1a\n"
+            dimensions.add(struct.unpack(">II", header[16:24]))
         assert [move["pose"] for move in metrics["moves"]] == [
             "outer-wastes", "inner-wastes", "rim-passage", "cathedral", "cathedral-surface"
         ]
@@ -34,6 +41,7 @@ def report(root):
         manifests.append(manifest)
         runs[label] = {"metrics": metrics, "receipt": receipt, "manifest": manifest}
     assert len(fixtures) == 1, "Measurement fixture changed between runs"
+    assert len(dimensions) == 1, "Framebuffer size changed between captures"
     assert all(manifest == manifests[0] for manifest in manifests), "Terrain probes changed"
     for variant in ("baseline", "optimized"):
         paired = [run for label, run in runs.items() if label.startswith(variant)]
@@ -58,7 +66,8 @@ def report(root):
         }
     changes = {key: 100 * (rows["optimized"][key] / value - 1) for key, value in rows["baseline"].items()}
     return {"aggregation": "Mean of two per-run p95/p99/CPU values; maximum of per-run maxima. Negative change means lower.",
-            "order": list(runs), "summary": rows, "changePercent": changes, "runs": runs}
+            "order": list(runs), "framebufferPixels": list(next(iter(dimensions))),
+            "summary": rows, "changePercent": changes, "runs": runs}
 
 
 if __name__ == "__main__":

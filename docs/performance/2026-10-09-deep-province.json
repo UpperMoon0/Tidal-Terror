@@ -6,6 +6,10 @@
     "optimized-f",
     "baseline-f"
   ],
+  "framebufferPixels": [
+    1920,
+    1080
+  ],
   "summary": {
     "baseline": {
       "frameP95MeanMs": 141.63445000000002,
