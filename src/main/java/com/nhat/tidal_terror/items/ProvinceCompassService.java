@@ -26,17 +26,16 @@ public final class ProvinceCompassService {
         if(!session.pending.add(player.getUUID())) {message(player,"busy");return;}
         player.getCooldowns().addCooldown(stack.getItem(),60);
         var token=UUID.randomUUID();stack.getOrCreateTag().putUUID("ReefCompassSearch",token);
-        var source=(ReefProvinceAccess)level.getChunkSource().getGenerator().getBiomeSource();
-        var sampler=level.getChunkSource().randomState().sampler();
         var origin=player.blockPosition();var id=player.getUUID();
         message(player,"searching");
         try {
             session.worker.execute(()-> {
                 ReefProvinceLayout.Center result=null;boolean failed=false;
                 try {
-                    result=ProvinceLocatorSearch.find(level.getSeed(),origin.getX(),origin.getZ(),source.placementVersion(),
-                        c->source.province(level.getSeed(),c.x(),c.z(),sampler)!=null,
-                        ()->Thread.currentThread().isInterrupted()||!server.isRunning());
+                    result=ReefLocator.find(level,origin.getX(),origin.getZ(),
+                            ()->Thread.currentThread().isInterrupted()||!server.isRunning());
+                } catch(CancellationException e) {
+                    return;
                 } catch(RuntimeException e) {
                     com.mojang.logging.LogUtils.getLogger().warn("Reef compass search failed",e);failed=true;
                 }

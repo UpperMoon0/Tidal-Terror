@@ -58,9 +58,10 @@ public final class ReefWorldgen {
         PROVINCE_SOURCES.register(bus);
         bus.addListener(ReefWorldgen::data);
         bus.addListener(ReefWorldgen::spawns);
+        bus.addListener(EndlessProvincePack::register);
         bus.addListener(ReefAnimalSpawns::register);
         bus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) -> event.enqueueWork(() -> {
-            if (!ReefProvinceMode.enabled()) LegacyReefIntegration.register();
+            LegacyReefIntegration.register();
         }));
     }
 
@@ -103,7 +104,7 @@ public final class ReefWorldgen {
     private static void data(GatherDataEvent event) {
         RegistrySetBuilder builder = new RegistrySetBuilder()
                 .add(Registries.CONFIGURED_FEATURE, context -> {
-                    if (ReefProvinceMode.enabled()) context.register(WASTES_CONFIG, new ConfiguredFeature<>(WASTES_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
+                    context.register(WASTES_CONFIG, new ConfiguredFeature<>(WASTES_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
                     context.register(CONFIGURED, new ConfiguredFeature<>(GIANT_CORAL.get(), NoneFeatureConfiguration.INSTANCE));
                     context.register(BASIN_CONFIG, new ConfiguredFeature<>(BASIN.get(), NoneFeatureConfiguration.INSTANCE));
                     context.register(GARDEN_CONFIG, new ConfiguredFeature<>(GARDEN.get(), NoneFeatureConfiguration.INSTANCE));
@@ -111,7 +112,7 @@ public final class ReefWorldgen {
                 .add(Registries.PLACED_FEATURE, context -> {
                     // No random offset: each feature owns the decorating chunk, including its edges.
                     var configured=context.lookup(Registries.CONFIGURED_FEATURE);
-                    if (ReefProvinceMode.enabled()) context.register(WASTES_PLACED,new PlacedFeature(configured.getOrThrow(WASTES_CONFIG),List.of()));
+                    context.register(WASTES_PLACED,new PlacedFeature(configured.getOrThrow(WASTES_CONFIG),List.of()));
                     context.register(PLACED,new PlacedFeature(configured.getOrThrow(CONFIGURED),List.of()));
                     context.register(BASIN_PLACED,new PlacedFeature(configured.getOrThrow(BASIN_CONFIG),List.of()));
                     context.register(GARDEN_PLACED,new PlacedFeature(configured.getOrThrow(GARDEN_CONFIG),List.of()));
@@ -161,7 +162,7 @@ public final class ReefWorldgen {
         mobs.addSpawn(ModEntities.RAY_POOL, new MobSpawnSettings.SpawnerData(ModEntities.CATHEDRAL_RAY.get(), 6, 2, 3));
         mobs.addSpawn(ModEntities.VEILGLOW_POOL, new MobSpawnSettings.SpawnerData(ModEntities.VEILGLOW.get(), 8, 2, 4));
         mobs.addSpawn(ModEntities.SHARDBACK_POOL, new MobSpawnSettings.SpawnerData(ModEntities.SHARDBACK.get(), 10, 1, 3));
-        if (ReefProvinceMode.enabled()) {
+        {
             BiomeGenerationSettings.Builder wastesGeneration = new BiomeGenerationSettings.Builder(placed, carvers);
             wastesGeneration.addFeature(GenerationStep.Decoration.RAW_GENERATION, BASIN_PLACED);
             wastesGeneration.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, PLACED);

@@ -10,7 +10,13 @@ Craft the **Reef Compass** with a vanilla Compass, three Amethyst Shards and a N
 
 ## Current Endless-backed deep preset
 
-The latest Forge 1.20.1 prototype requires **Endless 0.9.3** on both client and server. Select **Deep Reef Province (Endless Prototype)** when creating a new world (`tidalterror:reef_province_deep` on a server). TerraBlender is absent from the experimental runtime. The earlier shallow preset remains selectable for comparison; the depth descriptions further below record that earlier pass.
+The Forge 1.20.1 build now uses one jar for both world-generation paths. **TerraBlender remains required**, and ordinary worlds retain the previous natural Cathedral distribution and normal bedrock floor. **Endless 0.9.3 is optional**; installing it on both client and server adds **Deep Reef Province (Endless)** to the world-type choices (`tidalterror:reef_province_deep` on a server). The earlier shallow source and preset remain readable for saved-world compatibility, but only the deep preset is added to the world-type menu. Depth descriptions further below record the earlier shallow pass.
+
+World types come from a built-in data pack registered only when Endless is installed. Sparse mixins are skipped before their optional API is resolved. A saved deep biome source refuses to decode without Endless instead of falling back to ordinary generation. Installing Endless never changes a normal world's generator. Province sampling uses the delegate's native climate parameter tree so TerraBlender's globally registered reef region cannot add legacy Cathedrals outside the province layout or move previously saved provinces.
+
+Both paths use the same Cathedral biome resource, feature graph, spawn tables, `ReefTerrain`, `CoralCathedralFeature.decorate` and `ReefGardenFeature.decorate`. The sparse worker supplies a private block view to those decorators. Canopy-specific spawn restrictions apply only to deep sources; ordinary worlds retain the prior habitat rules. The Reef Compass recipe is available in either world type: normal worlds use native horizontal biome lookup; province worlds use seeded centers. Both searches use the same bounded server worker and saved compass target.
+
+Normal worlds passed native checks with and without Endless, including loading a copied normal save after removing Endless. Fresh deep generation and a separate-process cold reload passed with identical garden counts and the frozen legacy biome inventory. [Compatibility validation and reproducible commands](performance/Optional-Endless-World-Types-2026-10-09.md).
 
 Cathedral retains its 1,024-block nominal radius and existing roughly 100-block giant coral height. All outer horizontal bands retain the proportional enlargement. The deep profile lowers the core toward Y −448, climbs through a rim crest near −256 (with deeper passages), then climbs through the Inner Wastes toward −144 and the Outer Wastes toward ordinary seabed. Dunes and angular warping vary those heights.
 
@@ -24,7 +30,13 @@ Endless 0.9.3 is an unreleased PR build. Build `:forge-1.20.1:remapJar` in that 
 
 ```powershell
 # After installing the local Endless 0.9.3 PR jar:
-.\gradlew.bat -PprovincePrototype build
+.\gradlew.bat build
+
+# Ordinary development runtime, without Endless:
+.\gradlew.bat runClient
+
+# Development runtime offering the additional deep world type:
+.\gradlew.bat -PwithEndless runClient
 
 # Isolated native generation, then a separate process loading the saved world:
 .\gradlew.bat -PprovincePrototype -PdeepProvinceTests runServer --offline
@@ -161,7 +173,9 @@ This prototype keeps basin excavation in `RAW_GENERATION`, as the released mod d
 
 The source currently assigns province biomes through the subterranean region down to the normal minimum height. Full cave-biome preservation under the new seabed needs another pass. Flooded quart cells are resolved to the intended zone during excavation. Existing worlds and existing saved chunks are not regenerated.
 
-## TerraBlender migration
+## Earlier TerraBlender-free packaging (historical)
+
+This section records the original isolated prototype. The current shared-jar behavior is described at the top.
 
 The Forge experimental build runs without TerraBlender. `-PprovincePrototype` changes TerraBlender to a compile-only dependency, marks it optional in Forge metadata, removes the TerraBlender-dependent distribution mixin from the built config, and includes the preset and Wastes data. A resource marker disables the isolated legacy integration in the packaged experimental jar as well as development runs.
 
@@ -174,10 +188,10 @@ Do not switch an existing save between the released and prototype generators. Us
 Forge 1.20.1 uses the repository's Java 17 toolchain.
 
 ```powershell
-# Native normal-world audit with TerraBlender absent:
+# Native shallow-preset audit (both companion mods installed):
 .\gradlew.bat -PprovincePrototype -PprovinceTests runServer --offline
 
-# Interactive review: select Reef Province (Prototype) in a NEW world.
+# Interactive review: select Deep Reef Province (Endless) in a NEW world.
 .\gradlew.bat -PprovincePrototype runClient --offline
 
 # Produce a distinctly named experimental jar:

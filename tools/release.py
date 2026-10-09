@@ -69,13 +69,17 @@ def verify_jar(path, value):
         for name in ('forge', 'minecraft', 'terrablender'):
             assert deps[name]['mandatory'] and deps[name]['side'] == 'BOTH'
         assert deps['terrablender']['versionRange'] == '[3.0.1.6,3.1)'
+        assert not deps['endless']['mandatory'] and deps['endless']['side'] == 'BOTH'
+        assert deps['endless']['versionRange'] == '[0.9.3,0.10)'
+        assert 'packs/endless_province/pack.mcmeta' in names
+        assert 'reef-province-prototype.marker' not in names
         icon = jar.read(mod['logoFile'])
         assert icon[:8] == b'\x89PNG\r\n\x1a\n'
         assert struct.unpack('>II', icon[16:24]) == (500, 500)
         assert 'tidalterror.mixins.json' in names
         json.loads(jar.read('tidalterror.mixins.json'))
         # Every production resource must survive packaging.
-        for folder in ('src/main/resources', 'src/generated/resources'):
+        for folder in ('src/main/resources', 'src/generated/resources', 'src/forgeProvince/resources'):
             base = ROOT / folder
             for source in base.rglob('*'):
                 if source.is_file() and '.cache' not in source.parts:

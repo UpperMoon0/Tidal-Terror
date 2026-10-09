@@ -45,7 +45,7 @@ class ArtifactTests(unittest.TestCase):
         self.entries = {}
         props = release.properties((release.ROOT/'gradle.properties').read_text())
         props['terrablender_required'] = 'true'  # Normal release metadata.
-        for dirname in ('src/main/resources','src/generated/resources'):
+        for dirname in ('src/main/resources','src/generated/resources','src/forgeProvince/resources'):
             base=release.ROOT/dirname
             for path in base.rglob('*'):
                 if path.is_file() and '.cache' not in path.parts:

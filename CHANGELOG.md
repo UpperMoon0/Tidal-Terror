@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.4 — Unreleased
+
+- Make Endless optional on Forge 1.20.1. Default worlds retain the legacy TerraBlender Cathedral generation; installing Endless adds the separate Deep Reef Province world type.
+- Share Cathedral coral, gardens, biome features, spawn tables, terrain queries and Reef Compass behavior across normal and deep worlds. Load only the sparse terrain adapter when Endless is installed, and refuse deep saves without that dependency.
+- Preserve saved province placement versions and full Cathedral size. New deep worlds use the balanced placement and craftable Reef Compass described in the province report.
+
 ## 0.0.3 — Unreleased
 
 - Restore Reef Armor trim rendering on Fabric 1.20.1 and 1.21.1, using the shell geometry with vanilla trim UVs; add native trimmable tags and client regressions for every vanilla pattern, armor slot, age and glint state.

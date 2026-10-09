@@ -136,6 +136,47 @@ jobs:
             build/*-model*/
             build/equipment-art/
           if-no-files-found: ignore
+  optional-endless:
+    needs: endless
+    name: Normal world with optional Endless (${{ matrix.endless }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        endless: [absent, present]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: reviewed-endless-forge
+          path: .dependencies/endless
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Native normal-world dependency and parity checks
+        run: |
+          chmod +x gradlew
+          extra=''
+          if [[ '${{ matrix.endless }}' == present ]]; then extra='-PwithEndless'; fi
+          ./gradlew -PoptionalEndlessTests $extra runServer --no-daemon
+          ./gradlew -PoptionalEndlessTests $extra runServer --no-daemon
+      - name: Reload a normal world after removing Endless
+        if: matrix.endless == 'present'
+        run: |
+          mkdir -p build/optional-endless-removed
+          cp -a build/optional-endless-present/normal-world build/optional-endless-removed/
+          ./gradlew -PoptionalEndlessTests -PoptionalEndlessTestDirectory=build/optional-endless-removed runServer --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: optional-endless-${{ matrix.endless }}-evidence
+          path: |
+            build/optional-endless-${{ matrix.endless }}/
+            build/optional-endless-removed/
+          if-no-files-found: error
   deep-province:
     needs: endless
     name: Deep province generation and cold reload
@@ -165,7 +206,7 @@ jobs:
             build/deep-province-test/passed.txt
             build/deep-province-test/failure.txt
             build/deep-province-test/checkpoint.json
-            build/libs/*province-prototype.jar
+            build/libs/tidalterror-*.jar
           if-no-files-found: ignore
   ports:
     needs: endless

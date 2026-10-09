@@ -23,8 +23,7 @@ public final class ReefCompassItem extends CompassItem {
     @Override public InteractionResultHolder<ItemStack> use(Level level,Player player,InteractionHand hand) {
         var stack=player.getItemInHand(hand);
         if(level.isClientSide)return InteractionResultHolder.success(stack);
-        var serverLevel=(ServerLevel)level;
-        if(level.dimension()!=Level.OVERWORLD || !(serverLevel.getChunkSource().getGenerator().getBiomeSource() instanceof ReefProvinceAccess)) {
+        if(level.dimension()!=Level.OVERWORLD) {
             player.displayClientMessage(Component.translatable("message.tidalterror.reef_compass_no_resonance"),true);
             return InteractionResultHolder.fail(stack);
         }
