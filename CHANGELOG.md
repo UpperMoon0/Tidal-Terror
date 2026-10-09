@@ -1,13 +1,18 @@
 # Changelog
 
-## 0.0.4 — Unreleased
+## 0.0.4
 
 - Remove TerraBlender across all supported loaders. New normal worlds use the shared full-size Cathedral and Sunken Wastes province system, with normal bedrock and world height. No legacy TerraBlender save migration.
-- Keep Endless optional on Forge 1.20.1; installing it adds the separate Deep Reef Province world type.
+- Keep Endless optional on Forge 1.20.1; Endless 0.9.3 and its Architectury API 9.2.14+ dependency add the separate experimental Deep Reef Province world type. Configure a minimum build height at or below -512 before creating a new deep world.
 - Share Cathedral coral, gardens, biome features, spawn tables, terrain queries and Reef Compass behavior across normal and deep worlds. Load only the sparse terrain adapter when Endless is installed, and refuse deep saves without that dependency.
 - Preserve saved province placement versions and full Cathedral size. New deep worlds use the balanced placement and craftable Reef Compass described in the province report.
 
-## 0.0.3 — Unreleased
+- Add the Forge 1.20.1 Reef Compass and its recipe for normal and deep worlds. The other four ports retain normal-height provinces without the compass or deep adapter.
+- Bound Forge reef-water finishing to 64 columns, 32 inspected chunks and an approximately 3 ms soft budget per level tick. Persist partial progress and resume unfinished repairs after a cold restart; recover interrupted deep generation without replacing saved pages.
+- Add a static normal-world preset collision scanner. Competing `minecraft:normal` definitions still require a deliberately combined or separate preset and native modpack testing.
+- Keep deep cave/structure integration, worst-case populated burst-load timings and historical client/tick timing regressions as known limitations. Benchmark data and historical reports are preserved unchanged; this release does not claim a general performance improvement.
+
+## 0.0.3 — 2026-10-06
 
 - Restore Reef Armor trim rendering on Fabric 1.20.1 and 1.21.1, using the shell geometry with vanilla trim UVs; add native trimmable tags and client regressions for every vanilla pattern, armor slot, age and glint state.
 

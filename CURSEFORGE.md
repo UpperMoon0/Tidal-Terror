@@ -2,7 +2,7 @@
 
 ![Tidal Terror banner](https://raw.githubusercontent.com/UpperMoon0/Tidal-Terror/main/docs/assets/tidal-terror-banner.png)
 
-**Version 0.0.4 (unreleased draft):** Explore provinces of **Coral Cathedral** and the adjoining **Sunken Wastes**, with towering coral formations, sandstone basins, and four animated marine creatures. New normal worlds on all five ports generate full-sized Cathedral provinces and their wide Wastes rings at ordinary heights. The optional Forge 1.20.1 Deep Reef Province world type extends the same terrain below vanilla bedrock using Endless.
+**Version 0.0.4:** Explore provinces of **Coral Cathedral** and the adjoining **Sunken Wastes**, with towering coral formations, sandstone basins, and four animated marine creatures. New normal worlds on all five ports generate full-sized Cathedral provinces and their wide Wastes rings at ordinary heights. The optional Forge 1.20.1 Deep Reef Province world type extends the same terrain below vanilla bedrock using Endless.
 
 ## Meet the reef's creatures
 
@@ -38,11 +38,11 @@ Choose a file for your exact Minecraft version and loader:
 | --- | --- | --- | --- |
 | 1.20.1 | Forge 47.2+ | 17 | None |
 | 1.20.1 | Fabric 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+ |
-| 1.21.1 | Fabric 0.17.2+ | 21 | Fabric API, Architectury API 13.0.8+ |
+| 1.21.1 | Fabric 0.16.14+ | 21 | Fabric API, Architectury API 13.0.8+ |
 | 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+ |
 | 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+ |
 
-Place the matching Tidal Terror jar and required companion mods in your instance's `mods` folder. Multiplayer needs them on the server and every client. Use companion builds for the same Minecraft version and loader. Fabric 1.20.1 bundles Reach Entity Attributes for the spear; newer versions use native reach.
+Place the matching Tidal Terror jar and required companion mods in your instance's `mods` folder. Multiplayer needs them on the server and every client. Use companion builds for the same Minecraft version and loader. Fabric 1.20.1 bundles Reach Entity Attributes for the spear; newer versions use native reach. Fabric 1.21.1 declares Loader 0.16.14 as its metadata minimum and is built and tested with Loader 0.17.2. TerraBlender is no longer required.
 
 Shaders are optional. Development previews use Oculus, Embeddium, and Complementary Reimagined; these are separate downloads and are not bundled with Tidal Terror.
 
@@ -50,9 +50,11 @@ Shaders are optional. Development previews use Oculus, Embeddium, and Complement
 
 Explore newly generated ocean chunks; with commands enabled, locate either the Cathedral or Sunken Wastes biome. Existing chunks retain their terrain and structures. Older Cathedral rarity estimates do not describe the full new province footprint.
 
-**Forge 1.20.1 only:** A craftable **Reef Compass** (Compass, three Amethyst Shards, Nautilus Shell) locates an accepted Cathedral without loading remote chunks. The separate **Deep Reef Province (Endless)** preset requires Endless 0.9.3 on both client and server and a minimum build height at or below -512. Ordinary worlds need no Endless; the other four ports do not include this compass or deep world type.
+**Forge 1.20.1 only:** A craftable **Reef Compass** (Compass, three Amethyst Shards, Nautilus Shell) locates an accepted Cathedral without loading remote chunks. The separate, experimental **Deep Reef Province (Endless)** preset requires Endless 0.9.3 (supported range: 0.9.3 to below 0.10), its Architectury API 9.2.14+ dependency on both client and server, and a minimum build height at or below -512 configured before creating a new world. Ordinary worlds need no Endless; the other four ports do not include this compass or deep world type.
 
-**Compatibility warning:** This draft replaces vanilla **minecraft:normal** world-preset JSON, conflicting with other mods/datapacks that replace the same preset. The highest-precedence pack wins; generators are not automatically combined. Use a deliberately merged or separate custom preset and test a fresh world. No older TerraBlender-save migration is supplied. See the [draft worldgen notes](https://github.com/UpperMoon0/Tidal-Terror/blob/codex/sunken-wastes-draft/docs/Sunken-Wastes-Province.md).
+**Compatibility warning:** Version 0.0.4 replaces vanilla **minecraft:normal** world-preset JSON, conflicting with other mods/datapacks that replace the same preset. The highest-precedence pack wins; generators are not automatically combined. Use a deliberately merged or separate custom preset and test a fresh world. No older TerraBlender-save migration is supplied. See the [worldgen design and historical validation notes](https://github.com/UpperMoon0/Tidal-Terror/blob/main/docs/Sunken-Wastes-Province.md).
+
+**Experimental deep-world limitations:** Cave and structure integration remains incomplete; the native deep audit disables structures. Preset-collision checks do not establish compatibility with every modpack. Worst-case populated burst-load timings and the recorded client/tick timing regressions remain unresolved. Historical benchmark data is retained as measured and does not establish a general performance improvement. Evaluate deep generation in a disposable new world and keep backups.
 
 Coral Crushers ignore Creative and Spectator players. Switch to Survival or Adventure to experience their hunting behavior.
 

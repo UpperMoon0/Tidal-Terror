@@ -1,6 +1,6 @@
 # Multi-version ports
 
-Version 0.0.3 retains Forge 1.20.1 and adds Fabric 1.20.1, Fabric/NeoForge 1.21.1 and NeoForge 26.1.2. The layout follows Endless: Architectury common/versioned sources, Fabric Loom targets, and native NeoForge ModDev targets. Each target has separate output and development worlds.
+Version 0.0.3 added Fabric 1.20.1, Fabric/NeoForge 1.21.1 and NeoForge 26.1.2 alongside Forge 1.20.1. Version 0.0.4 retains all five targets, removes TerraBlender and adds normal-height Cathedral/Sunken Wastes provinces. The experimental Endless deep adapter and Reef Compass are Forge 1.20.1-only. The layout follows Endless: Architectury common/versioned sources, Fabric Loom targets, and native NeoForge ModDev targets. Each target has separate output and development worlds.
 
 ## Source ownership
 
@@ -59,7 +59,7 @@ After tests or client checks, **clean the target before a production build**:
 
 ```powershell
 ./gradlew.bat -Pmultiversion :neoforge-26.1.2:clean :neoforge-26.1.2:build
-python tools/ports.py jar neoforge-26.1.2 --jar neoforge-26.1.2/build/libs/tidalterror-neoforge-26.1.2-0.0.3.jar --version 0.0.3
+python tools/ports.py jar neoforge-26.1.2 --jar neoforge-26.1.2/build/libs/tidalterror-neoforge-26.1.2-0.0.4.jar --version 0.0.4
 ```
 
 The archive gate verifies loader/Minecraft/Java metadata, required companion mods, mixin classes/refmaps, category names, gear recipes, loot, artwork and modern enchantment data. Test/preview classes and obsolete spear icons must be absent. Evidence is preserved under `build/port-evidence` before clean builds.

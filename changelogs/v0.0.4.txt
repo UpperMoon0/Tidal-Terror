@@ -1,7 +1,7 @@
-Tidal Terror 0.0.4 (unreleased)
+Tidal Terror 0.0.4
 
 - Remove TerraBlender on every supported loader; normal worlds now use the full-size Coral Cathedral and surrounding Sunken Wastes provinces at ordinary world height. Legacy TerraBlender saves are not migrated.
-- Endless 0.9.3 remains optional on Forge 1.20.1 and unlocks the separate deep world type. Generic logical-floor fog and sparse engine changes are supplied by Endless PR #24.
+- Endless 0.9.3 remains optional on Forge 1.20.1 and unlocks the separate deep world type. Generic logical-floor fog and sparse engine changes are supplied by Endless 0.9.3; its Forge build also requires Architectury API 9.2.14+.
 - Add a separate Deep Reef Province world type when Endless is installed, with conditional sparse adapters and shared biome features/spawn tables. Preserve the Cathedral's 1,024-block radius and scale the surrounding rim and Sunken Wastes proportionally.
 - Balance new province placement toward a measured 10-20k-block average journey while retaining full Cathedral size and rings. Persist placement version 2; old saved sources retain their original version-1 layout.
 - Add a craftable Reef Compass for both Forge world-generation paths, with generated-art rotating needle frames, asynchronous nearest-Cathedral attunement, saved targets and no distant chunk generation.
@@ -14,4 +14,7 @@ Tidal Terror 0.0.4 (unreleased)
 - Restore native natural spawning below the dense floor through Endless's logical spawn-bound fix. Confine the four custom species to Cathedral canopy water, retain vanilla aquatic spawning above and below it, and retain Drowned weight 1. Add native deep-dispatch, upper-water/Wastes rejection and cold-restart regressions.
 - Resolve NeoForge's external tooling from its authoritative repository rather than incomplete Maven Central classifier artifacts.
 
-The deep world type is experimental on Forge 1.20.1, requires Endless and a new world, and remain blocked from production promotion by structure/cave integration, timing regressions and other loader/version deep adapters. This draft has not been merged or published.
+- Bound Forge water finishing to 64 columns, 32 inspected chunks and an approximately 3 ms soft budget per level tick. Persist the next-column cursor and resume unfinished work after cold restart; recover interrupted deep generation without replacing saved pages.
+- Add a static normal-world preset collision scanner. Other mods/datapacks replacing minecraft:normal still need a deliberately combined or separate custom preset and native validation.
+
+The deep world type remains experimental and Forge 1.20.1-only. It requires Endless 0.9.3 (supported range: 0.9.3 to below 0.10), Architectury API 9.2.14+, and a new world with a minimum build height at or below -512. Cave/structure integration is incomplete; native deep audits disable structures. Other loaders do not include the deep adapter or Reef Compass. Worst-case populated burst-load timings and recorded client/tick timing regressions remain unresolved. Historical benchmark data and reports are preserved unchanged; this release does not claim a general performance improvement.
