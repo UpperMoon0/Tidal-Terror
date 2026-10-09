@@ -1,0 +1,26 @@
+gradle.projectsEvaluated {
+    def root = rootProject
+    root.sourceSets.main.java.srcDir root.file('tools/province/coverage')
+    root.configurations.localRuntime.dependencies.clear()
+    root.configurations.runtimeOnly.dependencies.removeAll {
+        it.group == 'dev.local' && (it.name.startsWith('oculus') || it.name.startsWith('embeddium'))
+    }
+    def directory=root.file(root.findProperty('coverageOutput') ?: 'build/province-coverage-2026-10-09')
+    root.minecraft.runs.server {
+        workingDirectory directory
+        property 'forge.logging.console.level', 'info'
+        property 'tidalterror.coverageSurvey', 'true'
+        args '--nogui'
+    }
+    root.tasks.matching { it.name == 'runServer' }.configureEach {
+        doFirst {
+            if(directory.exists()) throw new GradleException('Coverage output exists; preserve it and choose a new directory')
+            directory.mkdirs()
+            new File(directory,'eula.txt').text='eula=true\n'
+            new File(directory,'config').mkdirs()
+            new File(directory,'config/endless.json').text='{"buildHeight":{"minBuildHeight":-1024,"maxBuildHeight":1024}}'
+            new File(directory,'server.properties').text='level-name=survey-bootstrap-world\nlevel-seed=0\nlevel-type=tidalterror:reef_province_deep\nonline-mode=false\nserver-ip=127.0.0.1\nserver-port=25589\nview-distance=2\nsimulation-distance=2\ngenerate-structures=false\nmax-tick-time=0\n'
+        }
+        doLast {if(!new File(directory,'passed.txt').exists())throw new GradleException('Coverage survey failed')}
+    }
+}
