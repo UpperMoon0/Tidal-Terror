@@ -42,6 +42,16 @@ The published 0.0.3 (`133c112`) biome inventory remains the reference: the nativ
 
 Existing generated pages are preserved, so already saved bare terrain is not retroactively decorated. Review this change in a new world or an independent copy of the newly audited world. Never overwrite the preserved v4 exploration/benchmark saves.
 
+Final native fresh generation and a separate-process cold reload passed, including the frozen legacy inventory, all five coral colors and crown fans. A 48×48 sample contains 730 living coral blocks, 435 boulder blocks, 373 coral plants, 377 fans, 189 seagrass and 102 sea pickles. Those counts remain identical after 200 active ticks and restart; forced native coral ticks preserve living states, and every sampled plant has valid support and water. Admission builds remain zero.
+
+The independent **Deep Reef Province Exploration v5** client completed five framebuffer captures and five active-water scans. Its low garden camera shows the recovered terrain:
+
+![Recovered legacy Cathedral gardens in the deep preset](assets/deep-cathedral-garden-2026-10-09.png)
+
+Capture uses vanilla rendering, Creative flight and Night Vision. Reproduce the close-up tour after the fresh/reload audits with `./gradlew.bat -PprovincePrototype -PdeepProvinceExplore -PprovinceProfile -PreefGardenReview runClient --offline`. The profile exits after completion; omit `provinceProfile` to keep the review world open. The v5 copy is imported only when absent, preserving previous review saves.
+
+The [post-recovery smoke metrics](performance/2026-10-09-reef-recovery.json) record frame p95 53.45 ms, tick p95 60.20 ms, worst heartbeat 481.71 ms and a 1,768.72 ms worst frame. This is one run with a different audited save, garden camera and 1600×900 framebuffer, not a matched comparison with the historical ABBA runs. Timing regressions remain a promotion gate.
+
 ### Fog ownership migration, 2026-10-09
 
 The generic correction is in [Endless PR #24](https://github.com/UpperMoon0/Endless/pull/24), targeting its `master` mainline and kept unmerged. Endless has been bumped from 0.9.2 to 0.9.3. The two older Minecraft versions share one client hook; 26.1.2 has a separate target matching its changed fog API. Floor-policy regressions, all five packaged jars, and Endless tooling passed locally.

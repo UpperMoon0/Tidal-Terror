@@ -1,0 +1,139 @@
+{
+  "scope": "Single post-recovery smoke tour. Different audited save, garden camera and framebuffer from historical ABBA; not a matched speed comparison.",
+  "tidalRuntimeCommit": "22f2a419ab51d8d35fd3d0bfbca8bb10ff801744",
+  "endlessCommit": "af3353235773b081b4951daa2c26416d76626748",
+  "endlessJarSha256": "13ce17daadf41a8edca7f2fe8b23edfefc1a2c4f57d0592cd9053136b4c70d0c",
+  "framebufferPixels": [
+    1600,
+    900
+  ],
+  "command": [
+    "gradlew.bat",
+    "-PprovincePrototype",
+    "-PdeepProvinceExplore",
+    "-PprovinceProfile",
+    "-PreefGardenReview",
+    "runClient",
+    "--offline",
+    "--no-daemon"
+  ],
+  "gardenSample": {
+    "colony": 730,
+    "boulder": 435,
+    "plant": 373,
+    "fan": 377,
+    "seagrass": 189,
+    "pickle": 102,
+    "unchangedAfterTicksAndColdRestart": true,
+    "sampledColumns": 2304,
+    "verticalBlocksAboveFloor": 16
+  },
+  "metrics": {
+    "save": "Deep Reef Province Exploration v5",
+    "elapsedMs": 126697.61,
+    "frames": {
+      "count": 5515,
+      "p50Ms": 16.8871,
+      "p95Ms": 53.4476,
+      "p99Ms": 123.7522,
+      "maxMs": 1768.7192,
+      "totalMs": 125419.1292
+    },
+    "serverTicks": {
+      "count": 2534,
+      "p50Ms": 16.8483,
+      "p95Ms": 60.1961,
+      "p99Ms": 92.0888,
+      "maxMs": 262.7641,
+      "totalMs": 60254.1779
+    },
+    "serverTickIntervals": {
+      "count": 2533,
+      "p50Ms": 49.9688,
+      "p95Ms": 78.8994,
+      "p99Ms": 120.0764,
+      "maxMs": 481.7094,
+      "totalMs": 126141.3042
+    },
+    "moves": [
+      {
+        "pose": "outer-wastes",
+        "responseMs": 509.7169,
+        "queueMs": 2.4362,
+        "executionMs": 507.2807
+      },
+      {
+        "pose": "inner-wastes",
+        "responseMs": 0.2863,
+        "queueMs": 0.0458,
+        "executionMs": 0.2405
+      },
+      {
+        "pose": "rim-passage",
+        "responseMs": 15.7881,
+        "queueMs": 15.5169,
+        "executionMs": 0.2712
+      },
+      {
+        "pose": "cathedral",
+        "responseMs": 0.6252,
+        "queueMs": 0.115,
+        "executionMs": 0.5102
+      },
+      {
+        "pose": "cathedral-surface",
+        "responseMs": 0.1673,
+        "queueMs": 0.0455,
+        "executionMs": 0.1218
+      }
+    ],
+    "cpuMs": {
+      "Render thread": 31687.5,
+      "Worker-Main-1": 45421.875,
+      "Worker-Main-2": 41421.875,
+      "Worker-Main-3": 44781.25,
+      "Server thread": 45062.5
+    },
+    "admissionBuilds": 0,
+    "logicalMin": -1024,
+    "logicalMax": 1024
+  },
+  "manifest": [
+    {
+      "file": "01-outer-wastes.png",
+      "x": -52845,
+      "z": 43535,
+      "floor": 7,
+      "biome": "tidalterror:sunken_wastes"
+    },
+    {
+      "file": "02-inner-wastes.png",
+      "x": -53755,
+      "z": 43535,
+      "floor": -244,
+      "biome": "tidalterror:sunken_wastes"
+    },
+    {
+      "file": "03-rim-passage.png",
+      "x": -54381,
+      "z": 43535,
+      "floor": -380,
+      "biome": "tidalterror:sunken_wastes"
+    },
+    {
+      "file": "04-cathedral.png",
+      "x": -55689,
+      "z": 43535,
+      "floor": -447,
+      "biome": "tidalterror:coral_cathedral"
+    },
+    {
+      "file": "05-cathedral-surface.png",
+      "x": -55689,
+      "z": 43535,
+      "floor": -447,
+      "biome": "tidalterror:coral_cathedral"
+    }
+  ],
+  "gardenScreenshotSha256": "6e8d884e3fbf01f80d190564d483104499f1a3b6849f1a48df75615b1e28805c"
+}
