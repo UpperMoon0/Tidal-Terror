@@ -19,7 +19,7 @@ def main():
     command = process.cmdline()
     if not command or Path(command[0]).name.lower() != 'java.exe':
         raise RuntimeError('Select the actual Java server process, not Gradle')
-    if 'forgeuserdevserver' not in command:
+    if 'forgeserveruserdev' not in command:
         raise RuntimeError('Selected process is not a Forge dev server')
     environment = process.environ()
     if not environment.get('MOD_CLASSES'):

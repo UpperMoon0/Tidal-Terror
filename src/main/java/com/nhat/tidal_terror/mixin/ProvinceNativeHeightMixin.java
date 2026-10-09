@@ -32,23 +32,26 @@ public abstract class ProvinceNativeHeightMixin implements ReefNativeHeightProvi
         config,globalFluidPicker.get(),Blender.empty());
     noise.initializeForFirstCellX();noise.advanceCellX(0);
     try {
-     for(int x=Math.max(mx,cx);x<Math.min(mx+16,cx+width);x++)
-      for(int z=Math.max(mz,cz);z<Math.min(mz+16,cz+width);z++) {
-       boolean found=false;
-       for(int cy=cells-1;cy>=0 && !found;cy--) {
-        noise.selectCellYZ(cy,0);
-        for(int dy=cellHeight-1;dy>=0;dy--) {
-         int y=(minCell+cy)*cellHeight+dy;
-         noise.updateForY(y,(double)dy/cellHeight);
+     int x0=Math.max(mx,cx),x1=Math.min(mx+16,cx+width),z0=Math.max(mz,cz),z1=Math.min(mz+16,cz+width);
+     boolean[] found=new boolean[256];int remaining=(x1-x0)*(z1-z0);
+     // Fill each vertical native cell once, then visit every unresolved column.
+     for(int cy=cells-1;cy>=0 && remaining>0;cy--) {
+      noise.selectCellYZ(cy,0);
+      for(int dy=cellHeight-1;dy>=0 && remaining>0;dy--) {
+       int y=(minCell+cy)*cellHeight+dy;noise.updateForY(y,(double)dy/cellHeight);
+       for(int x=x0;x<x1;x++) {
          noise.updateForX(x,(double)(x-cx)/width);
+        for(int z=z0;z<z1;z++) {
+         int index=(x-mx)*16+z-mz;if(found[index])continue;
          noise.updateForZ(z,(double)(z-cz)/width);
          var state=((ProvinceNoiseCellAccess)noise).reefInterpolatedState();
          if(opaque.test(state==null?config.defaultBlock():state)) {
-          heights[(x-mx)*16+z-mz]=y;found=true;break;
+          heights[index]=y;found[index]=true;remaining--;
          }
         }
        }
       }
+     }
     } finally { noise.stopInterpolation(); }
    }
   return heights;
