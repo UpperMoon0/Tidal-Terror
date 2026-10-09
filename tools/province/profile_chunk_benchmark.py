@@ -10,9 +10,13 @@ JFR='C:/Program Files/Eclipse Adoptium/jdk-17.0.20.101-hotspot/bin/jfr.exe'
 def nanos(text): return int(datetime.fromisoformat(text.replace('Z','+00:00')).timestamp()*1e9)
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('directory',type=Path)
+    parser.add_argument('--variant',choices=('vanilla','default','deep'))
+    parser.add_argument('--phase',choices=('fresh','cold'))
     parser.add_argument('--jfr',default=JFR);args=parser.parse_args()
     result=json.loads((args.directory/'results.json').read_text());profiles=[]
     for run in result['runs']:
+        if args.variant and run['variant']!=args.variant:continue
+        if args.phase and run['phase']!=args.phase:continue
         recording=args.directory/run['directory']/(run['phase']+'.jfr')
         if not recording.exists():continue
         events=json.loads(subprocess.check_output([args.jfr,'print','--json','--events',
@@ -34,7 +38,7 @@ def main():
                     thread=values.get('sampledThread') or {};threads[thread.get('javaName','unknown')]+=1
                     if methods:samples[methods[0]]+=1
                     for marker in ('NoiseBasedChunkGenerator.getBaseHeight','NoiseBasedChunkGenerator.iterateNoiseColumn',
-                                   'NoiseChunk.<init>','ReefTerrain.lambda$originalFloor$0'):
+                                   'NoiseBasedChunkGenerator.reefNativeHeights','NoiseChunk.<init>','ReefTerrain.lambda$originalFloor$0'):
                         if any(m.endswith(marker) for m in methods):paths[marker]+=1
                     if len(examples)<2 and any(m.endswith('ReefTerrain.lambda$originalFloor$0') for m in methods):
                         examples.append(methods)
@@ -49,6 +53,7 @@ def main():
                 'mod_frames':owners.most_common(15),'sampled_threads':threads.most_common(),
                 'inclusive_path_samples':dict(paths),'truncated_samples':truncated,'height_query_stack_examples':examples,
                 'contended_monitors':monitor.most_common(10),'gc_pauses':gc})
-    (args.directory/'profiles.json').write_text(json.dumps(profiles,indent=2))
+    name=f'profiles-{args.variant or "all"}-{args.phase or "all"}.json' if args.variant or args.phase else 'profiles.json'
+    (args.directory/name).write_text(json.dumps(profiles,indent=2))
     print(json.dumps(profiles,indent=2))
 if __name__=='__main__':main()
