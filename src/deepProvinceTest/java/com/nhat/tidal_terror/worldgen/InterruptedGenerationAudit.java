@@ -118,6 +118,8 @@ final class InterruptedGenerationAudit {
         var chunk=level.getChunk(waterPos.x,waterPos.z);
         if(reload) {
             verifyPlayerEdits(chunk);
+            finishWaterWitness(level,chunk);
+            verifyPlayerEdits(chunk);
             require(chunk.getBlockState(pendingEdit(level)).is(Blocks.WATER),"Unfinished water column did not resume");
             var queues=queues();
             synchronized(queues) { require(!queues.get(level).containsKey(waterPos),"Resumed water repair never completed"); }
@@ -155,6 +157,43 @@ final class InterruptedGenerationAudit {
             System.out.println("REEF_WATER_PARTIAL_SAVE_PASS cursor="+cursor);
         } finally {
             synchronized(queues) { queues.put(level,original); }
+        }
+    }
+
+    private static void finishWaterWitness(ServerLevel level,LevelChunk chunk) throws Exception {
+        var queues=queues();LinkedHashMap<ChunkPos,Integer> original,isolated=new LinkedHashMap<>();
+        synchronized(queues) {
+            original=queues.get(level);
+            Integer cursor=original==null?null:original.get(waterPos);
+            System.out.println("REEF_WATER_RESTART_QUEUE pendingChunks="+(original==null?0:original.size())
+                +" cursor="+cursor+" fullStatus="+chunk.getFullStatus()+" unfinishedState="+chunk.getBlockState(pendingEdit(level)));
+            if(cursor==null)return;
+            isolated.put(waterPos,cursor);
+            queues.put(level,isolated);
+        }
+        try {
+            require(chunk.getFullStatus().isOrAfter(net.minecraft.server.level.FullChunkStatus.BLOCK_TICKING),"Restored water witness is not ticking");
+            // The production queue can contain thousands of non-ticking chunks.
+            // Its 32-inspection cap deliberately takes many rounds to revisit
+            // this witness, so 200 whole-server ticks are not a completion SLA.
+            // Isolate only scheduling, as in the fresh-save phase. Execute the
+            // real native END handler and require forward progress every call.
+            int calls=0,initial=isolated.get(waterPos);
+            while(isolated.containsKey(waterPos)) {
+                int before=isolated.get(waterPos);
+                ReefWaterFinish.tick(new TickEvent.LevelTickEvent(LogicalSide.SERVER,TickEvent.Phase.END,level,()->true));
+                int after=isolated.getOrDefault(waterPos,256);
+                require(after>before && after<=Math.min(256,before+64),"Restored water cursor failed its progress/budget contract: "+before+" -> "+after);
+                require(++calls<=256-initial,"Restored water repair exceeded its remaining-column bound");
+            }
+            System.out.println("REEF_WATER_RESTART_DRAIN_PASS initialCursor="+initial+" nativeHandlerCalls="+calls);
+        } finally {
+            synchronized(queues) {
+                // Retain any asynchronous chunk-load markers received meanwhile.
+                original.remove(waterPos);
+                isolated.forEach((pos,cursor)->original.merge(pos,cursor,Math::max));
+                queues.put(level,original);
+            }
         }
     }
 

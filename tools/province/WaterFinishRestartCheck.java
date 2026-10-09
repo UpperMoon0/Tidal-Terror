@@ -61,8 +61,33 @@ public final class WaterFinishRestartCheck {
             require(!save(level,chunk).contains(MARKER),"Completed marker was not removed");
             require(chunk.unsaved,"Progress did not mark the chunk dirty");
             markers(level,chunk);
+            largeBacklog();
             System.out.println("WATER_FINISH_STUB_COLD_RESTART_PASS player edits preserved, pending columns repaired, legacy/boundary tags passed");
         } else throw new IllegalArgumentException(args[0]);
+    }
+    private static void largeBacklog()throws Exception {
+        var level=new ServerLevel();var chunk=new LevelChunk(level,new ChunkPos(0,0));
+        var queue=pending(level);
+        // Reproduce the native reload's scale: unloaded/non-ticking chunks
+        // rotate, while a ready partial chunk receives at most 64 columns.
+        for(int i=1;i<6298;i++)queue.put(new ChunkPos(i,0),0);
+        queue.put(chunk.getPos(),64);
+        for(int tick=0;tick<200;tick++)tick(level);
+        Integer cursor=queue.get(chunk.getPos());
+        require(cursor!=null && cursor>=64 && cursor<256,"Backlog fixture unexpectedly met a 200-tick completion deadline");
+        require(chunk.getBlockState(new BlockPos(15,3,15)).isAir(),"Backlogged last column repaired prematurely");
+        var unrelated=new LinkedHashMap<>(queue);unrelated.remove(chunk.getPos());
+        queue.clear();queue.put(chunk.getPos(),cursor);
+        int calls=0;
+        while(queue.containsKey(chunk.getPos())){
+            int before=queue.get(chunk.getPos());tick(level);int after=queue.getOrDefault(chunk.getPos(),256);
+            require(after>before && after<=Math.min(256,before+64),"Isolated native handler failed to advance within budget");
+            require(++calls<=256-cursor,"Isolated repair exceeded remaining-column bound");
+        }
+        require(chunk.getBlockState(new BlockPos(15,3,15)).is(Blocks.WATER),"Isolated final column did not repair");
+        queue.putAll(unrelated);require(queue.size()==6297,"Unrelated pending work was lost");
+        ReefWaterFinish.stopped(new ServerStoppedEvent(level.getServer()));
+        System.out.println("WATER_FINISH_STUB_BACKLOG_PASS queued=6298 cursorAfter200Ticks="+cursor+" isolatedCalls="+calls);
     }
     private static void markers(ServerLevel level,LevelChunk chunk)throws Exception {
         for(int test=0;test<8;test++){
