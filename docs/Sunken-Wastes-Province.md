@@ -30,7 +30,17 @@ Endless 0.9.3 is an unreleased PR build. Build `:forge-1.20.1:remapJar` in that 
 
 The native fixture resets only its named world under `build/deep-province-test` on the first command; `deepReload` preserves that world. It checks deep sediment and bedrock, the dense/sparse water join, ordinary outside bedrock, unchanged dense array sizes, sparse biome and height queries, giant living coral, buried Wastes skeletons, active ticking, and preservation of a player edit after restart. The exploration fixture is excluded from packaged jars and preserves its independent save after first import.
 
-This is a Forge 1.20.1 worldgen prototype. Other loader/version ports still use their existing adapters. The deep extension currently supplies rock, sediment, water, existing giant coral, sparse garden fans and buried dead coral; it does not generate a new ore or cave system. Native noise-generator base-height/column queries used by structure planning still describe vanilla terrain, so structures are disabled in the audit. Structure integration, cave biome preservation, full clustered garden parity and generation performance remain promotion gates. Surface islands/coasts inside an admitted province can be excavated; unchanged ordinary terrain means **outside the province footprint**.
+This is a Forge 1.20.1 worldgen prototype. Other loader/version ports still use their existing adapters. The deep extension supplies rock, sediment, water, giant coral and the full legacy reef garden/decorations described below, plus buried dead coral. It does not generate a new ore or cave system. Native noise-generator base-height/column queries used by structure planning still describe vanilla terrain, so structures are disabled in the audit. Structure integration, cave biome preservation and generation performance remain promotion gates. Surface islands/coasts inside an admitted province can be excavated; unchanged ordinary terrain means **outside the province footprint**.
+
+### Legacy Cathedral feature recovery, 2026-10-09
+
+The first deep pass copied giant coral bodies and substituted isolated floor fans for `ReefGardenFeature`. That omitted clustered branching/layered/folded colonies, rounded sandstone outcrops, coral plants, seagrass, sea pickles, the original five-color spatial field and giant crown fans.
+
+The deep worker now calls the same `ReefGardenFeature.decorate` and `CoralCathedralFeature.decorate` used by the legacy native features, in the same order (gardens before giants). Seed rules, density field, three small-colony forms, boulder chance, five colors, support checks, plant mixture and crown-fan rules come directly from the original implementations. Native generation uses a native block view; the deep worker uses a private view of its pending sections, with terrain-only halo reads that never request neighbouring chunks. Writes remain confined to the owning chunk and precede bulk admission. The Cathedral footprint and tall-coral height cap remain unchanged. Sand thickness now also uses the original coordinate rule.
+
+The published 0.0.3 (`133c112`) biome inventory remains the reference: the native feature graph, inherited carver registrations and all spawn tables are retained, not replaced by a short reef-only list. A frozen native inventory regression checks those three fields against the actual loaded biome. The recovery does not invent underground features absent from the original flooded basin: its RAW excavation already filled the interior's former caves with sandstone before decoration, and filtered magma, geodes, kelp and several native aquatic decorators. Deep structure/cave integration remains a separate limitation.
+
+Existing generated pages are preserved, so already saved bare terrain is not retroactively decorated. Review this change in a new world or an independent copy of the newly audited world. Never overwrite the preserved v4 exploration/benchmark saves.
 
 ### Fog ownership migration, 2026-10-09
 
@@ -48,7 +58,7 @@ The optimized Forge 1.20.1 fresh-generation audit passed, followed by a separate
 
 CI builds the exact Endless commit recorded in `tools/endless-source.json`, shares its unbundled Forge jar with normal/native/prototype builds, and runs a fresh/cold deep audit. Both mods remain unreleased: Endless 0.9.3 and Tidal Terror 0.0.4 are draft PR builds.
 
-The completed [four-run in-game benchmark](performance/Deep-Province-2026-10-09.md) reduced frame p95 in both pairs (25.7% and 72.6%) and reduced the worst server heartbeat gap across runs from 2,219 to 489 ms. Tick p95 and longest individual frame regressed. The report preserves every independent result and raw metric; this remains an opt-in draft and is not ready for production promotion.
+The completed [four-run in-game benchmark](performance/Deep-Province-2026-10-09.md), recorded before the full garden recovery, reduced frame p95 in both pairs (25.7% and 72.6%) and reduced the worst server heartbeat gap across runs from 2,219 to 489 ms. Tick p95 and longest individual frame regressed. Those timings do not certify the richer recovered terrain. The report preserves every independent result and raw metric; this remains an opt-in draft and is not ready for production promotion.
 
 ### Performance investigation, 2026-10-09
 

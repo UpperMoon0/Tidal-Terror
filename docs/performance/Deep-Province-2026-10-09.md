@@ -1,5 +1,7 @@
 # Deep Reef Province: measured performance, 2026-10-09
 
+These timings measure Tidal runtime `0f99651`, before the later full garden recovery. They are historical evidence for the engine/preparation optimization and do not certify performance of the richer recovered terrain.
+
 The changes improve frame p95 in both paired runs and remove the observed two-second server heartbeat gaps. They **do not improve every metric**: server tick p95 and the longest individual rendered frame regress. Both PRs remain draft and unmerged; this prototype is not ready for default-world promotion.
 
 ## Independent in-game results

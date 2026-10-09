@@ -66,7 +66,7 @@ public final class DeepProvinceGenerator {
             var section=new LevelChunkSection(biomes);int bottom=sy*16;
             for(int x=0;x<16;x++)for(int z=0;z<16;z++) {
                 int i=x*16+z;if(samples[i]==null)continue;int floor=floors[i];
-                int sand=6+(int)Math.floorMod((long)(mx+x)*31+mz+z,3);
+                int sand=6+(int)Math.floorMod((long)(mx+x)*31+(long)(mz+z)*17,3);
                 for(int y=0;y<16;y++) {
                     int wy=bottom+y;
                     BlockState state=ReefProvinceLayout.bedrock(level.getSeed(),mx+x,wy,mz+z,floor)?Blocks.BEDROCK.defaultBlockState()
@@ -79,7 +79,10 @@ public final class DeepProvinceGenerator {
                     sampler,mx>>2,sectionY*4,mz>>2);
             if(!section.hasOnlyAir())sections.put(sy,section);
         }
-        corals(level,terrain,sections,mx,mz);
+        var blocks=new PrivateReefBlockAccess(sections,chunk,terrain,level.getSeed(),level.getSeaLevel());
+        // Match legacy order: seabed gardens first, then giant bodies/crown fans.
+        ReefGardenFeature.decorate(blocks,terrain,level.getSeed(),level.getSeaLevel(),mx,mz);
+        CoralCathedralFeature.decorate(blocks,terrain,level.getSeed(),level.getSeaLevel(),mx,mz,true);
         wastes(level,terrain,sections,mx,mz);
         return sections;
     }
@@ -90,38 +93,6 @@ public final class DeepProvinceGenerator {
     private static void set(Map<Integer,LevelChunkSection> sections,int x,int y,int z,BlockState state) {
         var section=sections.get(Math.floorDiv(y,16));
         if(section!=null)section.setBlockState(x&15,y&15,z&15,state,false);
-    }
-    private static void corals(ServerLevel level,ReefTerrain terrain,Map<Integer,LevelChunkSection> sections,int mx,int mz) {
-        for(int gx=Math.floorDiv(mx-40,88);gx<=Math.floorDiv(mx+55,88);gx++)for(int gz=Math.floorDiv(mz-40,88);gz<=Math.floorDiv(mz+55,88);gz++) {
-            long seed=CoralCathedralFeature.seed(level.getSeed(),gx,gz);Random r=new Random(seed);
-            int cx=gx*88+44+r.nextInt(13)-6,cz=gz*88+44+r.nextInt(13)-6;
-            if(!terrain.giant(cx,cz))continue;
-            int base=terrain.anchorFloor(cx,cz)+1,style=r.nextInt(3);
-            int height=Math.min(level.getSeaLevel()-base-2-r.nextInt(5),110-r.nextInt(5));
-            if(Math.floorMod(gx+gz,3)!=0)height-=12+r.nextInt(20);
-            PlanKey key=new PlanKey(seed,height,style);CoralGeometry.Plan plan;
-            synchronized(PLANS) { plan=PLANS.computeIfAbsent(key,k->CoralGeometry.build(k.seed,k.height,k.style)); }
-            for(var e:plan.blocks().entrySet()) {
-                var v=e.getKey();int x=cx+v.x(),y=base+v.y(),z=cz+v.z();
-                if(x<mx || x>=mx+16 || z<mz || z>=mz+16 || !get(sections,x,y,z).is(Blocks.WATER))continue;
-                boolean wet=false;
-                for(var d:Direction.values()) {
-                    var n=new CoralGeometry.Voxel(v.x()+d.getStepX(),v.y()+d.getStepY(),v.z()+d.getStepZ());
-                    if(!plan.blocks().containsKey(n) && y+d.getStepY()>terrain.floor(x+d.getStepX(),z+d.getStepZ()))wet=true;
-                }
-                int color=e.getValue();
-                set(sections,x,y,z,color<0 || !wet?Blocks.SMOOTH_SANDSTONE.defaultBlockState():CoralCathedralFeature.CORAL[color].defaultBlockState());
-            }
-        }
-        // Existing garden density/colors, placed only above this chunk's seabed.
-        for(int x=mx;x<mx+16;x++)for(int z=mz;z<mz+16;z++) {
-            if(!terrain.reef(x,z))continue;
-            Random r=new Random(CoralCathedralFeature.seed(level.getSeed()^0x736fabL,x,z));
-            if(r.nextDouble()>ReefGardenLayout.decorationChance(level.getSeed(),x,z))continue;
-            int y=terrain.floor(x,z)+1;
-            if(get(sections,x,y,z).is(Blocks.WATER) && get(sections,x,y-1,z).is(Blocks.SAND))
-                set(sections,x,y,z,CoralCathedralFeature.FANS[r.nextInt(5)].defaultBlockState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED,true));
-        }
     }
     /** Same sparse, buried skeleton layout as the dense Wastes feature. */
     private static void wastes(ServerLevel level,ReefTerrain terrain,Map<Integer,LevelChunkSection> sections,int mx,int mz) {

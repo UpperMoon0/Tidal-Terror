@@ -719,7 +719,7 @@ if (project.hasProperty('deepProvinceExplore')) {
             new File(client,'config').mkdirs()
             new File(client,'config/endless.json').text='{"buildHeight":{"minBuildHeight":-1024,"maxBuildHeight":1024}}'
             def source=new File(audit,'deep-province-world')
-            def target=new File(client,'saves/Deep Reef Province Exploration v4')
+            def target=new File(client,'saves/Deep Reef Province Exploration v5')
             if (!target.exists()) {
                 def channel=java.nio.channels.FileChannel.open(new File(source,'session.lock').toPath(),java.nio.file.StandardOpenOption.WRITE)
                 try {
@@ -741,4 +741,8 @@ if (project.hasProperty('provinceProfile')) {
 if (project.hasProperty('performanceSave')) {
     if (!project.hasProperty('deepProvinceExplore')) throw new GradleException('performanceSave requires deepProvinceExplore');
     minecraft.runs.client.property 'tidalterror.performanceSave',project.property('performanceSave').toString()
+}
+if (project.hasProperty('reefGardenReview')) {
+    if (!project.hasProperty('deepProvinceExplore')) throw new GradleException('reefGardenReview requires deepProvinceExplore');
+    minecraft.runs.client.property 'tidalterror.reefGardenReview','true'
 }

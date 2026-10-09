@@ -21,7 +21,8 @@ import java.util.concurrent.CompletableFuture;
 public final class ProvinceExplorer {
     private static final Minecraft MC = Minecraft.getInstance();
     private static final boolean DEEP = Boolean.getBoolean("tidalterror.deepExplore");
-    private static final String SAVE = System.getProperty("tidalterror.performanceSave", DEEP ? "Deep Reef Province Exploration v4" : "Reef Province Exploration v2");
+    private static final String SAVE = System.getProperty("tidalterror.performanceSave", DEEP ? "Deep Reef Province Exploration v5" : "Reef Province Exploration v2");
+    private static final boolean GARDEN_REVIEW=Boolean.getBoolean("tidalterror.reefGardenReview");
     private static final Path OUT = Path.of("captures");
     private static final int[] DISTANCES = {500, 340, 230, 0, 0};
     private static final String[] NAMES = {"outer-wastes", "inner-wastes", "rim-passage", "cathedral", "cathedral-surface"};
@@ -134,12 +135,12 @@ public final class ProvinceExplorer {
                         floorChecks[check++]=new BlockPos(x+dx,terrain.floor(x+dx,z+dz),z+dz);
                     // Require a section in front of this camera. Offscreen and
                     // buried sections can legitimately remain uncompiled.
-                    int viewX=x-(shot==3?64:32);
-                    int viewY=shot==4?63:shot==3?(DEEP?floor+85:4):terrain.floor(viewX,z);
+                    int viewX=x-(shot==3 && !GARDEN_REVIEW?64:32);
+                    int viewY=shot==4?63:shot==3?(GARDEN_REVIEW?floor+4:DEEP?floor+85:4):terrain.floor(viewX,z);
                     renderChecks=new BlockPos[]{new BlockPos(viewX,viewY,z)};
                     level.getChunk(x>>4,z>>4);
-                    double y=shot==4?75:shot==3?(DEEP?floor+65:-8):Math.min(48,floor+12);
-                    player.teleportTo(level,x+.5,y,z+.5,90,shot==3?-12:shot==4?25:32);
+                    double y=shot==4?75:shot==3?(GARDEN_REVIEW?floor+5:DEEP?floor+65:-8):Math.min(48,floor+12);
+                    player.teleportTo(level,x+.5,y,z+.5,90,shot==3 && !GARDEN_REVIEW?-12:shot==4?25:32);
                     player.getAbilities().flying=true; player.onUpdateAbilities();
                     Metrics.move(shot,requested,began,System.nanoTime());
                 },server);

@@ -21,6 +21,8 @@ public final class DeepProvinceAudit {
     private static net.minecraft.server.MinecraftServer server;
     private static ReefProvinceLayout.Center center;
     private static final List<BlockPos> points=new ArrayList<>();
+    private static final List<net.minecraft.world.level.ChunkPos> gardenChunks=new ArrayList<>();
+    private static BlockPos crownFan;
     private static boolean ready,done;private static int ticks;
     private static final boolean RELOAD=Boolean.getBoolean("tidalterror.deepReload");
     private static void require(boolean value,String message) { if(!value)throw new AssertionError(message); }
@@ -47,8 +49,10 @@ public final class DeepProvinceAudit {
             }
             require(center!=null,"No bounded fixture province");
             System.out.println("DEEP_AUDIT center="+center+" reload="+RELOAD);
+            LegacyCathedralInventory.verify(level);
             var terrain=new ReefTerrain(level,generator);
             verifyLandmarks(level,terrain);
+            verifyRecoveredGardens(level,terrain);
             int[] offsets={0,230,340,500};
             for(int i=0;i<offsets.length;i++) {
                 int x=center.x()+(int)Math.round(offsets[i]*ReefProvinceLayout.SCALE),z=center.z();
@@ -109,6 +113,13 @@ public final class DeepProvinceAudit {
         require(coral.getY()<-64,"Coral witness is not sparse");
         level.getChunk(coral.getX()>>4,coral.getZ()>>4);
         require(level.getBlockState(coral).is(CoralCathedralFeature.CORAL[tip.getValue()]),"Deep Cathedral coral missing");
+        for(var entry:plan.blocks().entrySet()) {
+            var v=entry.getKey();if(entry.getValue()<0 || v.y()<30)continue;
+            var fan=new BlockPos(cx+v.x(),base+v.y()+1,cz+v.z());
+            level.getChunk(fan.getX()>>4,fan.getZ()>>4);
+            if(level.getBlockState(fan).is(CoralCathedralFeature.FANS[entry.getValue()])) { crownFan=fan;break; }
+        }
+        require(crownFan!=null,"Legacy giant crown fans missing");
         int innerX=center.x()+(int)Math.round(340*ReefProvinceLayout.SCALE);
         int ax=Math.floorDiv(innerX,144),az=Math.floorDiv(center.z(),144);
         for(int x=ax-4;x<=ax+4;x++)for(int z=az-4;z<=az+4;z++) {
@@ -134,6 +145,8 @@ public final class DeepProvinceAudit {
         if(event.phase!=TickEvent.Phase.END || !ready || done || ++ticks<200)return;
         try {
             var level=server.overworld();var terrain=new ReefTerrain(level,level.getChunkSource().getGenerator());
+            verifyRecoveredGardens(level,terrain);
+            require(level.getBlockState(crownFan).getBlock() instanceof net.minecraft.world.level.block.CoralFanBlock,"Giant fan lost after ticking/reload");
             for(var point:points) {
                 var chunk=level.getChunk(point.getX()>>4,point.getZ()>>4);
                 require(chunk.getFullStatus().isOrAfter(net.minecraft.server.level.FullChunkStatus.BLOCK_TICKING),"Fixture never reached block ticking");
@@ -157,6 +170,38 @@ public final class DeepProvinceAudit {
             System.out.println("DEEP_AUDIT "+(RELOAD?"COLD_RELOAD":"FRESH_GENERATION")+" PASSED");
             finish(null);
         } catch(Throwable error) { finish(error); }
+    }
+    private static void verifyRecoveredGardens(net.minecraft.server.level.ServerLevel level,ReefTerrain terrain) {
+        if(gardenChunks.isEmpty())for(int dx=-1;dx<=1;dx++)for(int dz=-1;dz<=1;dz++) {
+            var pos=new net.minecraft.world.level.ChunkPos((center.x()>>4)+dx,(center.z()>>4)+dz);
+            level.setChunkForced(pos.x,pos.z,true);level.getChunk(pos.x,pos.z);gardenChunks.add(pos);
+        }
+        Map<String,Integer> counts=new TreeMap<>();Set<net.minecraft.world.level.block.Block> palette=new HashSet<>();
+        for(var chunk:gardenChunks)for(int x=chunk.getMinBlockX();x<chunk.getMinBlockX()+16;x++)
+            for(int z=chunk.getMinBlockZ();z<chunk.getMinBlockZ()+16;z++) {
+                int floor=terrain.floor(x,z);require(floor+16< -64,"Garden witness is not sparse");
+                for(int y=floor+1;y<=floor+16;y++) {
+                    var pos=new BlockPos(x,y,z);var state=level.getBlockState(pos);var block=state.getBlock();
+                    String kind=block instanceof net.minecraft.world.level.block.CoralBlock?"colony"
+                        :block instanceof net.minecraft.world.level.block.CoralFanBlock?"fan"
+                        :block instanceof net.minecraft.world.level.block.CoralPlantBlock?"plant"
+                        :state.is(Blocks.SEAGRASS)?"seagrass":state.is(Blocks.SEA_PICKLE)?"pickle"
+                        :state.is(Blocks.SANDSTONE)?"boulder":null;
+                    if(kind==null)continue;
+                    counts.merge(kind,1,Integer::sum);palette.add(block);
+                    if(!kind.equals("colony") && !kind.equals("boulder")) {
+                        require(state.canSurvive(level,pos),"Unsupported recovered decoration "+pos);
+                        require(state.getFluidState().is(net.minecraft.tags.FluidTags.WATER),"Recovered decoration lost water "+pos);
+                    }
+                    if(block instanceof net.minecraft.world.level.block.CoralBlock) {
+                        block.tick(state,level,pos,level.getRandom());
+                        require(level.getBlockState(pos).equals(state),"Recovered colony died in native tick "+pos);
+                    }
+                }
+            }
+        for(String kind:List.of("colony","fan","plant","seagrass","pickle","boulder"))require(counts.getOrDefault(kind,0)>0,"Missing legacy reef family "+kind);
+        for(var block:CoralCathedralFeature.CORAL)require(palette.contains(block),"Missing legacy coral color "+block);
+        System.out.println("DEEP_REEF_RECOVERY_PASS phase="+(ticks>=200?"ticked":"initial")+" reload="+RELOAD+" families="+counts);
     }
     private static void finish(Throwable error) {
         if(done)return;done=true;
