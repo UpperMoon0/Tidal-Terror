@@ -1,0 +1,26 @@
+gradle.projectsEvaluated {
+    def root=rootProject
+    root.sourceSets.main.java.srcDir root.file('tools/province/compass-client')
+    root.configurations.localRuntime.dependencies.clear()
+    root.configurations.runtimeOnly.dependencies.removeAll {
+        it.group=='dev.local' && (it.name.startsWith('oculus') || it.name.startsWith('embeddium'))
+    }
+    def directory=root.file(root.findProperty('compassClientOutput') ?: 'build/reef-compass-client-2026-10-09')
+    root.minecraft.runs.client {
+        workingDirectory directory
+        property 'forge.logging.console.level','info'
+        property 'tidalterror.compassClientAudit','true'
+        args '--width','1280','--height','720'
+    }
+    root.tasks.matching {it.name=='runClient'}.configureEach {
+        doFirst {
+            if(directory.exists())throw new GradleException('Preserve existing client audit output')
+            def audit=root.file('build/province-balanced-native-v2-2026-10-09')
+            if(!new File(audit,'passed.txt').exists())throw new GradleException('Native balanced province audit must pass first')
+            directory.mkdirs();new File(directory,'config').mkdirs()
+            new File(directory,'config/endless.json').text='{"buildHeight":{"minBuildHeight":-1024,"maxBuildHeight":1024}}'
+            root.copy {from new File(audit,'deep-province-world');into new File(directory,'saves/Reef Compass Native Check');exclude 'session.lock'}
+        }
+        doLast {if(!new File(directory,'passed.txt').exists())throw new GradleException('Compass native client audit failed')}
+    }
+}

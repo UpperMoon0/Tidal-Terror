@@ -36,6 +36,7 @@ public final class DeepProvinceAudit {
             require(EndlessHeights.getDenseMinBuildHeight()==-64 && level.getSectionsCount()==24,"Dense core widened");
             require(EndlessHeights.getMinBuildHeight()==-1024,"Logical min differs from fixture");
             var source=(ReefProvinceBiomeSource)generator.getBiomeSource();
+            ReefCompassAudit.verify(level,source);
             var sampler=level.getChunkSource().randomState().sampler();
             if(RELOAD) {
                 var checkpoint=JsonParser.parseString(Files.readString(Path.of("checkpoint.json"))).getAsJsonObject();
@@ -191,7 +192,10 @@ public final class DeepProvinceAudit {
         } catch(Throwable error) { finish(error); }
     }
     private static void verifyRecoveredGardens(net.minecraft.server.level.ServerLevel level,ReefTerrain terrain) {
-        if(gardenChunks.isEmpty())for(int dx=-1;dx<=1;dx++)for(int dz=-1;dz<=1;dz++) {
+        // Palette grouping is seeded by world coordinates; a moved province's
+        // 48x48 center patch need not contain every color. Keep the all-color
+        // preservation assertion and survey a larger native 80x80 garden.
+        if(gardenChunks.isEmpty())for(int dx=-2;dx<=2;dx++)for(int dz=-2;dz<=2;dz++) {
             var pos=new net.minecraft.world.level.ChunkPos((center.x()>>4)+dx,(center.z()>>4)+dz);
             level.setChunkForced(pos.x,pos.z,true);level.getChunk(pos.x,pos.z);gardenChunks.add(pos);
         }

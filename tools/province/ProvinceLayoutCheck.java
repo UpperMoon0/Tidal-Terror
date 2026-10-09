@@ -17,7 +17,7 @@ public final class ProvinceLayoutCheck {
                 for (int angle = 0; angle < 360; angle += 3) {
                     int previous = 4, lastFloor = -49;
                     double a = Math.toRadians(angle);
-                    for (int radius = 0; radius < 4500; radius += 4) {
+                    for (int radius = 0; radius < Math.min(4500, ReefProvinceLayout.SPACING / 2 - ReefProvinceLayout.JITTER); radius += 4) {
                         int x = center.x() + (int)Math.round(Math.cos(a) * radius);
                         int z = center.z() + (int)Math.round(Math.sin(a) * radius);
                         var s = ReefProvinceLayout.sample(seed, x, z);

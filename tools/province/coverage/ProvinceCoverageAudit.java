@@ -75,7 +75,11 @@ public final class ProvinceCoverageAudit {
                         row.put("fine_province_ocean",fineOcean);row.put("fine_cathedral",fineCore);
                         row.put("fine_cathedral_ocean",fineCoreOcean);cells.add(row);
                     }
-                    Map<String,Object> result=new LinkedHashMap<>();result.put("seed",Long.toString(seed));result.put("cells",cells);seeds.add(result);
+                    Map<String,Object> result=new LinkedHashMap<>();result.put("seed",Long.toString(seed));
+                    var spawn=sampler.findSpawnPosition();
+                    result.put("spawn_hint_x",spawn.getX());result.put("spawn_hint_z",spawn.getZ());
+                    result.put("spacing",ReefProvinceLayout.SPACING);result.put("jitter",ReefProvinceLayout.JITTER);
+                    result.put("cells",cells);seeds.add(result);
                     Files.writeString(Path.of("coverage.json"),new GsonBuilder().setPrettyPrinting().create().toJson(seeds));
                     System.out.println("COVERAGE_SEED_COMPLETE seed="+seed+" cells="+cells.size());
                 }

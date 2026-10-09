@@ -6,7 +6,7 @@ import math
 from pathlib import Path
 
 
-def summarize(cells):
+def summarize(cells,spacing=12288):
     names=('samples','vanilla_ocean','province_ocean','province','converted_non_ocean','cathedral','cathedral_ocean')
     total={name:sum(c[name] for c in cells) for name in names}
     total['cells']=len(cells)
@@ -38,7 +38,7 @@ def summarize(cells):
             'province_of_ocean_plus_province_domain':100*province_fraction/(coarse_fraction+converted_fraction),
             'province_of_total_map':100*province_fraction,
             'converted_non_ocean_of_province':100*converted_fraction/province_fraction,
-            'analytical_province_of_total_map':100*math.pi*(600*1024/180)**2*(1+(.075**2+.035**2)/2)/12288**2*total['accepted']/total['cells'],
+            'analytical_province_of_total_map':100*math.pi*(600*1024/180)**2*(1+(.075**2+.035**2)/2)/spacing**2*total['accepted']/total['cells'],
         }
     return total
 
@@ -49,10 +49,14 @@ def main():
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
     raw=json.loads(args.input.read_text())
+    spacings={row.get('spacing',12288) for row in raw}
+    assert len(spacings)==1,'Cannot pool different cell areas'
+    spacing=spacings.pop()
     summary={'method':'Native Forge 1.20.1 delegate ocean tag at quart Y=8; actual ReefProvinceBiomeSource acceptance; 16x16 jittered strata per placement cell. When present, refined province intersections use independent 128x128 jittered strata in accepted cells, with equal cell-area weights.',
              'raw_sha256':hashlib.sha256(args.input.read_bytes()).hexdigest(),
-             'seeds':[{'seed':row['seed'],**summarize(row['cells'])} for row in raw],
-             'pooled':summarize([cell for row in raw for cell in row['cells']])}
+             'spacing':spacing,
+             'seeds':[{'seed':row['seed'],**summarize(row['cells'],spacing)} for row in raw],
+             'pooled':summarize([cell for row in raw for cell in row['cells']],spacing)}
     args.output.write_text(json.dumps(summary,indent=2)+'\n')
     print(json.dumps(summary,indent=2))
 

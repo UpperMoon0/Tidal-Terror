@@ -53,6 +53,7 @@ public class TidalTerror {
                         output.accept(ModEquipment.SHARDBACK_PLATE.get());
                         output.accept(ModEquipment.FANG_ARROW.get());
                         output.accept(ModEquipment.REEF_SPEAR.get());
+                        output.accept(ModEquipment.REEF_COMPASS.get());
                         com.nhat.tidal_terror.enchantments.ModEnchantments.addBooks(output);
                         output.accept(ModEquipment.REEF_HELMET.get());
                         output.accept(ModEquipment.REEF_CHESTPLATE.get());

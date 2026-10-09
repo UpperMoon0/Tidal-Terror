@@ -2,6 +2,12 @@
 
 First draft and Forge 1.20.1 prototype, 2026-10-08. Based on main `133c112`.
 
+## Balanced placement and Reef Compass, 2026-10-09
+
+New prototype worlds select placement version 2: 8,192-block cells, 256-block jitter, an ocean center and two-thirds ocean coverage among expanded Cathedral-core probes. Cathedral size and complete outer rings are unchanged. Six native seeds average about 17.6k blocks from their spawn-search hints to a province edge. The older 12,288-block / 75% policy described below is retained for saved version-1 sources, not silently migrated.
+
+Craft the **Reef Compass** with a vanilla Compass, three Amethyst Shards and a Nautilus Shell. Use it to seek the nearest accepted Cathedral within 65,536 blocks; its rotating needle retains that target until retuned. The bounded server search uses biome data without loading distant chunks. This first locator and recipe are part of the Forge 1.20.1 prototype. [Measured frequency, saved-world compatibility and native proofs](performance/Province-Balance-2026-10-09.md).
+
 ## Current Endless-backed deep preset
 
 The latest Forge 1.20.1 prototype requires **Endless 0.9.3** on both client and server. Select **Deep Reef Province (Endless Prototype)** when creating a new world (`tidalterror:reef_province_deep` on a server). TerraBlender is absent from the experimental runtime. The earlier shallow preset remains selectable for comparison; the depth descriptions further below record that earlier pass.

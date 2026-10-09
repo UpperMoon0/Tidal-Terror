@@ -12,7 +12,8 @@
             "preset": "minecraft:overworld"
           },
           "cathedral": "tidalterror:coral_cathedral",
-          "wastes": "tidalterror:sunken_wastes"
+          "wastes": "tidalterror:sunken_wastes",
+          "placement_version": 2
         }
       }
     },

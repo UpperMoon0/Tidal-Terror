@@ -13,7 +13,8 @@
           },
           "cathedral": "tidalterror:coral_cathedral",
           "wastes": "tidalterror:sunken_wastes",
-          "deep": true
+          "deep": true,
+          "placement_version": 2
         }
       }
     },

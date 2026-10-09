@@ -4,7 +4,7 @@ package com.nhat.tidal_terror.worldgen;
 public final class ReefProvinceLayout {
     // Match the recorded large legacy patch's ~3.3 km² area; scale all bands together.
     public static final double SCALE = 1024.0 / 180;
-    public static final int SPACING = 12288, JITTER = 1024;
+    public static final int SPACING = 8192, JITTER = 256;
     public static final double CORE = 180 * SCALE, RIM = 280 * SCALE,
             INNER = 420 * SCALE, OUTER = 600 * SCALE, EDGE_BLEND = 100 * SCALE;
     public enum Zone { OCEAN, OUTER_WASTES, INNER_WASTES, RIM, CATHEDRAL }
@@ -21,13 +21,22 @@ public final class ReefProvinceLayout {
         return n ^ (n >>> 31);
     }
     public static Center center(long seed, int cellX, int cellZ) {
+        return center(seed,cellX,cellZ,2);
+    }
+    public static int spacing(int version) {return version==1?12288:SPACING;}
+    public static Center center(long seed, int cellX, int cellZ,int version) {
+        int spacing=spacing(version),jitter=version==1?1024:JITTER;
         long h = hash(seed, cellX, cellZ);
-        return new Center(cellX * SPACING + SPACING / 2 + (int)Math.floorMod(h, 2 * JITTER + 1) - JITTER,
-                cellZ * SPACING + SPACING / 2 + (int)Math.floorMod(h >>> 24, 2 * JITTER + 1) - JITTER);
+        return new Center(cellX * spacing + spacing / 2 + (int)Math.floorMod(h, 2 * jitter + 1) - jitter,
+                cellZ * spacing + spacing / 2 + (int)Math.floorMod(h >>> 24, 2 * jitter + 1) - jitter);
     }
     public static Sample sample(long seed, int x, int z) {
-        // Warped outer radius < 3789; centers stay >= 5120 from cell edges.
-        Center c = center(seed, Math.floorDiv(x, SPACING), Math.floorDiv(z, SPACING));
+        return sample(seed,x,z,2);
+    }
+    public static Sample sample(long seed, int x, int z,int version) {
+        // Warped outer radius < 3789; centers stay >= 3840 from cell edges.
+        int spacing=spacing(version);
+        Center c = center(seed, Math.floorDiv(x, spacing), Math.floorDiv(z, spacing),version);
         double dx = (double)x - c.x, dz = (double)z - c.z, a = Math.atan2(dz, dx);
         double phase = (hash(seed, c.x, c.z) >>> 11) * 0x1.0p-53 * Math.PI * 2;
         double warp = 1 + .075 * Math.sin(3 * a + phase) + .035 * Math.sin(7 * a - phase);

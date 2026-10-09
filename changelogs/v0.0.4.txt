@@ -2,6 +2,8 @@ Tidal Terror 0.0.4 (unreleased)
 
 - Require Endless 0.9.3 on Forge 1.20.1; generic logical-floor fog and sparse engine changes are supplied by Endless PR #24.
 - Add opt-in TerraBlender-free Reef Province prototype presets. Preserve the Cathedral's 1,024-block radius and scale the surrounding rim and Sunken Wastes proportionally.
+- Balance new province placement toward a measured 10-20k-block average journey while retaining full Cathedral size and rings. Persist placement version 2; old saved sources retain their original version-1 layout.
+- Add a craftable Reef Compass to the Forge prototype, with generated-art rotating needle frames, asynchronous nearest-Cathedral attunement, saved targets and no distant chunk generation.
 - Add an Endless-backed basin foundation down to -512, deep water through the former vanilla bedrock barrier, and continuous bedrock following the seabed. Ordinary outside terrain retains vanilla bedrock.
 - Cache exact native seabed heights by chunk and calculate noise outside the shared LRU lock. Prepare sparse sections only for requested FULL chunks, on generation workers, then install them through Endless's bulk API without a snapshot encode/decode round trip.
 - Batch exact native height evaluation by chunk in the prototype, sharing one noise graph and interpolation slices across neighbouring columns. Initialize uniform deep water/rock sections through Endless's palette factory while preserving native write counters, bedrock, biomes and the original coral decorators.

@@ -40,5 +40,14 @@
   "tooltip.tidalterror.reef_armor_bleeding": "Set bonus: 25% less bleeding damage",
   "biome.tidalterror.sunken_wastes": "Sunken Wastes",
   "generator.tidalterror.reef_province": "Reef Province (Prototype)",
-  "generator.tidalterror.reef_province_deep": "Deep Reef Province (Endless Prototype)"
+  "generator.tidalterror.reef_province_deep": "Deep Reef Province (Endless Prototype)",
+  "item.tidalterror.reef_compass": "Reef Compass",
+  "tooltip.tidalterror.reef_compass": "Use to seek the nearest Coral Cathedral.",
+  "tooltip.tidalterror.reef_compass_attuned": "Attuned to a Coral Cathedral.",
+  "message.tidalterror.reef_compass_no_resonance": "No Reef Province resonance in this world.",
+  "message.tidalterror.reef_compass_busy": "Your compass is still listening. Try again shortly.",
+  "message.tidalterror.reef_compass_searching": "Listening for a Coral Cathedral…",
+  "message.tidalterror.reef_compass_failed": "The signal faded. Try again.",
+  "message.tidalterror.reef_compass_not_found": "No Cathedral found within 65,536 blocks. Travel farther and try again.",
+  "message.tidalterror.reef_compass_found": "Compass attuned: Coral Cathedral about %s blocks away."
 }

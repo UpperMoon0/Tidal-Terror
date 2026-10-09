@@ -55,6 +55,13 @@ jobs:
           mkdir -p build/province-cache-check
           javac -d build/province-cache-check common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ChunkColumnCache.java tools/province/ChunkColumnCacheCheck.java
           java -cp build/province-cache-check ChunkColumnCacheCheck
+      - name: Complete province layout and bounded locator regression
+        run: |
+          mkdir -p build/province-layout-check
+          javac -d build/province-layout-check common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ReefProvinceLayout.java common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ProvinceLocatorSearch.java tools/province/ProvinceLayoutCheck.java tools/province/DeepLayoutCheck.java tools/province/ProvinceLocatorSearchCheck.java
+          java -cp build/province-layout-check ProvinceLayoutCheck
+          java -cp build/province-layout-check DeepLayoutCheck
+          java -cp build/province-layout-check ProvinceLocatorSearchCheck
 
   native:
     needs: endless

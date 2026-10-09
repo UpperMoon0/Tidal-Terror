@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-09",
+  "version": "0.0.4-unreleased",
+  "endless_source": "f506758830f25041b9a05f932dbca4ea47d92861",
+  "sha256": {
+    "build/province-balanced-native-v2-fresh.log": "c911fcf1da24eb2f9702267062ace49b4e4fb33597c3a2198b6a68f16887239c",
+    "build/province-balanced-native-v2-reload.log": "154626cc0296f21c558195de489e6f36abfd8a72530d574ac9ee7d82c69483b1",
+    "build/province-balanced-native-final-reload.log": "7dbc4a6dd681897ca2cf8f2afaa26ad9ced92584f109ba8de042a713c94c4ed3",
+    "build/reef-compass-client-v2-native.log": "ae7da3db33dbf38da2894ddd52005a6cff4c56f61dcde1f01277b5f162ffeefc",
+    "build/province-density-balanced-2026-10-09.log": "958c877f94db3de9f18372ffe089e2e077f24388ef4e6c73de66db85752b5124",
+    "build/province-density-final-2026-10-09.log": "40db9e3ee6e9780b4bbbd6bdfb51d39b419eb79495676088fc1a23af11616b6a",
+    "build/province-balanced-prototype-build.log": "bfc00c8034078369a0c0b13ecb12f722013617b903185ad8e0bd5a11d0651cd3",
+    "build/province-balanced-normal-build.log": "e15a42feeabb9f68feb76d089e58e4b70179700da8e6f6eb4b66a648acec5d82",
+    "build/province-balanced-ports.log": "ffb852e13bdc9c24b7553f717b9d058fb600a5ed840ad583b8a38e1acf7451bc",
+    "build/province-balanced-tooling.log": "5df4f647aeb90ad09b2a72866f25afb34907aeaec5cbbba91ad1b894812c82a2",
+    "build/province-balanced-pure.log": "95c396b26c77896ed31656721b1cd7ff87bcfacd671d1df97d822fcaeb2707ae",
+    "build/libs/tidalterror-0.0.4.jar": "27ba63e4ef864bf878d8326280a91665f9820b7ba15ef8b1718b3f1ce3e99182",
+    "build/libs/tidalterror-0.0.4-province-prototype.jar": "19ee0946e2cc7f9b38272e69bb2fd739c9f6d40f6743b807a44051d81028ed2a",
+    "common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ReefProvinceLayout.java": "1b9d261b0d878c7cf1802bc589e9f658175e758a31da5b4afc3fd5d52ffe33a7",
+    "src/main/java/com/nhat/tidal_terror/worldgen/ReefProvinceBiomeSource.java": "77bae56efaa06491f18c52dbd6bd7a211bfb15989b6c57bba4ea1afccb967193",
+    "src/main/java/com/nhat/tidal_terror/items/ReefCompassItem.java": "717080688c2d0e6b588bf4494cbd78b171f53cc5a851d4676a6491625da2a3cd",
+    "src/main/java/com/nhat/tidal_terror/items/ProvinceCompassService.java": "b177d76fc5d8084b1941582b2b3c0697862e0645a0cba2650fc41a235ec06dea",
+    "tools/province/coverage/ProvinceCoverageAudit.java": "8a08a6c0bee4187e523eef978b2eecf1e2662029c7c451be0b3e304a1e050d43",
+    "tools/province/compass-client/ReefCompassClientAudit.java": "862c7f6fd32cbdccb01260b3fdf9b92932a6b0cd9e54c7cd536ff487508bec0a"
+  },
+  "final_native_survey_equals_balance_trial": true,
+  "packaging_guards": "Normal/prototype jars exclude all native audit classes; recipe/preset restricted to prototype resources; 32 generated-art frames reproduced byte identically.",
+  "client_bearings": [
+    {
+      "pose": 0,
+      "angle": 0.0035823584,
+      "sprite": "reef_compass_00"
+    },
+    {
+      "pose": 1,
+      "angle": 0.7516601,
+      "sprite": "reef_compass_24"
+    },
+    {
+      "pose": 2,
+      "angle": 0.5007353,
+      "sprite": "reef_compass_16"
+    },
+    {
+      "pose": 3,
+      "angle": 0.2510301,
+      "sprite": "reef_compass_08"
+    }
+  ]
+}

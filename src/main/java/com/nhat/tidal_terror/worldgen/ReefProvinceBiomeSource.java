@@ -16,30 +16,41 @@ public final class ReefProvinceBiomeSource extends BiomeSource implements ReefPr
             BiomeSource.CODEC.fieldOf("delegate").forGetter(s -> s.delegate),
             Biome.CODEC.fieldOf("cathedral").forGetter(s -> s.cathedral),
             Biome.CODEC.fieldOf("wastes").forGetter(s -> s.wastes),
-            Codec.BOOL.optionalFieldOf("deep",false).forGetter(s -> s.deep)
+            Codec.BOOL.optionalFieldOf("deep",false).forGetter(s -> s.deep),
+            Codec.intRange(1,2).optionalFieldOf("placement_version",1).forGetter(s->s.placementVersion)
     ).apply(i, ReefProvinceBiomeSource::new));
     private final BiomeSource delegate;
     private final Holder<Biome> cathedral, wastes;
     private final boolean deep;
+    private final int placementVersion;
     private record Key(long seed, ReefProvinceLayout.Center center) {}
     private final Map<Key, Boolean> eligible = new LinkedHashMap<>(128, .75F, true) {
         @Override protected boolean removeEldestEntry(Map.Entry<Key, Boolean> e) { return size() > 512; }
     };
     public ReefProvinceBiomeSource(BiomeSource delegate, Holder<Biome> cathedral, Holder<Biome> wastes,boolean deep) {
-        this.delegate = delegate; this.cathedral = cathedral; this.wastes = wastes; this.deep=deep;
+        this(delegate,cathedral,wastes,deep,2);
     }
+    public ReefProvinceBiomeSource(BiomeSource delegate, Holder<Biome> cathedral, Holder<Biome> wastes,boolean deep,int placementVersion) {
+        this.delegate = delegate; this.cathedral = cathedral; this.wastes = wastes; this.deep=deep;this.placementVersion=placementVersion;
+    }
+    @Override public int placementVersion(){return placementVersion;}
     @Override public boolean deep() { return deep; }
     @Override protected Codec<? extends BiomeSource> codec() { return CODEC; }
     @Override protected Stream<Holder<Biome>> collectPossibleBiomes() {
         return Stream.concat(delegate.possibleBiomes().stream(), Stream.of(cathedral, wastes));
     }
     @Override public ReefProvinceLayout.Sample province(long seed, int x, int z, Climate.Sampler sampler) {
-        var sample = ReefProvinceLayout.sample(seed, x, z);
+        var sample = ReefProvinceLayout.sample(seed, x, z,placementVersion);
         if (sample.zone() == ReefProvinceLayout.Zone.OCEAN) return null;
         boolean accept;
         synchronized (eligible) {
-            accept = eligible.computeIfAbsent(new Key(seed, sample.center()), k -> oceanEnvelope(k.center, ProvinceSeeds.canonical(sampler)));
+            Boolean cached=eligible.get(new Key(seed,sample.center()));
+            if(cached!=null)return cached?sample:null;
         }
+        // Native climate sampling can run on the locator worker. Keep it outside
+        // the shared LRU monitor so a search cannot block biome-generation workers.
+        accept=oceanEnvelope(sample.center(),ProvinceSeeds.canonical(sampler));
+        synchronized(eligible) {eligible.put(new Key(seed,sample.center()),accept);}
         return accept ? sample : null;
     }
     public BiomeSource delegate() { return delegate; }
@@ -56,7 +67,7 @@ public final class ReefProvinceBiomeSource extends BiomeSource implements ReefPr
                 total++;
                 if (ocean(c.x() + dx, c.z() + dz, sampler)) oceans++;
             }
-        return oceans * 4 >= total * 3;
+        return placementVersion==1?oceans*4>=total*3:oceans * 3 >= total * 2;
     }
     private boolean ocean(int x, int z, Climate.Sampler sampler) {
         return delegate.getNoiseBiome(QuartPos.fromBlock(x), 8, QuartPos.fromBlock(z), sampler).is(BiomeTags.IS_OCEAN);
