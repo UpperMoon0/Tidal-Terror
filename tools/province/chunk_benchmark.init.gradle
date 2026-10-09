@@ -1,0 +1,12 @@
+// Probe launch only: use current production source sets, without preview helpers
+// or optional client tooling. Capture the actual running Java server afterwards.
+gradle.projectsEvaluated {
+    rootProject.configurations.localRuntime.dependencies.clear()
+    rootProject.configurations.runtimeOnly.dependencies.removeAll {
+        it.group == 'dev.local' && (it.name.startsWith('oculus') || it.name.startsWith('embeddium'))
+    }
+    rootProject.minecraft.runs.server {
+        property 'forge.logging.console.level', 'info'
+        workingDirectory rootProject.file('build/chunk-bench-probe')
+    }
+}
