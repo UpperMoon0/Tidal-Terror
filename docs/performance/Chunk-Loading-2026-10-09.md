@@ -1,5 +1,7 @@
 # Current deep province versus vanilla chunk benchmark
 
+This records the pre-optimization runtime. See the subsequent [two-mod optimization and repeated vanilla comparison](Chunk-Optimization-2026-10-09.md) for the current result.
+
 The outer basin transition has a reproduced first-generation regression: **66.82 seconds versus 4.40 seconds in stock vanilla**, approximately **15.2 times slower**, for each workload of 16 explicitly requested chunks. Loading the same saved transition chunks in a new JVM takes **0.77 seconds versus 0.74 seconds**. The previous frame benchmark did not measure this workload and preceded full feature recovery.
 
 Measured runtime: Tidal Terror `f52267dfbb305aea48ccd69a918a4174352d00f6`, Endless `b82b3428f2e7d9cb86af6ca0307b92cabb7e6b2e`, Forge 47.2.0 / Minecraft 1.20.1. This commit adds measurement tools and evidence; it does not implement a new runtime optimization. Both related PRs remain draft and unmerged.

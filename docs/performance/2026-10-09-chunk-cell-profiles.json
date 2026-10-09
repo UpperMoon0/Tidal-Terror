@@ -1,0 +1,1087 @@
+[
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "outside",
+    "execution_samples": 421,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        67
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        34
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        34
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        23
+      ],
+      [
+        "net.minecraft.world.level.LevelReader.getNoiseBiome",
+        22
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        19
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        13
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        12
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        12
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        12
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.fillAllDirectly",
+        11
+      ],
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.idFor",
+        11
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        136
+      ],
+      [
+        "Worker-Main-1",
+        128
+      ],
+      [
+        "Worker-Main-2",
+        112
+      ],
+      [
+        "Server thread",
+        44
+      ],
+      [
+        "IO-Worker-5",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 14,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.040809385S",
+      "PT0.051188849S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "cathedral",
+    "execution_samples": 563,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        76
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        40
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        32
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        30
+      ],
+      [
+        "java.util.Objects.hashCode",
+        30
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        17
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        17
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.update",
+        12
+      ],
+      [
+        "net.minecraft.world.level.LevelReader.getNoiseBiome",
+        12
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        12
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        12
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.fillAllDirectly",
+        11
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        24
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        12
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenFeature.decorate",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.floor",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceLayout.bedrock",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator$$Lambda$7265+0x000002653bf56a78.63280374.getNoiseBiome",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.build",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.VerticalPageCodec.encodeSection",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.province",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.PrivateReefBlockAccess.getBlockState",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.place",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$reef$3",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        184
+      ],
+      [
+        "Worker-Main-1",
+        156
+      ],
+      [
+        "Worker-Main-3",
+        146
+      ],
+      [
+        "Server thread",
+        76
+      ],
+      [
+        "Thread-2",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 49,
+    "height_query_stack_examples": [],
+    "contended_monitors": [
+      [
+        "com/nstut/endless/vertical/MinecraftVerticalWorld",
+        1
+      ]
+    ],
+    "gc_pauses": [
+      "PT0.048661929S",
+      "PT0.059694986S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "inner_wastes",
+    "execution_samples": 611,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        78
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        76
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        45
+      ],
+      [
+        "java.util.Objects.hashCode",
+        42
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        28
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        27
+      ],
+      [
+        "net.minecraft.world.level.LevelReader.getNoiseBiome",
+        23
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        17
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        15
+      ],
+      [
+        "net.minecraft.world.level.material.FluidState.isEmpty",
+        13
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.fillAllDirectly",
+        12
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        12
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        20
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        9
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        6
+      ],
+      [
+        "com.nstut.endless.vertical.EndlessVerticalEngine.world",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.build",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.province",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.PrivateReefBlockAccess.setBlock",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.generate",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.MinecraftVerticalWorld.installGeneratedPage",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        204
+      ],
+      [
+        "Worker-Main-3",
+        181
+      ],
+      [
+        "Worker-Main-2",
+        176
+      ],
+      [
+        "Server thread",
+        47
+      ],
+      [
+        "IO-Worker-7",
+        3
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 77,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.049508676S",
+      "PT0.042877989S",
+      "PT0.032809298S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "blend_edge",
+    "execution_samples": 1022,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        185
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        152
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        92
+      ],
+      [
+        "java.util.Objects.hashCode",
+        42
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        39
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        31
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        30
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        21
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        21
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        15
+      ],
+      [
+        "net.minecraft.world.level.LevelReader.getNoiseBiome",
+        15
+      ],
+      [
+        "net.minecraft.world.level.material.FluidState.isEmpty",
+        14
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        23
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        11
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        8
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceLayout.sample",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.EndlessVerticalEngine.world",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        328
+      ],
+      [
+        "Worker-Main-1",
+        324
+      ],
+      [
+        "Worker-Main-3",
+        275
+      ],
+      [
+        "Server thread",
+        93
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ],
+      [
+        "Thread-2",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {
+      "NoiseBasedChunkGenerator.reefNativeHeights": 12,
+      "ReefTerrain.lambda$originalFloor$0": 11,
+      "NoiseChunk.<init>": 1
+    },
+    "truncated_samples": 209,
+    "height_query_stack_examples": [
+      [
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7285+0x000002653bf5b890.2004698874.get",
+        "com.nhat.tidal_terror.worldgen.ChunkColumnCache.getBatch",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.originalFloor"
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7285+0x000002653bf5b890.2004698874.get",
+        "com.nhat.tidal_terror.worldgen.ChunkColumnCache.getBatch",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.originalFloor"
+      ]
+    ],
+    "contended_monitors": [
+      [
+        "java/util/Collections$SynchronizedMap",
+        1
+      ]
+    ],
+    "gc_pauses": [
+      "PT0.03804661S",
+      "PT0.038546081S",
+      "PT0.039211553S",
+      "PT0.024242131S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "outside",
+    "execution_samples": 380,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        70
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        37
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        21
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        15
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        15
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        12
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        8
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        7
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute",
+        7
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.update",
+        7
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$BlendDensity.transform",
+        6
+      ],
+      [
+        "net.minecraft.world.level.LevelReader.getChunk",
+        6
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        118
+      ],
+      [
+        "Worker-Main-1",
+        113
+      ],
+      [
+        "Worker-Main-2",
+        103
+      ],
+      [
+        "Server thread",
+        46
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 19,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.034338786S",
+      "PT0.041692966S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "cathedral",
+    "execution_samples": 552,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        74
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        61
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        27
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        23
+      ],
+      [
+        "java.util.Objects.hashCode",
+        21
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        17
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        16
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        14
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        12
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        11
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        10
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        9
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        15
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        13
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenFeature.decorate",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenLayout.colony",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry$Voxel.equals",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenLayout.random",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.generate",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.VerticalPageLayout.sectionY",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.captureOriginal",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.SparseChunkUpdateQueue.flush",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.VerticalPageCodec.encodeSection",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        166
+      ],
+      [
+        "Worker-Main-3",
+        155
+      ],
+      [
+        "Worker-Main-2",
+        154
+      ],
+      [
+        "Server thread",
+        73
+      ],
+      [
+        "IO-Worker-8",
+        2
+      ],
+      [
+        "IO-Worker-5",
+        1
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 41,
+    "height_query_stack_examples": [],
+    "contended_monitors": [
+      [
+        "com/nstut/endless/vertical/MinecraftVerticalWorld",
+        1
+      ],
+      [
+        "java/util/Collections$SynchronizedMap",
+        1
+      ]
+    ],
+    "gc_pauses": [
+      "PT0.038801171S",
+      "PT0.050613553S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "inner_wastes",
+    "execution_samples": 643,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        104
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        84
+      ],
+      [
+        "java.util.Objects.hashCode",
+        32
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        27
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        26
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        25
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        24
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        18
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        15
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        13
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        13
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        11
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        24
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        8
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        5
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.PrivateReefBlockAccess.getBlockState",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.build",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenLayout.colony",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        201
+      ],
+      [
+        "Worker-Main-3",
+        198
+      ],
+      [
+        "Worker-Main-1",
+        193
+      ],
+      [
+        "Server thread",
+        49
+      ],
+      [
+        "Thread-2",
+        1
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 57,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.048148676S",
+      "PT0.044295048S",
+      "PT0.033089566S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "blend_edge",
+    "execution_samples": 1000,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        208
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        146
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        55
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        47
+      ],
+      [
+        "java.util.Objects.hashCode",
+        41
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        33
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        29
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        22
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        21
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        19
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        14
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        12
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        25
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        10
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.place",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.SunkenWastesFeature.place",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.generate",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.MinecraftVerticalWorld.installGeneratedPage",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.EndlessLayerLightEventListener.getDataLayerData",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        312
+      ],
+      [
+        "Worker-Main-1",
+        306
+      ],
+      [
+        "Worker-Main-2",
+        298
+      ],
+      [
+        "Server thread",
+        76
+      ],
+      [
+        "RCON Client /127.0.0.1 #2",
+        4
+      ],
+      [
+        "IO-Worker-5",
+        2
+      ],
+      [
+        "Thread-2",
+        1
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {
+      "NoiseBasedChunkGenerator.reefNativeHeights": 10,
+      "ReefTerrain.lambda$originalFloor$0": 10
+    },
+    "truncated_samples": 213,
+    "height_query_stack_examples": [
+      [
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7285+0x000001aec4f80250.913357023.get",
+        "com.nhat.tidal_terror.worldgen.ChunkColumnCache.getBatch",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.originalFloor"
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        "net.minecraft.world.level.levelgen.NoiseChunk.updateForZ",
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7285+0x000001aec4f80250.913357023.get"
+      ]
+    ],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.034010814S",
+      "PT0.042461697S",
+      "PT0.032092949S",
+      "PT0.027521289S"
+    ]
+  }
+]
