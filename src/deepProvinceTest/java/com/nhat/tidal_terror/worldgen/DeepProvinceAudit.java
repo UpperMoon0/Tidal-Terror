@@ -163,9 +163,13 @@ public final class DeepProvinceAudit {
         throw new AssertionError("No bounded deep Wastes landmark witness");
     }
     @SubscribeEvent public static void tick(TickEvent.ServerTickEvent event) {
-        if(event.phase!=TickEvent.Phase.END || !ready || done || ++ticks<200)return;
+        if(event.phase!=TickEvent.Phase.END || !ready || done)return;
+        ticks++;
         try {
-            var level=server.overworld();var terrain=new ReefTerrain(level,level.getChunkSource().getGenerator());
+            var level=server.overworld();
+            boolean automaticallyDrained=InterruptedGenerationAudit.automaticReady(level,RELOAD,ticks);
+            if(ticks<200 || !automaticallyDrained)return;
+            var terrain=new ReefTerrain(level,level.getChunkSource().getGenerator());
             verifyRecoveredGardens(level,terrain);
             require(level.getBlockState(crownFan).getBlock() instanceof net.minecraft.world.level.block.CoralFanBlock,"Giant fan lost after ticking/reload");
             for(var point:points) {

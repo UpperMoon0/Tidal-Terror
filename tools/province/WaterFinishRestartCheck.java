@@ -1,4 +1,5 @@
 import com.nhat.tidal_terror.worldgen.ReefWaterFinish;
+import com.nhat.tidal_terror.worldgen.WaterFinishProgressWatchdog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.*;
 import net.minecraft.server.level.ServerLevel;
@@ -62,6 +63,9 @@ public final class WaterFinishRestartCheck {
             require(chunk.unsaved,"Progress did not mark the chunk dirty");
             markers(level,chunk);
             largeBacklog();
+            automaticBacklog("normal");
+            automaticBacklog("disabled");
+            automaticBacklog("starved");
             System.out.println("WATER_FINISH_STUB_COLD_RESTART_PASS player edits preserved, pending columns repaired, legacy/boundary tags passed");
         } else throw new IllegalArgumentException(args[0]);
     }
@@ -88,6 +92,38 @@ public final class WaterFinishRestartCheck {
         queue.putAll(unrelated);require(queue.size()==6297,"Unrelated pending work was lost");
         ReefWaterFinish.stopped(new ServerStoppedEvent(level.getServer()));
         System.out.println("WATER_FINISH_STUB_BACKLOG_PASS queued=6298 cursorAfter200Ticks="+cursor+" isolatedCalls="+calls);
+    }
+    private static void automaticBacklog(String schedule)throws Exception {
+        var level=new ServerLevel();var chunk=new LevelChunk(level,new ChunkPos(0,0));
+        var queue=pending(level);
+        for(int i=1;i<6298;i++)queue.put(new ChunkPos(i,0),0);
+        queue.put(chunk.getPos(),64);
+        var watchdog=new WaterFinishProgressWatchdog(64);
+        boolean completed=false,rejected=false;int elapsed=0;
+        // A full round plus warm-up suffices to reject a disabled/starved hook.
+        // Normal scheduling must leave the entire backlog in place until done.
+        try {
+            for(elapsed=1;elapsed<=200+6298+2;elapsed++) {
+                if(schedule.equals("normal"))tick(level);
+                else if(schedule.equals("starved")) {
+                    // Negative control: let other queue entries receive normal
+                    // turns while withholding this still-block-ticking witness.
+                    Integer cursor=queue.remove(chunk.getPos());tick(level);queue.put(chunk.getPos(),cursor);
+                }
+                if(watchdog.observe(elapsed,queue.get(chunk.getPos()),queue.size(),true)) {completed=true;break;}
+            }
+        } catch(AssertionError expected) {
+            if(schedule.equals("normal") || !expected.getMessage().contains("starved"))throw expected;
+            rejected=true;
+        }
+        if(schedule.equals("normal")) {
+            require(completed,"Ordinary handler dispatch did not automatically drain the backlog");
+            require(queue.size()==6297 && !queue.containsKey(chunk.getPos()),"Automatic dispatch lost unrelated pending work");
+            require(chunk.getBlockState(new BlockPos(15,3,15)).is(Blocks.WATER),"Automatic backlog drain left unfinished water");
+        } else require(rejected && !completed,"Scheduling negative control incorrectly passed: "+schedule);
+        ReefWaterFinish.stopped(new ServerStoppedEvent(level.getServer()));
+        System.out.println("WATER_FINISH_STUB_AUTOMATIC_"+(completed?"PASS":"NEGATIVE_PASS")
+            +" schedule="+schedule+" ticks="+elapsed+" cursor="+watchdog.cursor());
     }
     private static void markers(ServerLevel level,LevelChunk chunk)throws Exception {
         for(int test=0;test<8;test++){

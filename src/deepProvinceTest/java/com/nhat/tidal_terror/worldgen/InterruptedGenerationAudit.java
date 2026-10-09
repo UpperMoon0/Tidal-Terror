@@ -22,6 +22,9 @@ final class InterruptedGenerationAudit {
     private static final Path PROTO=Path.of("interrupted-proto.nbt");
     private static final Path WATER=Path.of("interrupted-water.nbt");
     private static ChunkPos waterPos;
+    private static WaterFinishProgressWatchdog automatic;
+    private static boolean automaticallyCompleted;
+    private static int automaticTicks;
 
     private static void require(boolean condition,String message) {
         if(!condition)throw new AssertionError(message);
@@ -46,16 +49,16 @@ final class InterruptedGenerationAudit {
             require(data.contains(MARKER,Tag.TAG_INT),"Water checkpoint did not persist an integer cursor");
             int cursor=data.getInt(MARKER);
             require(cursor>0 && cursor<256,"Water checkpoint was not partial");
-            // Read native NBT in this fresh JVM, independently of forced-chunk
-            // startup ordering, then let normal END ticks finish the real chunk.
+            // getChunk above loaded the saved world through native ChunkMap /
+            // ChunkSerializer events. Observe that real queue entry unchanged:
+            // do not replace the queue or manually redispatch Load for this path.
             var queues=queues();
-            synchronized(queues) { queues.get(level).remove(waterPos); }
-            var restored=ChunkSerializer.read(level,level.getPoiManager(),waterPos,data);
-            require(restored instanceof ImposterProtoChunk,"Water checkpoint is not a native FULL chunk");
             synchronized(queues) {
-                require(Objects.equals(queues.get(level).get(waterPos),cursor),"Cold load lost the partial repair cursor");
+                require(Objects.equals(queues.get(level).get(waterPos),cursor),"Native cold load lost the partial repair cursor");
+                System.out.println("REEF_WATER_AUTOMATIC_START cursor="+cursor+" pendingChunks="+queues.get(level).size());
             }
-            verifyPlayerEdits(((ImposterProtoChunk)restored).getWrapped());
+            verifyPlayerEdits(level.getChunk(waterPos.x,waterPos.z));
+            automatic=new WaterFinishProgressWatchdog(cursor);
         }
     }
 
@@ -117,14 +120,14 @@ final class InterruptedGenerationAudit {
     static void finish(ServerLevel level,boolean reload) throws Exception {
         var chunk=level.getChunk(waterPos.x,waterPos.z);
         if(reload) {
-            verifyPlayerEdits(chunk);
-            finishWaterWitness(level,chunk);
+            require(automaticallyCompleted,"Native automatic-drain observation did not complete");
             verifyPlayerEdits(chunk);
             require(chunk.getBlockState(pendingEdit(level)).is(Blocks.WATER),"Unfinished water column did not resume");
             var queues=queues();
             synchronized(queues) { require(!queues.get(level).containsKey(waterPos),"Resumed water repair never completed"); }
             require(!saveWater(level,chunk).contains(MARKER),"Completed repair left a save marker");
-            System.out.println("REEF_WATER_COLD_RESTART_PASS completed columns preserved; unfinished columns resumed");
+            System.out.println("REEF_WATER_AUTOMATIC_DRAIN_PASS normalServerTicks="+automaticTicks
+                +" cursorAdvances="+automatic.advances()+" completed columns preserved; unfinished columns resumed");
             return;
         }
         require(chunk.getFullStatus().isOrAfter(net.minecraft.server.level.FullChunkStatus.BLOCK_TICKING),"Water witness is not ticking");
@@ -145,6 +148,7 @@ final class InterruptedGenerationAudit {
             require(chunk.getBlockState(new BlockPos(x,y-6,z)).is(Blocks.SANDSTONE),"First water column was not repaired");
             int cursor=queues.get(level).get(waterPos);
             require(cursor>0 && cursor<=64,"Water fixture did not stop within the column budget");
+            System.out.println("REEF_WATER_ISOLATED_STEP_PASS before=0 after="+cursor+" maxColumns=64");
             // Player edits only after this first column has completed.
             chunk.setBlockState(new BlockPos(x,y-6,z),Blocks.MAGMA_BLOCK.defaultBlockState(),false);
             chunk.setBlockState(new BlockPos(x,y-5,z),Blocks.SOUL_SAND.defaultBlockState(),false);
@@ -160,41 +164,36 @@ final class InterruptedGenerationAudit {
         }
     }
 
-    private static void finishWaterWitness(ServerLevel level,LevelChunk chunk) throws Exception {
-        var queues=queues();LinkedHashMap<ChunkPos,Integer> original,isolated=new LinkedHashMap<>();
+    /** Observe only; completion must come from the normal subscribed END events. */
+    static boolean automaticReady(ServerLevel level,boolean reload,int normalTick) throws Exception {
+        if(!reload)return true;
+        require(automatic!=null,"Missing native restart scheduling observer");
+        var queues=queues();Integer cursor;int pending;
         synchronized(queues) {
-            original=queues.get(level);
-            Integer cursor=original==null?null:original.get(waterPos);
-            System.out.println("REEF_WATER_RESTART_QUEUE pendingChunks="+(original==null?0:original.size())
-                +" cursor="+cursor+" fullStatus="+chunk.getFullStatus()+" unfinishedState="+chunk.getBlockState(pendingEdit(level)));
-            if(cursor==null)return;
-            isolated.put(waterPos,cursor);
-            queues.put(level,isolated);
+            var queue=queues.get(level);
+            cursor=queue==null?null:queue.get(waterPos);
+            pending=queue==null?0:queue.size();
         }
-        try {
-            require(chunk.getFullStatus().isOrAfter(net.minecraft.server.level.FullChunkStatus.BLOCK_TICKING),"Restored water witness is not ticking");
-            // The production queue can contain thousands of non-ticking chunks.
-            // Its 32-inspection cap deliberately takes many rounds to revisit
-            // this witness, so 200 whole-server ticks are not a completion SLA.
-            // Isolate only scheduling, as in the fresh-save phase. Execute the
-            // real native END handler and require forward progress every call.
-            int calls=0,initial=isolated.get(waterPos);
-            while(isolated.containsKey(waterPos)) {
-                int before=isolated.get(waterPos);
-                ReefWaterFinish.tick(new TickEvent.LevelTickEvent(LogicalSide.SERVER,TickEvent.Phase.END,level,()->true));
-                int after=isolated.getOrDefault(waterPos,256);
-                require(after>before && after<=Math.min(256,before+64),"Restored water cursor failed its progress/budget contract: "+before+" -> "+after);
-                require(++calls<=256-initial,"Restored water repair exceeded its remaining-column bound");
-            }
-            System.out.println("REEF_WATER_RESTART_DRAIN_PASS initialCursor="+initial+" nativeHandlerCalls="+calls);
-        } finally {
+        var chunk=level.getChunkSource().getChunkNow(waterPos.x,waterPos.z);
+        boolean ticking=chunk!=null && chunk.getFullStatus().isOrAfter(net.minecraft.server.level.FullChunkStatus.BLOCK_TICKING);
+        int before=automatic.cursor();boolean wasArmed=automatic.armed();
+        boolean complete=automatic.observe(normalTick,cursor,pending,ticking);
+        automaticTicks=normalTick;
+        if(!wasArmed && automatic.armed()) {
+            int ready=0;
             synchronized(queues) {
-                // Retain any asynchronous chunk-load markers received meanwhile.
-                original.remove(waterPos);
-                isolated.forEach((pos,cursor)->original.merge(pos,cursor,Math::max));
-                queues.put(level,original);
+                for(var pos:queues.get(level).keySet()) {
+                    var queued=level.getChunkSource().getChunkNow(pos.x,pos.z);
+                    if(queued!=null && queued.getFullStatus().isOrAfter(net.minecraft.server.level.FullChunkStatus.BLOCK_TICKING))ready++;
+                }
             }
+            System.out.println("REEF_WATER_AUTOMATIC_BOUND pendingChunks="+pending+" readyChunks="+ready
+                +" cursor="+cursor+" maxTicksPerTurn="+automatic.turnTicks()+" completionDeadline="+automatic.completionDeadline());
         }
+        if(before!=automatic.cursor())System.out.println("REEF_WATER_AUTOMATIC_PROGRESS tick="+normalTick
+            +" before="+before+" after="+automatic.cursor()+" pendingChunks="+pending);
+        automaticallyCompleted=complete;
+        return complete;
     }
 
     private static net.minecraft.nbt.CompoundTag saveWater(ServerLevel level,LevelChunk chunk) {
