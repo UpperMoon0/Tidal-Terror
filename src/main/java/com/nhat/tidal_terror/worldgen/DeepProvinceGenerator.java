@@ -40,8 +40,15 @@ public final class DeepProvinceGenerator {
         var vertical=EndlessVerticalEngine.world(level);
         Map<Integer,VerticalPage<LevelChunkSection>> pages=new TreeMap<>();
         sections.forEach((sy,section)->pages.computeIfAbsent(Math.floorDiv(sy,32),VerticalPage::new).putSection(sy,section));
-        for(var entry:pages.entrySet())
-            vertical.installGeneratedPage(new VerticalPagePos(mx>>4,entry.getKey(),mz>>4),entry.getValue());
+        for(var entry:pages.entrySet()) {
+            var pos=new VerticalPagePos(mx>>4,entry.getKey(),mz>>4);
+            // Sparse saves can reach disk before the native protochunk becomes a
+            // saved FULL chunk. The surviving page, including edits and missing
+            // sections, is authoritative; never regenerate or merge into it.
+            synchronized(vertical) {
+                if(!vertical.pageExists(pos))vertical.installGeneratedPage(pos,entry.getValue());
+            }
+        }
         chunk.setUnsaved(true);
     }
 

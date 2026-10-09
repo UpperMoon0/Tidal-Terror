@@ -662,7 +662,10 @@ if (project.hasProperty('deepProvinceTests')) {
             def world=new File(directory,'deep-province-world').canonicalFile
             if (!world.toPath().startsWith(layout.buildDirectory.get().asFile.canonicalFile.toPath())) throw new GradleException('Unsafe deep test world')
             directory.mkdirs()
-            if (!project.hasProperty('deepReload')) { project.delete(world); project.delete(new File(directory,'checkpoint.json')) }
+            if (!project.hasProperty('deepReload')) {
+                project.delete(world)
+                ['checkpoint.json','interrupted-proto.nbt','interrupted-water.nbt'].each { project.delete(new File(directory,it)) }
+            }
             project.delete(new File(directory,'passed.txt')); project.delete(new File(directory,'failure.txt'))
             new File(directory,'config').mkdirs()
             new File(directory,'config/endless.json').text='{"buildHeight":{"minBuildHeight":-1024,"maxBuildHeight":1024}}'

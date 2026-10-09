@@ -50,6 +50,7 @@ public final class DeepProvinceAudit {
             }
             require(center!=null,"No bounded fixture province");
             System.out.println("DEEP_AUDIT center="+center+" reload="+RELOAD);
+            InterruptedGenerationAudit.start(level,center,RELOAD);
             verifyNativeHeightBatch(level);
             com.nstut.endless.testing.NativeUniformSectionChecks.run(level);
             LegacyCathedralInventory.verify(level);
@@ -184,6 +185,7 @@ public final class DeepProvinceAudit {
                 JsonObject checkpoint=new JsonObject();checkpoint.addProperty("x",center.x());checkpoint.addProperty("z",center.z());
                 Files.writeString(Path.of("checkpoint.json"),checkpoint.toString());
             }
+            InterruptedGenerationAudit.finish(level,RELOAD);
             EndlessVerticalEngine.flushAll();
             server.saveEverything(false,true,true);
             Files.writeString(Path.of("passed.txt"),"Deep native generation, ordinary bedrock, sparse/dense continuity, active ticking, "+(RELOAD?"cold persisted edit":"initial sparse edit")+" passed\n");

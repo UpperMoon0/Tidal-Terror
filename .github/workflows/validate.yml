@@ -50,6 +50,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Partial water repair cold-restart handler regression
+        run: python tools/province/check_water_finish.py
       - name: Exact seabed cache regression
         run: |
           mkdir -p build/province-cache-check
@@ -206,6 +208,8 @@ jobs:
             build/deep-province-test/passed.txt
             build/deep-province-test/failure.txt
             build/deep-province-test/checkpoint.json
+            build/deep-province-test/interrupted-proto.nbt
+            build/deep-province-test/interrupted-water.nbt
             build/libs/tidalterror-*.jar
           if-no-files-found: ignore
   ports:

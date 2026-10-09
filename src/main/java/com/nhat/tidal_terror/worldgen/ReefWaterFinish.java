@@ -1,6 +1,7 @@
 package com.nhat.tidal_terror.worldgen;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Blocks;
@@ -26,18 +27,26 @@ public final class ReefWaterFinish {
         synchronized(PENDING){PENDING.computeIfAbsent(level,k->new LinkedHashMap<>()).putIfAbsent(event.getChunk().getPos(),0);}
     }
     @SubscribeEvent public static void read(ChunkDataEvent.Load event){
-        if(!event.getData().getBoolean(MARKER))return;
+        var data=event.getData();
+        // The old byte/boolean marker meant that no progress had been saved.
+        // An integer records the next column, including zero for a fresh queue.
+        int cursor;
+        if(data.contains(MARKER,Tag.TAG_INT))cursor=data.getInt(MARKER);
+        else if(data.contains(MARKER,Tag.TAG_BYTE) && data.getBoolean(MARKER))cursor=0;
+        else return;
+        if(cursor<0 || cursor>=COLUMNS_PER_CHUNK)return;
         var access=event.getChunk();
         var chunk=access instanceof net.minecraft.world.level.chunk.ImposterProtoChunk wrapped?wrapped.getWrapped():
                 access instanceof net.minecraft.world.level.chunk.LevelChunk full?full:null;
         if(chunk!=null && chunk.getLevel() instanceof ServerLevel level)
-            synchronized(PENDING){PENDING.computeIfAbsent(level,k->new LinkedHashMap<>()).putIfAbsent(chunk.getPos(),0);}
+            synchronized(PENDING){PENDING.computeIfAbsent(level,k->new LinkedHashMap<>()).putIfAbsent(chunk.getPos(),cursor);}
     }
     @SubscribeEvent public static void save(ChunkDataEvent.Save event){
         if(!(event.getLevel() instanceof ServerLevel level))return;
         synchronized(PENDING){
             var pending=PENDING.get(level);
-            if(pending!=null && pending.containsKey(event.getChunk().getPos()))event.getData().putBoolean(MARKER,true);
+            if(pending!=null && pending.containsKey(event.getChunk().getPos()))
+                event.getData().putInt(MARKER,pending.get(event.getChunk().getPos()));
             else event.getData().remove(MARKER);
         }
     }
@@ -112,7 +121,7 @@ public final class ReefWaterFinish {
                     else {pending.remove(pos);pending.put(pos,cursor);} // rotate to avoid starvation
                 }
             }
-            // Any changed columns must be persisted; the save marker remains until complete.
+            // Persist the blocks and their next-column cursor together until complete.
             chunk.setUnsaved(true);
         }
         if(processed>0 && Boolean.getBoolean("tidalterror.profileWaterFinish")){
