@@ -1,0 +1,2696 @@
+{
+  "method": "serial RCON FULL acknowledgement plus all-four entity-ready guard, 4 batches of 4 chunks per workload",
+  "minecraft": "1.20.1",
+  "java": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.20.101-hotspot\\bin\\java.exe",
+  "heap_gib": 2,
+  "active_processors": 4,
+  "seed": 0,
+  "logical_range": [
+    -1024,
+    1024
+  ],
+  "structures": true,
+  "platform": "Windows-10-10.0.19045-SP0",
+  "vanilla_sha256": "3af73a9dc5a102e38147946360dd27d4d70bae7055bf91cf2151cd5d121b79e0",
+  "forge_launch_sha256": "02b1de83153e5581655a954715d970a1a90fdc603e9bd73da59d298b251967c4",
+  "tidal_commit": "dee2e4959a351a6a20e0032db15926bb17a8a501",
+  "endless_pin": {
+    "repository": "UpperMoon0/Endless",
+    "commit": "f506758830f25041b9a05f932dbca4ea47d92861",
+    "version": "0.9.3"
+  },
+  "runs": [
+    {
+      "variant": "vanilla",
+      "replicate": 1,
+      "phase": "fresh",
+      "jvm_to_ready_seconds": 34.830337599967606,
+      "directory": "1-vanilla",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 4951.598,
+        "full_ack_total_ms": 1529.1973,
+        "ms_per_chunk": 309.474875,
+        "chunks_per_second": 3.231280083722467,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 3841.759,
+            "full_ack_ms": 1471.227,
+            "start_epoch_ns": 1791530156347301900,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 1042.3444,
+            "full_ack_ms": 56.3013,
+            "start_epoch_ns": 1791530160189074300,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 20.8811,
+            "full_ack_ms": 1.3472,
+            "start_epoch_ns": 1791530161231428300,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 46.6135,
+            "full_ack_ms": 0.3218,
+            "start_epoch_ns": 1791530161252318100,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 4035.1983,
+          "full_ack_total_ms": 2176.8957,
+          "ms_per_chunk": 252.19989375,
+          "chunks_per_second": 3.9651087283616273,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 4019.7885,
+              "full_ack_ms": 2176.136,
+              "start_epoch_ns": 1791530161298962400,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 7.043,
+              "full_ack_ms": 0.2373,
+              "start_epoch_ns": 1791530165318762300,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 6.5818,
+              "full_ack_ms": 0.2755,
+              "start_epoch_ns": 1791530165325815900,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 1.785,
+              "full_ack_ms": 0.2469,
+              "start_epoch_ns": 1791530165332407600,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 4222.5588,
+          "full_ack_total_ms": 2391.5637,
+          "ms_per_chunk": 263.909925,
+          "chunks_per_second": 3.789171627402797,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 4155.076,
+              "full_ack_ms": 2384.2118,
+              "start_epoch_ns": 1791530165334300700,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 12.6201,
+              "full_ack_ms": 0.6515,
+              "start_epoch_ns": 1791530169489387600,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 14.8057,
+              "full_ack_ms": 0.5158,
+              "start_epoch_ns": 1791530169502018000,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 40.057,
+              "full_ack_ms": 6.1846,
+              "start_epoch_ns": 1791530169516833700,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 5111.7732000000005,
+          "full_ack_total_ms": 3018.1548000000003,
+          "ms_per_chunk": 319.48582500000003,
+          "chunks_per_second": 3.1300293213321746,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 4422.0531,
+              "full_ack_ms": 2989.704,
+              "start_epoch_ns": 1791530169556977900,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 538.3105,
+              "full_ack_ms": 0.4914,
+              "start_epoch_ns": 1791530173979040700,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 144.9337,
+              "full_ack_ms": 23.2674,
+              "start_epoch_ns": 1791530174517360500,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 6.4759,
+              "full_ack_ms": 4.692,
+              "start_epoch_ns": 1791530174662302900,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 3669.7187,
+          "full_ack_total_ms": 2166.5558,
+          "ms_per_chunk": 229.35741875,
+          "chunks_per_second": 4.360007212541931,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 3597.4417,
+              "full_ack_ms": 2163.0434,
+              "start_epoch_ns": 1791530174668864000,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 44.2984,
+              "full_ack_ms": 0.4624,
+              "start_epoch_ns": 1791530178266316100,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 14.2092,
+              "full_ack_ms": 0.2659,
+              "start_epoch_ns": 1791530178310623000,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 13.7694,
+              "full_ack_ms": 2.7841,
+              "start_epoch_ns": 1791530178324840000,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "vanilla",
+      "replicate": 1,
+      "phase": "cold",
+      "jvm_to_ready_seconds": 14.88104020000901,
+      "directory": "1-vanilla",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 919.077,
+        "full_ack_total_ms": 475.7519,
+        "ms_per_chunk": 57.4423125,
+        "chunks_per_second": 17.408769885439412,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 840.2558,
+            "full_ack_ms": 407.3173,
+            "start_epoch_ns": 1791530199819273900,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 11.4916,
+            "full_ack_ms": 6.6168,
+            "start_epoch_ns": 1791530200659539300,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 32.0157,
+            "full_ack_ms": 27.4002,
+            "start_epoch_ns": 1791530200671040700,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 35.3139,
+            "full_ack_ms": 34.4176,
+            "start_epoch_ns": 1791530200703065300,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 646.5405000000001,
+          "full_ack_total_ms": 372.5319,
+          "ms_per_chunk": 40.408781250000004,
+          "chunks_per_second": 24.74709627625802,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 523.8626,
+              "full_ack_ms": 311.3911,
+              "start_epoch_ns": 1791530200738404200,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 96.6605,
+              "full_ack_ms": 36.4079,
+              "start_epoch_ns": 1791530201262277200,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 24.9462,
+              "full_ack_ms": 24.319,
+              "start_epoch_ns": 1791530201358946500,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 1.0712,
+              "full_ack_ms": 0.4139,
+              "start_epoch_ns": 1791530201383899800,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 481.28799999999995,
+          "full_ack_total_ms": 312.0908,
+          "ms_per_chunk": 30.080499999999997,
+          "chunks_per_second": 33.24412825584682,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 430.5103,
+              "full_ack_ms": 309.8452,
+              "start_epoch_ns": 1791530201385048200,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 11.8259,
+              "full_ack_ms": 0.2463,
+              "start_epoch_ns": 1791530201815567200,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 12.747,
+              "full_ack_ms": 1.2465,
+              "start_epoch_ns": 1791530201827401600,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 26.2048,
+              "full_ack_ms": 0.7528,
+              "start_epoch_ns": 1791530201840162400,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 359.92830000000004,
+          "full_ack_total_ms": 251.2209,
+          "ms_per_chunk": 22.495518750000002,
+          "chunks_per_second": 44.45329805964132,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 301.4712,
+              "full_ack_ms": 249.7767,
+              "start_epoch_ns": 1791530201866448600,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 13.5432,
+              "full_ack_ms": 0.4865,
+              "start_epoch_ns": 1791530202167929500,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 17.5127,
+              "full_ack_ms": 0.4838,
+              "start_epoch_ns": 1791530202181482200,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 27.4012,
+              "full_ack_ms": 0.4739,
+              "start_epoch_ns": 1791530202199003300,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 775.5089999999999,
+          "full_ack_total_ms": 457.1029,
+          "ms_per_chunk": 48.469312499999994,
+          "chunks_per_second": 20.631610980659158,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 696.2778,
+              "full_ack_ms": 399.9054,
+              "start_epoch_ns": 1791530202226482200,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 20.5344,
+              "full_ack_ms": 0.9086,
+              "start_epoch_ns": 1791530202922769500,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 14.6703,
+              "full_ack_ms": 12.8045,
+              "start_epoch_ns": 1791530202943312700,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 44.0265,
+              "full_ack_ms": 43.4844,
+              "start_epoch_ns": 1791530202957992500,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "default",
+      "replicate": 1,
+      "phase": "fresh",
+      "jvm_to_ready_seconds": 59.23908420000225,
+      "directory": "2-default",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 7895.164500000001,
+        "full_ack_total_ms": 2480.6304,
+        "ms_per_chunk": 493.44778125000005,
+        "chunks_per_second": 2.026556888080039,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 6148.1346,
+            "full_ack_ms": 2457.5889,
+            "start_epoch_ns": 1791530267629406000,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 1680.0053,
+            "full_ack_ms": 0.613,
+            "start_epoch_ns": 1791530273777552800,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 33.6169,
+            "full_ack_ms": 22.167,
+            "start_epoch_ns": 1791530275457567900,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 33.4077,
+            "full_ack_ms": 0.2615,
+            "start_epoch_ns": 1791530275491193100,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded\n"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 6816.4813,
+          "full_ack_total_ms": 3600.8666,
+          "ms_per_chunk": 426.03008125,
+          "chunks_per_second": 2.3472520932464085,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 6797.443,
+              "full_ack_ms": 3599.1456,
+              "start_epoch_ns": 1791530275524629900,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 9.1528,
+              "full_ack_ms": 0.3691,
+              "start_epoch_ns": 1791530282322093100,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 7.9784,
+              "full_ack_ms": 1.0887,
+              "start_epoch_ns": 1791530282331256000,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 1.9071,
+              "full_ack_ms": 0.2632,
+              "start_epoch_ns": 1791530282339243600,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 5453.6415,
+          "full_ack_total_ms": 3415.8027,
+          "ms_per_chunk": 340.85259375,
+          "chunks_per_second": 2.9338195405766956,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 5371.579,
+              "full_ack_ms": 3414.8298,
+              "start_epoch_ns": 1791530282341257300,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 13.8195,
+              "full_ack_ms": 0.4163,
+              "start_epoch_ns": 1791530287712848500,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 12.1434,
+              "full_ack_ms": 0.2794,
+              "start_epoch_ns": 1791530287726677000,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 56.0996,
+              "full_ack_ms": 0.2772,
+              "start_epoch_ns": 1791530287738828800,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 4010.4165,
+          "full_ack_total_ms": 2645.081,
+          "ms_per_chunk": 250.65103125,
+          "chunks_per_second": 3.989610555412387,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 3868.6375,
+              "full_ack_ms": 2636.8537,
+              "start_epoch_ns": 1791530287795028600,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 8.4938,
+              "full_ack_ms": 1.4008,
+              "start_epoch_ns": 1791530291663677000,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 9.2828,
+              "full_ack_ms": 0.2756,
+              "start_epoch_ns": 1791530291672180200,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 124.0024,
+              "full_ack_ms": 6.5509,
+              "start_epoch_ns": 1791530291681473200,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 5994.059700000001,
+          "full_ack_total_ms": 3470.1096,
+          "ms_per_chunk": 374.62873125000004,
+          "chunks_per_second": 2.669309416454427,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 5583.2767,
+              "full_ack_ms": 3152.7994,
+              "start_epoch_ns": 1791530291805557300,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 86.0147,
+              "full_ack_ms": 73.0807,
+              "start_epoch_ns": 1791530297388845300,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 84.1453,
+              "full_ack_ms": 16.18,
+              "start_epoch_ns": 1791530297474868400,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 240.623,
+              "full_ack_ms": 228.0495,
+              "start_epoch_ns": 1791530297559042500,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "default",
+      "replicate": 1,
+      "phase": "cold",
+      "jvm_to_ready_seconds": 37.00763230002485,
+      "directory": "2-default",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 1467.1458,
+        "full_ack_total_ms": 466.91499999999996,
+        "ms_per_chunk": 91.6966125,
+        "chunks_per_second": 10.905528271287011,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 1450.8164,
+            "full_ack_ms": 465.3918,
+            "start_epoch_ns": 1791530343551161200,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 2.1254,
+            "full_ack_ms": 0.4237,
+            "start_epoch_ns": 1791530345001991300,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 12.2816,
+            "full_ack_ms": 0.6989,
+            "start_epoch_ns": 1791530345004124900,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 1.9224,
+            "full_ack_ms": 0.4006,
+            "start_epoch_ns": 1791530345016415300,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded\n"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 626.9753,
+          "full_ack_total_ms": 424.178,
+          "ms_per_chunk": 39.18595625,
+          "chunks_per_second": 25.519346615408935,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 503.8205,
+              "full_ack_ms": 345.7694,
+              "start_epoch_ns": 1791530345018364700,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 39.9182,
+              "full_ack_ms": 37.0198,
+              "start_epoch_ns": 1791530345522194600,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 41.6834,
+              "full_ack_ms": 37.485,
+              "start_epoch_ns": 1791530345562121500,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 41.5532,
+              "full_ack_ms": 3.9038,
+              "start_epoch_ns": 1791530345603813300,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 461.9885,
+          "full_ack_total_ms": 316.8971,
+          "ms_per_chunk": 28.87428125,
+          "chunks_per_second": 34.6328967063033,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 444.2624,
+              "full_ack_ms": 315.9687,
+              "start_epoch_ns": 1791530345645468300,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 4.6275,
+              "full_ack_ms": 0.2756,
+              "start_epoch_ns": 1791530346089739300,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 11.9758,
+              "full_ack_ms": 0.3314,
+              "start_epoch_ns": 1791530346094376600,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 1.1228,
+              "full_ack_ms": 0.3214,
+              "start_epoch_ns": 1791530346106361600,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 585.3516,
+          "full_ack_total_ms": 323.8069,
+          "ms_per_chunk": 36.584475,
+          "chunks_per_second": 27.333998916206944,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 463.2548,
+              "full_ack_ms": 294.2092,
+              "start_epoch_ns": 1791530346107563900,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 69.4746,
+              "full_ack_ms": 28.8995,
+              "start_epoch_ns": 1791530346570828400,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 11.1182,
+              "full_ack_ms": 0.291,
+              "start_epoch_ns": 1791530346640312000,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 41.504,
+              "full_ack_ms": 0.4072,
+              "start_epoch_ns": 1791530346651442100,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 474.5501,
+          "full_ack_total_ms": 268.5684,
+          "ms_per_chunk": 29.65938125,
+          "chunks_per_second": 33.716145039269826,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 452.4436,
+              "full_ack_ms": 267.5278,
+              "start_epoch_ns": 1791530346693031800,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 4.1397,
+              "full_ack_ms": 0.3226,
+              "start_epoch_ns": 1791530347145484900,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 16.8928,
+              "full_ack_ms": 0.2907,
+              "start_epoch_ns": 1791530347149633100,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 1.074,
+              "full_ack_ms": 0.4273,
+              "start_epoch_ns": 1791530347166568800,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "deep",
+      "replicate": 1,
+      "phase": "fresh",
+      "jvm_to_ready_seconds": 51.72123630007263,
+      "directory": "3-deep",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 4280.5787,
+        "full_ack_total_ms": 2086.6617,
+        "ms_per_chunk": 267.53616875,
+        "chunks_per_second": 3.7378123663513065,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 4178.1042,
+            "full_ack_ms": 2010.8059,
+            "start_epoch_ns": 1791530405218164400,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 51.2058,
+            "full_ack_ms": 41.3157,
+            "start_epoch_ns": 1791530409396278800,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 40.8082,
+            "full_ack_ms": 34.1901,
+            "start_epoch_ns": 1791530409447493900,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 10.4605,
+            "full_ack_ms": 0.35,
+            "start_epoch_ns": 1791530409488312000,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded\n"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 4600.1968,
+          "full_ack_total_ms": 2474.2016,
+          "ms_per_chunk": 287.5123,
+          "chunks_per_second": 3.4781120668576615,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 4418.3595,
+              "full_ack_ms": 2461.6295,
+              "start_epoch_ns": 1791530409498801300,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 91.3499,
+              "full_ack_ms": 0.7772,
+              "start_epoch_ns": 1791530413917171300,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 88.2675,
+              "full_ack_ms": 11.5141,
+              "start_epoch_ns": 1791530414008529800,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 2.2199,
+              "full_ack_ms": 0.2808,
+              "start_epoch_ns": 1791530414096806600,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 6630.7643,
+          "full_ack_total_ms": 3248.2192999999997,
+          "ms_per_chunk": 414.42276875,
+          "chunks_per_second": 2.412994833793142,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 6609.2505,
+              "full_ack_ms": 3246.2684,
+              "start_epoch_ns": 1791530414099127700,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 10.3514,
+              "full_ack_ms": 1.2591,
+              "start_epoch_ns": 1791530420708390500,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 8.1225,
+              "full_ack_ms": 0.3061,
+              "start_epoch_ns": 1791530420718751700,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 3.0399,
+              "full_ack_ms": 0.3857,
+              "start_epoch_ns": 1791530420726890800,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 6537.9226,
+          "full_ack_total_ms": 4327.661300000001,
+          "ms_per_chunk": 408.6201625,
+          "chunks_per_second": 2.4472605411388626,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 6499.5908,
+              "full_ack_ms": 4325.6108,
+              "start_epoch_ns": 1791530420730015300,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 23.9453,
+              "full_ack_ms": 1.1855,
+              "start_epoch_ns": 1791530427229633700,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 11.6926,
+              "full_ack_ms": 0.5389,
+              "start_epoch_ns": 1791530427253594500,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 2.6939,
+              "full_ack_ms": 0.3261,
+              "start_epoch_ns": 1791530427265298800,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 8870.000699999999,
+          "full_ack_total_ms": 4688.9346,
+          "ms_per_chunk": 554.3750437499999,
+          "chunks_per_second": 1.8038330030796956,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 8814.4497,
+              "full_ack_ms": 4686.6145,
+              "start_epoch_ns": 1791530427268090200,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 24.7172,
+              "full_ack_ms": 1.8468,
+              "start_epoch_ns": 1791530436082549300,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 18.3358,
+              "full_ack_ms": 0.2145,
+              "start_epoch_ns": 1791530436107275200,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 12.498,
+              "full_ack_ms": 0.2588,
+              "start_epoch_ns": 1791530436125618900,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "deep",
+      "replicate": 1,
+      "phase": "cold",
+      "jvm_to_ready_seconds": 34.12782589998096,
+      "directory": "3-deep",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 928.8252,
+        "full_ack_total_ms": 738.8982,
+        "ms_per_chunk": 58.051575,
+        "chunks_per_second": 17.226061480674726,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 832.7278,
+            "full_ack_ms": 675.1831,
+            "start_epoch_ns": 1791530479805937200,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 37.4637,
+            "full_ack_ms": 23.521,
+            "start_epoch_ns": 1791530480638675400,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 35.622,
+            "full_ack_ms": 19.1198,
+            "start_epoch_ns": 1791530480676148200,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 23.0117,
+            "full_ack_ms": 21.0743,
+            "start_epoch_ns": 1791530480711778900,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded\n"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 1366.6852000000001,
+          "full_ack_total_ms": 432.4056,
+          "ms_per_chunk": 85.41782500000001,
+          "chunks_per_second": 11.707158312682393,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 1267.3522,
+              "full_ack_ms": 391.0506,
+              "start_epoch_ns": 1791530480734815700,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 39.1721,
+              "full_ack_ms": 37.158,
+              "start_epoch_ns": 1791530482002186800,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 14.9479,
+              "full_ack_ms": 3.9795,
+              "start_epoch_ns": 1791530482041367700,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 45.213,
+              "full_ack_ms": 0.2175,
+              "start_epoch_ns": 1791530482056324900,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 540.8501,
+          "full_ack_total_ms": 268.9228,
+          "ms_per_chunk": 33.80313125,
+          "chunks_per_second": 29.58305822629967,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 464.6335,
+              "full_ack_ms": 239.6459,
+              "start_epoch_ns": 1791530482101641200,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 25.9879,
+              "full_ack_ms": 24.6659,
+              "start_epoch_ns": 1791530482566284500,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 47.7207,
+              "full_ack_ms": 3.5089,
+              "start_epoch_ns": 1791530482592281800,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 2.508,
+              "full_ack_ms": 1.1021,
+              "start_epoch_ns": 1791530482640011500,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 338.8281,
+          "full_ack_total_ms": 263.5633,
+          "ms_per_chunk": 21.17675625,
+          "chunks_per_second": 47.22158522271323,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 263.1875,
+              "full_ack_ms": 225.4832,
+              "start_epoch_ns": 1791530482642599700,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 12.3333,
+              "full_ack_ms": 10.129,
+              "start_epoch_ns": 1791530482905797700,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 61.1859,
+              "full_ack_ms": 27.2463,
+              "start_epoch_ns": 1791530482918140300,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 2.1214,
+              "full_ack_ms": 0.7048,
+              "start_epoch_ns": 1791530482979335300,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 951.4622999999999,
+          "full_ack_total_ms": 411.63259999999997,
+          "ms_per_chunk": 59.466393749999995,
+          "chunks_per_second": 16.816220674219043,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 758.0006,
+              "full_ack_ms": 262.3719,
+              "start_epoch_ns": 1791530482981549800,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 91.0383,
+              "full_ack_ms": 78.6519,
+              "start_epoch_ns": 1791530483739560300,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 8.2406,
+              "full_ack_ms": 0.3375,
+              "start_epoch_ns": 1791530483830607400,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 94.1828,
+              "full_ack_ms": 70.2713,
+              "start_epoch_ns": 1791530483838856500,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "deep",
+      "replicate": 2,
+      "phase": "fresh",
+      "jvm_to_ready_seconds": 64.10976939997636,
+      "directory": "4-deep",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 6208.025100000001,
+        "full_ack_total_ms": 2609.3763,
+        "ms_per_chunk": 388.00156875000005,
+        "chunks_per_second": 2.5773091671294948,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 4824.573,
+            "full_ack_ms": 2519.5172,
+            "start_epoch_ns": 1791530557285915000,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 1268.4109,
+            "full_ack_ms": 17.1511,
+            "start_epoch_ns": 1791530562110523500,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 8.5291,
+            "full_ack_ms": 0.4712,
+            "start_epoch_ns": 1791530563378946900,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 106.5121,
+            "full_ack_ms": 72.2368,
+            "start_epoch_ns": 1791530563387484700,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded\n"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 4945.631,
+          "full_ack_total_ms": 2545.0226,
+          "ms_per_chunk": 309.1019375,
+          "chunks_per_second": 3.2351786859957805,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 4824.2869,
+              "full_ack_ms": 2523.9051,
+              "start_epoch_ns": 1791530563494055600,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 25.0556,
+              "full_ack_ms": 20.0675,
+              "start_epoch_ns": 1791530568318354000,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 8.7855,
+              "full_ack_ms": 0.3478,
+              "start_epoch_ns": 1791530568343418500,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 87.503,
+              "full_ack_ms": 0.7022,
+              "start_epoch_ns": 1791530568352214000,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 9712.9584,
+          "full_ack_total_ms": 5801.8029,
+          "ms_per_chunk": 607.0599,
+          "chunks_per_second": 1.6472839006496725,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 9694.1853,
+              "full_ack_ms": 5800.3532,
+              "start_epoch_ns": 1791530568439803600,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 8.068,
+              "full_ack_ms": 0.4179,
+              "start_epoch_ns": 1791530578133999800,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 8.1028,
+              "full_ack_ms": 0.6041,
+              "start_epoch_ns": 1791530578142076200,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 2.6023,
+              "full_ack_ms": 0.4277,
+              "start_epoch_ns": 1791530578150187500,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 6577.5588,
+          "full_ack_total_ms": 4239.8598,
+          "ms_per_chunk": 411.097425,
+          "chunks_per_second": 2.432513412118794,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 6551.2246,
+              "full_ack_ms": 4238.5085,
+              "start_epoch_ns": 1791530578153055400,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 15.3388,
+              "full_ack_ms": 0.7582,
+              "start_epoch_ns": 1791530584704300900,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 8.5097,
+              "full_ack_ms": 0.3051,
+              "start_epoch_ns": 1791530584719650400,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 2.4857,
+              "full_ack_ms": 0.288,
+              "start_epoch_ns": 1791530584728170100,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 8515.5607,
+          "full_ack_total_ms": 4761.9669,
+          "ms_per_chunk": 532.22254375,
+          "chunks_per_second": 1.8789132699153914,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 8500.0098,
+              "full_ack_ms": 4761.2581,
+              "start_epoch_ns": 1791530584730749100,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 6.8561,
+              "full_ack_ms": 0.2609,
+              "start_epoch_ns": 1791530593230767900,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 6.9021,
+              "full_ack_ms": 0.2263,
+              "start_epoch_ns": 1791530593237632400,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 1.7927,
+              "full_ack_ms": 0.2216,
+              "start_epoch_ns": 1791530593244542700,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "deep",
+      "replicate": 2,
+      "phase": "cold",
+      "jvm_to_ready_seconds": 30.372566999983974,
+      "directory": "4-deep",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 1302.5574000000001,
+        "full_ack_total_ms": 468.6101,
+        "ms_per_chunk": 81.40983750000001,
+        "chunks_per_second": 12.283527773900788,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 1169.2552,
+            "full_ack_ms": 440.4772,
+            "start_epoch_ns": 1791530632412482400,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 78.6341,
+            "full_ack_ms": 0.8563,
+            "start_epoch_ns": 1791530633581749500,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 5.2285,
+            "full_ack_ms": 0.4553,
+            "start_epoch_ns": 1791530633660393400,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 49.4396,
+            "full_ack_ms": 26.8213,
+            "start_epoch_ns": 1791530633665630600,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded\n"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 728.132,
+          "full_ack_total_ms": 334.94300000000004,
+          "ms_per_chunk": 45.50825,
+          "chunks_per_second": 21.974037674487594,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 623.3308,
+              "full_ack_ms": 333.3122,
+              "start_epoch_ns": 1791530633715095600,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 79.7814,
+              "full_ack_ms": 0.2596,
+              "start_epoch_ns": 1791530634338434500,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 11.9253,
+              "full_ack_ms": 0.2805,
+              "start_epoch_ns": 1791530634418224500,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 13.0945,
+              "full_ack_ms": 1.0907,
+              "start_epoch_ns": 1791530634430159100,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 540.4536,
+          "full_ack_total_ms": 311.2505,
+          "ms_per_chunk": 33.77835,
+          "chunks_per_second": 29.604761629860544,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 485.2568,
+              "full_ack_ms": 308.2335,
+              "start_epoch_ns": 1791530634443337200,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 31.5773,
+              "full_ack_ms": 2.0878,
+              "start_epoch_ns": 1791530634928604300,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 11.7115,
+              "full_ack_ms": 0.3072,
+              "start_epoch_ns": 1791530634960190700,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 11.908,
+              "full_ack_ms": 0.622,
+              "start_epoch_ns": 1791530634971918400,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 554.6967999999999,
+          "full_ack_total_ms": 264.4451,
+          "ms_per_chunk": 34.668549999999996,
+          "chunks_per_second": 28.844586808505117,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 431.7093,
+              "full_ack_ms": 262.1,
+              "start_epoch_ns": 1791530634983903900,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 17.7442,
+              "full_ack_ms": 1.206,
+              "start_epoch_ns": 1791530635415622400,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 65.2164,
+              "full_ack_ms": 0.5786,
+              "start_epoch_ns": 1791530635433375400,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 40.0269,
+              "full_ack_ms": 0.5605,
+              "start_epoch_ns": 1791530635498601400,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 1407.5898,
+          "full_ack_total_ms": 263.0106,
+          "ms_per_chunk": 87.9743625,
+          "chunks_per_second": 11.366947956002523,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 388.6069,
+              "full_ack_ms": 262.0424,
+              "start_epoch_ns": 1791530635538707600,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 927.4904,
+              "full_ack_ms": 0.3023,
+              "start_epoch_ns": 1791530635927329200,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 2.2281,
+              "full_ack_ms": 0.3133,
+              "start_epoch_ns": 1791530636854827700,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 89.2644,
+              "full_ack_ms": 0.3526,
+              "start_epoch_ns": 1791530636857064100,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "default",
+      "replicate": 2,
+      "phase": "fresh",
+      "jvm_to_ready_seconds": 51.36344149999786,
+      "directory": "5-default",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 5441.0981,
+        "full_ack_total_ms": 1841.8711,
+        "ms_per_chunk": 340.06863125,
+        "chunks_per_second": 2.9405828944712464,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 4343.4087,
+            "full_ack_ms": 1788.3398,
+            "start_epoch_ns": 1791530693858904300,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 948.8369,
+            "full_ack_ms": 7.6033,
+            "start_epoch_ns": 1791530698202324700,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 60.9882,
+            "full_ack_ms": 45.2805,
+            "start_epoch_ns": 1791530699151169900,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 87.8643,
+            "full_ack_ms": 0.6475,
+            "start_epoch_ns": 1791530699212167500,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded\n"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 4099.195,
+          "full_ack_total_ms": 2089.3888,
+          "ms_per_chunk": 256.1996875,
+          "chunks_per_second": 3.903205385447631,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 3978.6634,
+              "full_ack_ms": 2028.6114,
+              "start_epoch_ns": 1791530699300056600,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 8.8367,
+              "full_ack_ms": 0.4609,
+              "start_epoch_ns": 1791530703278736000,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 7.3077,
+              "full_ack_ms": 0.5647,
+              "start_epoch_ns": 1791530703287582000,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 104.3872,
+              "full_ack_ms": 59.7518,
+              "start_epoch_ns": 1791530703294900900,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 6492.1389,
+          "full_ack_total_ms": 3549.31,
+          "ms_per_chunk": 405.75868125,
+          "chunks_per_second": 2.4645190508785944,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 6428.6878,
+              "full_ack_ms": 3548.2646,
+              "start_epoch_ns": 1791530703399385600,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 14.7313,
+              "full_ack_ms": 0.4352,
+              "start_epoch_ns": 1791530709828084100,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 8.754,
+              "full_ack_ms": 0.2768,
+              "start_epoch_ns": 1791530709842824900,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 39.9658,
+              "full_ack_ms": 0.3334,
+              "start_epoch_ns": 1791530709851587100,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 4694.4703,
+          "full_ack_total_ms": 3017.5807,
+          "ms_per_chunk": 293.40439375,
+          "chunks_per_second": 3.408265251992328,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 4609.4296,
+              "full_ack_ms": 3016.4483,
+              "start_epoch_ns": 1791530709891630200,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 12.8106,
+              "full_ack_ms": 0.3538,
+              "start_epoch_ns": 1791530714501069100,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 67.3291,
+              "full_ack_ms": 0.5035,
+              "start_epoch_ns": 1791530714514006800,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 4.901,
+              "full_ack_ms": 0.2751,
+              "start_epoch_ns": 1791530714581347000,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 5652.476,
+          "full_ack_total_ms": 3610.5330000000004,
+          "ms_per_chunk": 353.27975,
+          "chunks_per_second": 2.830617945127056,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 5561.3789,
+              "full_ack_ms": 3571.3778,
+              "start_epoch_ns": 1791530714586326200,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 79.5087,
+              "full_ack_ms": 38.2899,
+              "start_epoch_ns": 1791530720147715300,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 9.198,
+              "full_ack_ms": 0.5273,
+              "start_epoch_ns": 1791530720227232100,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 2.3904,
+              "full_ack_ms": 0.338,
+              "start_epoch_ns": 1791530720236441500,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "default",
+      "replicate": 2,
+      "phase": "cold",
+      "jvm_to_ready_seconds": 29.83366689994,
+      "directory": "5-default",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 1342.9083,
+        "full_ack_total_ms": 382.616,
+        "ms_per_chunk": 83.93176875,
+        "chunks_per_second": 11.9144397275674,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 1186.2672,
+            "full_ack_ms": 376.6812,
+            "start_epoch_ns": 1791530757595292600,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 125.5822,
+            "full_ack_ms": 0.5213,
+            "start_epoch_ns": 1791530758781570200,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 28.6133,
+            "full_ack_ms": 3.6809,
+            "start_epoch_ns": 1791530758907162100,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded\n"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 2.4456,
+            "full_ack_ms": 1.7326,
+            "start_epoch_ns": 1791530758935784400,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded\n"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 609.2488000000001,
+          "full_ack_total_ms": 338.25300000000004,
+          "ms_per_chunk": 38.078050000000005,
+          "chunks_per_second": 26.261849018003808,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 542.5582,
+              "full_ack_ms": 330.1272,
+              "start_epoch_ns": 1791530758938252700,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 3.3557,
+              "full_ack_ms": 1.3294,
+              "start_epoch_ns": 1791530759480820300,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 57.4949,
+              "full_ack_ms": 1.2844,
+              "start_epoch_ns": 1791530759484184700,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded\n"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 5.84,
+              "full_ack_ms": 5.512,
+              "start_epoch_ns": 1791530759541688300,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 706.1152999999999,
+          "full_ack_total_ms": 443.91540000000003,
+          "ms_per_chunk": 44.132206249999996,
+          "chunks_per_second": 22.659188945488083,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 534.5544,
+              "full_ack_ms": 333.0047,
+              "start_epoch_ns": 1791530759547599700,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 89.7357,
+              "full_ack_ms": 87.5062,
+              "start_epoch_ns": 1791530760082163300,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 21.7991,
+              "full_ack_ms": 20.7456,
+              "start_epoch_ns": 1791530760171908500,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 60.0261,
+              "full_ack_ms": 2.6589,
+              "start_epoch_ns": 1791530760193716600,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 585.4993999999999,
+          "full_ack_total_ms": 427.89090000000004,
+          "ms_per_chunk": 36.593712499999995,
+          "chunks_per_second": 27.3270988834489,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 542.0097,
+              "full_ack_ms": 399.9931,
+              "start_epoch_ns": 1791530760253828800,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 26.7484,
+              "full_ack_ms": 25.6784,
+              "start_epoch_ns": 1791530760795847600,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 3.9847,
+              "full_ack_ms": 0.3303,
+              "start_epoch_ns": 1791530760822604100,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 12.7566,
+              "full_ack_ms": 1.8891,
+              "start_epoch_ns": 1791530760826597400,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded\n"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 595.4745,
+          "full_ack_total_ms": 445.3889,
+          "ms_per_chunk": 37.21715625,
+          "chunks_per_second": 26.869328577462174,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 534.845,
+              "full_ack_ms": 390.8707,
+              "start_epoch_ns": 1791530760839442500,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 34.4918,
+              "full_ack_ms": 30.8174,
+              "start_epoch_ns": 1791530761374306800,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 14.9608,
+              "full_ack_ms": 13.1661,
+              "start_epoch_ns": 1791530761408808500,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded\n"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 11.1769,
+              "full_ack_ms": 10.5347,
+              "start_epoch_ns": 1791530761423778300,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "vanilla",
+      "replicate": 2,
+      "phase": "fresh",
+      "jvm_to_ready_seconds": 39.05145860009361,
+      "directory": "6-vanilla",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 5843.5493,
+        "full_ack_total_ms": 1760.5769,
+        "ms_per_chunk": 365.22183125,
+        "chunks_per_second": 2.738061951492392,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 4011.2827,
+            "full_ack_ms": 1690.2587,
+            "start_epoch_ns": 1791530806124657000,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 46.0843,
+            "full_ack_ms": 35.1309,
+            "start_epoch_ns": 1791530810135949900,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 70.845,
+            "full_ack_ms": 0.3584,
+            "start_epoch_ns": 1791530810182042700,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 1715.3373,
+            "full_ack_ms": 34.8289,
+            "start_epoch_ns": 1791530810252896200,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 3108.3148,
+          "full_ack_total_ms": 1490.6287,
+          "ms_per_chunk": 194.269675,
+          "chunks_per_second": 5.147483774809424,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 3034.4967,
+              "full_ack_ms": 1474.9771,
+              "start_epoch_ns": 1791530811968260100,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 54.1668,
+              "full_ack_ms": 6.3537,
+              "start_epoch_ns": 1791530815002768500,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 11.4549,
+              "full_ack_ms": 4.1334,
+              "start_epoch_ns": 1791530815056945200,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 8.1964,
+              "full_ack_ms": 5.1645,
+              "start_epoch_ns": 1791530815068408800,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 3746.2522,
+          "full_ack_total_ms": 2182.7446999999997,
+          "ms_per_chunk": 234.1407625,
+          "chunks_per_second": 4.270935096147558,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 3721.1666,
+              "full_ack_ms": 2180.5896,
+              "start_epoch_ns": 1791530815076688800,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 13.3056,
+              "full_ack_ms": 1.5584,
+              "start_epoch_ns": 1791530818797866200,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 7.8385,
+              "full_ack_ms": 0.2935,
+              "start_epoch_ns": 1791530818811181400,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 3.9415,
+              "full_ack_ms": 0.3032,
+              "start_epoch_ns": 1791530818819032600,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 3841.7817,
+          "full_ack_total_ms": 2473.7338,
+          "ms_per_chunk": 240.11135625,
+          "chunks_per_second": 4.164734295027747,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 3724.434,
+              "full_ack_ms": 2398.8728,
+              "start_epoch_ns": 1791530818823052200,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 7.1731,
+              "full_ack_ms": 0.3566,
+              "start_epoch_ns": 1791530822547496100,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 19.4655,
+              "full_ack_ms": 0.2583,
+              "start_epoch_ns": 1791530822554679400,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 90.7091,
+              "full_ack_ms": 74.2461,
+              "start_epoch_ns": 1791530822574152800,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 4100.7683,
+          "full_ack_total_ms": 2465.7637,
+          "ms_per_chunk": 256.29801875,
+          "chunks_per_second": 3.9017078823985254,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 4082.3386,
+              "full_ack_ms": 2464.949,
+              "start_epoch_ns": 1791530822665076700,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 8.6071,
+              "full_ack_ms": 0.2613,
+              "start_epoch_ns": 1791530826747425200,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 7.8826,
+              "full_ack_ms": 0.2965,
+              "start_epoch_ns": 1791530826756042900,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 1.94,
+              "full_ack_ms": 0.2569,
+              "start_epoch_ns": 1791530826763934400,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "vanilla",
+      "replicate": 2,
+      "phase": "cold",
+      "jvm_to_ready_seconds": 16.910619399975985,
+      "directory": "6-vanilla",
+      "warmup": {
+        "label": "warmup",
+        "chunks": 16,
+        "total_ms": 874.6879,
+        "full_ack_total_ms": 502.4103,
+        "ms_per_chunk": 54.66799375,
+        "chunks_per_second": 18.29223886600009,
+        "batches": [
+          {
+            "command": "forceload add 768 2048 799 2079",
+            "chunks": 4,
+            "ms": 780.1817,
+            "full_ack_ms": 425.3605,
+            "start_epoch_ns": 1791530850544411700,
+            "response": "Marked [48, 128] chunks in minecraft:overworld from [48, 128] to [49, 129] to be force loaded"
+          },
+          {
+            "command": "forceload add 800 2048 831 2079",
+            "chunks": 4,
+            "ms": 46.8922,
+            "full_ack_ms": 43.6631,
+            "start_epoch_ns": 1791530851324602600,
+            "response": "Marked [50, 128] chunks in minecraft:overworld from [50, 128] to [51, 129] to be force loaded"
+          },
+          {
+            "command": "forceload add 768 2080 799 2111",
+            "chunks": 4,
+            "ms": 33.8887,
+            "full_ack_ms": 33.0509,
+            "start_epoch_ns": 1791530851371503800,
+            "response": "Marked [48, 130] chunks in minecraft:overworld from [48, 130] to [49, 131] to be force loaded"
+          },
+          {
+            "command": "forceload add 800 2080 831 2111",
+            "chunks": 4,
+            "ms": 13.7253,
+            "full_ack_ms": 0.3358,
+            "start_epoch_ns": 1791530851405400000,
+            "response": "Marked [50, 130] chunks in minecraft:overworld from [50, 130] to [51, 131] to be force loaded"
+          }
+        ]
+      },
+      "workloads": [
+        {
+          "label": "outside",
+          "chunks": 16,
+          "total_ms": 898.5337,
+          "full_ack_total_ms": 533.4745,
+          "ms_per_chunk": 56.15835625,
+          "chunks_per_second": 17.80678899411341,
+          "batches": [
+            {
+              "command": "forceload add 0 2048 31 2079",
+              "chunks": 4,
+              "ms": 716.9275,
+              "full_ack_ms": 449.6447,
+              "start_epoch_ns": 1791530851419150600,
+              "response": "Marked [0, 128] chunks in minecraft:overworld from [0, 128] to [1, 129] to be force loaded"
+            },
+            {
+              "command": "forceload add 32 2048 63 2079",
+              "chunks": 4,
+              "ms": 4.1948,
+              "full_ack_ms": 0.5448,
+              "start_epoch_ns": 1791530852136099400,
+              "response": "Marked [2, 128] chunks in minecraft:overworld from [2, 128] to [3, 129] to be force loaded"
+            },
+            {
+              "command": "forceload add 0 2080 31 2111",
+              "chunks": 4,
+              "ms": 87.4612,
+              "full_ack_ms": 47.5143,
+              "start_epoch_ns": 1791530852140302900,
+              "response": "Marked [0, 130] chunks in minecraft:overworld from [0, 130] to [1, 131] to be force loaded"
+            },
+            {
+              "command": "forceload add 32 2080 63 2111",
+              "chunks": 4,
+              "ms": 89.9502,
+              "full_ack_ms": 35.7707,
+              "start_epoch_ns": 1791530852227772700,
+              "response": "Marked [2, 130] chunks in minecraft:overworld from [2, 130] to [3, 131] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "cathedral",
+          "chunks": 16,
+          "total_ms": 468.3924,
+          "full_ack_total_ms": 388.2625,
+          "ms_per_chunk": 29.274525,
+          "chunks_per_second": 34.15939285095147,
+          "batches": [
+            {
+              "command": "forceload add -55696 43520 -55665 43551",
+              "chunks": 4,
+              "ms": 442.7746,
+              "full_ack_ms": 366.4513,
+              "start_epoch_ns": 1791530852317803600,
+              "response": "Marked [-3481, 2720] chunks in minecraft:overworld from [-3481, 2720] to [-3480, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -55664 43520 -55633 43551",
+              "chunks": 4,
+              "ms": 11.7693,
+              "full_ack_ms": 10.1528,
+              "start_epoch_ns": 1791530852760587300,
+              "response": "Marked [-3479, 2720] chunks in minecraft:overworld from [-3479, 2720] to [-3478, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -55696 43552 -55665 43583",
+              "chunks": 4,
+              "ms": 11.4919,
+              "full_ack_ms": 11.0046,
+              "start_epoch_ns": 1791530852772365300,
+              "response": "Marked [-3481, 2722] chunks in minecraft:overworld from [-3481, 2722] to [-3480, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -55664 43552 -55633 43583",
+              "chunks": 4,
+              "ms": 2.3566,
+              "full_ack_ms": 0.6538,
+              "start_epoch_ns": 1791530852783863900,
+              "response": "Marked [-3479, 2722] chunks in minecraft:overworld from [-3479, 2722] to [-3478, 2723] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "inner_wastes",
+          "chunks": 16,
+          "total_ms": 579.7005,
+          "full_ack_total_ms": 353.1687,
+          "ms_per_chunk": 36.23128125,
+          "chunks_per_second": 27.600459202639982,
+          "batches": [
+            {
+              "command": "forceload add -53760 43520 -53729 43551",
+              "chunks": 4,
+              "ms": 516.8437,
+              "full_ack_ms": 351.8294,
+              "start_epoch_ns": 1791530852786295700,
+              "response": "Marked [-3360, 2720] chunks in minecraft:overworld from [-3360, 2720] to [-3359, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -53728 43520 -53697 43551",
+              "chunks": 4,
+              "ms": 11.9209,
+              "full_ack_ms": 0.2913,
+              "start_epoch_ns": 1791530853303148400,
+              "response": "Marked [-3358, 2720] chunks in minecraft:overworld from [-3358, 2720] to [-3357, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -53760 43552 -53729 43583",
+              "chunks": 4,
+              "ms": 33.17,
+              "full_ack_ms": 0.4649,
+              "start_epoch_ns": 1791530853315078200,
+              "response": "Marked [-3360, 2722] chunks in minecraft:overworld from [-3360, 2722] to [-3359, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -53728 43552 -53697 43583",
+              "chunks": 4,
+              "ms": 17.7659,
+              "full_ack_ms": 0.5831,
+              "start_epoch_ns": 1791530853348257500,
+              "response": "Marked [-3358, 2722] chunks in minecraft:overworld from [-3358, 2722] to [-3357, 2723] to be force loaded"
+            }
+          ]
+        },
+        {
+          "label": "blend_edge",
+          "chunks": 16,
+          "total_ms": 593.2985,
+          "full_ack_total_ms": 339.78679999999997,
+          "ms_per_chunk": 37.08115625,
+          "chunks_per_second": 26.96787536122205,
+          "batches": [
+            {
+              "command": "forceload add -52704 43520 -52673 43551",
+              "chunks": 4,
+              "ms": 531.2092,
+              "full_ack_ms": 337.4804,
+              "start_epoch_ns": 1791530853366101800,
+              "response": "Marked [-3294, 2720] chunks in minecraft:overworld from [-3294, 2720] to [-3293, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -52672 43520 -52641 43551",
+              "chunks": 4,
+              "ms": 1.85,
+              "full_ack_ms": 0.2726,
+              "start_epoch_ns": 1791530853897319800,
+              "response": "Marked [-3292, 2720] chunks in minecraft:overworld from [-3292, 2720] to [-3291, 2721] to be force loaded"
+            },
+            {
+              "command": "forceload add -52704 43552 -52673 43583",
+              "chunks": 4,
+              "ms": 13.1462,
+              "full_ack_ms": 1.4323,
+              "start_epoch_ns": 1791530853899178800,
+              "response": "Marked [-3294, 2722] chunks in minecraft:overworld from [-3294, 2722] to [-3293, 2723] to be force loaded"
+            },
+            {
+              "command": "forceload add -52672 43552 -52641 43583",
+              "chunks": 4,
+              "ms": 47.0931,
+              "full_ack_ms": 0.6015,
+              "start_epoch_ns": 1791530853912335500,
+              "response": "Marked [-3292, 2722] chunks in minecraft:overworld from [-3292, 2722] to [-3291, 2723] to be force loaded"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary_mean_batch_totals_ms": {
+    "vanilla": {
+      "fresh": {
+        "outside": 3571.75655,
+        "cathedral": 3984.4055,
+        "inner_wastes": 4476.7774500000005,
+        "blend_edge": 3885.2434999999996
+      },
+      "cold": {
+        "outside": 772.5371,
+        "cathedral": 474.8402,
+        "inner_wastes": 469.81440000000003,
+        "blend_edge": 684.40375
+      }
+    },
+    "default": {
+      "fresh": {
+        "outside": 5457.83815,
+        "cathedral": 5972.8902,
+        "inner_wastes": 4352.4434,
+        "blend_edge": 5823.26785
+      },
+      "cold": {
+        "outside": 618.11205,
+        "cathedral": 584.0518999999999,
+        "inner_wastes": 585.4254999999999,
+        "blend_edge": 535.0123
+      }
+    },
+    "deep": {
+      "fresh": {
+        "outside": 4772.9139,
+        "cathedral": 8171.861349999999,
+        "inner_wastes": 6557.7407,
+        "blend_edge": 8692.7807
+      },
+      "cold": {
+        "outside": 1047.4086,
+        "cathedral": 540.65185,
+        "inner_wastes": 446.76244999999994,
+        "blend_edge": 1179.52605
+      }
+    }
+  }
+}

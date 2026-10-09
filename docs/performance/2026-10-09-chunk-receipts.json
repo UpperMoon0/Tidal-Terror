@@ -1,0 +1,29 @@
+{
+  "local_directory": "build\\chunk-bench-2026-10-09-matched",
+  "sha256": {
+    "1-vanilla\\cold.jfr": "d98b898ea95e7567f80e33e0ace1f7a201c0dc3f9d3b29ee81118fd74822299e",
+    "1-vanilla\\cold.log": "d2a64b4e4c9cf38180d58a0980c90c3434c5d997c4d8cd1c8e93ccef26f502a1",
+    "1-vanilla\\fresh.jfr": "96b9e66b51e346e98818b882dacd0071d7c96369900b899a513f94b6b145d8f4",
+    "1-vanilla\\fresh.log": "f808b7ed94e8747d5f2eef7bcaec0a278da838f9e0d3c33ccbff2c1d3a99b864",
+    "2-default\\cold.jfr": "0c8c65a9ef1d0c278fbf996c4de7919b531111431e1dbabb3d4fe2aba85b86ce",
+    "2-default\\cold.log": "e12094a61f8983952039c7d7aaecefd02262a1e08f887bd10107b8ece642ae98",
+    "2-default\\fresh.jfr": "6a67b9ebf1b10856bfda41ebf73039b51472247cb07c9c86b9bb93a7afb9f54b",
+    "2-default\\fresh.log": "19faf33f10af7394a8c69b5daf3deb086ccdfdbcdaa50ceb7dfd4bb6378a2976",
+    "3-deep\\cold.jfr": "510b95220031801f8da94899855267de0e62eb65b6ec93d785eb3954e14cbb9c",
+    "3-deep\\cold.log": "3cbef5e19f7854d9245cb153b902ee68ebad82039dbc6acaf17710629cacd58e",
+    "3-deep\\fresh.jfr": "0ecff9f56cbefc41f8dce57ba4993b9b8793cba5238f9004a8a09de17aa14f57",
+    "3-deep\\fresh.log": "cae2a4f3f0d6103c826bdff39a6150b4699bb6ba88aae998dbadd02a8897de9f",
+    "4-deep\\cold.jfr": "923ef1368ba96869dc66e163ea215e09b9d4cef341228ce79225431dc13a6839",
+    "4-deep\\cold.log": "903ee8b6e07550f14bc1ccd49dd650b5baadbdab342df3c174592dfc99036cc1",
+    "4-deep\\fresh.jfr": "f616eb6eb490cb91810af55b65cbe47854b42006af0189c170b2e862d0f12733",
+    "4-deep\\fresh.log": "7d6d375a19b2953e320f00308480f49e08302c5f9f93bff20ba33ab3b230e734",
+    "5-default\\cold.jfr": "90ed4dafd95d0324e7729b1c7732008635e66a50f7df3cb19f039d65171e3a2f",
+    "5-default\\cold.log": "f3c4675a8e3a5c640685211b03e716cf0d26aa81171d6b1e7a3825f12ad4c125",
+    "5-default\\fresh.jfr": "43ae2b77d9be83afb6bbd6f48a0639f1d78b07f1ed8ceb16ee7f062652809fb5",
+    "5-default\\fresh.log": "7d6a200ca8d5878773f318f5249c29046a4c9c0a746a3219577c435bf77507a6",
+    "6-vanilla\\cold.jfr": "d83c3ab8c9cd52db553dc0416f860023ea1879c90b9d9f477bfc9605ac672182",
+    "6-vanilla\\cold.log": "871d2935440919f0e091ce2cdc22b313041c1d1e321f10a5ceac4e26e3094c32",
+    "6-vanilla\\fresh.jfr": "e4ac9e500bd8ee74f48627f27248c30bbd5ffc23bb2e847b4299953639da4d78",
+    "6-vanilla\\fresh.log": "8c7ac1328ffa1c6556818fddc8a66c73a381ff7661868a7c8e80c81a3ff3ab92"
+  }
+}

@@ -16,9 +16,6 @@
     ],
     "client": [
       "com.nhat.tidal_terror.fabric.TidalTerrorFabricClient"
-    ],
-    "terrablender": [
-      "com.nhat.tidal_terror.fabric.TidalTerraBlender"
     ]
   },
   "mixins": [
@@ -29,7 +26,6 @@
     "minecraft": "1.21.1",
     "java": ">=21",
     "fabric-api": "*",
-    "architectury": ">=13.0.8",
-    "terrablender": ">=4.1.0.8"
+    "architectury": ">=13.0.8"
   }
 }

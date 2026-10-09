@@ -1,0 +1,74 @@
+{
+  "reference": [
+    0,
+    0
+  ],
+  "method": "Horizontal Euclidean distance from world origin, used as a spawn-area estimate. Actual world spawn positions were not measured. Accepted cells come from native six-seed survey; boundary uses production ReefProvinceLayout at 7200 angular samples per candidate.",
+  "seeds": [
+    {
+      "seed": "0",
+      "nearest_province_center": [
+        -66786,
+        -18054
+      ],
+      "province_edge_blocks": 65470.67,
+      "cathedral_edge_blocks": 68069.431,
+      "center_blocks": 69183.211
+    },
+    {
+      "seed": "1",
+      "nearest_province_center": [
+        55531,
+        18877
+      ],
+      "province_edge_blocks": 55303.492,
+      "cathedral_edge_blocks": 57647.225,
+      "center_blocks": 58651.795
+    },
+    {
+      "seed": "-1",
+      "nearest_province_center": [
+        5740,
+        6426
+      ],
+      "province_edge_blocks": 5433.449,
+      "cathedral_edge_blocks": 7654.143,
+      "center_blocks": 8616.326
+    },
+    {
+      "seed": "7142026",
+      "nearest_province_center": [
+        31428,
+        -92942
+      ],
+      "province_edge_blocks": 94701.981,
+      "cathedral_edge_blocks": 97088.551,
+      "center_blocks": 98111.847
+    },
+    {
+      "seed": "-9223372036854775808",
+      "nearest_province_center": [
+        30676,
+        6893
+      ],
+      "province_edge_blocks": 27814.952,
+      "cathedral_edge_blocks": 30352.96,
+      "center_blocks": 31440.904
+    },
+    {
+      "seed": "9223372036854775807",
+      "nearest_province_center": [
+        -56033,
+        30304
+      ],
+      "province_edge_blocks": 60347.967,
+      "cathedral_edge_blocks": 62695.015,
+      "center_blocks": 63702.665
+    }
+  ],
+  "mean_province_edge_blocks": 51512.085166666664,
+  "median_province_edge_blocks": 57825.7295,
+  "mean_cathedral_edge_blocks": 53917.8875,
+  "mean_center_blocks": 54951.12466666666,
+  "coverage_sha256": "bc5605934b8871f5136b5f8e79f1651719ab945a85716dd47011fd7ea0001fe6"
+}

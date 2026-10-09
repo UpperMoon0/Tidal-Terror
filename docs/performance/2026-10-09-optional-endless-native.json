@@ -1,0 +1,74 @@
+{
+  "scope": "Forge 1.20.1 optional Endless world-type refactor",
+  "base_commit": "7cd9f4c46c6053f68630c1e70e77b21495ab939b",
+  "endless_commit": "f506758830f25041b9a05f932dbca4ea47d92861",
+  "results": {
+    "normal_without_endless": {
+      "passed": true,
+      "log": "build/optional-endless-absent-native-final.log",
+      "sha256": "ef8337a7b2e7a47d17dc0759f3adad419c2f6717af313a91f505291da11646f6",
+      "receipts": [
+        "DEEP_LEGACY_INVENTORY_PASS reference=133c112 features/carvers/spawners",
+        "OPTIONAL_ENDLESS_NATIVE_PASS endless=false normalReef=BlockPos{x=2304, y=32, z=6016} chunksBefore=2209 chunksAfterLookup=2209 preset,codec,features,spawns,compass,bedrock"
+      ]
+    },
+    "normal_with_endless": {
+      "passed": true,
+      "log": "build/optional-endless-present-native.log",
+      "sha256": "e12d2150b46566d742481c3fd8a308a9c21af45e404c3cbbb7b4c949afbad930",
+      "receipts": [
+        "DEEP_LEGACY_INVENTORY_PASS reference=133c112 features/carvers/spawners",
+        "OPTIONAL_ENDLESS_NATIVE_PASS endless=true normalReef=BlockPos{x=2304, y=32, z=6016} chunksBefore=2209 chunksAfterLookup=2209 preset,codec,features,spawns,compass,bedrock"
+      ]
+    },
+    "normal_after_endless_removal": {
+      "passed": true,
+      "log": "build/optional-endless-removed-native.log",
+      "sha256": "6c5676bf0e7589adfa34bac66d74757bd74abba5665137610bf5a53706e4131e",
+      "receipts": [
+        "DEEP_LEGACY_INVENTORY_PASS reference=133c112 features/carvers/spawners",
+        "OPTIONAL_ENDLESS_NATIVE_PASS endless=false normalReef=BlockPos{x=2304, y=32, z=6016} chunksBefore=2209 chunksAfterLookup=2209 preset,codec,features,spawns,compass,bedrock"
+      ]
+    },
+    "deep_fresh": {
+      "passed": true,
+      "log": "build/optional-endless-deep-fresh.log",
+      "sha256": "6dd6b008e539791069f28a4a0053a96204aadad493049d15fa0591fc66d87e5b",
+      "receipts": [
+        "REEF_COMPASS_NATIVE_PASS target=Center[x=-4317, z=37119] chunksBefore=2209 chunksAfter=2209 searchMs=234.3926 recipe,codec,legacy,inventoryTick,foreignSeed",
+        "NATIVE_HEIGHT_BATCH_PASS columns=768 exact native equivalence",
+        "DEEP_LEGACY_INVENTORY_PASS reference=133c112 features/carvers/spawners",
+        "DEEP_REEF_RECOVERY_PASS phase=initial reload=false families={boulder=485, colony=2456, fan=844, pickle=220, plant=925, seagrass=422}",
+        "DEEP_SPAWN_PASS vanillaBelow=3898 vanillaAbove=5376 lowerSpecies=[entity.minecraft.turtle, entity.minecraft.tropical_fish, entity.minecraft.squid, entity.minecraft.dolphin, entity.minecraft.pufferfish, entity.minecraft.glow_squid] drowned=1 drownedWeight=1 floor=-449 ceiling=-338",
+        "DEEP_ADMISSION_WORKER_PASS builds=0",
+        "DEEP_REEF_RECOVERY_PASS phase=ticked reload=false families={boulder=485, colony=2456, fan=844, pickle=220, plant=925, seagrass=422}",
+        "DEEP_AUDIT FRESH_GENERATION PASSED"
+      ]
+    },
+    "deep_cold_reload": {
+      "passed": true,
+      "log": "build/optional-endless-deep-reload.log",
+      "sha256": "5f2941276d1738fddafc0dcb501ec110e85f11482835bbab71e913ec3cb14b58",
+      "receipts": [
+        "REEF_COMPASS_NATIVE_PASS target=Center[x=-4317, z=37119] chunksBefore=5821 chunksAfter=5821 searchMs=90.5045 recipe,codec,legacy,inventoryTick,foreignSeed",
+        "NATIVE_HEIGHT_BATCH_PASS columns=768 exact native equivalence",
+        "DEEP_LEGACY_INVENTORY_PASS reference=133c112 features/carvers/spawners",
+        "DEEP_REEF_RECOVERY_PASS phase=initial reload=true families={boulder=485, colony=2456, fan=844, pickle=220, plant=925, seagrass=422}",
+        "DEEP_SPAWN_PASS vanillaBelow=3898 vanillaAbove=5706 lowerSpecies=[entity.minecraft.glow_squid, entity.minecraft.tropical_fish, entity.minecraft.turtle, entity.minecraft.dolphin, entity.minecraft.pufferfish, entity.minecraft.squid] drowned=1 drownedWeight=1 floor=-449 ceiling=-338",
+        "DEEP_ADMISSION_WORKER_PASS builds=0",
+        "DEEP_REEF_RECOVERY_PASS phase=ticked reload=true families={boulder=485, colony=2456, fan=844, pickle=220, plant=925, seagrass=422}",
+        "DEEP_AUDIT COLD_RELOAD PASSED"
+      ]
+    }
+  },
+  "production_jar": {
+    "path": "build\\libs\\tidalterror-0.0.4.jar",
+    "sha256": "1c466b775893e80b58f9f6040e5697166ea15c983de04c33feeb3dd2fe9a1784",
+    "fixture_exclusion": true,
+    "endless_bundled": false,
+    "optional_dependency": true,
+    "conditional_world_type_pack": true,
+    "compass_frames": 32
+  },
+  "tooling_tests": 24
+}

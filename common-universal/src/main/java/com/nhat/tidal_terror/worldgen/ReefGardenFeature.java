@@ -14,14 +14,17 @@ public final class ReefGardenFeature extends Feature<NoneFeatureConfiguration> {
     @Override public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> c) {
         var level=c.level(); var terrain=new ReefTerrain(level,c.chunkGenerator());
         int mx=c.origin().getX()&~15,mz=c.origin().getZ()&~15;
-        long worldSeed=level.getSeed();
+        return decorate(ReefBlockAccess.nativeLevel(level),terrain,level.getSeed(),level.getSeaLevel(),mx,mz);
+    }
+    /** Shared legacy garden algorithm, including colonies, rocks and every decoration family. */
+    public static boolean decorate(ReefBlockAccess level,ReefTerrain terrain,long worldSeed,int seaLevel,int mx,int mz) {
         // Include neighbouring anchors, reconstruct whole shapes, write only our
         // slice. Structures no longer stop or re-centre at every 16-block seam.
         for(int x=mx-7;x<mx+23;x++)for(int z=mz-7;z<mz+23;z++) {
             var colony=ReefGardenLayout.colony(worldSeed,x,z);
             if(colony==null || !terrain.reef(x,z))continue;
             int base=terrain.anchorFloor(x,z)+1;
-            int h=Math.min(colony.height(),level.getSeaLevel()-base-3);
+            int h=Math.min(colony.height(),seaLevel-base-3);
             if(h<2)continue;
             var r=new Random(colony.seed());
             double aspect=.7+r.nextDouble()*.7, radius=2.4+r.nextDouble()*2.0;
@@ -59,7 +62,7 @@ public final class ReefGardenFeature extends Feature<NoneFeatureConfiguration> {
             }
             for(BlockPos p:shape.keySet())if(own(p,mx,mz)&&r.nextInt(3)==0&&level.getBlockState(p.above()).is(Blocks.WATER)) {
                 var decoration=r.nextInt(4)==0?PLANTS[colony.color()].defaultBlockState():CoralCathedralFeature.FANS[colony.color()].defaultBlockState();
-                if(decoration.canSurvive(level,p.above()))level.setBlock(p.above(),decoration,2);
+                if(decoration.canSurvive(level.reader(),p.above()))level.setBlock(p.above(),decoration,2);
             }
         }
         for(int x=mx;x<mx+16;x++)for(int z=mz;z<mz+16;z++) {
@@ -72,7 +75,7 @@ public final class ReefGardenFeature extends Feature<NoneFeatureConfiguration> {
             int kind=r.nextInt(10);
             var decoration=kind<2?Blocks.SEAGRASS.defaultBlockState():kind<6?PLANTS[color].defaultBlockState():kind<9?CoralCathedralFeature.FANS[color].defaultBlockState():
                     Blocks.SEA_PICKLE.defaultBlockState().setValue(SeaPickleBlock.PICKLES,1+r.nextInt(4));
-            if(decoration.canSurvive(level,p))level.setBlock(p,decoration,2);
+            if(decoration.canSurvive(level.reader(),p))level.setBlock(p,decoration,2);
         }
         return true;
     }

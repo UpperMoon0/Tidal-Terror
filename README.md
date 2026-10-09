@@ -2,7 +2,7 @@
 
 ![Tidal Terror banner](docs/assets/tidal-terror-banner.png)
 
-Explore **Coral Cathedral**, a deep ocean biome with towering coral formations, irregular reef gardens, sandstone seabeds, and four animated marine creatures. Its deepest interior waters extend roughly 100 blocks below the surface, with some giant coral crowns reaching almost to sea level.
+Explore **Coral Cathedral** and the surrounding **Sunken Wastes** in new ocean provinces. The full-size Cathedral retains its giant coral formations, reef gardens and four animated marine creatures; broad adjoining Wastes rings contain sand and rock landmarks. Normal worlds use ordinary terrain heights. An optional Forge 1.20.1 world type extends the same provinces deep beneath the world with Endless.
 
 ## Creatures and food
 
@@ -17,7 +17,7 @@ All four have custom spawn eggs in the **Tidal Terror** creative tab. The Crushe
 
 ## Reef equipment (0.0.2)
 
-Coral Cathedral supplies an **iron-to-diamond specialist equipment branch**. Coral Crushers drop 1â€“2 **Crusher Teeth**, and Shardbacks drop 1â€“2 **Shardback Plates**, alongside seafood. Looting can increase the material drops. Living Shardbacks also shed a plate while safely foraging on submerged sediment after 5â€“6 minutes of loaded underwater time; keep a respectful distance so they can forage. The initial molt takes five minutes, and cooldowns persist across saves.
+Coral Cathedral supplies an **iron-to-diamond specialist equipment branch**. Coral Crushers drop 1�?"2 **Crusher Teeth**, and Shardbacks drop 1�?"2 **Shardback Plates**, alongside seafood. Looting can increase the material drops. Living Shardbacks also shed a plate while safely foraging on submerged sediment after 5�?"6 minutes of loaded underwater time; keep a respectful distance so they can forage. The initial molt takes five minutes, and cooldowns persist across saves.
 
 Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather**. Upgrade each matching iron armor piece with **three Shardback Plates and one dead coral block** at a crafting table. Any of the five vanilla dead coral block varieties works. Isolate a coral block from adjacent water to let it die, then mine the dead block with a pickaxe; Silk Touch is not required for the dead block. Collecting teeth or plates unlocks their recipes in the recipe book. Teeth repair the spear; plates repair the armor.
 
@@ -29,25 +29,31 @@ Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather
 
 The equipment inherits the mobs' materials: an ivory tooth and sandy bindings for the spear; violet Shardback carapace, cobalt coral, ivory segments and slate joints for armor. Diamond remains the stronger general defensive tier. See [equipment artwork and verification](docs/Reef-Equipment-Art-Workflow.md).
 
-**Serration Iâ€“III** adds 0.5 damage per level every two seconds. **Hemorrhage Iâ€“II** extends bleeding to six/eight seconds. Both are spear-only enchantments available through tables and books/anvils, and can be combined with each other. Both conflict with Sharpness, Smite and Bane of Arthropods, creating a choice between immediate damage and stronger bleeding. All five book levels appear beside the spear in the Tidal Terror creative tab; book tooltips explain their level-specific bleeding bonuses. The spear tooltip shows enchanted damage every two seconds and duration. Coral Crusher bites also cause the base bleed: two damage over four seconds, with the same custom blood particles. The spear points forward in both hands. Bleeding produces custom blood droplets and dispersing underwater plumes with a dedicated status icon. See [sprite references, bleeding and enchantment details](docs/Reef-Sprites-and-Bleeding.md).
+**Serration I�?"III** adds 0.5 damage per level every two seconds. **Hemorrhage I�?"II** extends bleeding to six/eight seconds. Both are spear-only enchantments available through tables and books/anvils, and can be combined with each other. Both conflict with Sharpness, Smite and Bane of Arthropods, creating a choice between immediate damage and stronger bleeding. All five book levels appear beside the spear in the Tidal Terror creative tab; book tooltips explain their level-specific bleeding bonuses. The spear tooltip shows enchanted damage every two seconds and duration. Coral Crusher bites also cause the base bleed: two damage over four seconds, with the same custom blood particles. The spear points forward in both hands. Bleeding produces custom blood droplets and dispersing underwater plumes with a dedicated status icon. See [sprite references, bleeding and enchantment details](docs/Reef-Sprites-and-Bleeding.md).
 
 JEI loads automatically in the development client (`runClient`) for recipe inspection. It is optional development tooling and is not bundled into the release.
 
 ## Install and explore
 
-Choose the jar matching your Minecraft version and loader. Version **0.0.3 adds four ports** alongside the original Forge build:
+Choose the jar matching your Minecraft version and loader. Version **0.0.4** supports five loader/version targets and changes default new-world ocean generation:
 
 | Minecraft | Loader | Java | Required companion mods |
 | --- | --- | --- | --- |
-| 1.20.1 | Forge 47.2+ | 17 | TerraBlender 3.0.1.6+ |
-| 1.20.1 | Fabric Loader 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+, TerraBlender 3.0.1.6+ |
-| 1.21.1 | Fabric Loader 0.17.2+ | 21 | Fabric API, Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
-| 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
-| 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+, TerraBlender 26.1.2.0.3+ |
+| 1.20.1 | Forge 47.2+ | 17 | None |
+| 1.20.1 | Fabric Loader 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+ |
+| 1.21.1 | Fabric Loader 0.16.14+ | 21 | Fabric API, Architectury API 13.0.8+ |
+| 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+ |
+| 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+ |
 
-Install companion mods for the **same Minecraft version and loader** on both the server and clients. Fabric 1.20.1 includes Reach Entity Attributes 2.4.0 for the spear's extra reach; the newer versions use Minecraft's native reach attribute. Architectury API, Fabric API and TerraBlender are separate downloads.
+Install companion mods for the **same Minecraft version and loader** on both the server and clients. Fabric 1.20.1 includes Reach Entity Attributes 2.4.0 for the spear's extra reach; the newer versions use Minecraft's native reach attribute. Architectury API and Fabric API are separate downloads; TerraBlender is no longer required. Fabric 1.21.1 declares Loader 0.16.14 as its metadata minimum and is built and tested with Loader 0.17.2.
 
-Coral Cathedral targets roughly 5% of ocean area with default biome settings. Its region scale stays unchanged. Find it in newly generated ocean chunks, or use `/locate biome tidalterror:coral_cathedral` with commands enabled. Existing chunks retain their terrain and structures. Reef structure fixes affect future generation. Dolphins, turtles, and tropical fish can spawn at reef depths alongside the new creatures.
+New normal worlds on all five ports contain Cathedral-centered ocean provinces surrounded by Sunken Wastes instead of the previous rare standalone Cathedral placement. The Cathedral retains its 1,024-block nominal radius; complete Wastes rings may reshape coastlines inside their footprint. With commands enabled, locate either the Cathedral or Sunken Wastes biome. Already generated chunks are not regenerated.
+
+**Forge 1.20.1 only:** Craft a **Reef Compass** from a Compass, three Amethyst Shards and a Nautilus Shell to find a nearby accepted Cathedral without forcing distant chunk loads. The optional, experimental **Deep Reef Province (Endless)** world type requires Endless 0.9.3 (supported range: 0.9.3 to below 0.10) and its Architectury API 9.2.14+ dependency on both client and server. Configure Endless with a minimum build height at or below -512 before creating a new world. Other loaders have neither the Reef Compass nor this deep world type; ordinary worlds do not require Endless.
+
+**World-preset compatibility warning:** Version 0.0.4 replaces the vanilla **minecraft:normal** world preset JSON. Other mods or datapacks replacing that same preset do not merge automatically: whichever pack wins takes ownership of the normal-world generator/dimensions. Use a deliberately merged preset or a separate custom world type; test in a new disposable world first. There is no migration for older TerraBlender saves. Details are in [Sunken Wastes design and limitations](docs/Sunken-Wastes-Province.md).
+
+**Experimental deep-world limitations:** Cave and structure integration remains incomplete, and the native deep audit disables structures. Preset-collision checks do not prove compatibility with every modpack. Worst-case populated burst-load timings and the recorded client/tick timing regressions remain unresolved; the historical benchmark reports are retained as measured and do not establish a general performance improvement. Use a disposable new world for evaluation and keep backups.
 
 Coral Crushers ignore Creative and Spectator players. Use Survival or Adventure to try their hunting behavior. Shaders are optional and are not required to play.
 
@@ -61,7 +67,7 @@ Author: **NsTut**. Licensed under the [MIT License](LICENSE.txt). The original F
 
 ## Development
 
-The original Forge development commands use Java 17. The Gradle wrapper downloads development dependencies on the first build. Ports use Java 21 to run Gradle, with Java 17, 21 or 25 compilation/runtime toolchains selected for each target.
+The original Forge development commands use Java 17. Before any Forge build, build the exact Endless commit in `tools/endless-source.json` with Java 21 and `:forge-1.20.1:remapJar`, then copy `endless-forge-1.20.1-0.9.3.jar` into `.dependencies/endless/`. This compile-time dependency is required even when the runtime will not use Endless; it is not bundled. The Gradle wrapper downloads the other development dependencies on the first build. Ports use Java 21 to run Gradle, with Java 17, 21 or 25 compilation/runtime toolchains selected for each target.
 
 ```powershell
 ./gradlew.bat build
@@ -80,7 +86,7 @@ The Forge release jar is written to `build/libs`. Port jars are written to each 
 
 See [multi-version architecture and verification](docs/Multi-Version-Ports.md) for source ownership, runtime checks and release packaging.
 
-To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.txt`, and push to `main`. CI runs native regression checks and packaging verification, then uploads all five verified jars to CurseForge and creates the matching GitHub release only after every upload has a matching receipt. Publication requires the repository secret `CURSEFORGE_API_TOKEN`.
+To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.txt`, and push to `main`. CI runs native regression checks and packaging verification, then uploads all five verified jars to CurseForge and creates the matching GitHub release only after every upload has a matching receipt. Publication requires the repository secret `CURSEFORGE_API_TOKEN`. Verify the compatible Endless Forge 0.9.3 release is publicly downloadable before publishing this version; see the [release checklist](docs/Release-Checklist.md).
 
 Generate biome and feature data with `./gradlew.bat runData`. Generated registry JSON is tracked; runtime worlds and generator caches are ignored.
 

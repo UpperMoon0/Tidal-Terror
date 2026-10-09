@@ -1,58 +1,33 @@
 package com.nhat.tidal_terror.gametest;
-
-import com.mojang.datafixers.util.Pair;
-import com.nhat.tidal_terror.worldgen.ReefDistribution;
-import com.nhat.tidal_terror.worldgen.ReefWorldgen;
+import com.nhat.tidal_terror.worldgen.*;
 import net.minecraft.core.Holder;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Climate;
-import terrablender.api.Region;
-import terrablender.api.RegionType;
-import terrablender.worldgen.IExtendedParameterList;
-
-/** Check the actual injected native parameter list, including native fallback. */
+import net.minecraft.world.level.biome.*;
+/** Shared native regression for all loaders, without any biome injection dependency. */
 public final class ReefDistributionTests {
-    @SuppressWarnings("unchecked")
-    public static void verify(GameTestHelper h, Holder<Biome> nativeBiome) {
+    public static void verify(GameTestHelper h,Holder<Biome> ocean) {
+        h.assertTrue(ocean.is(net.minecraft.tags.BiomeTags.IS_OCEAN),"Fixture needs tagged vanilla ocean");
         long seed=7142026L;
-        var parameters=new Climate.ParameterList<>(java.util.List.of(Pair.of(
-                Climate.parameters(.4F,0F,-.5F,0F,0F,0F,0F),nativeBiome)));
-        var extended=(IExtendedParameterList<Holder<Biome>>)(Object)parameters;
-        extended.initializeForTerraBlender(h.getLevel().registryAccess(),RegionType.OVERWORLD,seed);
-        var gate=ReefDistribution.mask(seed); var reload=ReefDistribution.mask(seed);
-        var search=treeSearch();
-        int kept=0,suppressed=0,unchanged=0;
+        var sampler=h.getLevel().getChunkSource().randomState().sampler();
+        var source=new ReefProvinceBiomeSource(new FixedBiomeSource(ocean),ocean,ocean,false);
+        var reload=new ReefProvinceBiomeSource(new FixedBiomeSource(ocean),ocean,ocean,false);
+        var center=ReefProvinceLayout.center(seed,-1,1);
+        int admitted=0,outside=0;
         for(int x=-4096;x<=4096;x+=64)for(int z=-4096;z<=4096;z+=64) {
-            for(var point:new Climate.TargetPoint[]{Climate.target(.4F,0F,-.5F,0F,0F,0F),Climate.target(-.8F,0F,-.5F,0F,0F,0F)}) {
-                var original=(Holder<Biome>)search.apply(extended.getTree(extended.getUniqueness(x,8,z)),point);
-                if(original.is(Region.DEFERRED_PLACEHOLDER))original=parameters.findValue(point);
-                var actual=extended.findValuePositional(point,x,8,z);
-                h.assertTrue(gate.get(x,z)==reload.get(x,z),"Seeded reef gate changed on reconstruction");
-                if(original.is(ReefWorldgen.BIOME)) {
-                    if(gate.get(x,z)==0){suppressed++;h.assertTrue(actual==nativeBiome,"Excluded reef did not preserve the native/datapack tree");}
-                    else{kept++;h.assertTrue(actual==original,"Selected reef lost its biome");}
-                    h.assertTrue(actual==extended.findValuePositional(point,x,24,z),"Reef gate varied vertically");
-                }else{unchanged++;h.assertTrue(actual==original,"Changed a non-reef biome candidate");}
-            }
+            var first=source.province(seed,center.x()+x,center.z()+z,sampler);
+            h.assertTrue(java.util.Objects.equals(first,reload.province(seed,center.x()+x,center.z()+z,sampler)),"Province moved on reconstruction");
+            if(first==null)outside++;else admitted++;
         }
-        h.assertTrue(kept>0&&suppressed>kept&&unchanged>0,"Fixture missed retained reefs, rarity rejection or non-reef candidates");
-        System.out.println("TIDAL_REEF_DISTRIBUTION: kept="+kept+" suppressed="+suppressed+" unchanged="+unchanged);
+        h.assertTrue(admitted>0&&outside>0,"Fixture missed full province or vanilla background");
+        h.assertTrue(source.province(seed,center.x(),center.z(),sampler).zone()==ReefProvinceLayout.Zone.CATHEDRAL,"Large core missing");
+        ProvinceSeeds.bind(sampler,seed);
+        h.assertTrue(source.getNoiseBiome(0,24,0,sampler)==ocean,"Above-sea delegate changed");
+        // Direct holders carry no ocean tag: a land-only delegate must reject the entire footprint.
+        var land=new ReefProvinceBiomeSource(new FixedBiomeSource(Holder.direct(ocean.value())),ocean,ocean,false);
+        h.assertTrue(land.province(seed,center.x(),center.z(),sampler)==null,"Land-only climate admitted a province");
+        System.out.println("TIDAL_REEF_DISTRIBUTION: province="+admitted+" background="+outside+" stable,land-rejection");
+        ProvincePresetAudit.verify(h);
         h.succeed();
     }
-    // Native RTree and its distance metric are package-private; reflect only in
-    // this opt-in fixture to compare against TerraBlender's unfiltered selection.
-    private static java.util.function.BiFunction<Object,Climate.TargetPoint,Object> treeSearch() {
-        try {
-            var metric=Class.forName("net.minecraft.world.level.biome.Climate$DistanceMetric");
-            var node=Class.forName("net.minecraft.world.level.biome.Climate$RTree$Node");
-            var distance=node.getDeclaredMethod("distance",long[].class);distance.setAccessible(true);
-            var delegate=java.lang.reflect.Proxy.newProxyInstance(metric.getClassLoader(),new Class<?>[]{metric},
-                    (proxy,method,args)->distance.invoke(args[0],args[1]));
-            var tree=Class.forName("net.minecraft.world.level.biome.Climate$RTree");
-            var search=tree.getDeclaredMethod("search",Climate.TargetPoint.class,metric);search.setAccessible(true);
-            return (value,point)->{try{return search.invoke(value,point,delegate);}catch(ReflectiveOperationException failure){throw new RuntimeException(failure);}};
-        }catch(ReflectiveOperationException failure){throw new RuntimeException(failure);}
-    }
-    private ReefDistributionTests() {}
+    private ReefDistributionTests(){}
 }

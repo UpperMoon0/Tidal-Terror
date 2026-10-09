@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" A ", "ACA", " P "],
+  "key": {
+    "A": {"item": "minecraft:amethyst_shard"},
+    "C": {"item": "minecraft:compass"},
+    "P": {"item": "minecraft:nautilus_shell"}
+  },
+  "result": {"item": "tidalterror:reef_compass"}
+}

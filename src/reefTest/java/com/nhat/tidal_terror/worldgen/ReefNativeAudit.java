@@ -59,22 +59,10 @@ public final class ReefNativeAudit {
         try {
             var terrain=new ReefTerrain(level,level.getChunkSource().getGenerator());
             if(auditCenter==null) {
-                var found=level.getChunkSource().getGenerator().getBiomeSource().findBiomeHorizontal(
-                        0,32,0,16000,16,holder->holder.is(ReefWorldgen.BIOME),RandomSource.create(7142026),true,
-                        level.getChunkSource().randomState().sampler());
-                require(found!=null,"Reef missing from native Overworld biome source");
-                BlockPos nearest=found.getFirst();
-                // A rare biome's nearest edge fragment need not have a deep basin.
-                // Select a genuinely large fixture; keep every terrain/footprint
-                // assertion below unchanged and latch it across chunk preparation.
-                outer: for(int radius=0;radius<=16000;radius+=64)
-                    for(int edge=-radius;edge<=radius;edge+=64)
-                        for(int side=0;side<4;side++) {
-                            int x=nearest.getX()+(side<2?(side==0?-radius:radius):edge);
-                            int z=nearest.getZ()+(side<2?edge:(side==2?-radius:radius));
-                            if(largeAuditReef(terrain,x,z)){auditCenter=new BlockPos(x,32,z);break outer;}
-                        }
-                require(auditCenter!=null,"No large deep reef fixture within the bounded search");
+                var found=ReefLocator.find(level,0,0,()->false);
+                require(found!=null,"Province missing from default Overworld");
+                auditCenter=new BlockPos(found.x(),32,found.z());
+                require(largeAuditReef(terrain,auditCenter.getX(),auditCenter.getZ()),"Default Cathedral lost its full-sized core");
             }
             BlockPos center=auditCenter;
             System.out.println("REEF_AUDIT biome="+center);
@@ -223,9 +211,9 @@ public final class ReefNativeAudit {
             var expectedItems=Set.of("coral_crusher_spawn_egg","cathedral_ray_spawn_egg","veilglow_spawn_egg","shardback_spawn_egg",
                     "raw_coral_crusher_steak","cooked_coral_crusher_steak","raw_cathedral_ray_wing","cooked_cathedral_ray_wing",
                     "raw_veilglow_gel","cooked_veilglow_gel","raw_shardback_claw","cooked_shardback_claw",
-                    "crusher_tooth","shardback_plate","fang_arrow","reef_spear","reef_helmet","reef_chestplate","reef_leggings","reef_boots","enchanted_book");
+                    "crusher_tooth","shardback_plate","fang_arrow","reef_spear","reef_compass","reef_helmet","reef_chestplate","reef_leggings","reef_boots","enchanted_book");
             var actualItems=tab.getDisplayItems().stream().map(stack -> net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem()).getPath()).collect(java.util.stream.Collectors.toSet());
-            require(tab.getDisplayItems().size()==25 && actualItems.equals(expectedItems),"Wrong creative tab contents: "+actualItems);
+            require(tab.getDisplayItems().size()==26 && actualItems.equals(expectedItems),"Wrong creative tab contents: "+actualItems);
             require(!net.minecraftforge.registries.ForgeRegistries.ITEMS.containsKey(new net.minecraft.resources.ResourceLocation("tidalterror","example_item")),"Template item remains");
             require(!net.minecraftforge.registries.ForgeRegistries.BLOCKS.containsKey(new net.minecraft.resources.ResourceLocation("tidalterror","example_block")),"Template block remains");
             require(tab.getDisplayItems().stream().filter(stack -> stack.is(net.minecraft.world.item.Items.ENCHANTED_BOOK)).count()==5,"Missing spear enchantment book levels");
@@ -259,10 +247,10 @@ public final class ReefNativeAudit {
             for(int ray=0;ray<8;ray++) {
                 double angle=ray*Math.PI/4;
                 BlockPos last=center;
-                for(int distance=4;distance<=1600;distance+=4) {
+                for(int distance=4;distance<=4096;distance+=4) {
                     BlockPos next=new BlockPos(center.getX()+(int)Math.round(Math.cos(angle)*distance),32,
                             center.getZ()+(int)Math.round(Math.sin(angle)*distance));
-                    if(terrain.reef(next.getX(),next.getZ())) { last=next;continue; }
+                    if(terrain.province(next.getX(),next.getZ())) { last=next;continue; }
                     int nativeFloor=level.getChunkSource().getGenerator().getBaseHeight(last.getX(),last.getZ(),
                             net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,
                             level.getChunkSource().randomState())-1;

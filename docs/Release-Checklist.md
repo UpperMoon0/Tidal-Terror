@@ -1,16 +1,20 @@
 # Release checklist
 
-CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minecraft/mc-mods/tidal-terror). Its description is maintained in `CURSEFORGE.md`. TerraBlender is a required dependency of every uploaded file.
+CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minecraft/mc-mods/tidal-terror). Its description is maintained in `CURSEFORGE.md`. TerraBlender is no longer a dependency of any target; Endless is optional for Forge 1.20.1.
 
 ## Version-driven publication
 
-The workflows follow Endless's structure, adapted to Forge 1.20.1 and Java 17. To release:
+The version-driven workflow publishes all five loader/version targets. Merging a version change to `main` starts publication automatically; it is not a merge-only check. Before releasing 0.0.4:
 
-1. Change `mod_version` in `gradle.properties` and add nonempty `changelogs/vVERSION.txt` notes.
-2. Commit and push to `main`. The Release workflow compares the version with the previous revision. An untagged current version also runs, allowing the initial release and workflow repairs.
-3. Preflight rejects missing notes and tags belonging to another commit. Validation runs 71 native GameTests, the terrain audit, five model checks, release tooling tests, and a clean packaging check.
-4. A separate clean build produces the ordinary jar, verifies expanded metadata, dependencies, the icon and all resources, and rejects test/preview classes. The exact jar, SHA256SUMS, and source manifest are retained as an artifact and in a draft GitHub release.
-5. The same jar uploads to CurseForge project 1726637 using `CURSEFORGE_API_TOKEN`, marked Forge 1.20.1, Java 17, client/server, release, with required TerraBlender. A receipt containing its file ID and checksum is saved before the GitHub release becomes public.
+1. Confirm `mod_version=0.0.4` in `gradle.properties`, nonempty `changelogs/v0.0.4.txt` notes, and no `v0.0.4` tag reserved by another commit. Update the current README, CurseForge description and changelog while preserving historical benchmark data and reports.
+2. Publish Endless 0.9.3 first and verify that its Forge 1.20.1 jar is publicly downloadable. Tidal's optional runtime range is `[0.9.3,0.10)`; older Endless releases cannot supply the supported deep adapter. Deep users also need Architectury API 9.2.14+ on the server and clients. Ordinary Tidal Forge worlds need neither companion.
+3. Check `tools/endless-source.json`: CI builds that exact reviewed Endless commit and shares its unbundled Forge 0.9.3 jar with the validation and release builds. A local Forge build also requires this jar in `.dependencies/endless/`, even when Endless is absent at runtime. The pin need not change for an Endless docs-only merge whose runtime code is unchanged.
+4. Confirm the latest exact-head Validate run: Forge native gameplay/model/terrain suites, normal worlds with and without Endless and reload after removing it, deep fresh/cold generation, four port native/client suites, tooling regressions, and clean five-target packaging. Passing these checks does not resolve the documented deep cave/structure, preset-collision or performance limitations.
+5. Commit and push to `main`. The Release workflow detects the changed or untagged version, rejects missing notes or a tag belonging to another commit, reruns Validate, then clean-builds and verifies all five production jars. Archive metadata/resources, required companions, optional Endless, and fixture exclusion must pass.
+6. The complete immutable bundle (five jars, SHA256SUMS and source/version manifest) is retained as an artifact and reserved in a draft GitHub release. `CURSEFORGE_API_TOKEN` publishes the original Forge jar first, then all four ports with the matching loader, Minecraft and Java metadata. Forge declares optional `nstut-endless`; Fabric declares required Architectury/Fabric API; NeoForge declares required Architectury. Fabric 1.20.1 bundles Reach Entity Attributes 2.4.0.
+7. Every CurseForge upload must produce a receipt matching its artifact checksum and source commit. Only after all five receipts are verified does the GitHub release become public. Check that the CurseForge project description matches `CURSEFORGE.md`; this workflow uploads file notes and does not update the project description.
+
+The five artifacts are Forge 1.20.1 (Java 17), Fabric 1.20.1 (Java 17), Fabric 1.21.1 (Java 21), NeoForge 1.21.1 (Java 21) and NeoForge 26.1.2 (Java 25). Loader and companion minimums are listed in the README; Fabric 1.21.1 declares Loader 0.16.14 and is tested with 0.17.2.
 
 Normal PRs and non-main pushes use Validate without publishing. Manual Release runs must target `main`. Completed uploads with a recorded receipt are reused; differing bytes or reused version tags fail rather than overwrite a release. Archive ordering and timestamps are stable across rebuilds.
 
@@ -20,7 +24,7 @@ Use **Re-run failed jobs** for a failed pipeline. A manual retry of the exact ta
 
 Check the Actions run, the GitHub release's jar/checksum/manifest, and the CurseForge Files page separately. An accepted upload can remain pending moderation; green Actions does not mean a publicly downloadable CurseForge file. Client playtesting and shader screenshot review remain separate from automated native checks.
 
-The normal jar excludes worlds, logs, development galleries, shader packs, and test/preview classes. TerraBlender and optional shaders are separate downloads. The mod is MIT licensed; the preserved third-party Forge MDK notice is `LICENSE-Forge-MDK.txt`.
+The normal jar excludes worlds, logs, development galleries, shader packs, and test/preview classes. Endless and optional shaders are separate downloads. The mod is MIT licensed; the preserved third-party Forge MDK notice is `LICENSE-Forge-MDK.txt`.
 
 ## Verified initial release
 

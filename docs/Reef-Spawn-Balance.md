@@ -1,5 +1,8 @@
 # Reef spawn balance
 
+Generation update for 0.0.4: new normal worlds use ocean provinces on every supported loader, with no TerraBlender dependency. The old region-weight and rarity measurements below are historical; current placement is described in [Sunken Wastes Province](Sunken-Wastes-Province.md). Wildlife weights and habitat rules remain shared with the province generators.
+
+
 Coral Cathedral keeps the warm-ocean roster, with drowned selection weight
 reduced from 5 to 1 (group size still one). This is approximately an 80 percent
 reduction in selection frequency. Native drowned placement, darkness, depth
@@ -35,12 +38,38 @@ habitat determine the population. Existing spawn depths and the crab's
 sediment requirement remain intact. Restart the client/server to load the
 updated categories and biome data. Existing drowned are not removed.
 
-Crab natural spawn attempts project the randomly sampled column onto its loaded
+In ordinary presets, crab natural spawn attempts project the randomly sampled column onto its loaded
 OCEAN_FLOOR height, when it has submerged, sturdy sediment. Other species keep
 Minecraft's original height sampling. The crab's biome/depth/clearance rules,
 player distances, group size and caps still run in NaturalSpawner. This improves
 success on suitable seabed without increasing the crab population budget. Coral
 structures and steep neighboring columns can still invalidate an attempt.
+
+In the experimental deep Forge province preset, all four custom species spawn
+only in Coral Cathedral water beneath the local giant-coral canopy. The canopy
+envelope uses the decorator's seeded anchors and heights, with a bounded column
+cache; it does not scan the configured world height. Shardbacks target the basin
+sediment rather than the coral-topped ocean heightmap. Custom placement rules
+also reject upper water and the surrounding Wastes, including horizontally
+shifted native group attempts.
+
+Vanilla aquatic categories sample the whole basin water column. The existing
+Cathedral deep-water routes for tropical fish, dolphins and turtles remain
+available; squid and pufferfish also receive a deep route restricted to this
+preset. Glow squid retain their native dark-water rule. Vanilla species can
+spawn both below and above the canopy. Monster
+attempts also sample the basin so Drowned can reach deep water. Their Cathedral
+selection weight remains 1; other native placement, collision, distance and
+population checks remain active. This changes natural spawn positions, not
+movement limits or existing entities.
+
+Endless supplies the logical lower-bound check in native spawn dispatch while
+keeping dense chunk arrays at their persisted height. Tidal Terror supplies
+habitat selection. `-PprovincePrototype -PdeepProvinceTests runServer` exercises
+all four species and vanilla fish/Drowned using real native spawn dispatch in
+generated sparse terrain with a nearby player; `-PdeepReload` repeats it after
+a cold restart. The fixture discards its counted mobs, so counts prove spawn
+acceptance and zone routing rather than steady-state population density.
 
 Group size is per group, not a spacing rule. Minecraft tries up to three groups
 near one sampled point, so a Crusher group of one can still yield 2-3 nearby

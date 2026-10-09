@@ -4,6 +4,23 @@
   "package": "com.nhat.tidal_terror.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "tidalterror.refmap.json",
-  "mixins": ["ReefDistributionMixin", "CrabSpawnTargetMixin", "ReefWaterPostprocessMixin", "ReefTurtlePlacementMixin", "ReefShipwreckPlacementMixin", "ReefRuinedPortalPlacementMixin"],
-  "injectors": { "defaultRequire": 1 }
+  "mixins": [
+    "CrabSpawnTargetMixin",
+    "ReefWaterPostprocessMixin",
+    "ReefTurtlePlacementMixin",
+    "ReefShipwreckPlacementMixin",
+    "ReefRuinedPortalPlacementMixin",
+    "ProvinceRandomStateMixin",
+    "ProvinceClimateSamplerMixin",
+    "ProvinceNativeHeightMixin",
+    "ProvinceNoiseCellAccess",
+    "DeepProvinceChunkMixin",
+    "DeepProvincePreparationMixin",
+    "DeepProvinceBiomeMixin",
+    "DeepProvinceHeightMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "plugin": "com.nhat.tidal_terror.mixin.ReefMixinPlugin"
 }

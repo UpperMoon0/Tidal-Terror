@@ -1,0 +1,92 @@
+{
+  "method": "Euclidean distance from native Climate.Sampler.findSpawnPosition, before the 11x11-chunk final surface spawn search.",
+  "seeds": [
+    {
+      "seed": "0",
+      "spawn_search_hint": [
+        -31,
+        6
+      ],
+      "nearest_center": [
+        -4317,
+        37119
+      ],
+      "province_edge_blocks": 33772.984,
+      "cathedral_edge_blocks": 36283.528,
+      "center_blocks": 37359.665
+    },
+    {
+      "seed": "1",
+      "spawn_search_hint": [
+        126,
+        178
+      ],
+      "nearest_center": [
+        12240,
+        -28558
+      ],
+      "province_edge_blocks": 27824.182,
+      "cathedral_edge_blocks": 30174.979,
+      "center_blocks": 31185.04
+    },
+    {
+      "seed": "-1",
+      "spawn_search_hint": [
+        452,
+        118
+      ],
+      "nearest_center": [
+        -3946,
+        4314
+      ],
+      "province_edge_blocks": 2373.499,
+      "cathedral_edge_blocks": 4960.254,
+      "center_blocks": 6078.554
+    },
+    {
+      "seed": "7142026",
+      "spawn_search_hint": [
+        -182,
+        -134
+      ],
+      "nearest_center": [
+        20667,
+        -4103
+      ],
+      "province_edge_blocks": 17589.071,
+      "cathedral_edge_blocks": 20132.729,
+      "center_blocks": 21223.425
+    },
+    {
+      "seed": "-9223372036854775808",
+      "spawn_search_hint": [
+        0,
+        0
+      ],
+      "nearest_center": [
+        3920,
+        -12533
+      ],
+      "province_edge_blocks": 9772.539,
+      "cathedral_edge_blocks": 12121.817,
+      "center_blocks": 13131.736
+    },
+    {
+      "seed": "9223372036854775807",
+      "spawn_search_hint": [
+        0,
+        0
+      ],
+      "nearest_center": [
+        12387,
+        -12166
+      ],
+      "province_edge_blocks": 14122.528,
+      "cathedral_edge_blocks": 16389.093,
+      "center_blocks": 17362.296
+    }
+  ],
+  "mean_province_edge_blocks": 17575.8005,
+  "mean_cathedral_edge_blocks": 20010.399999999998,
+  "mean_center_blocks": 21056.786
+}

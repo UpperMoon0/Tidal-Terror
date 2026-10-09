@@ -19,11 +19,33 @@ public final class CoralCathedralFeature extends Feature<NoneFeatureConfiguratio
  }
  @Override public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> c){
   var level=c.level();var terrain=new ReefTerrain(level,c.chunkGenerator());int mx=c.origin().getX()&~15,mz=c.origin().getZ()&~15;boolean placed=false;
+  placed=decorate(ReefBlockAccess.nativeLevel(level),terrain,level.getSeed(),level.getSeaLevel(),mx,mz,
+      c.chunkGenerator().getBiomeSource() instanceof ReefProvinceAccess access && access.deep());
+  // Finish the flooded volume after native decoration. Unsupported waterlogged
+  // plants return AIR in native neighbour-shape processing; retain their water.
+  BlockPos.MutableBlockPos p=new BlockPos.MutableBlockPos();
+  for(int x=mx;x<mx+16;x++)for(int z=mz;z<mz+16;z++){
+   if(!terrain.reef(x,z))continue;
+   int floor=terrain.floor(x,z);
+   for(int y=level.getMinY();y<level.getSeaLevel();y++){
+    p.set(x,y,z);var state=level.getBlockState(p);
+    boolean invalid=state.getFluidState().is(net.minecraft.tags.FluidTags.WATER)
+        && !(state.getBlock() instanceof net.minecraft.world.level.block.LiquidBlock)
+        && (!state.canSurvive(level,p) || net.minecraft.world.level.block.Block.updateFromNeighbourShapes(state,level,p).isAir());
+    if(state.is(Blocks.MAGMA_BLOCK) || state.is(Blocks.SOUL_SAND))level.setBlock(p,Blocks.SANDSTONE.defaultBlockState(),2);
+    else if(y>floor && (state.isAir() || invalid || state.is(Blocks.BUBBLE_COLUMN)))level.setBlock(p,Blocks.WATER.defaultBlockState(),2);
+   }
+  }
+  return placed;
+ }
+ /** Shared giant bodies and crown fans; the deep path must not maintain a reduced copy. */
+ public static boolean decorate(ReefBlockAccess level,ReefTerrain terrain,long worldSeed,int seaLevel,int mx,int mz,boolean deep) {
+  boolean placed=false;
   for(int gx=Math.floorDiv(mx-40,88);gx<=Math.floorDiv(mx+55,88);gx++)for(int gz=Math.floorDiv(mz-40,88);gz<=Math.floorDiv(mz+55,88);gz++){
-   long seed=seed(level.getSeed(),gx,gz);Random r=new Random(seed);
+   long seed=seed(worldSeed,gx,gz);Random r=new Random(seed);
    int cx=gx*88+44+r.nextInt(13)-6,cz=gz*88+44+r.nextInt(13)-6;
    if(!terrain.giant(cx,cz))continue;int base=terrain.anchorFloor(cx,cz)+1,style=r.nextInt(3);
-   int height=level.getSeaLevel()-base-2-r.nextInt(5);if(Math.floorMod(gx+gz,3)!=0)height-=12+r.nextInt(20);
+   int height=seaLevel-base-2-r.nextInt(5);if(deep)height=Math.min(height,110-r.nextInt(5));if(Math.floorMod(gx+gz,3)!=0)height-=12+r.nextInt(20);
    Key k=new Key(seed,height,style);CoralGeometry.Plan plan;
    synchronized(CACHE){plan=CACHE.computeIfAbsent(k,key->CoralGeometry.build(key.seed,key.height,key.style));}
    for(var e:plan.blocks().entrySet()){
@@ -54,24 +76,10 @@ public final class CoralCathedralFeature extends Feature<NoneFeatureConfiguratio
     BlockPos p=new BlockPos(x,base+v.y(),z),top=p.above();
     if(plan.blocks().containsKey(new CoralGeometry.Voxel(v.x(),v.y()+1,v.z())) || !level.getBlockState(top).is(Blocks.WATER))continue;
     var fan=FANS[kind].defaultBlockState();
-    if(fan.canSurvive(level,top))level.setBlock(top,fan,2);
-   }
-  }
-  // Finish the flooded volume after native decoration. Unsupported waterlogged
-  // plants return AIR in native neighbour-shape processing; retain their water.
-  BlockPos.MutableBlockPos p=new BlockPos.MutableBlockPos();
-  for(int x=mx;x<mx+16;x++)for(int z=mz;z<mz+16;z++){
-   if(!terrain.reef(x,z))continue;
-   int floor=terrain.floor(x,z);
-   for(int y=level.getMinY();y<level.getSeaLevel();y++){
-    p.set(x,y,z);var state=level.getBlockState(p);
-    boolean invalid=state.getFluidState().is(net.minecraft.tags.FluidTags.WATER)
-        && !(state.getBlock() instanceof net.minecraft.world.level.block.LiquidBlock)
-        && (!state.canSurvive(level,p) || net.minecraft.world.level.block.Block.updateFromNeighbourShapes(state,level,p).isAir());
-    if(state.is(Blocks.MAGMA_BLOCK) || state.is(Blocks.SOUL_SAND))level.setBlock(p,Blocks.SANDSTONE.defaultBlockState(),2);
-    else if(y>floor && (state.isAir() || invalid || state.is(Blocks.BUBBLE_COLUMN)))level.setBlock(p,Blocks.WATER.defaultBlockState(),2);
+    if(fan.canSurvive(level.reader(),top))level.setBlock(top,fan,2);
    }
   }
   return placed;
  }
+
 }

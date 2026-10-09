@@ -66,16 +66,26 @@ def verify_jar(path, value):
         assert meta['license'] == 'MIT' and mod['authors'] == 'NsTut'
         deps = {d['modId']: d for d in meta['dependencies']['tidalterror']}
         assert deps['minecraft']['versionRange'] == '[1.20.1]'
-        for name in ('forge', 'minecraft', 'terrablender'):
+        for name in ('forge', 'minecraft'):
             assert deps[name]['mandatory'] and deps[name]['side'] == 'BOTH'
-        assert deps['terrablender']['versionRange'] == '[3.0.1.6,3.1)'
+        assert 'terrablender' not in deps
+        assert not deps['endless']['mandatory'] and deps['endless']['side'] == 'BOTH'
+        assert deps['endless']['versionRange'] == '[0.9.3,0.10)'
+        assert 'packs/endless_province/pack.mcmeta' in names
+        assert 'reef-province-prototype.marker' not in names
+        normal=json.loads(jar.read('data/minecraft/worldgen/world_preset/normal.json'))
+        source=normal['dimensions']['minecraft:overworld']['generator']['biome_source']
+        assert source['type']=='tidalterror:reef_province' and not source.get('deep',False)
+        assert source['placement_version']==2
+        assert 'tidalterror.mixins.json' in names
+        assert 'ReefDistributionMixin' not in json.loads(jar.read('tidalterror.mixins.json'))['mixins']
         icon = jar.read(mod['logoFile'])
         assert icon[:8] == b'\x89PNG\r\n\x1a\n'
         assert struct.unpack('>II', icon[16:24]) == (500, 500)
         assert 'tidalterror.mixins.json' in names
         json.loads(jar.read('tidalterror.mixins.json'))
         # Every production resource must survive packaging.
-        for folder in ('src/main/resources', 'src/generated/resources'):
+        for folder in ('src/main/resources', 'src/generated/resources', 'src/forgeProvince/resources'):
             base = ROOT / folder
             for source in base.rglob('*'):
                 if source.is_file() and '.cache' not in source.parts:

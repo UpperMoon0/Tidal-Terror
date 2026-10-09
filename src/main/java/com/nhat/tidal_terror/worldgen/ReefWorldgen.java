@@ -27,11 +27,11 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import terrablender.api.*;
 import java.util.List;
 import java.util.Set;
 
 public final class ReefWorldgen {
+    public static final ResourceKey<Biome> WASTES = ResourceKey.create(Registries.BIOME, id("sunken_wastes"));
     public static final ResourceKey<Biome> BIOME = ResourceKey.create(Registries.BIOME, id("coral_cathedral"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED = ResourceKey.create(Registries.CONFIGURED_FEATURE, id("giant_coral"));
     public static final ResourceKey<PlacedFeature> PLACED = ResourceKey.create(Registries.PLACED_FEATURE, id("giant_coral"));
@@ -44,37 +44,29 @@ public final class ReefWorldgen {
     public static final ResourceKey<PlacedFeature> BASIN_PLACED = ResourceKey.create(Registries.PLACED_FEATURE, id("reef_basin"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> GARDEN_CONFIG = ResourceKey.create(Registries.CONFIGURED_FEATURE, id("reef_garden"));
     public static final ResourceKey<PlacedFeature> GARDEN_PLACED = ResourceKey.create(Registries.PLACED_FEATURE, id("reef_garden"));
+    private static final DeferredRegister<com.mojang.serialization.Codec<? extends BiomeSource>> PROVINCE_SOURCES =
+            DeferredRegister.create(Registries.BIOME_SOURCE, TidalTerror.MODID);
+    static { PROVINCE_SOURCES.register("reef_province", () -> ReefProvinceBiomeSource.CODEC); }
+
+    public static final RegistryObject<SunkenWastesFeature> WASTES_FEATURE = FEATURES.register("wastes_landmarks", SunkenWastesFeature::new);
+    public static final ResourceKey<ConfiguredFeature<?, ?>> WASTES_CONFIG = ResourceKey.create(Registries.CONFIGURED_FEATURE, id("wastes_landmarks"));
+    public static final ResourceKey<PlacedFeature> WASTES_PLACED = ResourceKey.create(Registries.PLACED_FEATURE, id("wastes_landmarks"));
     private static ResourceLocation id(String path) { return new ResourceLocation(TidalTerror.MODID, path); }
 
     public static void register(IEventBus bus) {
         FEATURES.register(bus);
+        PROVINCE_SOURCES.register(bus);
         bus.addListener(ReefWorldgen::data);
         bus.addListener(ReefWorldgen::spawns);
+        bus.addListener(EndlessProvincePack::register);
         bus.addListener(ReefAnimalSpawns::register);
-        bus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) -> event.enqueueWork(() -> {
-            SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, TidalTerror.MODID,
-                    SurfaceRules.ifTrue(SurfaceRules.isBiome(BIOME), SurfaceRules.sequence(
-                            SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.state(net.minecraft.world.level.block.Blocks.SAND.defaultBlockState())),
-                            SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.state(net.minecraft.world.level.block.Blocks.SAND.defaultBlockState())))));
-            Regions.register(new Region(id("reefs"), RegionType.OVERWORLD, com.nhat.tidal_terror.balance.ReefBalance.REEF_REGION_WEIGHT) {
-                @Override public void addBiomes(net.minecraft.core.Registry<Biome> registry,
-                        java.util.function.Consumer<com.mojang.datafixers.util.Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
-                    addModifiedVanillaOverworldBiomes(mapper, builder -> {
-                        builder.replaceBiome(Biomes.WARM_OCEAN, BIOME);
-                        builder.replaceBiome(Biomes.LUKEWARM_OCEAN, BIOME);
-                        builder.replaceBiome(Biomes.OCEAN, BIOME);
-                        builder.replaceBiome(Biomes.DEEP_OCEAN, BIOME);
-                        builder.replaceBiome(Biomes.DEEP_LUKEWARM_OCEAN, BIOME);
-                    });
-                }
-            });
-        }));
     }
 
     private static void spawns(SpawnPlacementRegisterEvent event) {
         event.register(ModEntities.SHARDBACK.get(), SpawnPlacements.Type.IN_WATER,
                 Heightmap.Types.OCEAN_FLOOR, (type, level, reason, pos, random) ->
-                    level.getBiome(pos).is(BIOME) && pos.getY()<level.getSeaLevel()-4
+                    (level.getBiome(pos).is(BIOME) || level.getBiome(pos).is(WASTES)) && pos.getY()<level.getSeaLevel()-4
+                    && ReefSpawnHabitat.allowed(level.getLevel(),pos)
                     && level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.WATER)
                     && level.getBlockState(pos.above()).is(net.minecraft.world.level.block.Blocks.WATER)
                     && com.nhat.tidal_terror.entities.shardback.ShardbackEntity.isSeabed(level.getBlockState(pos.below()))
@@ -82,21 +74,22 @@ public final class ReefWorldgen {
                 SpawnPlacementRegisterEvent.Operation.REPLACE);
         event.register(ModEntities.VEILGLOW.get(), SpawnPlacements.Type.IN_WATER,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (type, level, reason, pos, random) -> {
-                    if(!level.getBiome(pos).is(BIOME) || pos.getY()>=level.getSeaLevel()-8)return false;
+                    if(!level.getBiome(pos).is(BIOME) || pos.getY()>=level.getSeaLevel()-8 || !ProvinceSpawnRules.allowed(level,pos,false))return false;
                     // The tall bell and hanging ribbons need an entirely submerged column.
                     for(int y=-1;y<=3;y++)if(!level.getBlockState(pos.above(y)).is(net.minecraft.world.level.block.Blocks.WATER))return false;
                     return true;
                 }, SpawnPlacementRegisterEvent.Operation.REPLACE);
         event.register(ModEntities.CATHEDRAL_RAY.get(), SpawnPlacements.Type.IN_WATER,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (type, level, reason, pos, random) ->
-                    level.getBiome(pos).is(BIOME) && pos.getY() < level.getSeaLevel()-4
+                    level.getBiome(pos).is(BIOME) && ProvinceSpawnRules.allowed(level,pos,false) && pos.getY() < level.getSeaLevel()-4
                     && level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.WATER)
                     && level.getBlockState(pos.above()).is(net.minecraft.world.level.block.Blocks.WATER)
                     && level.getBlockState(pos.below()).is(net.minecraft.world.level.block.Blocks.WATER),
                 SpawnPlacementRegisterEvent.Operation.REPLACE);
         event.register(ModEntities.CORAL_CRUSHER.get(), SpawnPlacements.Type.IN_WATER,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (type, level, reason, pos, random) -> {
-                    if (!level.getBiome(pos).is(BIOME) || pos.getY() >= level.getSeaLevel()-4) return false;
+                    if (!(level.getBiome(pos).is(BIOME) || level.getBiome(pos).is(WASTES)) || pos.getY() >= level.getSeaLevel()-4) return false;
+                    if (!ProvinceSpawnRules.allowed(level, pos, true)) return false;
                     // Unlike WaterAnimal's surface-only rule, reef sharks can use deep water.
                     // NaturalSpawner subsequently checks the entity's actual 2x1 collision box.
                     return level.getFluidState(pos).is(FluidTags.WATER)
@@ -108,6 +101,7 @@ public final class ReefWorldgen {
     private static void data(GatherDataEvent event) {
         RegistrySetBuilder builder = new RegistrySetBuilder()
                 .add(Registries.CONFIGURED_FEATURE, context -> {
+                    context.register(WASTES_CONFIG, new ConfiguredFeature<>(WASTES_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
                     context.register(CONFIGURED, new ConfiguredFeature<>(GIANT_CORAL.get(), NoneFeatureConfiguration.INSTANCE));
                     context.register(BASIN_CONFIG, new ConfiguredFeature<>(BASIN.get(), NoneFeatureConfiguration.INSTANCE));
                     context.register(GARDEN_CONFIG, new ConfiguredFeature<>(GARDEN.get(), NoneFeatureConfiguration.INSTANCE));
@@ -115,6 +109,7 @@ public final class ReefWorldgen {
                 .add(Registries.PLACED_FEATURE, context -> {
                     // No random offset: each feature owns the decorating chunk, including its edges.
                     var configured=context.lookup(Registries.CONFIGURED_FEATURE);
+                    context.register(WASTES_PLACED,new PlacedFeature(configured.getOrThrow(WASTES_CONFIG),List.of()));
                     context.register(PLACED,new PlacedFeature(configured.getOrThrow(CONFIGURED),List.of()));
                     context.register(BASIN_PLACED,new PlacedFeature(configured.getOrThrow(BASIN_CONFIG),List.of()));
                     context.register(GARDEN_PLACED,new PlacedFeature(configured.getOrThrow(GARDEN_CONFIG),List.of()));
@@ -164,6 +159,20 @@ public final class ReefWorldgen {
         mobs.addSpawn(ModEntities.RAY_POOL, new MobSpawnSettings.SpawnerData(ModEntities.CATHEDRAL_RAY.get(), 6, 2, 3));
         mobs.addSpawn(ModEntities.VEILGLOW_POOL, new MobSpawnSettings.SpawnerData(ModEntities.VEILGLOW.get(), 8, 2, 4));
         mobs.addSpawn(ModEntities.SHARDBACK_POOL, new MobSpawnSettings.SpawnerData(ModEntities.SHARDBACK.get(), 10, 1, 3));
+        {
+            BiomeGenerationSettings.Builder wastesGeneration = new BiomeGenerationSettings.Builder(placed, carvers);
+            wastesGeneration.addFeature(GenerationStep.Decoration.RAW_GENERATION, BASIN_PLACED);
+            wastesGeneration.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, PLACED);
+            wastesGeneration.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, WASTES_PLACED);
+            MobSpawnSettings.Builder wastesMobs = new MobSpawnSettings.Builder();
+            wastesMobs.addSpawn(MobCategory.WATER_AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.COD, 3, 1, 2));
+            wastesMobs.addSpawn(ModEntities.CRUSHER_POOL, new MobSpawnSettings.SpawnerData(ModEntities.CORAL_CRUSHER.get(), 1, 1, 1));
+            wastesMobs.addSpawn(ModEntities.SHARDBACK_POOL, new MobSpawnSettings.SpawnerData(ModEntities.SHARDBACK.get(), 2, 1, 1));
+            context.register(WASTES, new Biome.BiomeBuilder().hasPrecipitation(true).temperature(.8F).downfall(.5F)
+                    .specialEffects(new BiomeSpecialEffects.Builder().waterColor(0x648f91).waterFogColor(0x304f60)
+                            .fogColor(0xc0d8ff).skyColor(0x78a7ff).build())
+                    .mobSpawnSettings(wastesMobs.build()).generationSettings(wastesGeneration.build()).build());
+        }
         context.register(BIOME, new Biome.BiomeBuilder().hasPrecipitation(true).temperature(.95F).downfall(.8F)
                 .specialEffects(new BiomeSpecialEffects.Builder().waterColor(0x35bdb2).waterFogColor(0x126b82)
                         .fogColor(0xc0d8ff).skyColor(0x78a7ff).build())

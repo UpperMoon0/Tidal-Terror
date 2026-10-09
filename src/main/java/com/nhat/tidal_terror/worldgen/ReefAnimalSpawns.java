@@ -32,11 +32,27 @@ public final class ReefAnimalSpawns {
                 reason == MobSpawnType.NATURAL && deepWater(level, pos));
         event.register(EntityType.TURTLE, (type, level, reason, pos, random) ->
                 reason == MobSpawnType.NATURAL && deepWater(level, pos));
+        // These native surface bands cannot reach the new deep canopy. Extend
+        // them only in this preset; leave ordinary biomes and presets untouched.
+        event.register(EntityType.SQUID, (type, level, reason, pos, random) ->
+                reason == MobSpawnType.NATURAL && ReefSpawnHabitat.deep(level.getLevel()) && deepWater(level,pos));
+        event.register(EntityType.PUFFERFISH, (type, level, reason, pos, random) ->
+                reason == MobSpawnType.NATURAL && ReefSpawnHabitat.deep(level.getLevel()) && deepWater(level,pos));
     }
 
     @SubscribeEvent
     public static void turtlePosition(MobSpawnEvent.PositionCheck event) {
         var turtle = event.getEntity();
+        var server=event.getLevel().getLevel();
+        if(event.getSpawnType()==MobSpawnType.NATURAL && ReefSpawnHabitat.deep(server)) {
+            var pos=turtle.blockPosition();
+            var terrain=new ReefTerrain(server,server.getChunkSource().getGenerator());
+            if(terrain.provinceSample(pos.getX(),pos.getZ())!=null) {
+                if(com.nhat.tidal_terror.entities.ModEntities.reefPools().contains(turtle.getType().getCategory())) {
+                    if(!ReefSpawnHabitat.allowed(server,pos))event.setResult(Event.Result.DENY);
+                }
+            }
+        }
         if (turtle instanceof Turtle && event.getSpawnType() == MobSpawnType.NATURAL
                 && deepWater(event.getLevel(), turtle.blockPosition())
                 && event.getLevel().noCollision(turtle) && event.getLevel().isUnobstructed(turtle)

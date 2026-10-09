@@ -11,6 +11,33 @@ concurrency:
 permissions:
   contents: read
 jobs:
+  endless:
+    name: Build pinned Endless dependency
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read reviewed dependency commit
+        id: source
+        run: echo "ref=$(python3 -c 'import json; print(json.load(open("tools/endless-source.json"))["commit"])')" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          repository: UpperMoon0/Endless
+          ref: ${{ steps.source.outputs.ref }}
+          path: build/endless-source
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build Forge dependency from source
+        working-directory: build/endless-source
+        run: chmod +x gradlew && ./gradlew :forge-1.20.1:remapJar --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reviewed-endless-forge
+          path: build/endless-source/forge-1.20.1/build/libs/endless-forge-1.20.1-0.9.3.jar
+          if-no-files-found: error
   tooling:
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +46,27 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tools -p 'test_*.py' -v
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Partial water repair cold-restart handler regression
+        run: python tools/province/check_water_finish.py
+      - name: Exact seabed cache regression
+        run: |
+          mkdir -p build/province-cache-check
+          javac -d build/province-cache-check common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ChunkColumnCache.java tools/province/ChunkColumnCacheCheck.java
+          java -cp build/province-cache-check ChunkColumnCacheCheck
+      - name: Complete province layout and bounded locator regression
+        run: |
+          mkdir -p build/province-layout-check
+          javac -d build/province-layout-check common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ReefProvinceLayout.java common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ProvinceLocatorSearch.java tools/province/ProvinceLayoutCheck.java tools/province/DeepLayoutCheck.java tools/province/ProvinceLocatorSearchCheck.java
+          java -cp build/province-layout-check ProvinceLayoutCheck
+          java -cp build/province-layout-check DeepLayoutCheck
+          java -cp build/province-layout-check ProvinceLocatorSearchCheck
+
   native:
+    needs: endless
     name: Native ${{ matrix.suite }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
@@ -54,13 +101,17 @@ jobs:
           - suite: terrain
             property: reefTests
             task: runServer
-            directory: reef-native-test-v4a
+            directory: reef-native-test-v5-province
           - suite: models
             property: coralCrusherModelTests
             task: verifyCoralCrusherAnimation verifyCathedralRayModel verifyVeilglowModel verifyShardbackModel verifyReefEquipmentModel
             directory: model-tests
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: reviewed-endless-forge
+          path: .dependencies/endless
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -87,7 +138,82 @@ jobs:
             build/*-model*/
             build/equipment-art/
           if-no-files-found: ignore
+  optional-endless:
+    needs: endless
+    name: Normal world with optional Endless (${{ matrix.endless }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        endless: [absent, present]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: reviewed-endless-forge
+          path: .dependencies/endless
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Native normal-world dependency and parity checks
+        run: |
+          chmod +x gradlew
+          extra=''
+          if [[ '${{ matrix.endless }}' == present ]]; then extra='-PwithEndless'; fi
+          ./gradlew -PoptionalEndlessTests $extra runServer --no-daemon
+          ./gradlew -PoptionalEndlessTests $extra runServer --no-daemon
+      - name: Reload a normal world after removing Endless
+        if: matrix.endless == 'present'
+        run: |
+          mkdir -p build/optional-endless-removed
+          cp -a build/optional-endless-present/normal-world build/optional-endless-removed/
+          ./gradlew -PoptionalEndlessTests -PoptionalEndlessTestDirectory=build/optional-endless-removed runServer --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: optional-endless-${{ matrix.endless }}-evidence
+          path: |
+            build/optional-endless-${{ matrix.endless }}/
+            build/optional-endless-removed/
+          if-no-files-found: error
+  deep-province:
+    needs: endless
+    name: Deep province generation and cold reload
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: reviewed-endless-forge
+          path: .dependencies/endless
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Fresh basin, lighting and bulk admission regression
+        run: chmod +x gradlew && ./gradlew -PprovincePrototype -PdeepProvinceTests runServer --no-daemon
+      - name: Separate JVM cold reload preserving player edits
+        run: ./gradlew -PprovincePrototype -PdeepProvinceTests -PdeepReload runServer --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deep-province-evidence
+          path: |
+            build/deep-province-test/logs/
+            build/deep-province-test/passed.txt
+            build/deep-province-test/failure.txt
+            build/deep-province-test/checkpoint.json
+            build/deep-province-test/interrupted-proto.nbt
+            build/deep-province-test/interrupted-water.nbt
+            build/libs/tidalterror-*.jar
+          if-no-files-found: ignore
   ports:
+    needs: endless
     name: Port ${{ matrix.target }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -97,6 +223,10 @@ jobs:
         target: [fabric-1.20.1, fabric-1.21.1, neoforge-1.21.1, neoforge-26.1.2]
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: reviewed-endless-forge
+          path: .dependencies/endless
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -137,12 +267,17 @@ jobs:
             ${{ matrix.target }}/build/libs/*.jar
           if-no-files-found: ignore
   package:
+    needs: endless
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: reviewed-endless-forge
+          path: .dependencies/endless
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

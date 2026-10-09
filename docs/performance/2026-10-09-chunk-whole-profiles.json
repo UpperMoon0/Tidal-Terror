@@ -1,0 +1,4587 @@
+[
+  {
+    "variant": "vanilla",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "outside",
+    "execution_samples": 356,
+    "top_frames": [
+      [
+        "dgw$c.a",
+        47
+      ],
+      [
+        "dwf.a",
+        37
+      ],
+      [
+        "dwi.a",
+        25
+      ],
+      [
+        "dhn.a",
+        24
+      ],
+      [
+        "dho.a",
+        21
+      ],
+      [
+        "dib$w.tryApply",
+        16
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        14
+      ],
+      [
+        "dhe$a.a",
+        14
+      ],
+      [
+        "cnt$e$c.a",
+        14
+      ],
+      [
+        "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+        11
+      ],
+      [
+        "dhk.a",
+        8
+      ],
+      [
+        "dhe$e.a",
+        8
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        110
+      ],
+      [
+        "Worker-Main-2",
+        103
+      ],
+      [
+        "Worker-Main-3",
+        97
+      ],
+      [
+        "Server thread",
+        42
+      ],
+      [
+        "IO-Worker-7",
+        2
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 20,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.050773373S",
+      "PT0.048740071S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "cathedral",
+    "execution_samples": 475,
+    "top_frames": [
+      [
+        "dgw$c.a",
+        91
+      ],
+      [
+        "dwf.a",
+        46
+      ],
+      [
+        "dwi.a",
+        27
+      ],
+      [
+        "dho.a",
+        26
+      ],
+      [
+        "dib$w.tryApply",
+        24
+      ],
+      [
+        "cnt$e$c.a",
+        23
+      ],
+      [
+        "dhn.a",
+        21
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        20
+      ],
+      [
+        "dhe$a.a",
+        15
+      ],
+      [
+        "dho$i.a",
+        11
+      ],
+      [
+        "dhe$p.a",
+        10
+      ],
+      [
+        "dhk.a",
+        6
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        152
+      ],
+      [
+        "Worker-Main-1",
+        140
+      ],
+      [
+        "Worker-Main-3",
+        137
+      ],
+      [
+        "Server thread",
+        44
+      ],
+      [
+        "IO-Worker-7",
+        2
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 19,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.053671956S",
+      "PT0.058128663S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "inner_wastes",
+    "execution_samples": 495,
+    "top_frames": [
+      [
+        "dgw$c.a",
+        69
+      ],
+      [
+        "dwf.a",
+        42
+      ],
+      [
+        "dwi.a",
+        40
+      ],
+      [
+        "dho.a",
+        28
+      ],
+      [
+        "dib$w.tryApply",
+        25
+      ],
+      [
+        "dhn.a",
+        23
+      ],
+      [
+        "cnt$e$c.a",
+        22
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        21
+      ],
+      [
+        "dhe$a.a",
+        13
+      ],
+      [
+        "dca$a.a",
+        12
+      ],
+      [
+        "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+        11
+      ],
+      [
+        "dhk.a",
+        10
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        154
+      ],
+      [
+        "Worker-Main-3",
+        143
+      ],
+      [
+        "Worker-Main-1",
+        140
+      ],
+      [
+        "Server thread",
+        56
+      ],
+      [
+        "IO-Worker-5",
+        2
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 15,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.0457196S",
+      "PT0.046637251S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "blend_edge",
+    "execution_samples": 451,
+    "top_frames": [
+      [
+        "dgw$c.a",
+        84
+      ],
+      [
+        "dwf.a",
+        39
+      ],
+      [
+        "dwi.a",
+        29
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        28
+      ],
+      [
+        "cnt$e$c.a",
+        25
+      ],
+      [
+        "dhn.a",
+        23
+      ],
+      [
+        "dib$w.tryApply",
+        22
+      ],
+      [
+        "dho.a",
+        20
+      ],
+      [
+        "dhe$e.a",
+        10
+      ],
+      [
+        "dxe.c",
+        9
+      ],
+      [
+        "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+        7
+      ],
+      [
+        "dca$a.a",
+        7
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        153
+      ],
+      [
+        "Worker-Main-1",
+        141
+      ],
+      [
+        "Worker-Main-2",
+        121
+      ],
+      [
+        "Server thread",
+        34
+      ],
+      [
+        "RCON Client /127.0.0.1 #2",
+        1
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 19,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.04558147S",
+      "PT0.046586697S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "outside",
+    "execution_samples": 18,
+    "top_frames": [
+      [
+        "apl.a",
+        2
+      ],
+      [
+        "eed.b",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.andTree",
+        1
+      ],
+      [
+        "java.util.HashMap$TreeNode.getTreeNode",
+        1
+      ],
+      [
+        "deq$d$2.a",
+        1
+      ],
+      [
+        "java.util.concurrent.ForkJoinPool.unmanagedBlock",
+        1
+      ],
+      [
+        "dcd.a",
+        1
+      ],
+      [
+        "com.mojang.serialization.codecs.PrimitiveCodec.lambda$decode$0",
+        1
+      ],
+      [
+        "dej.a",
+        1
+      ],
+      [
+        "sun.nio.ch.FileChannelImpl.write",
+        1
+      ],
+      [
+        "any.b",
+        1
+      ],
+      [
+        "deq.a",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        16
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ],
+      [
+        "IO-Worker-8",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 3,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.027170119S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "cathedral",
+    "execution_samples": 18,
+    "top_frames": [
+      [
+        "dej.a",
+        3
+      ],
+      [
+        "dey.a",
+        2
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap.get",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.unipush",
+        1
+      ],
+      [
+        "java.io.DataInputStream.readUnsignedByte",
+        1
+      ],
+      [
+        "hr$$Lambda$554+0x000001da573648e8.149567803.apply",
+        1
+      ],
+      [
+        "dhk.a",
+        1
+      ],
+      [
+        "apl.a",
+        1
+      ],
+      [
+        "com.mojang.serialization.DataResult.flatMap",
+        1
+      ],
+      [
+        "dfx.b",
+        1
+      ],
+      [
+        "aif.a",
+        1
+      ],
+      [
+        "net.minecraft.server.MinecraftServer.F",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        16
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ],
+      [
+        "IO-Worker-5",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 2,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "inner_wastes",
+    "execution_samples": 9,
+    "top_frames": [
+      [
+        "java.util.concurrent.CompletableFuture.getNow",
+        2
+      ],
+      [
+        "java.lang.String.indexOf",
+        1
+      ],
+      [
+        "dey.a",
+        1
+      ],
+      [
+        "duf$a.valueOf",
+        1
+      ],
+      [
+        "det.a",
+        1
+      ],
+      [
+        "dhk.a",
+        1
+      ],
+      [
+        "java.util.HashMap$TreeNode.getTreeNode",
+        1
+      ],
+      [
+        "cmo.aj",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        8
+      ],
+      [
+        "Worker-Main-1",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "blend_edge",
+    "execution_samples": 36,
+    "top_frames": [
+      [
+        "java.util.HashMap$TreeNode.getTreeNode",
+        3
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.reportJoin",
+        3
+      ],
+      [
+        "com.mojang.serialization.DataResult.flatMap",
+        2
+      ],
+      [
+        "apl.a",
+        2
+      ],
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        2
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postComplete",
+        2
+      ],
+      [
+        "deq.a",
+        2
+      ],
+      [
+        "dey.a",
+        1
+      ],
+      [
+        "java.lang.invoke.DirectMethodHandle.allocateInstance",
+        1
+      ],
+      [
+        "java.lang.String.indexOf",
+        1
+      ],
+      [
+        "java.io.BufferedOutputStream.write",
+        1
+      ],
+      [
+        "com.mojang.serialization.DataResult.resultOrPartial",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        32
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ],
+      [
+        "Worker-Main-3",
+        1
+      ],
+      [
+        "Worker-Main-2",
+        1
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 6,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.034522248S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "outside",
+    "execution_samples": 477,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        90
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        38
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        31
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        26
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        17
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        17
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        14
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        13
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute",
+        12
+      ],
+      [
+        "java.util.HashMap$TreeNode.find",
+        8
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$PureTransformer.compute",
+        8
+      ],
+      [
+        "net.minecraft.world.level.material.FluidState.isEmpty",
+        7
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        4
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        135
+      ],
+      [
+        "Worker-Main-3",
+        135
+      ],
+      [
+        "Worker-Main-1",
+        132
+      ],
+      [
+        "Server thread",
+        71
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ],
+      [
+        "Thread-2",
+        1
+      ],
+      [
+        "RCON Listener #1",
+        1
+      ],
+      [
+        "IO-Worker-5",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 21,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.046717421S",
+      "PT0.071196231S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "cathedral",
+    "execution_samples": 543,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        86
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        36
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        33
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        32
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        27
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        19
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute",
+        17
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        16
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.fillAllDirectly",
+        15
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        9
+      ],
+      [
+        "net.minecraft.world.level.levelgen.carver.CaveWorldCarver.createTunnel",
+        9
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$BlendDensity.transform",
+        9
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        2
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        172
+      ],
+      [
+        "Worker-Main-2",
+        158
+      ],
+      [
+        "Worker-Main-1",
+        148
+      ],
+      [
+        "Server thread",
+        62
+      ],
+      [
+        "IO-Worker-6",
+        2
+      ],
+      [
+        "JFR Periodic Tasks",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 23,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.04045412S",
+      "PT0.042218477S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "inner_wastes",
+    "execution_samples": 511,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        107
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        44
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        31
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        23
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        23
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        19
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        15
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        13
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        11
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute",
+        11
+      ],
+      [
+        "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase.is",
+        9
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.getAndSet",
+        7
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        169
+      ],
+      [
+        "Worker-Main-2",
+        152
+      ],
+      [
+        "Worker-Main-3",
+        142
+      ],
+      [
+        "Server thread",
+        46
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 24,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.049399276S",
+      "PT0.046173177S",
+      "PT0.041308348S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "blend_edge",
+    "execution_samples": 627,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        92
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        51
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        46
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        27
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        25
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        24
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        22
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        19
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        14
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.fillAllDirectly",
+        11
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute",
+        11
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.reportJoin",
+        11
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        5
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        181
+      ],
+      [
+        "Worker-Main-3",
+        180
+      ],
+      [
+        "Worker-Main-2",
+        172
+      ],
+      [
+        "Server thread",
+        89
+      ],
+      [
+        "IO-Worker-5",
+        2
+      ],
+      [
+        "JFR Periodic Tasks",
+        1
+      ],
+      [
+        "Thread-2",
+        1
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {
+      "NoiseBasedChunkGenerator.getBaseHeight": 1,
+      "NoiseBasedChunkGenerator.iterateNoiseColumn": 1
+    },
+    "truncated_samples": 28,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.032854611S",
+      "PT0.042068145S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "outside",
+    "execution_samples": 21,
+    "top_frames": [
+      [
+        "net.minecraft.util.CrudeIncrementalIntIdentityHashBiMap.indexOf",
+        2
+      ],
+      [
+        "net.minecraft.server.level.ChunkMap.getChunkRangeFuture",
+        1
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.primeHeightmaps",
+        1
+      ],
+      [
+        "java.lang.invoke.DirectMethodHandle.allocateInstance",
+        1
+      ],
+      [
+        "net.minecraft.server.level.ChunkMap.markPosition",
+        1
+      ],
+      [
+        "net.minecraft.nbt.ListTag.get",
+        1
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.getAll",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.biApplyStage",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.LevelChunkSection.getBlockState",
+        1
+      ],
+      [
+        "java.nio.Buffer.checkIndex",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postComplete",
+        1
+      ],
+      [
+        "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        20
+      ],
+      [
+        "IO-Worker-8",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.03048035S",
+      "PT0.028302364S",
+      "PT0.015738694S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "cathedral",
+    "execution_samples": 8,
+    "top_frames": [
+      [
+        "java.lang.Integer.getChars",
+        1
+      ],
+      [
+        "java.lang.StringConcatHelper.stringOf",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        1
+      ],
+      [
+        "net.minecraft.world.level.lighting.LayerLightSectionStorage.getDataLayer",
+        1
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.primeHeightmaps",
+        1
+      ],
+      [
+        "net.minecraft.server.level.ServerChunkCache.tickChunks",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        1
+      ],
+      [
+        "com.google.common.collect.AbstractIterator.<init>",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        7
+      ],
+      [
+        "Worker-Main-1",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "default",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "inner_wastes",
+    "execution_samples": 21,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        3
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.biApplyStage",
+        1
+      ],
+      [
+        "net.minecraft.Util.sequence",
+        1
+      ],
+      [
+        "java.lang.String.substring",
+        1
+      ],
+      [
+        "com.mojang.serialization.Codec$16.read",
+        1
+      ],
+      [
+        "java.util.Optional.map",
+        1
+      ],
+      [
+        "java.util.HashMap.putVal",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.reportJoin",
+        1
+      ],
+      [
+        "net.minecraft.world.ticks.LevelTicks.sortContainersToTick",
+        1
+      ],
+      [
+        "java.util.Objects.requireNonNull",
+        1
+      ],
+      [
+        "net.minecraft.server.level.ServerChunkCache.getChunk",
+        1
+      ],
+      [
+        "java.util.PriorityQueue.iterator",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        21
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 3,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "default",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "blend_edge",
+    "execution_samples": 15,
+    "top_frames": [
+      [
+        "java.util.concurrent.CompletableFuture.postComplete",
+        2
+      ],
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        2
+      ],
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        2
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.biApplyStage",
+        1
+      ],
+      [
+        "java.util.function.Function$$Lambda$1159+0x00000246d23f5f88.747343328.apply",
+        1
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.getAll",
+        1
+      ],
+      [
+        "java.util.HashMap.keysToArray",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.LevelChunk.lambda$registerAllBlockEntitiesAfterLevelLoad$5",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap$MapIterator.nextEntry",
+        1
+      ],
+      [
+        "java.lang.invoke.DirectMethodHandle$Holder.invokeStatic",
+        1
+      ],
+      [
+        "java.io.BufferedOutputStream.flushBuffer",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.LevelChunkSection.getBlockState",
+        1
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Server thread",
+        12
+      ],
+      [
+        "Worker-Main-2",
+        2
+      ],
+      [
+        "IO-Worker-8",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 2,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "outside",
+    "execution_samples": 497,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        96
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        45
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        31
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        27
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        20
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        20
+      ],
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.idFor",
+        19
+      ],
+      [
+        "net.minecraft.world.level.material.FluidState.isEmpty",
+        13
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        11
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        10
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute",
+        9
+      ],
+      [
+        "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase.is",
+        7
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        150
+      ],
+      [
+        "Worker-Main-3",
+        148
+      ],
+      [
+        "Worker-Main-1",
+        143
+      ],
+      [
+        "Server thread",
+        56
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 29,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.040336774S",
+      "PT0.045366932S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "cathedral",
+    "execution_samples": 569,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        84
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        62
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        33
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        24
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        24
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        23
+      ],
+      [
+        "java.util.Objects.hashCode",
+        22
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        16
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        13
+      ],
+      [
+        "net.minecraft.world.level.material.FluidState.isEmpty",
+        12
+      ],
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.idFor",
+        10
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        8
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        19
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        12
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.place",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenLayout.colony",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenLayout.noise",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.PrivateReefBlockAccess.setBlock",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.floor",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        160
+      ],
+      [
+        "Worker-Main-1",
+        159
+      ],
+      [
+        "Worker-Main-3",
+        159
+      ],
+      [
+        "Server thread",
+        89
+      ],
+      [
+        "Thread-2",
+        1
+      ],
+      [
+        "IO-Worker-5",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 43,
+    "height_query_stack_examples": [],
+    "contended_monitors": [
+      [
+        "com/nstut/endless/vertical/MinecraftVerticalWorld",
+        1
+      ]
+    ],
+    "gc_pauses": [
+      "PT0.047582204S",
+      "PT0.046835372S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "inner_wastes",
+    "execution_samples": 667,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        115
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        77
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        43
+      ],
+      [
+        "java.util.Objects.hashCode",
+        30
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        30
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        27
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        23
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        22
+      ],
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.idFor",
+        17
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        15
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        15
+      ],
+      [
+        "net.minecraft.world.level.material.FluidState.isEmpty",
+        14
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        21
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        11
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        5
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$reef$3",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.SunkenWastesFeature.place",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.build",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.<init>",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        1
+      ],
+      [
+        "com.nstut.endless.heights.EndlessHeights.getMinBuildHeight",
+        1
+      ],
+      [
+        "com.nstut.endless.heights.EndlessHeights.getDenseMinBuildHeight",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.wastes",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.EndlessVerticalEngine.world",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        229
+      ],
+      [
+        "Worker-Main-2",
+        199
+      ],
+      [
+        "Worker-Main-1",
+        188
+      ],
+      [
+        "Server thread",
+        49
+      ],
+      [
+        "RCON Client /127.0.0.1 #2",
+        1
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 57,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.047747215S",
+      "PT0.048555398S",
+      "PT0.031958339S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "fresh",
+    "workload": "blend_edge",
+    "execution_samples": 803,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        147
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        118
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        45
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        37
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        34
+      ],
+      [
+        "java.util.Objects.hashCode",
+        29
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        27
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        23
+      ],
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.idFor",
+        19
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        18
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        18
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.fillAllDirectly",
+        18
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        24
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        14
+      ],
+      [
+        "com.nstut.endless.vertical.EndlessVerticalEngine.world",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.place",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.province",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ChunkColumnCache.getBatch",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        275
+      ],
+      [
+        "Worker-Main-3",
+        226
+      ],
+      [
+        "Worker-Main-2",
+        224
+      ],
+      [
+        "Server thread",
+        75
+      ],
+      [
+        "IO-Worker-6",
+        2
+      ],
+      [
+        "JFR Periodic Tasks",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {
+      "NoiseBasedChunkGenerator.reefNativeHeights": 14,
+      "ReefTerrain.lambda$originalFloor$0": 14
+    },
+    "truncated_samples": 83,
+    "height_query_stack_examples": [
+      [
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7291+0x000001f329f5c5b8.1951692509.get",
+        "com.nhat.tidal_terror.worldgen.ChunkColumnCache.getBatch",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.originalFloor"
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7291+0x000001f329f5c5b8.1951692509.get",
+        "com.nhat.tidal_terror.worldgen.ChunkColumnCache.getBatch",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.originalFloor"
+      ]
+    ],
+    "contended_monitors": [
+      [
+        "com/nstut/endless/vertical/MinecraftVerticalWorld",
+        1
+      ]
+    ],
+    "gc_pauses": [
+      "PT0.034207593S",
+      "PT0.048025449S",
+      "PT0.028097628S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "outside",
+    "execution_samples": 37,
+    "top_frames": [
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        3
+      ],
+      [
+        "java.lang.invoke.DirectMethodHandle.allocateInstance",
+        2
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.primeHeightmaps",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.LevelChunkSection.getBlockState",
+        1
+      ],
+      [
+        "java.util.ImmutableCollections$SetN.probe",
+        1
+      ],
+      [
+        "net.minecraft.world.level.PathNavigationRegion.<init>",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.DataLayer.set",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap$KeySet.iterator",
+        1
+      ],
+      [
+        "net.minecraft.world.entity.animal.Bee.sendDebugPackets",
+        1
+      ],
+      [
+        "net.minecraft.world.level.ChunkPos.toLong",
+        1
+      ],
+      [
+        "net.minecraftforge.eventbus.EventBus.post",
+        1
+      ],
+      [
+        "net.minecraft.server.level.ServerChunkCache.lambda$tickChunks$5",
+        1
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nstut.endless.vertical.EndlessVerticalEngine.world",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Server thread",
+        31
+      ],
+      [
+        "Worker-Main-3",
+        2
+      ],
+      [
+        "IO-Worker-7",
+        2
+      ],
+      [
+        "IO-Worker-4",
+        2
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 0,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.049548242S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "cathedral",
+    "execution_samples": 19,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.valueFor",
+        3
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.primeHeightmaps",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        1
+      ],
+      [
+        "com.mojang.datafixers.util.Either$Left.map",
+        1
+      ],
+      [
+        "java.util.Objects.checkIndex",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postFire",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.LevelChunkSection.getBlockState",
+        1
+      ],
+      [
+        "net.minecraft.world.level.gameevent.EuclideanGameEventListenerRegistry.visitInRangeListeners",
+        1
+      ],
+      [
+        "dev.architectury.event.forge.EventHandlerImplCommon.event",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap.get",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.LongCollection.removeIf",
+        1
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Server thread",
+        16
+      ],
+      [
+        "Worker-Main-1",
+        1
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ],
+      [
+        "IO-Worker-8",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.036202896S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "inner_wastes",
+    "execution_samples": 14,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        2
+      ],
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.valueFor",
+        2
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.bipush",
+        1
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.primeHeightmaps",
+        1
+      ],
+      [
+        "net.minecraft.resources.DelegatingOps.compressMaps",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        1
+      ],
+      [
+        "com.mojang.serialization.Codec$$Lambda$1403+0x000001f73d622e98.2017848970.apply",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postFire",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.LongLinkedOpenHashSet.removeFirstLong",
+        1
+      ],
+      [
+        "net.minecraft.server.level.ServerLevel.tick",
+        1
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.unpack",
+        1
+      ],
+      [
+        "net.minecraft.world.entity.PathfinderMob.tickLeash",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        13
+      ],
+      [
+        "Worker-Main-2",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 3,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "deep",
+    "replicate": 1,
+    "phase": "cold",
+    "workload": "blend_edge",
+    "execution_samples": 32,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        4
+      ],
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.valueFor",
+        3
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        3
+      ],
+      [
+        "net.minecraft.server.level.ChunkHolder.getOrScheduleFuture",
+        2
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.getAll",
+        2
+      ],
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        2
+      ],
+      [
+        "net.minecraft.nbt.CompoundTag.putByte",
+        2
+      ],
+      [
+        "java.lang.invoke.DirectMethodHandle.allocateInstance",
+        1
+      ],
+      [
+        "com.mojang.datafixers.util.Either$Left.map",
+        1
+      ],
+      [
+        "net.minecraft.world.level.dimension.DimensionType.timeOfDay",
+        1
+      ],
+      [
+        "net.minecraft.world.level.block.LiquidBlock.neighborChanged",
+        1
+      ],
+      [
+        "net.minecraft.server.level.ChunkMap.processUnloads",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        30
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [
+      [
+        "java/lang/Object",
+        1
+      ]
+    ],
+    "gc_pauses": []
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "outside",
+    "execution_samples": 461,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        93
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        38
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        33
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        20
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        20
+      ],
+      [
+        "java.util.concurrent.Semaphore.release",
+        17
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        15
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        12
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        11
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        10
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunction$SimpleFunction.fillArray",
+        7
+      ],
+      [
+        "java.util.ImmutableCollections$SetN.probe",
+        6
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        140
+      ],
+      [
+        "Worker-Main-2",
+        134
+      ],
+      [
+        "Worker-Main-3",
+        127
+      ],
+      [
+        "Server thread",
+        57
+      ],
+      [
+        "IO-Worker-5",
+        2
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 28,
+    "height_query_stack_examples": [],
+    "contended_monitors": [
+      [
+        "java/util/Collections$SynchronizedMap",
+        2
+      ]
+    ],
+    "gc_pauses": [
+      "PT0.053662609S",
+      "PT0.046499882S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "cathedral",
+    "execution_samples": 614,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        67
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        47
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        32
+      ],
+      [
+        "java.util.Objects.hashCode",
+        29
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        28
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        28
+      ],
+      [
+        "java.util.concurrent.Semaphore.release",
+        16
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        15
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.fillAllDirectly",
+        15
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        14
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        14
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        10
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        15
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        15
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.place",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenFeature.decorate",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.giant",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenLayout.colony",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        188
+      ],
+      [
+        "Worker-Main-1",
+        172
+      ],
+      [
+        "Worker-Main-2",
+        156
+      ],
+      [
+        "Server thread",
+        92
+      ],
+      [
+        "IO-Worker-5",
+        2
+      ],
+      [
+        "IO-Worker-4",
+        2
+      ],
+      [
+        "Thread-2",
+        1
+      ],
+      [
+        "JFR Periodic Tasks",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {
+      "NoiseBasedChunkGenerator.getBaseHeight": 1,
+      "NoiseBasedChunkGenerator.iterateNoiseColumn": 1
+    },
+    "truncated_samples": 49,
+    "height_query_stack_examples": [],
+    "contended_monitors": [
+      [
+        "java/util/Collections$SynchronizedMap",
+        5
+      ]
+    ],
+    "gc_pauses": [
+      "PT0.051826723S",
+      "PT0.04702812S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "inner_wastes",
+    "execution_samples": 616,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        80
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        77
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        54
+      ],
+      [
+        "java.util.Objects.hashCode",
+        43
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        27
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        26
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        20
+      ],
+      [
+        "java.util.concurrent.Semaphore.release",
+        16
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.update",
+        14
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        11
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        11
+      ],
+      [
+        "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+        11
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        25
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        5
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralCathedralFeature.decorate",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ProvinceSeeds.get",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.build",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.floor",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.PrivateReefBlockAccess.setBlock",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.SunkenWastesFeature.place",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceLayout.sample",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        192
+      ],
+      [
+        "Worker-Main-2",
+        190
+      ],
+      [
+        "Worker-Main-3",
+        188
+      ],
+      [
+        "Server thread",
+        43
+      ],
+      [
+        "IO-Worker-6",
+        2
+      ],
+      [
+        "RCON Client /127.0.0.1 #2",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 62,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.043880839S",
+      "PT0.048710253S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "blend_edge",
+    "execution_samples": 846,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        147
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        135
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        59
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        42
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        36
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        33
+      ],
+      [
+        "java.util.Objects.hashCode",
+        32
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        22
+      ],
+      [
+        "net.minecraft.server.level.WorldGenRegion.setBlock",
+        20
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        20
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        19
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        17
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefBasinFeature.place",
+        36
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        14
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        4
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.tube",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.CoralGeometry.build",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.floor",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.getNoiseBiome",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        295
+      ],
+      [
+        "Worker-Main-1",
+        242
+      ],
+      [
+        "Worker-Main-2",
+        229
+      ],
+      [
+        "Server thread",
+        76
+      ],
+      [
+        "IO-Worker-5",
+        2
+      ],
+      [
+        "RCON Client /127.0.0.1 #2",
+        1
+      ],
+      [
+        "RCON Listener #1",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {
+      "NoiseBasedChunkGenerator.reefNativeHeights": 14,
+      "ReefTerrain.lambda$originalFloor$0": 14
+    },
+    "truncated_samples": 69,
+    "height_query_stack_examples": [
+      [
+        "java.util.ArrayList.forEach",
+        "net.minecraft.world.level.levelgen.NoiseChunk.updateForX",
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7284+0x000001c5bcf86fa8.771179504.get"
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        "net.minecraft.world.level.levelgen.NoiseChunk.updateForY",
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7284+0x000001c5bcf86fa8.771179504.get"
+      ]
+    ],
+    "contended_monitors": [
+      [
+        "java/util/Collections$SynchronizedMap",
+        1
+      ]
+    ],
+    "gc_pauses": [
+      "PT0.047227025S",
+      "PT0.03636783S",
+      "PT0.034634813S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "outside",
+    "execution_samples": 27,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        3
+      ],
+      [
+        "net.minecraft.server.level.ChunkHolder.getOrScheduleFuture",
+        1
+      ],
+      [
+        "java.io.DataInputStream.readLong",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.uniExceptionallyStage",
+        1
+      ],
+      [
+        "com.google.common.collect.HashBiMap.seekByKey",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.LinearPalette.valueFor",
+        1
+      ],
+      [
+        "net.minecraft.util.FastBufferedInputStream.read",
+        1
+      ],
+      [
+        "net.minecraft.nbt.CompoundTag.writeNamedTag",
+        1
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.getAll",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.maybeHas",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture$BiApply.tryFire",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.biApply",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        20
+      ],
+      [
+        "IO-Worker-6",
+        3
+      ],
+      [
+        "Worker-Main-3",
+        2
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 2,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "cathedral",
+    "execution_samples": 18,
+    "top_frames": [
+      [
+        "net.minecraft.server.level.ChunkHolder.getOrScheduleFuture",
+        3
+      ],
+      [
+        "java.util.concurrent.ThreadPoolExecutor.runWorker",
+        2
+      ],
+      [
+        "java.lang.Integer.getChars",
+        1
+      ],
+      [
+        "net.minecraft.core.Registry.lambda$holderByNameCodec$9",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        1
+      ],
+      [
+        "java.util.Arrays.copyOf",
+        1
+      ],
+      [
+        "net.minecraft.world.phys.shapes.VoxelShape.isEmpty",
+        1
+      ],
+      [
+        "dev.architectury.event.forge.EventHandlerImplCommon.event",
+        1
+      ],
+      [
+        "net.minecraft.util.CrudeIncrementalIntIdentityHashBiMap.indexOf",
+        1
+      ],
+      [
+        "java.lang.StringConcatHelper.newArray",
+        1
+      ],
+      [
+        "java.io.DataOutputStream.writeUTF",
+        1
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.<init>",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        13
+      ],
+      [
+        "IO-Worker-5",
+        2
+      ],
+      [
+        "IO-Worker-8",
+        2
+      ],
+      [
+        "Worker-Main-1",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "inner_wastes",
+    "execution_samples": 21,
+    "top_frames": [
+      [
+        "java.io.BufferedOutputStream.flushBuffer",
+        3
+      ],
+      [
+        "net.minecraft.world.level.chunk.LevelChunkSection.<init>",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        1
+      ],
+      [
+        "com.google.common.collect.HashBiMap.seekByKey",
+        1
+      ],
+      [
+        "java.util.concurrent.ConcurrentLinkedQueue.peek",
+        1
+      ],
+      [
+        "net.minecraft.network.syncher.SynchedEntityData.get",
+        1
+      ],
+      [
+        "java.util.function.Function$$Lambda$1159+0x0000012e013f5db0.1361241279.apply",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap$MapIterator.<init>",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.shorts.ShortArrayList.listIterator",
+        1
+      ],
+      [
+        "java.util.Spliterator$OfLong.forEachRemaining",
+        1
+      ],
+      [
+        "java.lang.invoke.DirectMethodHandle.allocateInstance",
+        1
+      ],
+      [
+        "java.util.stream.StreamOpFlag.fromCharacteristics",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        17
+      ],
+      [
+        "IO-Worker-4",
+        3
+      ],
+      [
+        "IO-Worker-8",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.028058053S"
+    ]
+  },
+  {
+    "variant": "deep",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "blend_edge",
+    "execution_samples": 58,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        6
+      ],
+      [
+        "java.util.Objects.hashCode",
+        4
+      ],
+      [
+        "net.minecraft.util.CrudeIncrementalIntIdentityHashBiMap.indexOf",
+        3
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        3
+      ],
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        2
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.reportJoin",
+        2
+      ],
+      [
+        "java.util.stream.StreamOpFlag.fromCharacteristics",
+        2
+      ],
+      [
+        "java.lang.Enum.hashCode",
+        2
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        2
+      ],
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        1
+      ],
+      [
+        "com.google.common.collect.HashBiMap.seekByKey",
+        1
+      ],
+      [
+        "java.util.HashMap.getNode",
+        1
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.DeepProvinceGenerator.build",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefProvinceBiomeSource.province",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefGardenFeature.decorate",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Server thread",
+        29
+      ],
+      [
+        "Worker-Main-2",
+        10
+      ],
+      [
+        "Worker-Main-3",
+        9
+      ],
+      [
+        "Worker-Main-1",
+        9
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {
+      "NoiseBasedChunkGenerator.reefNativeHeights": 3,
+      "ReefTerrain.lambda$originalFloor$0": 2
+    },
+    "truncated_samples": 10,
+    "height_query_stack_examples": [
+      [
+        "java.util.ArrayList.forEach",
+        "net.minecraft.world.level.levelgen.NoiseChunk.updateForZ",
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7172+0x0000012e01f3ae20.1635827520.get"
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        "net.minecraft.world.level.levelgen.NoiseChunk.updateForZ",
+        "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator.reefNativeHeights",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.lambda$originalFloor$0",
+        "com.nhat.tidal_terror.worldgen.ReefTerrain$$Lambda$7172+0x0000012e01f3ae20.1635827520.get"
+      ]
+    ],
+    "contended_monitors": [
+      [
+        "java/util/Collections$SynchronizedMap",
+        5
+      ],
+      [
+        "java/lang/Object",
+        1
+      ]
+    ],
+    "gc_pauses": []
+  },
+  {
+    "variant": "default",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "outside",
+    "execution_samples": 427,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        72
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        42
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        26
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        23
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        23
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        20
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        16
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        14
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        14
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        10
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        9
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute",
+        8
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nstut.endless.vertical.EndlessVerticalEngine.world",
+        3
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefTerrain.province",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        142
+      ],
+      [
+        "Worker-Main-2",
+        122
+      ],
+      [
+        "Worker-Main-3",
+        122
+      ],
+      [
+        "Server thread",
+        41
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 28,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.054997191S",
+      "PT0.052380379S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "cathedral",
+    "execution_samples": 521,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        93
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        39
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        36
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        33
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        25
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        25
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        22
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        18
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.noise",
+        11
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$TransformerWithContext.fillArray",
+        11
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        10
+      ],
+      [
+        "com.electronwill.nightconfig.core.file.FileWatcher$WatcherThread.run",
+        7
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nstut.endless.vertical.EndlessVerticalEngine.world",
+        2
+      ],
+      [
+        "com.nstut.endless.config.EndlessConfig.getInstance",
+        1
+      ],
+      [
+        "com.nstut.endless.vertical.VerticalNetworkBridge.tickServer",
+        1
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.save",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        156
+      ],
+      [
+        "Worker-Main-1",
+        154
+      ],
+      [
+        "Worker-Main-2",
+        144
+      ],
+      [
+        "Server thread",
+        57
+      ],
+      [
+        "Thread-2",
+        8
+      ],
+      [
+        "IO-Worker-8",
+        1
+      ],
+      [
+        "IO-Worker-5",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 25,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.04804419S",
+      "PT0.064682367S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "inner_wastes",
+    "execution_samples": 503,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        93
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        45
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        27
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        25
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        21
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        19
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.fillAllDirectly",
+        14
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        13
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        13
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        12
+      ],
+      [
+        "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase.is",
+        8
+      ],
+      [
+        "net.minecraft.world.level.material.FlowingFluid.getNewLiquid",
+        8
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nstut.endless.vertical.EndlessVerticalEngine.world",
+        2
+      ],
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        144
+      ],
+      [
+        "Worker-Main-3",
+        144
+      ],
+      [
+        "Worker-Main-2",
+        143
+      ],
+      [
+        "Server thread",
+        69
+      ],
+      [
+        "Thread-2",
+        1
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 24,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.052538599S",
+      "PT0.044040826S",
+      "PT0.029884589S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "blend_edge",
+    "execution_samples": 497,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance",
+        74
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.PerlinNoise.getValue",
+        44
+      ],
+      [
+        "net.minecraft.world.level.levelgen.synth.ImprovedNoise.p",
+        32
+      ],
+      [
+        "net.minecraft.world.level.levelgen.SurfaceRules$TestRule.tryApply",
+        28
+      ],
+      [
+        "net.minecraft.world.level.biome.Climate$RTree$SubTree.search",
+        24
+      ],
+      [
+        "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase.is",
+        19
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        18
+      ],
+      [
+        "net.minecraft.world.level.biome.BiomeManager.getBiome",
+        18
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.getAndSet",
+        15
+      ],
+      [
+        "net.minecraft.world.level.levelgen.NoiseChunk.lambda$new$0",
+        14
+      ],
+      [
+        "net.minecraft.world.level.levelgen.DensityFunctions$Ap2.compute",
+        8
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        7
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        2
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        153
+      ],
+      [
+        "Worker-Main-2",
+        150
+      ],
+      [
+        "Worker-Main-1",
+        130
+      ],
+      [
+        "Server thread",
+        60
+      ],
+      [
+        "IO-Worker-4",
+        3
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {
+      "NoiseBasedChunkGenerator.iterateNoiseColumn": 1
+    },
+    "truncated_samples": 28,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.032865255S",
+      "PT0.035548264S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "outside",
+    "execution_samples": 16,
+    "top_frames": [
+      [
+        "net.minecraft.util.SimpleBitStorage.<init>",
+        2
+      ],
+      [
+        "net.minecraft.server.level.ChunkHolder.getOrScheduleFuture",
+        1
+      ],
+      [
+        "com.mojang.serialization.Codec$2.decode",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.shorts.ShortArrays.forceCapacity",
+        1
+      ],
+      [
+        "com.google.common.collect.MapMakerInternalMap$Segment.getEntry",
+        1
+      ],
+      [
+        "com.google.common.collect.ImmutableMap.isEmpty",
+        1
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap$$Lambda$2510+0x00000157458fe000.354419506.test",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        1
+      ],
+      [
+        "java.lang.StringLatin1.newString",
+        1
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.get",
+        1
+      ],
+      [
+        "net.minecraft.util.thread.ProcessorHandle.askEither",
+        1
+      ],
+      [
+        "com.electronwill.nightconfig.core.file.FileWatcher$WatcherThread.run",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        13
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ],
+      [
+        "Thread-2",
+        1
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 4,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "default",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "cathedral",
+    "execution_samples": 11,
+    "top_frames": [
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ByteOpenHashMap.find",
+        1
+      ],
+      [
+        "net.minecraft.nbt.ListTag.get",
+        1
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.getAll",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        1
+      ],
+      [
+        "com.mojang.serialization.codecs.FieldDecoder.decode",
+        1
+      ],
+      [
+        "java.lang.invoke.DirectMethodHandle.allocateInstance",
+        1
+      ],
+      [
+        "net.minecraft.core.AxisCycle$3.cycle",
+        1
+      ],
+      [
+        "net.minecraft.world.scores.Scoreboard.getPlayersTeam",
+        1
+      ],
+      [
+        "dev.architectury.event.forge.EventHandlerImplCommon.eventChunkDataEvent",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.lambda$pack$11",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap.putAndMoveToFirst",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        10
+      ],
+      [
+        "Worker-Main-3",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.02945049S"
+    ]
+  },
+  {
+    "variant": "default",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "inner_wastes",
+    "execution_samples": 15,
+    "top_frames": [
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        2
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap.get",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap.find",
+        1
+      ],
+      [
+        "java.io.DataInputStream.readUTF",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.<init>",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer.read",
+        1
+      ],
+      [
+        "java.util.Objects.checkIndex",
+        1
+      ],
+      [
+        "net.minecraft.util.SimpleBitStorage.get",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postFire",
+        1
+      ],
+      [
+        "net.minecraft.world.entity.animal.Bee.aiStep",
+        1
+      ],
+      [
+        "net.minecraft.core.Registry$$Lambda$1398+0x000001574561f9f0.906056863.apply",
+        1
+      ],
+      [
+        "java.util.HashMap$KeySet.toArray",
+        1
+      ]
+    ],
+    "mod_frames": [
+      [
+        "com.nhat.tidal_terror.worldgen.ReefWaterFinish.tick",
+        1
+      ]
+    ],
+    "sampled_threads": [
+      [
+        "Server thread",
+        14
+      ],
+      [
+        "Worker-Main-2",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "default",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "blend_edge",
+    "execution_samples": 14,
+    "top_frames": [
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addTo",
+        1
+      ],
+      [
+        "net.minecraft.world.level.levelgen.Heightmap.primeHeightmaps",
+        1
+      ],
+      [
+        "net.minecraftforge.registries.ForgeRegistry.getValue",
+        1
+      ],
+      [
+        "java.lang.invoke.VarHandleReferences$FieldInstanceReadWrite.setOpaque",
+        1
+      ],
+      [
+        "java.util.concurrent.SynchronousQueue$TransferStack.transfer",
+        1
+      ],
+      [
+        "net.minecraft.world.level.chunk.PalettedContainer.get",
+        1
+      ],
+      [
+        "java.lang.StringConcatHelper.newArrayWithSuffix",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture$UniCompletion.claim",
+        1
+      ],
+      [
+        "java.lang.ThreadLocal$ThreadLocalMap.set",
+        1
+      ],
+      [
+        "net.minecraft.world.level.BlockCollisions.getChunk",
+        1
+      ],
+      [
+        "net.minecraft.world.entity.Entity.getOnPosLegacy",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap$MapIterator.nextEntry",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        11
+      ],
+      [
+        "IO-Worker-8",
+        1
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ],
+      [
+        "Worker-Main-3",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 1,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.047558427S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "outside",
+    "execution_samples": 376,
+    "top_frames": [
+      [
+        "dgw$c.a",
+        64
+      ],
+      [
+        "dwf.a",
+        62
+      ],
+      [
+        "cnt$e$c.a",
+        25
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        21
+      ],
+      [
+        "cnm.a",
+        16
+      ],
+      [
+        "dho.a",
+        14
+      ],
+      [
+        "dib$w.tryApply",
+        12
+      ],
+      [
+        "dhe$a.a",
+        10
+      ],
+      [
+        "dhk.a",
+        10
+      ],
+      [
+        "dxe.c",
+        9
+      ],
+      [
+        "dho$i.a",
+        7
+      ],
+      [
+        "dhe$p.a",
+        7
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        123
+      ],
+      [
+        "Worker-Main-1",
+        114
+      ],
+      [
+        "Worker-Main-3",
+        107
+      ],
+      [
+        "Server thread",
+        31
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 12,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.046290773S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "cathedral",
+    "execution_samples": 510,
+    "top_frames": [
+      [
+        "dgw$c.a",
+        106
+      ],
+      [
+        "dwf.a",
+        62
+      ],
+      [
+        "dib$w.tryApply",
+        29
+      ],
+      [
+        "cnt$e$c.a",
+        26
+      ],
+      [
+        "dho.a",
+        19
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        18
+      ],
+      [
+        "dxe.c",
+        17
+      ],
+      [
+        "cnm.a",
+        14
+      ],
+      [
+        "dhe$a.a",
+        12
+      ],
+      [
+        "dhe$p.a",
+        8
+      ],
+      [
+        "dhe$x.a",
+        8
+      ],
+      [
+        "dlj.a",
+        8
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-3",
+        164
+      ],
+      [
+        "Worker-Main-1",
+        156
+      ],
+      [
+        "Worker-Main-2",
+        154
+      ],
+      [
+        "Server thread",
+        36
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 35,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.051574599S",
+      "PT0.050213889S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "inner_wastes",
+    "execution_samples": 504,
+    "top_frames": [
+      [
+        "dgw$c.a",
+        93
+      ],
+      [
+        "dwf.a",
+        62
+      ],
+      [
+        "dib$w.tryApply",
+        27
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        20
+      ],
+      [
+        "cnm.a",
+        20
+      ],
+      [
+        "dho.a",
+        19
+      ],
+      [
+        "cnt$e$c.a",
+        15
+      ],
+      [
+        "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+        13
+      ],
+      [
+        "dxe.c",
+        13
+      ],
+      [
+        "dhe$a.a",
+        11
+      ],
+      [
+        "dhk.a",
+        10
+      ],
+      [
+        "dlj.a",
+        10
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-1",
+        161
+      ],
+      [
+        "Worker-Main-2",
+        148
+      ],
+      [
+        "Worker-Main-3",
+        132
+      ],
+      [
+        "Server thread",
+        60
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ],
+      [
+        "RCON Client /127.0.0.1 #2",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 23,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.051080858S",
+      "PT0.045345997S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 2,
+    "phase": "fresh",
+    "workload": "blend_edge",
+    "execution_samples": 542,
+    "top_frames": [
+      [
+        "dgw$c.a",
+        95
+      ],
+      [
+        "dwf.a",
+        83
+      ],
+      [
+        "cnt$e$c.a",
+        31
+      ],
+      [
+        "java.util.ArrayList.forEach",
+        29
+      ],
+      [
+        "dib$w.tryApply",
+        29
+      ],
+      [
+        "cnm.a",
+        20
+      ],
+      [
+        "dho.a",
+        14
+      ],
+      [
+        "dhe$a.a",
+        13
+      ],
+      [
+        "java.util.concurrent.locks.AbstractQueuedSynchronizer.signalNext",
+        12
+      ],
+      [
+        "dwi.a",
+        12
+      ],
+      [
+        "dxe.c",
+        11
+      ],
+      [
+        "dlj.a",
+        9
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Worker-Main-2",
+        176
+      ],
+      [
+        "Worker-Main-3",
+        170
+      ],
+      [
+        "Worker-Main-1",
+        157
+      ],
+      [
+        "Server thread",
+        35
+      ],
+      [
+        "IO-Worker-4",
+        2
+      ],
+      [
+        "IO-Worker-7",
+        1
+      ],
+      [
+        "RCON Client /127.0.0.1 #2",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 29,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.049913283S",
+      "PT0.046008853S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "outside",
+    "execution_samples": 26,
+    "top_frames": [
+      [
+        "dey.a",
+        2
+      ],
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        2
+      ],
+      [
+        "qr.a",
+        2
+      ],
+      [
+        "dfe.a",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.unipush",
+        1
+      ],
+      [
+        "java.util.Arrays.copyOf",
+        1
+      ],
+      [
+        "java.io.DataInputStream.readFully",
+        1
+      ],
+      [
+        "ddx.a",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postComplete",
+        1
+      ],
+      [
+        "dws.d",
+        1
+      ],
+      [
+        "java.lang.invoke.LambdaForm$MH+0x0000018b512b9400.1943472065.reinvoke",
+        1
+      ],
+      [
+        "bfz.A",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        16
+      ],
+      [
+        "IO-Worker-5",
+        3
+      ],
+      [
+        "IO-Worker-6",
+        2
+      ],
+      [
+        "IO-Worker-4",
+        2
+      ],
+      [
+        "Worker-Main-3",
+        1
+      ],
+      [
+        "Worker-Main-2",
+        1
+      ],
+      [
+        "RCON Client /127.0.0.1 #2",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 0,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.052354973S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "cathedral",
+    "execution_samples": 13,
+    "top_frames": [
+      [
+        "java.util.Optional.map",
+        1
+      ],
+      [
+        "any.b",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.unipush",
+        1
+      ],
+      [
+        "dcc$$Lambda$573+0x0000018b51368de8.425413785.apply",
+        1
+      ],
+      [
+        "java.io.DataInputStream.readInt",
+        1
+      ],
+      [
+        "qx$1.a",
+        1
+      ],
+      [
+        "dws.a",
+        1
+      ],
+      [
+        "dej.a",
+        1
+      ],
+      [
+        "dey.a",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postComplete",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ByteOpenHashMap.get",
+        1
+      ],
+      [
+        "java.util.Collections$UnmodifiableMap.<init>",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        8
+      ],
+      [
+        "Worker-Main-2",
+        2
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ],
+      [
+        "Worker-Main-1",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 2,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.023363487S"
+    ]
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "inner_wastes",
+    "execution_samples": 16,
+    "top_frames": [
+      [
+        "java.lang.Integer.getChars",
+        1
+      ],
+      [
+        "java.lang.invoke.DirectMethodHandle.allocateInstance",
+        1
+      ],
+      [
+        "aoj.read",
+        1
+      ],
+      [
+        "java.io.DataInputStream.readFully",
+        1
+      ],
+      [
+        "dey.a",
+        1
+      ],
+      [
+        "com.mojang.serialization.Codec$$Lambda$564+0x0000018b51366688.1343111733.apply",
+        1
+      ],
+      [
+        "java.util.HashMap.getNode",
+        1
+      ],
+      [
+        "com.google.common.collect.MapMakerInternalMap$Segment.getEntry",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postComplete",
+        1
+      ],
+      [
+        "it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap.find",
+        1
+      ],
+      [
+        "java.lang.Math.ceil",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.getNow",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        13
+      ],
+      [
+        "IO-Worker-6",
+        1
+      ],
+      [
+        "IO-Worker-5",
+        1
+      ],
+      [
+        "Worker-Main-1",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 2,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": []
+  },
+  {
+    "variant": "vanilla",
+    "replicate": 2,
+    "phase": "cold",
+    "workload": "blend_edge",
+    "execution_samples": 22,
+    "top_frames": [
+      [
+        "it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap.addToValue",
+        2
+      ],
+      [
+        "dem.a",
+        2
+      ],
+      [
+        "java.time.Instant.toEpochMilli",
+        1
+      ],
+      [
+        "com.mojang.serialization.MapCodec$MapCodecCodec.toString",
+        1
+      ],
+      [
+        "ri.a",
+        1
+      ],
+      [
+        "java.util.IdentityHashMap.get",
+        1
+      ],
+      [
+        "qr.d",
+        1
+      ],
+      [
+        "java.util.concurrent.ThreadPoolExecutor.runWorker",
+        1
+      ],
+      [
+        "java.lang.StringLatin1.hashCode",
+        1
+      ],
+      [
+        "qr.c",
+        1
+      ],
+      [
+        "bcq.d",
+        1
+      ],
+      [
+        "java.util.concurrent.CompletableFuture.postComplete",
+        1
+      ]
+    ],
+    "mod_frames": [],
+    "sampled_threads": [
+      [
+        "Server thread",
+        15
+      ],
+      [
+        "IO-Worker-5",
+        2
+      ],
+      [
+        "IO-Worker-6",
+        2
+      ],
+      [
+        "IO-Worker-4",
+        1
+      ],
+      [
+        "Worker-Main-2",
+        1
+      ],
+      [
+        "Worker-Main-3",
+        1
+      ]
+    ],
+    "inclusive_path_samples": {},
+    "truncated_samples": 2,
+    "height_query_stack_examples": [],
+    "contended_monitors": [],
+    "gc_pauses": [
+      "PT0.023836638S"
+    ]
+  }
+]

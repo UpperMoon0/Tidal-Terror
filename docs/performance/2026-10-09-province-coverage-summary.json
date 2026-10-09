@@ -1,0 +1,257 @@
+{
+  "method": "Native Forge 1.20.1 delegate ocean tag at quart Y=8; actual ReefProvinceBiomeSource acceptance; 16x16 jittered strata per placement cell. When present, refined province intersections use independent 128x128 jittered strata in accepted cells, with equal cell-area weights.",
+  "raw_sha256": "bc5605934b8871f5136b5f8e79f1651719ab945a85716dd47011fd7ea0001fe6",
+  "seeds": [
+    {
+      "seed": "0",
+      "samples": 246016,
+      "vanilla_ocean": 70762,
+      "province_ocean": 198,
+      "province": 564,
+      "converted_non_ocean": 366,
+      "cathedral": 51,
+      "cathedral_ocean": 42,
+      "cells": 961,
+      "accepted": 9,
+      "percent": {
+        "vanilla_ocean_replaced": 0.2798111981006755,
+        "cathedral_of_vanilla_ocean": 0.0593538905062039,
+        "province_of_final_ocean_domain": 0.7929366775390845,
+        "province_of_total_map": 0.22925338189386057,
+        "vanilla_ocean_of_total_map": 28.763169875130075,
+        "converted_non_ocean_of_province": 64.8936170212766,
+        "candidate_acceptance": 0.9365244536940687
+      },
+      "fine_counts": {
+        "fine_strata": 15745024,
+        "fine_province": 35870,
+        "fine_province_ocean": 12142,
+        "fine_cathedral": 3214,
+        "fine_cathedral_ocean": 2691
+      },
+      "refined_percent": {
+        "vanilla_ocean_replaced": 0.26810823605890166,
+        "cathedral_of_vanilla_ocean": 0.05942013368757242,
+        "province_of_ocean_plus_province_domain": 0.7879194182707684,
+        "province_of_total_map": 0.22781800777185224,
+        "converted_non_ocean_of_province": 66.14998606077502,
+        "analytical_province_of_total_map": 0.22779747719594307
+      }
+    },
+    {
+      "seed": "1",
+      "samples": 246016,
+      "vanilla_ocean": 70729,
+      "province_ocean": 157,
+      "province": 492,
+      "converted_non_ocean": 335,
+      "cathedral": 44,
+      "cathedral_ocean": 36,
+      "cells": 961,
+      "accepted": 8,
+      "percent": {
+        "vanilla_ocean_replaced": 0.22197401348810247,
+        "cathedral_of_vanilla_ocean": 0.05089849990809993,
+        "province_of_final_ocean_domain": 0.6923336710570753,
+        "province_of_total_map": 0.1999869927159209,
+        "vanilla_ocean_of_total_map": 28.749756113423516,
+        "converted_non_ocean_of_province": 68.08943089430895,
+        "candidate_acceptance": 0.8324661810613944
+      },
+      "fine_counts": {
+        "fine_strata": 15745024,
+        "fine_province": 31872,
+        "fine_province_ocean": 10465,
+        "fine_cathedral": 2870,
+        "fine_cathedral_ocean": 2336
+      },
+      "refined_percent": {
+        "vanilla_ocean_replaced": 0.23118611177876117,
+        "cathedral_of_vanilla_ocean": 0.051605423517934644,
+        "province_of_ocean_plus_province_domain": 0.7007818493279445,
+        "province_of_total_map": 0.2024258584807492,
+        "converted_non_ocean_of_province": 67.16553714859437,
+        "analytical_province_of_total_map": 0.20248664639639383
+      }
+    },
+    {
+      "seed": "-1",
+      "samples": 246016,
+      "vanilla_ocean": 72685,
+      "province_ocean": 616,
+      "province": 1761,
+      "converted_non_ocean": 1145,
+      "cathedral": 167,
+      "cathedral_ocean": 139,
+      "cells": 961,
+      "accepted": 28,
+      "percent": {
+        "vanilla_ocean_replaced": 0.8474926050767009,
+        "cathedral_of_vanilla_ocean": 0.1912361560156841,
+        "province_of_final_ocean_domain": 2.3852092645266154,
+        "province_of_total_map": 0.7158071019771072,
+        "vanilla_ocean_of_total_map": 29.544826352757543,
+        "converted_non_ocean_of_province": 65.0198750709824,
+        "candidate_acceptance": 2.91363163371488
+      },
+      "fine_counts": {
+        "fine_strata": 15745024,
+        "fine_province": 111611,
+        "fine_province_ocean": 39887,
+        "fine_cathedral": 10062,
+        "fine_cathedral_ocean": 8373
+      },
+      "refined_percent": {
+        "vanilla_ocean_replaced": 0.8574456559124991,
+        "cathedral_of_vanilla_ocean": 0.17999329297654265,
+        "province_of_ocean_plus_province_domain": 2.362855674232423,
+        "province_of_total_map": 0.7088652262454475,
+        "converted_non_ocean_of_province": 64.26248308858446,
+        "analytical_province_of_total_map": 0.7087032623873784
+      }
+    },
+    {
+      "seed": "7142026",
+      "samples": 246016,
+      "vanilla_ocean": 73746,
+      "province_ocean": 393,
+      "province": 996,
+      "converted_non_ocean": 603,
+      "cathedral": 94,
+      "cathedral_ocean": 76,
+      "cells": 961,
+      "accepted": 16,
+      "percent": {
+        "vanilla_ocean_replaced": 0.5329102595395004,
+        "cathedral_of_vanilla_ocean": 0.1030564369592927,
+        "province_of_final_ocean_domain": 1.3396279707864263,
+        "province_of_total_map": 0.40485171696149846,
+        "vanilla_ocean_of_total_map": 29.97609911550468,
+        "converted_non_ocean_of_province": 60.54216867469879,
+        "candidate_acceptance": 1.6649323621227887
+      },
+      "fine_counts": {
+        "fine_strata": 15745024,
+        "fine_province": 63801,
+        "fine_province_ocean": 25595,
+        "fine_cathedral": 5736,
+        "fine_cathedral_ocean": 4804
+      },
+      "refined_percent": {
+        "vanilla_ocean_replaced": 0.5422963618365741,
+        "cathedral_of_vanilla_ocean": 0.10178518156916984,
+        "province_of_ocean_plus_province_domain": 1.3409346462236889,
+        "province_of_total_map": 0.40521373609846517,
+        "converted_non_ocean_of_province": 59.88307393301046,
+        "analytical_province_of_total_map": 0.40497329279278765
+      }
+    },
+    {
+      "seed": "-9223372036854775808",
+      "samples": 246016,
+      "vanilla_ocean": 74444,
+      "province_ocean": 458,
+      "province": 1204,
+      "converted_non_ocean": 746,
+      "cathedral": 105,
+      "cathedral_ocean": 86,
+      "cells": 961,
+      "accepted": 19,
+      "percent": {
+        "vanilla_ocean_replaced": 0.6152275535973349,
+        "cathedral_of_vanilla_ocean": 0.11552307774971791,
+        "province_of_final_ocean_domain": 1.6012767655273308,
+        "province_of_total_map": 0.4893990634755463,
+        "vanilla_ocean_of_total_map": 30.25982049947971,
+        "converted_non_ocean_of_province": 61.96013289036545,
+        "candidate_acceptance": 1.9771071800208118
+      },
+      "fine_counts": {
+        "fine_strata": 15745024,
+        "fine_province": 75765,
+        "fine_province_ocean": 28809,
+        "fine_cathedral": 6833,
+        "fine_cathedral_ocean": 5692
+      },
+      "refined_percent": {
+        "vanilla_ocean_replaced": 0.6046701211649026,
+        "cathedral_of_vanilla_ocean": 0.11946899682983184,
+        "province_of_ocean_plus_province_domain": 1.5747067572409699,
+        "province_of_total_map": 0.48119964758389694,
+        "converted_non_ocean_of_province": 61.97584636705602,
+        "analytical_province_of_total_map": 0.4809057851914353
+      }
+    },
+    {
+      "seed": "9223372036854775807",
+      "samples": 246016,
+      "vanilla_ocean": 73409,
+      "province_ocean": 628,
+      "province": 1549,
+      "converted_non_ocean": 921,
+      "cathedral": 129,
+      "cathedral_ocean": 104,
+      "cells": 961,
+      "accepted": 25,
+      "percent": {
+        "vanilla_ocean_replaced": 0.855480935580106,
+        "cathedral_of_vanilla_ocean": 0.1416720020705908,
+        "province_of_final_ocean_domain": 2.0839499529126866,
+        "province_of_total_map": 0.6296338449531738,
+        "vanilla_ocean_of_total_map": 29.839116155046828,
+        "converted_non_ocean_of_province": 59.457714654615884,
+        "candidate_acceptance": 2.6014568158168574
+      },
+      "fine_counts": {
+        "fine_strata": 15745024,
+        "fine_province": 99618,
+        "fine_province_ocean": 41132,
+        "fine_cathedral": 9022,
+        "fine_cathedral_ocean": 7707
+      },
+      "refined_percent": {
+        "vanilla_ocean_replaced": 0.8754887002956041,
+        "cathedral_of_vanilla_ocean": 0.1640423858110041,
+        "province_of_ocean_plus_province_domain": 2.0942837645390826,
+        "province_of_total_map": 0.6326951295850677,
+        "converted_non_ocean_of_province": 58.710273243791285,
+        "analytical_province_of_total_map": 0.6327707699887307
+      }
+    }
+  ],
+  "pooled": {
+    "samples": 1476096,
+    "vanilla_ocean": 435775,
+    "province_ocean": 2450,
+    "province": 6566,
+    "converted_non_ocean": 4116,
+    "cathedral": 590,
+    "cathedral_ocean": 483,
+    "cells": 5766,
+    "accepted": 105,
+    "percent": {
+      "vanilla_ocean_replaced": 0.5622167402902875,
+      "cathedral_of_vanilla_ocean": 0.11083701451437095,
+      "province_of_final_ocean_domain": 1.492642495527301,
+      "province_of_total_map": 0.4448220169961845,
+      "vanilla_ocean_of_total_map": 29.52213135189039,
+      "converted_non_ocean_of_province": 62.6865671641791,
+      "candidate_acceptance": 1.8210197710718001
+    },
+    "fine_counts": {
+      "fine_strata": 94470144,
+      "fine_province": 418537,
+      "fine_province_ocean": 158030,
+      "fine_cathedral": 37737,
+      "fine_cathedral_ocean": 31603
+    },
+    "refined_percent": {
+      "vanilla_ocean_replaced": 0.5666269864035339,
+      "cathedral_of_vanilla_ocean": 0.11331464058286961,
+      "province_of_ocean_plus_province_domain": 1.4868042952731937,
+      "province_of_total_map": 0.44303626762757975,
+      "converted_non_ocean_of_province": 62.24228682290932,
+      "analytical_province_of_total_map": 0.4429395389921115
+    }
+  }
+}

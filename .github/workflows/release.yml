@@ -49,6 +49,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: reviewed-endless-forge
+          path: .dependencies/endless
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -100,7 +104,7 @@ jobs:
           game-version-filter: none
           environment: client | server
           java: '17'
-          curseforge-dependencies: terrablender(required)
+          curseforge-dependencies: 'nstut-endless(optional)'
           retry-attempts: 1
           fail-mode: fail
       - name: Record successful CurseForge upload
@@ -122,22 +126,22 @@ jobs:
             loader: fabric
             minecraft: '1.20.1'
             java: '17'
-            dependencies: terrablender(required) | architectury-api(required) | fabric-api(required)
+            dependencies: 'architectury-api(required) | fabric-api(required)'
           - target: fabric-1.21.1
             loader: fabric
             minecraft: '1.21.1'
             java: '21'
-            dependencies: terrablender(required) | architectury-api(required) | fabric-api(required)
+            dependencies: 'architectury-api(required) | fabric-api(required)'
           - target: neoforge-1.21.1
             loader: neoforge
             minecraft: '1.21.1'
             java: '21'
-            dependencies: terrablender(required) | architectury-api(required)
+            dependencies: 'architectury-api(required)'
           - target: neoforge-26.1.2
             loader: neoforge
             minecraft: '26.1.2'
             java: '25'
-            dependencies: terrablender(required) | architectury-api(required)
+            dependencies: 'architectury-api(required)'
     steps:
       - uses: actions/checkout@v4
         with:

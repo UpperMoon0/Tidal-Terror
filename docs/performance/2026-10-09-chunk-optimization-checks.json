@@ -1,0 +1,60 @@
+{
+  "logs": {
+    "chunk-optimization-whole-native-fresh.log": "9a5e13f8879e69a3070d0535c246b7a102b695f2d2180f82f2fedd9120e1f17c",
+    "chunk-optimization-whole-native-reload.log": "29f94096b18e0981f7a072c8b51617a08f3be0443f8e2738705b911f66f8898e",
+    "chunk-optimization-whole-prototype-build.log": "c04deeb0ca6580a74293963e630934f898f55ba0c69fb6701cbfc054afc5b4da",
+    "chunk-optimization-tooling.log": "e853f62434ebc9ddf55c4ee6a82dd1ee81b17440be46d352ac6092245238024e",
+    "chunk-optimization-normal-build.log": "1e23b53d189450d1f30fc5355fe4fe81110da43d4b8cce12205ab00f1d23cd7a",
+    "chunk-optimization-ports.log": "0c369fe49321a0abf6eaa6934f73f4e492c5d84a049c817ea517abd6fb1ce5b2"
+  },
+  "section_microbenchmark": {
+    "chunk-optimization-whole-native-fresh.log": [
+      {
+        "bulk": false,
+        "sections": 256,
+        "ns": 34058400
+      },
+      {
+        "bulk": true,
+        "sections": 256,
+        "ns": 232400
+      },
+      {
+        "bulk": true,
+        "sections": 256,
+        "ns": 265000
+      },
+      {
+        "bulk": false,
+        "sections": 256,
+        "ns": 31621400
+      }
+    ],
+    "chunk-optimization-whole-native-reload.log": [
+      {
+        "bulk": false,
+        "sections": 256,
+        "ns": 53306500
+      },
+      {
+        "bulk": true,
+        "sections": 256,
+        "ns": 338400
+      },
+      {
+        "bulk": true,
+        "sections": 256,
+        "ns": 120000
+      },
+      {
+        "bulk": false,
+        "sections": 256,
+        "ns": 31575800
+      }
+    ]
+  },
+  "endless_logs": {
+    "uniform-section-verified-build.log": "40f01298b4ede4fe758536f2056ced02e7f87cf4d23558a94ec53cd54060ffe7",
+    "uniform-section-final-build.log": "1356f70bcbcbb7cb282bc6d58e26681601652ba51aa5db657e9a1ac0d5c97006"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "has_precipitation": true,
+  "temperature": 0.8,
+  "downfall": 0.5,
+  "effects": {
+    "water_color": 6590353,
+    "water_fog_color": 3166048,
+    "fog_color": 12638463,
+    "sky_color": 7907327
+  },
+  "carvers": {},
+  "features": [
+    [
+      "tidalterror:reef_basin"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "tidalterror:giant_coral",
+      "tidalterror:wastes_landmarks"
+    ]
+  ],
+  "spawn_costs": {},
+  "spawners": {
+    "water_ambient": [
+      {
+        "type": "minecraft:cod",
+        "weight": 3,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "tidalterror_shardback": [
+      {
+        "type": "tidalterror:shardback",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "tidalterror_crusher": [
+      {
+        "type": "tidalterror:coral_crusher",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ]
+  }
+}

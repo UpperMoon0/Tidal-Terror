@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_compass": {"trigger": "minecraft:inventory_changed", "conditions": {"items": [{"items": ["minecraft:compass"]}]}},
+    "has_recipe": {"trigger": "minecraft:recipe_unlocked", "conditions": {"recipe": "tidalterror:reef_compass"}}
+  },
+  "requirements": [["has_compass", "has_recipe"]],
+  "rewards": {"recipes": ["tidalterror:reef_compass"]}
+}

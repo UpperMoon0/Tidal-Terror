@@ -1,0 +1,238 @@
+diff --git a/src/main/java/com/nhat/tidal_terror/mixin/DeepProvinceChunkMixin.java b/src/main/java/com/nhat/tidal_terror/mixin/DeepProvinceChunkMixin.java
+--- a/src/main/java/com/nhat/tidal_terror/mixin/DeepProvinceChunkMixin.java
++++ b/src/main/java/com/nhat/tidal_terror/mixin/DeepProvinceChunkMixin.java
+@@ -12,6 +12,6 @@
+ public abstract class DeepProvinceChunkMixin {
+     @Inject(method="<init>(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ProtoChunk;Lnet/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor;)V",at=@At("RETURN"))
+     private void deepProvince(ServerLevel level,ProtoChunk proto,LevelChunk.PostLoadProcessor processor,CallbackInfo ci) {
+-        DeepProvinceGenerator.generate(level,(LevelChunk)(Object)this,proto);
++        DeepProvinceGenerator.generate(level,(LevelChunk)(Object)this);
+     }
+ }
+diff --git a/src/main/java/com/nhat/tidal_terror/mixin/DeepProvincePreparationMixin.java b/src/main/java/com/nhat/tidal_terror/mixin/DeepProvincePreparationMixin.java
+--- a/src/main/java/com/nhat/tidal_terror/mixin/DeepProvincePreparationMixin.java
++++ /dev/null
+@@ -1,46 +0,0 @@
+-package com.nhat.tidal_terror.mixin;
+-
+-import com.mojang.datafixers.util.Either;
+-import com.nhat.tidal_terror.worldgen.DeepProvinceGenerator;
+-import net.minecraft.Util;
+-import net.minecraft.server.level.*;
+-import net.minecraft.world.level.chunk.*;
+-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+-import org.spongepowered.asm.mixin.Mixin;
+-import org.spongepowered.asm.mixin.Unique;
+-import org.spongepowered.asm.mixin.injection.*;
+-import java.util.List;
+-import java.util.concurrent.*;
+-import java.util.function.Function;
+-
+-/** FULL conversion queues work on the server thread; prepare before invoking that continuation.
+- * Saved protochunks can already be past RAW_GENERATION, so both native load and generation need this. */
+-@Mixin(ChunkStatus.class)
+-public abstract class DeepProvincePreparationMixin {
+-    @Unique
+-    private Function<ChunkAccess,CompletableFuture<Either<ChunkAccess,ChunkHolder.ChunkLoadingFailure>>> tidalterror$prepare(
+-        ServerLevel level,Function<ChunkAccess,CompletableFuture<Either<ChunkAccess,ChunkHolder.ChunkLoadingFailure>>> convert) {
+-        if((Object)this!=ChunkStatus.FULL || !(level.getChunkSource().getGenerator().getBiomeSource()
+-            instanceof com.nhat.tidal_terror.worldgen.ReefProvinceAccess access) || !access.deep()) return convert;
+-        return chunk->{
+-            if(!(chunk instanceof ProtoChunk) || chunk instanceof ImposterProtoChunk) return convert.apply(chunk);
+-            return CompletableFuture.runAsync(()->DeepProvinceGenerator.prepare(level,chunk),Util.backgroundExecutor())
+-                .thenCompose(ignored->convert.apply(chunk));
+-        };
+-    }
+-    @ModifyVariable(method="generate",at=@At("HEAD"),argsOnly=true)
+-    private Function<ChunkAccess,CompletableFuture<Either<ChunkAccess,ChunkHolder.ChunkLoadingFailure>>> prepareGenerated(
+-        Function<ChunkAccess,CompletableFuture<Either<ChunkAccess,ChunkHolder.ChunkLoadingFailure>>> value,
+-        Executor executor,ServerLevel level,ChunkGenerator generator,StructureTemplateManager templates,
+-        ThreadedLevelLightEngine lights,Function<ChunkAccess,CompletableFuture<Either<ChunkAccess,ChunkHolder.ChunkLoadingFailure>>> convert,
+-        List<ChunkAccess> chunks) {
+-        return tidalterror$prepare(level,value);
+-    }
+-    @ModifyVariable(method="load",at=@At("HEAD"),argsOnly=true)
+-    private Function<ChunkAccess,CompletableFuture<Either<ChunkAccess,ChunkHolder.ChunkLoadingFailure>>> prepareLoaded(
+-        Function<ChunkAccess,CompletableFuture<Either<ChunkAccess,ChunkHolder.ChunkLoadingFailure>>> value,
+-        ServerLevel level,StructureTemplateManager templates,ThreadedLevelLightEngine lights,
+-        Function<ChunkAccess,CompletableFuture<Either<ChunkAccess,ChunkHolder.ChunkLoadingFailure>>> convert,ChunkAccess chunk) {
+-        return tidalterror$prepare(level,value);
+-    }
+-}
+diff --git a/src/main/java/com/nhat/tidal_terror/worldgen/DeepProvinceGenerator.java b/src/main/java/com/nhat/tidal_terror/worldgen/DeepProvinceGenerator.java
+--- a/src/main/java/com/nhat/tidal_terror/worldgen/DeepProvinceGenerator.java
++++ b/src/main/java/com/nhat/tidal_terror/worldgen/DeepProvinceGenerator.java
+@@ -5,7 +5,6 @@
+ import net.minecraft.core.*;
+ import net.minecraft.core.registries.Registries;
+ import net.minecraft.server.level.ServerLevel;
+-import net.minecraft.world.level.WorldGenLevel;
+ import net.minecraft.world.level.block.*;
+ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.chunk.*;
+@@ -13,50 +12,21 @@
+ 
+ /** Bounded sparse generation for the opt-in deep preset. Never widens dense arrays. */
+ public final class DeepProvinceGenerator {
+-    private static final java.util.concurrent.atomic.AtomicInteger ADMISSION_BUILDS=new java.util.concurrent.atomic.AtomicInteger();
+-    public static int admissionBuilds() { return ADMISSION_BUILDS.get(); }
+     private record PlanKey(long seed,int height,int style) {}
+     private static final Map<PlanKey,CoralGeometry.Plan> PLANS=new LinkedHashMap<>(64,.75f,true) {
+         @Override protected boolean removeEldestEntry(Map.Entry<PlanKey,CoralGeometry.Plan> e) { return size()>64; }
+     };
+-    private static final Map<ChunkAccess,Map<Integer,LevelChunkSection>> PREPARED=
+-        Collections.synchronizedMap(new WeakHashMap<>());
+-
+-    /** Prepare only a requested FULL protochunk, on a native worker before main-thread admission. */
+-    public static void prepare(WorldGenLevel context,ChunkAccess chunk) {
+-        if(PREPARED.containsKey(chunk)) return;
+-        var sections=build(context,chunk);
+-        PREPARED.put(chunk,sections);
+-    }
+-
+-    public static void generate(ServerLevel level,LevelChunk chunk,ProtoChunk proto) {
+-        var source=level.getChunkSource().getGenerator().getBiomeSource();
+-        if(!(source instanceof ReefProvinceAccess access) || !access.deep()) return;
+-        var sections=PREPARED.remove(proto);
+-        // Compatibility fallback for a generator that omitted the basin feature.
+-        if(sections==null) { ADMISSION_BUILDS.incrementAndGet();sections=build(level,chunk); }
+-        if(sections.isEmpty()) return;
++    public static void generate(ServerLevel level,LevelChunk chunk) {
++        var generator=level.getChunkSource().getGenerator();
++        if(!(generator.getBiomeSource() instanceof ReefProvinceAccess access) || !access.deep())return;
+         int mx=chunk.getPos().getMinBlockX(),mz=chunk.getPos().getMinBlockZ();
+-        var vertical=EndlessVerticalEngine.world(level);
+-        Map<Integer,VerticalPage<LevelChunkSection>> pages=new TreeMap<>();
+-        sections.forEach((sy,section)->pages.computeIfAbsent(Math.floorDiv(sy,32),VerticalPage::new).putSection(sy,section));
+-        for(var entry:pages.entrySet())
+-            vertical.installGeneratedPage(new VerticalPagePos(mx>>4,entry.getKey(),mz>>4),entry.getValue());
+-        chunk.setUnsaved(true);
+-    }
+-
+-    private static Map<Integer,LevelChunkSection> build(WorldGenLevel context,ChunkAccess chunk) {
+-        var level=context.getLevel();
+-        var generator=level.getChunkSource().getGenerator();
+-        if(!(generator.getBiomeSource() instanceof ReefProvinceAccess access) || !access.deep())return Map.of();
+-        int mx=chunk.getPos().getMinBlockX(),mz=chunk.getPos().getMinBlockZ();
+-        var terrain=new ReefTerrain(context,generator);
++        var terrain=new ReefTerrain(level,generator);
+         var samples=new ReefProvinceLayout.Sample[256];int[] floors=new int[256];boolean any=false;
+         for(int x=0;x<16;x++)for(int z=0;z<16;z++) {
+             int i=x*16+z;samples[i]=terrain.provinceSample(mx+x,mz+z);
+             if(samples[i]!=null) { floors[i]=terrain.floor(mx+x,mz+z);any=true; }
+         }
+-        if(!any)return Map.of();
++        if(!any)return;
+         if(EndlessHeights.getMinBuildHeight()>ReefProvinceLayout.DEEP_BOTTOM || EndlessHeights.getDenseMinBuildHeight()!=-64)
+             throw new IllegalStateException("Deep Reef Province requires a fresh vanilla dense core and Endless minBuildHeight <= -512");
+         var sections=new TreeMap<Integer,LevelChunkSection>();
+@@ -81,7 +51,26 @@
+         }
+         corals(level,terrain,sections,mx,mz);
+         wastes(level,terrain,sections,mx,mz);
+-        return sections;
++        // Palette/page installation avoids per-block sparse light invalidation.
++        // applySnapshot is not a persistence write: touch and restore ONE cell
++        // through the public block API to advance its revision and dirty the page.
++        var vertical=EndlessVerticalEngine.world(level);
++        synchronized(vertical) {
++            Map<Integer,VerticalPage<LevelChunkSection>> pages=new TreeMap<>();
++            sections.forEach((sy,section)->pages.computeIfAbsent(Math.floorDiv(sy,32),VerticalPage::new).putSection(sy,section));
++            for(var entry:pages.entrySet()) {
++                var pos=new VerticalPagePos(mx>>4,entry.getKey(),mz>>4);
++                if(vertical.snapshot(pos,true)!=null)
++                    throw new IllegalStateException("Refusing to replace existing sparse page during fresh generation: "+pos);
++                vertical.applySnapshot(VerticalPageSnapshot.fromPage(pos,0,entry.getValue()));
++                int sy=sections.keySet().stream().filter(y->Math.floorDiv(y,32)==entry.getKey()).findFirst().orElseThrow();
++                BlockPos marker=new BlockPos(mx,sy*16,mz);
++                var state=vertical.getBlockState(marker);
++                vertical.setBlockState(marker,state.is(Blocks.STONE)?Blocks.DEEPSLATE.defaultBlockState():Blocks.STONE.defaultBlockState());
++                vertical.setBlockState(marker,state);
++            }
++        }
++        chunk.setUnsaved(true);
+     }
+     private static BlockState get(Map<Integer,LevelChunkSection> sections,int x,int y,int z) {
+         var section=sections.get(Math.floorDiv(y,16));
+diff --git a/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ChunkColumnCache.java b/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ChunkColumnCache.java
+--- a/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ChunkColumnCache.java
++++ /dev/null
+@@ -1,23 +0,0 @@
+-package com.nhat.tidal_terror.worldgen;
+-import java.util.LinkedHashMap;
+-import java.util.Map;
+-import java.util.concurrent.atomic.AtomicIntegerArray;
+-import java.util.function.IntSupplier;
+-/** Exact point values grouped by chunk. Expensive noise never holds the shared LRU lock. */
+-public final class ChunkColumnCache<K> {
+- private static final int MISSING=Integer.MIN_VALUE;
+- private static final class Columns {
+-  final AtomicIntegerArray values=new AtomicIntegerArray(256);
+-  Columns(){for(int i=0;i<256;i++)values.set(i,MISSING);}
+- }
+- private final int limit;
+- private final Map<K,Columns> chunks=new LinkedHashMap<>(128,.75f,true);
+- public ChunkColumnCache(int limit){if(limit<1)throw new IllegalArgumentException();this.limit=limit;}
+- public int get(K chunk,int column,IntSupplier noise){
+-  if(column<0 || column>=256)throw new IllegalArgumentException();
+-  Columns values;
+-  synchronized(chunks){values=chunks.computeIfAbsent(chunk,k->new Columns());while(chunks.size()>limit)chunks.remove(chunks.keySet().iterator().next());}
+-  int value=values.values.get(column);if(value!=MISSING)return value;
+-  synchronized(values){value=values.values.get(column);if(value==MISSING){value=noise.getAsInt();if(value==MISSING)throw new IllegalStateException("Invalid noise height sentinel");values.values.set(column,value);}return value;}
+- }
+-}
+diff --git a/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/CrabSpawnTarget.java b/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/CrabSpawnTarget.java
+--- a/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/CrabSpawnTarget.java
++++ b/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/CrabSpawnTarget.java
+@@ -19,7 +19,7 @@
+                 var terrain=new ReefTerrain(level,level.getChunkSource().getGenerator());
+                 if(terrain.provinceSample(sampled.getX(),sampled.getZ())!=null) {
+                     int bottom=terrain.floor(sampled.getX(),sampled.getZ());
+-                    return new BlockPos(sampled.getX(),bottom+15+level.getRandom().nextInt(60),sampled.getZ());
++                    return new BlockPos(sampled.getX(),bottom+15+level.random.nextInt(60),sampled.getZ());
+                 }
+             }
+             return sampled;
+diff --git a/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ReefTerrain.java b/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ReefTerrain.java
+--- a/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ReefTerrain.java
++++ b/common-universal/src/main/java/com/nhat/tidal_terror/worldgen/ReefTerrain.java
+@@ -6,10 +6,13 @@
+ /** Climate sampling never requests distant chunks during decoration. */
+ public final class ReefTerrain {
+  private record ChunkKey(ChunkGenerator generator,long seed,int x,int z){}
++ private record PointKey(ChunkGenerator generator,long seed,int x,int z){}
+  private static final Map<ChunkKey,int[]> ORIGINAL=Collections.synchronizedMap(new LinkedHashMap<>(2048,.75F,true){
+   @Override protected boolean removeEldestEntry(Map.Entry<ChunkKey,int[]> e){return size()>2048;}
+  });
+- private static final ChunkColumnCache<ChunkKey> NOISE=new ChunkColumnCache<>(2048);
++ private static final Map<PointKey,Integer> NOISE=Collections.synchronizedMap(new LinkedHashMap<>(4096,.75F,true){
++  @Override protected boolean removeEldestEntry(Map.Entry<PointKey,Integer> e){return size()>4096;}
++ });
+  public static void captureOriginal(WorldGenLevel level,ChunkGenerator generator,int mx,int mz){
+   int[] heights=new int[256];
+   for(int x=0;x<16;x++)for(int z=0;z<16;z++)heights[x*16+z]=level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,mx+x,mz+z)-1;
+@@ -17,9 +20,9 @@
+  }
+  private int originalFloor(int x,int z,boolean anchor){
+   if(!anchor){int[] heights=ORIGINAL.get(new ChunkKey(generator,level.getSeed(),x>>4,z>>4));if(heights!=null)return heights[(x&15)*16+(z&15)];}
+-  ChunkKey key=new ChunkKey(generator,level.getSeed(),x>>4,z>>4);
+-  return NOISE.get(key,(x&15)*16+(z&15),()->generator.getBaseHeight(x,z,net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,
+-      level,level.getLevel().getChunkSource().randomState())-1);
++  PointKey key=new PointKey(generator,level.getSeed(),x,z);
++  synchronized(NOISE){return NOISE.computeIfAbsent(key,k->generator.getBaseHeight(x,z,net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,
++      level,level.getLevel().getChunkSource().randomState())-1);}
+  }
+  private final Map<Long,Integer> anchors=new HashMap<>();
+  public int anchorFloor(int x,int z){long key=((long)x<<32)^(z&0xffffffffL);return anchors.computeIfAbsent(key,k->calculateFloor(x,z,true));}
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle
++++ b/build.gradle
+@@ -634,7 +634,7 @@
+             def path = new File(destinationDir, 'tidalterror.mixins.json')
+             def config = new groovy.json.JsonSlurper().parse(path)
+             config.mixins.remove('ReefDistributionMixin')
+-            config.mixins.addAll(['ProvinceRandomStateMixin', 'ProvinceClimateSamplerMixin', 'DeepProvinceChunkMixin', 'DeepProvincePreparationMixin', 'DeepProvinceBiomeMixin', 'DeepProvinceHeightMixin'])
++            config.mixins.addAll(['ProvinceRandomStateMixin', 'ProvinceClimateSamplerMixin', 'DeepProvinceChunkMixin', 'DeepProvinceBiomeMixin', 'DeepProvinceHeightMixin'])
+             path.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(config)) + '\n'
+             def oceanTag = new File(destinationDir, 'data/minecraft/tags/worldgen/biome/is_ocean.json')
+             def ocean = new groovy.json.JsonSlurper().parse(oceanTag)

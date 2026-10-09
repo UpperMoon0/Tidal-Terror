@@ -1,0 +1,19 @@
+{
+  "placement_runtime_commit": "3ac2c342228250c5558bab6c4e17a441ea566afb",
+  "sha256": {
+    "build/province-coverage-2026-10-09.log": "88879482725da26b453e06eaf6bf75e2249c26e468f1f7cd061a817c1f148828",
+    "build/province-coverage-fine-2026-10-09.log": "c5b3db735169992b08877671212b11d59c7fe58bd59ae99f12880cf30444536e",
+    "tools/province/coverage/ProvinceCoverageAudit.java": "3a298132e8d9347481287788ad549522f037260fa22f5333b377d10c908c4169",
+    "tools/province/coverage.init.gradle": "ff00db3a58cd5a96b128e29a3506696b5e78162aa5336ca907a2184a30f8ac72",
+    "tools/province/summarize_coverage.py": "53758f46443c376715682f05c4476a3f83d560ea72abdb2e478e7b77d3a556a6",
+    "tools/endless-source.json": "3b0c60faadf2a58205ea6944701639fd99ba15f0538af6c401b935aa758177b9",
+    ".dependencies/endless/endless-forge-1.20.1-0.9.3.jar": "71ff881e1b437191d79ec51f03f5902eb6af9dc28203b12a69833c16c9105204",
+    "build/province-coverage-fine-2026-10-09/server.properties": "d0f4f149847c55f606d5fd5f317f5dd0fb6b6104b02746e92103520e123be2e5",
+    "build/province-coverage-fine-2026-10-09/config/endless.json": "7c9951670921939e8f6b3f493d96a7ad1fe6690130530119d82fd114ef531e08",
+    "build/province-coverage-isolation-2026-10-09.log": "b3247c5f9eb47c13226dabbbb95c74800b71519ed9cce2c938e63af4b9192e5e"
+  },
+  "coarse_raw_sha256": "3d59a76a97e244e4696b2f587d9fe2f0ff9a2f33eb8534924797d305b6e24c89",
+  "fine_raw_sha256": "bc5605934b8871f5136b5f8e79f1651719ab945a85716dd47011fd7ea0001fe6",
+  "validation": "Both native runs passed; six seeds/961 cells each; all repeated coarse counts and eligibility decisions identical.",
+  "packaging_guard": "Prototype jar and default compiled classes exclude ProvinceCoverageAudit after build without the opt-in init script."
+}

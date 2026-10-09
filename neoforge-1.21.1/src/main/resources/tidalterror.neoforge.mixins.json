@@ -4,7 +4,8 @@
   "package": "com.nhat.tidal_terror.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ReefDistributionMixin", "CrabSpawnTargetMixin", "ReefWaterPostprocessMixin",
+    "CrabSpawnTargetMixin",
+    "ReefWaterPostprocessMixin",
     "ReefTurtlePlacementMixin",
     "ReefShipwreckPlacementMixin",
     "ReefRuinedPortalPlacementMixin",
@@ -14,7 +15,9 @@
     "ReefChunkFinishMixin",
     "ReefChunkSaveMixin",
     "ReefAttackChargeMixin",
-    "SpearEnchantmentSupportMixin"
+    "SpearEnchantmentSupportMixin",
+    "ProvinceRandomStateMixin",
+    "ProvinceClimateSamplerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

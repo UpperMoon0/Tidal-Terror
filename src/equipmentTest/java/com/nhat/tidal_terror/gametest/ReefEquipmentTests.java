@@ -204,7 +204,12 @@ public final class ReefEquipmentTests {
                 near(h,((Number)bonus.getArgs()[0]).doubleValue(),enchantment==com.nhat.tidal_terror.enchantments.ModEnchantments.SERRATION.get()?.5*expected:2*expected,"Book bonus did not reflect its level");
             }
         }
-        h.assertTrue(count==5&&tab.getDisplayItems().size()==25,"Wrong creative book/equipment count");h.succeed();
+        h.assertTrue(count==5,"Missing spear enchantment book levels");
+        h.assertTrue(tab.getDisplayItems().stream().anyMatch(item->item.is(ModEquipment.REEF_COMPASS.get())),
+            "Reef Compass missing from creative tab");
+        h.assertTrue(tab.getDisplayItems().size()==26,
+            "Expected the 25 previous creative entries plus the Reef Compass");
+        h.succeed();
     }
     @GameTest(template="reef_life_pool",timeoutTicks=180)
     public static void enchantedBleedingScalesAndKeepsChargedWaterGate(GameTestHelper h) {
