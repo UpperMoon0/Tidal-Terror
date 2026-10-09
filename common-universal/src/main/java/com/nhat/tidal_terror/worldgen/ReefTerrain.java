@@ -18,6 +18,8 @@ public final class ReefTerrain {
  private int originalFloor(int x,int z,boolean anchor){
   if(!anchor){int[] heights=ORIGINAL.get(new ChunkKey(generator,level.getSeed(),x>>4,z>>4));if(heights!=null)return heights[(x&15)*16+(z&15)];}
   ChunkKey key=new ChunkKey(generator,level.getSeed(),x>>4,z>>4);
+  if(generator instanceof ReefNativeHeightProvider batch)
+   return NOISE.getBatch(key,(x&15)*16+(z&15),()->batch.reefNativeHeights(level,x>>4,z>>4));
   return NOISE.get(key,(x&15)*16+(z&15),()->generator.getBaseHeight(x,z,net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,
       level,level.getLevel().getChunkSource().randomState())-1);
  }

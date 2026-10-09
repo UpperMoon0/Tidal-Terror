@@ -15,6 +15,22 @@ public class ChunkColumnCacheCheck {
   }finally{release.countDown();pool.shutdownNow();}
   try{cache.get(5,0,()->{throw new IllegalStateException();});throw new AssertionError();}catch(IllegalStateException expected){}
   check(cache.get(5,0,()->3)==3);
+  var batchCache=new ChunkColumnCache<Integer>(2);var batches=new AtomicInteger();
+  java.util.function.Supplier<int[]> batch=()->{batches.incrementAndGet();int[] values=new int[256];for(int i=0;i<256;i++)values[i]=i-512;return values;};
+  for(int i=0;i<256;i++)check(batchCache.getBatch(0,i,batch)==i-512);
+  check(batches.get()==1);
+  var concurrent=new ChunkColumnCache<Integer>(2);var batchEntered=new CountDownLatch(1);var batchRelease=new CountDownLatch(1);
+  var batchPool=Executors.newFixedThreadPool(2);
+  try {
+   var first=batchPool.submit(()->concurrent.getBatch(0,0,()->{batchEntered.countDown();try{check(batchRelease.await(5,TimeUnit.SECONDS));}catch(Exception e){throw new RuntimeException(e);}return batch.get();}));
+   check(batchEntered.await(5,TimeUnit.SECONDS));
+   check(batchPool.submit(()->concurrent.getBatch(1,255,batch)).get(2,TimeUnit.SECONDS)==-257);
+   batchRelease.countDown();check(first.get(2,TimeUnit.SECONDS)==-512);
+   check(concurrent.getBatch(0,255,()->{throw new AssertionError("Repeated batch");})==-257);
+  } finally {batchRelease.countDown();batchPool.shutdownNow();}
+  try{batchCache.getBatch(1,0,()->new int[255]);throw new AssertionError();}catch(IllegalArgumentException expected){}
+  try{batchCache.getBatch(1,0,()->{int[] values=new int[256];values[255]=Integer.MIN_VALUE;return values;});throw new AssertionError();}catch(IllegalStateException expected){}
+  check(batchCache.getBatch(1,255,batch)==-257);
   System.out.println("CHUNK_COLUMN_CACHE PASS exact values, reuse, eviction, independent-chunk concurrency, failure retry");
  }
 }

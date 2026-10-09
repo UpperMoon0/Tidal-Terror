@@ -3,6 +3,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.function.IntSupplier;
+import java.util.function.Supplier;
 /** Exact point values grouped by chunk. Expensive noise never holds the shared LRU lock. */
 public final class ChunkColumnCache<K> {
  private static final int MISSING=Integer.MIN_VALUE;
@@ -19,5 +20,20 @@ public final class ChunkColumnCache<K> {
   synchronized(chunks){values=chunks.computeIfAbsent(chunk,k->new Columns());while(chunks.size()>limit)chunks.remove(chunks.keySet().iterator().next());}
   int value=values.values.get(column);if(value!=MISSING)return value;
   synchronized(values){value=values.values.get(column);if(value==MISSING){value=noise.getAsInt();if(value==MISSING)throw new IllegalStateException("Invalid noise height sentinel");values.values.set(column,value);}return value;}
+ }
+ /** Publish an exact batch atomically; other chunks never wait on this computation. */
+ public int getBatch(K chunk,int column,Supplier<int[]> noise){
+  if(column<0 || column>=256)throw new IllegalArgumentException();
+  Columns values;
+  synchronized(chunks){values=chunks.computeIfAbsent(chunk,k->new Columns());while(chunks.size()>limit)chunks.remove(chunks.keySet().iterator().next());}
+  int value=values.values.get(column);if(value!=MISSING)return value;
+  synchronized(values){
+   value=values.values.get(column);if(value!=MISSING)return value;
+   int[] batch=noise.get();
+   if(batch.length!=256)throw new IllegalArgumentException("Expected 256 native heights");
+   for(int height:batch)if(height==MISSING)throw new IllegalStateException("Invalid noise height sentinel");
+   for(int i=0;i<256;i++)values.values.set(i,batch[i]);
+   return batch[column];
+  }
  }
 }

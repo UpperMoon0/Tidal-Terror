@@ -49,6 +49,8 @@ public final class DeepProvinceAudit {
             }
             require(center!=null,"No bounded fixture province");
             System.out.println("DEEP_AUDIT center="+center+" reload="+RELOAD);
+            verifyNativeHeightBatch(level);
+            com.nstut.endless.testing.NativeUniformSectionChecks.run(level);
             LegacyCathedralInventory.verify(level);
             var terrain=new ReefTerrain(level,generator);
             verifyLandmarks(level,terrain);
@@ -99,6 +101,22 @@ public final class DeepProvinceAudit {
             System.out.println("DEEP_ADMISSION_WORKER_PASS builds="+DeepProvinceGenerator.admissionBuilds());
             ready=true;
         } catch(Throwable error) { finish(error); }
+    }
+    private static void verifyNativeHeightBatch(net.minecraft.server.level.ServerLevel level) {
+        var generator=level.getChunkSource().getGenerator();
+        require(generator instanceof ReefNativeHeightProvider,"Missing batched native height adapter");
+        var batch=(ReefNativeHeightProvider)generator;
+        int[][] chunks={{0,0},{Math.floorDiv(center.x()+3000,16),Math.floorDiv(center.z(),16)},
+            {Math.floorDiv(center.x()-3000,16),Math.floorDiv(center.z()-48,16)}};
+        for(var chunk:chunks) {
+            var heights=batch.reefNativeHeights(level,chunk[0],chunk[1]);
+            for(int x=0;x<16;x++)for(int z=0;z<16;z++) {
+                int expected=generator.getBaseHeight(chunk[0]*16+x,chunk[1]*16+z,
+                    Heightmap.Types.OCEAN_FLOOR_WG,level,level.getChunkSource().randomState())-1;
+                require(heights[x*16+z]==expected,"Batched native height differs at "+chunk[0]+","+chunk[1]+"/"+x+","+z+": "+heights[x*16+z]+" != "+expected);
+            }
+        }
+        System.out.println("NATIVE_HEIGHT_BATCH_PASS columns=768 exact native equivalence");
     }
     private static void verifyLandmarks(net.minecraft.server.level.ServerLevel level,ReefTerrain terrain) {
         int gx=Math.floorDiv(center.x(),88),gz=Math.floorDiv(center.z(),88);

@@ -60,10 +60,21 @@ public final class DeepProvinceGenerator {
         if(EndlessHeights.getMinBuildHeight()>ReefProvinceLayout.DEEP_BOTTOM || EndlessHeights.getDenseMinBuildHeight()!=-64)
             throw new IllegalStateException("Deep Reef Province requires a fresh vanilla dense core and Endless minBuildHeight <= -512");
         var sections=new TreeMap<Integer,LevelChunkSection>();
+        boolean full=true;int lowestFloor=Integer.MAX_VALUE,highestFloor=Integer.MIN_VALUE;
+        for(int i=0;i<256;i++) {
+            full &= samples[i]!=null;
+            if(samples[i]!=null) { lowestFloor=Math.min(lowestFloor,floors[i]);highestFloor=Math.max(highestFloor,floors[i]); }
+        }
         var biomes=level.registryAccess().registryOrThrow(Registries.BIOME);
         var sampler=level.getChunkSource().randomState().sampler();
         for(int sy=ReefProvinceLayout.DEEP_BOTTOM>>4;sy< -4;sy++) {
-            var section=new LevelChunkSection(biomes);int bottom=sy*16;
+            int bottom=sy*16;
+            // Entire sections above every floor are water. Those strictly below
+            // every bedrock sheet are solid rock. Boundary sections keep the exact loop.
+            BlockState uniform=full && bottom>highestFloor?Blocks.WATER.defaultBlockState()
+                :full && bottom+15<ReefProvinceLayout.bedrockBase(lowestFloor)?Blocks.DEEPSLATE.defaultBlockState():null;
+            var section=uniform==null?new LevelChunkSection(biomes):VerticalSectionFactory.uniform(biomes,uniform);
+            if(uniform==null)
             for(int x=0;x<16;x++)for(int z=0;z<16;z++) {
                 int i=x*16+z;if(samples[i]==null)continue;int floor=floors[i];
                 int sand=6+(int)Math.floorMod((long)(mx+x)*31+(long)(mz+z)*17,3);

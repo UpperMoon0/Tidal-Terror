@@ -4,6 +4,7 @@ Tidal Terror 0.0.4 (unreleased)
 - Add opt-in TerraBlender-free Reef Province prototype presets. Preserve the Cathedral's 1,024-block radius and scale the surrounding rim and Sunken Wastes proportionally.
 - Add an Endless-backed basin foundation down to -512, deep water through the former vanilla bedrock barrier, and continuous bedrock following the seabed. Ordinary outside terrain retains vanilla bedrock.
 - Cache exact native seabed heights by chunk and calculate noise outside the shared LRU lock. Prepare sparse sections only for requested FULL chunks, on generation workers, then install them through Endless's bulk API without a snapshot encode/decode round trip.
+- Batch exact native height evaluation by noise cell in the prototype, sharing setup across neighbouring columns. Initialize uniform deep water/rock sections through Endless's palette factory while preserving native write counters, bedrock, biomes and the original coral decorators.
 - Add native fresh/cold generation, lighting/halo, existing-page refusal and worker-admission regressions, plus a paired in-game performance fixture.
 - Restore the full legacy Cathedral garden and giant-coral decorations below the dense floor: clustered branching/layered/folded colonies, sandstone boulders, all five coral colors, coral plants/fans, seagrass, sea pickles and giant crown fans. Both paths now call the same original decorators.
 - Add native feature-family, living-coral survival, cold-reload and frozen 0.0.3 biome feature/carver/spawn inventory regressions.

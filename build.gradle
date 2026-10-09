@@ -60,7 +60,7 @@ minecraft {
     // However, it must be at "META-INF/accesstransformer.cfg" in the final mod jar to be loaded by Forge.
     // This default location is a best practice to automatically put the file in the right place in the final jar.
     // See https://docs.minecraftforge.net/en/latest/advanced/accesstransformers/ for more information.
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -634,7 +634,7 @@ if (project.hasProperty('provincePrototype')) {
             def path = new File(destinationDir, 'tidalterror.mixins.json')
             def config = new groovy.json.JsonSlurper().parse(path)
             config.mixins.remove('ReefDistributionMixin')
-            config.mixins.addAll(['ProvinceRandomStateMixin', 'ProvinceClimateSamplerMixin', 'DeepProvinceChunkMixin', 'DeepProvincePreparationMixin', 'DeepProvinceBiomeMixin', 'DeepProvinceHeightMixin'])
+            config.mixins.addAll(['ProvinceRandomStateMixin', 'ProvinceClimateSamplerMixin', 'ProvinceNativeHeightMixin', 'ProvinceNoiseCellAccess', 'DeepProvinceChunkMixin', 'DeepProvincePreparationMixin', 'DeepProvinceBiomeMixin', 'DeepProvinceHeightMixin'])
             path.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(config)) + '\n'
             def oceanTag = new File(destinationDir, 'data/minecraft/tags/worldgen/biome/is_ocean.json')
             def ocean = new groovy.json.JsonSlurper().parse(oceanTag)
@@ -674,16 +674,17 @@ if (project.hasProperty('provinceTests')) {
 
 if (project.hasProperty('deepProvinceTests')) {
     if (!project.hasProperty('provincePrototype')) throw new GradleException('deepProvinceTests requires provincePrototype')
+    def deepTestDirectory=project.file(project.findProperty('deepProvinceTestDirectory') ?: 'build/deep-province-test')
     sourceSets.main.java.srcDir 'src/deepProvinceTest/java'
     minecraft.runs.server {
-        workingDirectory project.file('build/deep-province-test')
+        workingDirectory deepTestDirectory
         property 'forge.logging.console.level', 'info'
         property 'tidalterror.deepReload', project.hasProperty('deepReload') ? 'true' : 'false'
         args '--nogui'
     }
     tasks.matching { it.name == 'runServer' }.configureEach {
         doFirst {
-            def directory=file('build/deep-province-test').canonicalFile
+            def directory=deepTestDirectory.canonicalFile
             def world=new File(directory,'deep-province-world').canonicalFile
             if (!world.toPath().startsWith(layout.buildDirectory.get().asFile.canonicalFile.toPath())) throw new GradleException('Unsafe deep test world')
             directory.mkdirs()
@@ -694,7 +695,7 @@ if (project.hasProperty('deepProvinceTests')) {
             new File(directory,'eula.txt').text='eula=true\n'
             new File(directory,'server.properties').text='level-name=deep-province-world\nlevel-seed=0\nlevel-type=tidalterror:reef_province_deep\nonline-mode=false\nmax-tick-time=0\nview-distance=2\nsimulation-distance=2\ngenerate-structures=false\nserver-port=25581\nserver-ip=127.0.0.1\n'
         }
-        doLast { if (!file('build/deep-province-test/passed.txt').exists()) throw new GradleException('Deep province native audit failed') }
+        doLast { if (!new File(deepTestDirectory,'passed.txt').exists()) throw new GradleException('Deep province native audit failed') }
     }
 }
 
