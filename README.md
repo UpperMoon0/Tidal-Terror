@@ -2,7 +2,7 @@
 
 ![Tidal Terror banner](docs/assets/tidal-terror-banner.png)
 
-Explore **Coral Cathedral**, a deep ocean biome with towering coral formations, irregular reef gardens, sandstone seabeds, and four animated marine creatures. Its deepest interior waters extend roughly 100 blocks below the surface, with some giant coral crowns reaching almost to sea level.
+Explore **Coral Cathedral** and the surrounding **Sunken Wastes** in new ocean provinces. The full-size Cathedral retains its giant coral formations, reef gardens and four animated marine creatures; broad adjoining Wastes rings contain sand and rock landmarks. Normal worlds use ordinary terrain heights. An optional Forge 1.20.1 world type extends the same provinces deep beneath the world with Endless.
 
 ## Creatures and food
 
@@ -17,7 +17,7 @@ All four have custom spawn eggs in the **Tidal Terror** creative tab. The Crushe
 
 ## Reef equipment (0.0.2)
 
-Coral Cathedral supplies an **iron-to-diamond specialist equipment branch**. Coral Crushers drop 1â€“2 **Crusher Teeth**, and Shardbacks drop 1â€“2 **Shardback Plates**, alongside seafood. Looting can increase the material drops. Living Shardbacks also shed a plate while safely foraging on submerged sediment after 5â€“6 minutes of loaded underwater time; keep a respectful distance so they can forage. The initial molt takes five minutes, and cooldowns persist across saves.
+Coral Cathedral supplies an **iron-to-diamond specialist equipment branch**. Coral Crushers drop 1�?"2 **Crusher Teeth**, and Shardbacks drop 1�?"2 **Shardback Plates**, alongside seafood. Looting can increase the material drops. Living Shardbacks also shed a plate while safely foraging on submerged sediment after 5�?"6 minutes of loaded underwater time; keep a respectful distance so they can forage. The initial molt takes five minutes, and cooldowns persist across saves.
 
 Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather**. Upgrade each matching iron armor piece with **three Shardback Plates and one dead coral block** at a crafting table. Any of the five vanilla dead coral block varieties works. Isolate a coral block from adjacent water to let it die, then mine the dead block with a pickaxe; Silk Touch is not required for the dead block. Collecting teeth or plates unlocks their recipes in the recipe book. Teeth repair the spear; plates repair the armor.
 
@@ -29,13 +29,13 @@ Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather
 
 The equipment inherits the mobs' materials: an ivory tooth and sandy bindings for the spear; violet Shardback carapace, cobalt coral, ivory segments and slate joints for armor. Diamond remains the stronger general defensive tier. See [equipment artwork and verification](docs/Reef-Equipment-Art-Workflow.md).
 
-**Serration Iâ€“III** adds 0.5 damage per level every two seconds. **Hemorrhage Iâ€“II** extends bleeding to six/eight seconds. Both are spear-only enchantments available through tables and books/anvils, and can be combined with each other. Both conflict with Sharpness, Smite and Bane of Arthropods, creating a choice between immediate damage and stronger bleeding. All five book levels appear beside the spear in the Tidal Terror creative tab; book tooltips explain their level-specific bleeding bonuses. The spear tooltip shows enchanted damage every two seconds and duration. Coral Crusher bites also cause the base bleed: two damage over four seconds, with the same custom blood particles. The spear points forward in both hands. Bleeding produces custom blood droplets and dispersing underwater plumes with a dedicated status icon. See [sprite references, bleeding and enchantment details](docs/Reef-Sprites-and-Bleeding.md).
+**Serration I�?"III** adds 0.5 damage per level every two seconds. **Hemorrhage I�?"II** extends bleeding to six/eight seconds. Both are spear-only enchantments available through tables and books/anvils, and can be combined with each other. Both conflict with Sharpness, Smite and Bane of Arthropods, creating a choice between immediate damage and stronger bleeding. All five book levels appear beside the spear in the Tidal Terror creative tab; book tooltips explain their level-specific bleeding bonuses. The spear tooltip shows enchanted damage every two seconds and duration. Coral Crusher bites also cause the base bleed: two damage over four seconds, with the same custom blood particles. The spear points forward in both hands. Bleeding produces custom blood droplets and dispersing underwater plumes with a dedicated status icon. See [sprite references, bleeding and enchantment details](docs/Reef-Sprites-and-Bleeding.md).
 
 JEI loads automatically in the development client (`runClient`) for recipe inspection. It is optional development tooling and is not bundled into the release.
 
 ## Install and explore
 
-Choose the jar matching your Minecraft version and loader. Version **0.0.3 adds four ports** alongside the original Forge build:
+Choose the jar matching your Minecraft version and loader. Version **0.0.4** supports five loader/version targets and changes default new-world ocean generation:
 
 | Minecraft | Loader | Java | Required companion mods |
 | --- | --- | --- | --- |
@@ -47,7 +47,11 @@ Choose the jar matching your Minecraft version and loader. Version **0.0.3 adds 
 
 Install companion mods for the **same Minecraft version and loader** on both the server and clients. Fabric 1.20.1 includes Reach Entity Attributes 2.4.0 for the spear's extra reach; the newer versions use Minecraft's native reach attribute. Architectury API and Fabric API are separate downloads; TerraBlender is no longer required.
 
-Coral Cathedral targets roughly 5% of ocean area with default biome settings. Its region scale stays unchanged. Find it in newly generated ocean chunks, or use `/locate biome tidalterror:coral_cathedral` with commands enabled. Existing chunks retain their terrain and structures. Reef structure fixes affect future generation. Dolphins, turtles, and tropical fish can spawn at reef depths alongside the new creatures.
+New normal worlds on all five ports contain Cathedral-centered ocean provinces surrounded by Sunken Wastes instead of the previous rare standalone Cathedral placement. The Cathedral retains its 1,024-block nominal radius; complete Wastes rings may reshape coastlines inside their footprint. With commands enabled, locate either the Cathedral or Sunken Wastes biome. Already generated chunks are not regenerated.
+
+**Forge 1.20.1 only:** Craft a **Reef Compass** from a Compass, three Amethyst Shards and a Nautilus Shell to find a nearby accepted Cathedral without forcing distant chunk loads. The optional **Deep Reef Province (Endless)** world type requires Endless 0.9.3 on both client and server, configured with a minimum build height at or below -512 before creating the world. Other loaders have neither the Reef Compass nor this deep world type; ordinary worlds do not require Endless.
+
+**World-preset compatibility warning:** This draft replaces the vanilla **minecraft:normal** world preset JSON. Other mods or datapacks replacing that same preset do not merge automatically: whichever pack wins takes ownership of the normal-world generator/dimensions. Use a deliberately merged preset or a separate custom world type; test in a new disposable world first. There is no migration for older TerraBlender saves. Details are in [Sunken Wastes design and limitations](docs/Sunken-Wastes-Province.md).
 
 Coral Crushers ignore Creative and Spectator players. Use Survival or Adventure to try their hunting behavior. Shaders are optional and are not required to play.
 
@@ -115,7 +119,3 @@ The Reef Spear uses its 3D model in inventory and JEI as well as in hand. See th
 Repeated bleeding hits refresh duration while preserving the independent two-second pulse cooldown, including across entity saves.
 
 Bleeding saves the attacker UUID and attributes lethal damage to that owner when resolvable, preserving native Looting and XP credit through victim save/reload.
-
-New normal worlds on every supported loader use ocean provinces: the full-size Coral Cathedral is surrounded by its Sunken Wastes rings at ordinary world height. TerraBlender is no longer required. The shared province layout, seabed, coral garden and wildlife code serve both normal and deep generation.
-
-Forge 1.20.1 additionally offers **Deep Reef Province (Endless)**. Install Endless 0.9.3 on client and server and configure its minimum height at or below -512 before creating that world. The full-size Cathedral sits near Y -448 with bedrock beneath the basin. Installing Endless does not deepen normal worlds. Legacy TerraBlender saves have no migration path in this version. [World types and setup](docs/Sunken-Wastes-Province.md).
