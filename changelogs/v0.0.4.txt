@@ -7,6 +7,7 @@ Tidal Terror 0.0.4 (unreleased)
 - Add native fresh/cold generation, lighting/halo, existing-page refusal and worker-admission regressions, plus a paired in-game performance fixture.
 - Restore the full legacy Cathedral garden and giant-coral decorations below the dense floor: clustered branching/layered/folded colonies, sandstone boulders, all five coral colors, coral plants/fans, seagrass, sea pickles and giant crown fans. Both paths now call the same original decorators.
 - Add native feature-family, living-coral survival, cold-reload and frozen 0.0.3 biome feature/carver/spawn inventory regressions.
+- Restore native natural spawning below the dense floor through Endless's logical spawn-bound fix. Confine the four custom species to Cathedral canopy water, retain vanilla aquatic spawning above and below it, and retain Drowned weight 1. Add native deep-dispatch, upper-water/Wastes rejection and cold-restart regressions.
 - Resolve NeoForge's external tooling from its authoritative repository rather than incomplete Maven Central classifier artifacts.
 
 The deep presets are experimental Forge 1.20.1 builds (-PprovincePrototype), require new worlds, and remain blocked from production promotion by structure/cave integration, timing regressions and other loader/version deep adapters. This draft has not been merged or published.

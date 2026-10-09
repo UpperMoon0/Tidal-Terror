@@ -68,6 +68,7 @@ public final class ReefWorldgen {
         event.register(ModEntities.SHARDBACK.get(), SpawnPlacements.Type.IN_WATER,
                 Heightmap.Types.OCEAN_FLOOR, (type, level, reason, pos, random) ->
                     (level.getBiome(pos).is(BIOME) || level.getBiome(pos).is(WASTES)) && pos.getY()<level.getSeaLevel()-4
+                    && ReefSpawnHabitat.allowed(level.getLevel(),pos)
                     && level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.WATER)
                     && level.getBlockState(pos.above()).is(net.minecraft.world.level.block.Blocks.WATER)
                     && com.nhat.tidal_terror.entities.shardback.ShardbackEntity.isSeabed(level.getBlockState(pos.below()))

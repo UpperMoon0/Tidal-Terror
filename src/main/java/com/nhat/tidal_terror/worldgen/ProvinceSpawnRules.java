@@ -6,6 +6,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 final class ProvinceSpawnRules {
     static boolean allowed(ServerLevelAccessor access, BlockPos pos, boolean predator) {
         var level = access.getLevel();
+        if(ReefSpawnHabitat.deep(level))return ReefSpawnHabitat.allowed(level,pos);
         var terrain = new ReefTerrain(level, level.getChunkSource().getGenerator());
         if (!(level.getChunkSource().getGenerator().getBiomeSource() instanceof ReefProvinceAccess)) return true;
         var s = terrain.provinceSample(pos.getX(), pos.getZ());

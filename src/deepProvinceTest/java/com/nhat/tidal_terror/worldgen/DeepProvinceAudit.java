@@ -53,6 +53,7 @@ public final class DeepProvinceAudit {
             var terrain=new ReefTerrain(level,generator);
             verifyLandmarks(level,terrain);
             verifyRecoveredGardens(level,terrain);
+            DeepSpawnAudit.verify(level,new BlockPos(center.x(),terrain.floor(center.x(),center.z())+1,center.z()));
             int[] offsets={0,230,340,500};
             for(int i=0;i<offsets.length;i++) {
                 int x=center.x()+(int)Math.round(offsets[i]*ReefProvinceLayout.SCALE),z=center.z();
