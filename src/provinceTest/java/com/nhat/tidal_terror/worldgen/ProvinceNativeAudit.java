@@ -22,7 +22,7 @@ public final class ProvinceNativeAudit {
     @SubscribeEvent public static void started(ServerStartedEvent event) {
         var server = event.getServer(); var level = server.overworld();
         try {
-            require(ModList.get().isLoaded("terrablender"), "Default-world integration missing");
+            require(!ModList.get().isLoaded("terrablender"), "TerraBlender still required");
             var generator = level.getChunkSource().getGenerator();
             require(generator.getBiomeSource() instanceof ReefProvinceBiomeSource, "Prototype preset did not load");
             var source = (ReefProvinceBiomeSource)generator.getBiomeSource();

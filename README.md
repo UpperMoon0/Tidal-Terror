@@ -39,13 +39,13 @@ Choose the jar matching your Minecraft version and loader. Version **0.0.3 adds 
 
 | Minecraft | Loader | Java | Required companion mods |
 | --- | --- | --- | --- |
-| 1.20.1 | Forge 47.2+ | 17 | TerraBlender 3.0.1.6+ |
-| 1.20.1 | Fabric Loader 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+, TerraBlender 3.0.1.6+ |
-| 1.21.1 | Fabric Loader 0.17.2+ | 21 | Fabric API, Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
-| 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
-| 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+, TerraBlender 26.1.2.0.3+ |
+| 1.20.1 | Forge 47.2+ | 17 | None |
+| 1.20.1 | Fabric Loader 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+ |
+| 1.21.1 | Fabric Loader 0.17.2+ | 21 | Fabric API, Architectury API 13.0.8+ |
+| 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+ |
+| 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+ |
 
-Install companion mods for the **same Minecraft version and loader** on both the server and clients. Fabric 1.20.1 includes Reach Entity Attributes 2.4.0 for the spear's extra reach; the newer versions use Minecraft's native reach attribute. Architectury API, Fabric API and TerraBlender are separate downloads.
+Install companion mods for the **same Minecraft version and loader** on both the server and clients. Fabric 1.20.1 includes Reach Entity Attributes 2.4.0 for the spear's extra reach; the newer versions use Minecraft's native reach attribute. Architectury API and Fabric API are separate downloads; TerraBlender is no longer required.
 
 Coral Cathedral targets roughly 5% of ocean area with default biome settings. Its region scale stays unchanged. Find it in newly generated ocean chunks, or use `/locate biome tidalterror:coral_cathedral` with commands enabled. Existing chunks retain their terrain and structures. Reef structure fixes affect future generation. Dolphins, turtles, and tropical fish can spawn at reef depths alongside the new creatures.
 
@@ -116,6 +116,6 @@ Repeated bleeding hits refresh duration while preserving the independent two-sec
 
 Bleeding saves the attacker UUID and attributes lethal damage to that owner when resolvable, preserving native Looting and XP credit through victim save/reload.
 
-Forge 1.20.1 also offers an optional **Deep Reef Province (Endless)** world type. The same jar works without Endless: default worlds retain the previous TerraBlender Cathedral generation. Install Endless 0.9.3 on client and server to add the deep world type, and configure its minimum height at or below -512 before creating that world. The full-size Cathedral sits near Y -448 with continuous surrounding Wastes and a bedrock floor beneath the basin. Existing worlds keep their saved generator. Other ports retain their existing generation adapters. [World types, shared features and setup](docs/Sunken-Wastes-Province.md).
+New normal worlds on every supported loader use ocean provinces: the full-size Coral Cathedral is surrounded by its Sunken Wastes rings at ordinary world height. TerraBlender is no longer required. The shared province layout, seabed, coral garden and wildlife code serve both normal and deep generation.
 
-New deep worlds use a balanced province layout, measured at about 17.6k blocks to the nearest outer edge across six seeds. The craftable **Reef Compass** works in normal and province worlds: use it to attune, then follow its rotating needle. Craft with a Compass, three Amethyst Shards and a Nautilus Shell. Older saved province worlds keep their original placement. [Balance and locator validation](docs/performance/Province-Balance-2026-10-09.md).
+Forge 1.20.1 additionally offers **Deep Reef Province (Endless)**. Install Endless 0.9.3 on client and server and configure its minimum height at or below -512 before creating that world. The full-size Cathedral sits near Y -448 with bedrock beneath the basin. Installing Endless does not deepen normal worlds. Legacy TerraBlender saves have no migration path in this version. [World types and setup](docs/Sunken-Wastes-Province.md).

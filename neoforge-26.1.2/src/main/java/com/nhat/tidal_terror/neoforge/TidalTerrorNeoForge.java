@@ -12,7 +12,6 @@ public final class TidalTerrorNeoForge {
         com.nhat.tidal_terror.worldgen.ReefWaterFinish.register(bus);
         new com.nhat.tidal_terror.TidalTerror();
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.level.ChunkEvent.Load event)->com.nhat.tidal_terror.worldgen.ReefWaterFinish.restore(event.getChunk()));
-        bus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event)->event.enqueueWork(com.nhat.tidal_terror.worldgen.ReefWorldgen::initializeBiomes));
         bus.addListener(TidalTerrorNeoForge::attributes);
         bus.addListener(TidalTerrorNeoForge::spawns);
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.tick.LevelTickEvent.Post event)->{

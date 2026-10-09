@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-09",
+  "version": "0.0.4",
+  "previous_head": "8756e652a0670df7b55b5375dfa253f24f404b0d",
+  "native_logs": {
+    "normal_without_endless": "default-province-absent.log",
+    "normal_with_endless": "default-province-present.log",
+    "normal_after_removing_endless": "default-province-removed.log",
+    "deep_fresh": "default-province-deep.log",
+    "deep_cold_reload": "default-province-deep-reload.log",
+    "shallow_terrain": "default-province-shallow-terrain-outer-edge.log",
+    "fabric_1201": "default-province-fabric1201-tests.log",
+    "fabric_1211": "default-province-fabric121-tests-final.log",
+    "neoforge_1211": "default-province-neo121-tests-final.log",
+    "neoforge_2612": "default-province-neo26-tests.log"
+  },
+  "production_jars": {
+    "fabric-1.20.1": {
+      "jar": "fabric-1.20.1\\build\\libs\\tidalterror-fabric-1.20.1-0.0.4.jar",
+      "sha256": "acf22397807379ab962deaadefaeb0dfe49b81c5ca242b7743f456ed5f6c303e"
+    },
+    "fabric-1.21.1": {
+      "jar": "fabric-1.21.1\\build\\libs\\tidalterror-fabric-1.21.1-0.0.4.jar",
+      "sha256": "64448041b1fe78a69a00b7e76ba52174540e1d70627784fc91a58e4d74030ef3"
+    },
+    "neoforge-1.21.1": {
+      "jar": "neoforge-1.21.1\\build\\libs\\tidalterror-neoforge-1.21.1-0.0.4.jar",
+      "sha256": "efea9f503c40193178ac8ba4ef952e56c39f888de7f9eba10686d3a07db82526"
+    },
+    "neoforge-26.1.2": {
+      "jar": "neoforge-26.1.2\\build\\libs\\tidalterror-neoforge-26.1.2-0.0.4.jar",
+      "sha256": "69e340ed461416ce23a2f98076cd660b7cb41ee43b2ed293e395ac1c827b6072"
+    },
+    "forge-1.20.1": {
+      "jar": "build\\libs\\tidalterror-0.0.4.jar",
+      "sha256": "96514411b1f53959267ca410b258e956e480ea4e2941127e740e9d7bfbfbc706"
+    }
+  },
+  "port_native_tests": {
+    "fabric-1.20.1": 23,
+    "fabric-1.21.1": 23,
+    "neoforge-1.21.1": 23,
+    "neoforge-26.1.2": 22
+  },
+  "tooling_tests": 26,
+  "normal_seed0_target": {
+    "x": -4317,
+    "z": 37119
+  },
+  "normal_seed7142026": {
+    "x": 20667,
+    "z": -4103,
+    "coral_blocks": 16236,
+    "tallest_column": 103,
+    "garden_blocks": 5594,
+    "deep_columns": 12544,
+    "air": 0,
+    "magma": 0,
+    "bubble_columns": 0,
+    "outer_seam_checks": 8,
+    "max_native_height_error": 0,
+    "structure_cases": 10
+  },
+  "limitations": [
+    "No legacy TerraBlender save migration.",
+    "Complete rings may absorb coastal land inside their footprint.",
+    "Deep Endless adapter is Forge 1.20.1 only.",
+    "Native port checks cover registry, codec, placement and existing GameTests; detailed fresh noise-world terrain and reload audits were run on Forge."
+  ]
+}

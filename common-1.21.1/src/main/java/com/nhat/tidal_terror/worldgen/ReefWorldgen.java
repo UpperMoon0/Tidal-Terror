@@ -22,7 +22,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.placement.*;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import terrablender.api.*;
 import java.util.List;
 import java.util.Set;
 
@@ -41,29 +40,17 @@ public final class ReefWorldgen {
     public static final ResourceKey<PlacedFeature> GARDEN_PLACED = ResourceKey.create(Registries.PLACED_FEATURE, id("reef_garden"));
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath(TidalTerror.MODID, path); }
 
+    public static final ResourceKey<Biome> WASTES = ResourceKey.create(Registries.BIOME, id("sunken_wastes"));
+    public static final RegistrySupplier<SunkenWastesFeature> WASTES_FEATURE = FEATURES.register("wastes_landmarks", SunkenWastesFeature::new);
+    private static final DeferredRegister<com.mojang.serialization.MapCodec<? extends BiomeSource>> PROVINCE_SOURCES =
+            DeferredRegister.create(TidalTerror.MODID, Registries.BIOME_SOURCE);
+    static { PROVINCE_SOURCES.register("reef_province", () -> ReefProvinceBiomeSource.CODEC); }
+
     public static void register() {
         FEATURES.register();
+        PROVINCE_SOURCES.register();
     }
 
-    public static void initializeBiomes() {
-            SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, TidalTerror.MODID,
-                    SurfaceRules.ifTrue(SurfaceRules.isBiome(BIOME), SurfaceRules.sequence(
-                            SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.state(net.minecraft.world.level.block.Blocks.SAND.defaultBlockState())),
-                            SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, SurfaceRules.state(net.minecraft.world.level.block.Blocks.SAND.defaultBlockState())))));
-            Regions.register(new Region(id("reefs"), RegionType.OVERWORLD, com.nhat.tidal_terror.balance.ReefBalance.REEF_REGION_WEIGHT) {
-                @Override public void addBiomes(net.minecraft.core.Registry<Biome> registry,
-                        java.util.function.Consumer<com.mojang.datafixers.util.Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
-                    addModifiedVanillaOverworldBiomes(mapper, builder -> {
-                        builder.replaceBiome(Biomes.WARM_OCEAN, BIOME);
-                        builder.replaceBiome(Biomes.LUKEWARM_OCEAN, BIOME);
-                        builder.replaceBiome(Biomes.OCEAN, BIOME);
-                        builder.replaceBiome(Biomes.DEEP_OCEAN, BIOME);
-                        builder.replaceBiome(Biomes.DEEP_LUKEWARM_OCEAN, BIOME);
-                    });
-                }
-            });
-
-    }
 
     private static void biome(BootstrapContext<Biome> context) {
         var placed = context.lookup(Registries.PLACED_FEATURE);

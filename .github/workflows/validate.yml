@@ -99,7 +99,7 @@ jobs:
           - suite: terrain
             property: reefTests
             task: runServer
-            directory: reef-native-test-v4a
+            directory: reef-native-test-v5-province
           - suite: models
             property: coralCrusherModelTests
             task: verifyCoralCrusherAnimation verifyCathedralRayModel verifyVeilglowModel verifyShardbackModel verifyReefEquipmentModel

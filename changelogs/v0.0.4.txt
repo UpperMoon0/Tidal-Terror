@@ -1,6 +1,7 @@
 Tidal Terror 0.0.4 (unreleased)
 
-- Make Endless 0.9.3 optional on Forge 1.20.1; normal worlds keep the previous TerraBlender generation. Generic logical-floor fog and sparse engine changes are supplied by Endless PR #24.
+- Remove TerraBlender on every supported loader; normal worlds now use the full-size Coral Cathedral and surrounding Sunken Wastes provinces at ordinary world height. Legacy TerraBlender saves are not migrated.
+- Endless 0.9.3 remains optional on Forge 1.20.1 and unlocks the separate deep world type. Generic logical-floor fog and sparse engine changes are supplied by Endless PR #24.
 - Add a separate Deep Reef Province world type when Endless is installed, with conditional sparse adapters and shared biome features/spawn tables. Preserve the Cathedral's 1,024-block radius and scale the surrounding rim and Sunken Wastes proportionally.
 - Balance new province placement toward a measured 10-20k-block average journey while retaining full Cathedral size and rings. Persist placement version 2; old saved sources retain their original version-1 layout.
 - Add a craftable Reef Compass for both Forge world-generation paths, with generated-art rotating needle frames, asynchronous nearest-Cathedral attunement, saved targets and no distant chunk generation.

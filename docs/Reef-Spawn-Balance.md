@@ -1,5 +1,8 @@
 # Reef spawn balance
 
+Generation update for 0.0.4: new normal worlds use ocean provinces on every supported loader, with no TerraBlender dependency. The old region-weight and rarity measurements below are historical; current placement is described in [Sunken Wastes Province](Sunken-Wastes-Province.md). Wildlife weights and habitat rules remain shared with the province generators.
+
+
 Coral Cathedral keeps the warm-ocean roster, with drowned selection weight
 reduced from 5 to 1 (group size still one). This is approximately an 80 percent
 reduction in selection frequency. Native drowned placement, darkness, depth

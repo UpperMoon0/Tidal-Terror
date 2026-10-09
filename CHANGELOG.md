@@ -2,7 +2,8 @@
 
 ## 0.0.4 — Unreleased
 
-- Make Endless optional on Forge 1.20.1. Default worlds retain the legacy TerraBlender Cathedral generation; installing Endless adds the separate Deep Reef Province world type.
+- Remove TerraBlender across all supported loaders. New normal worlds use the shared full-size Cathedral and Sunken Wastes province system, with normal bedrock and world height. No legacy TerraBlender save migration.
+- Keep Endless optional on Forge 1.20.1; installing it adds the separate Deep Reef Province world type.
 - Share Cathedral coral, gardens, biome features, spawn tables, terrain queries and Reef Compass behavior across normal and deep worlds. Load only the sparse terrain adapter when Endless is installed, and refuse deep saves without that dependency.
 - Preserve saved province placement versions and full Cathedral size. New deep worlds use the balanced placement and craftable Reef Compass described in the province report.
 

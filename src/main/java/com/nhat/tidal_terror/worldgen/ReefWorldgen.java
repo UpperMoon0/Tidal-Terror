@@ -60,9 +60,6 @@ public final class ReefWorldgen {
         bus.addListener(ReefWorldgen::spawns);
         bus.addListener(EndlessProvincePack::register);
         bus.addListener(ReefAnimalSpawns::register);
-        bus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) -> event.enqueueWork(() -> {
-            LegacyReefIntegration.register();
-        }));
     }
 
     private static void spawns(SpawnPlacementRegisterEvent event) {

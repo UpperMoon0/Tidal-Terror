@@ -23,7 +23,7 @@ public final class ReefCompassAudit {
         int loaded=level.getChunkSource().getLoadedChunksCount();
         long started=System.nanoTime();
         var target=ReefLocator.find(level,0,0,()->false);
-        require(new ReefProvinceLayout.Center(-4317,37119).equals(target),"Balanced seed0 target changed when TerraBlender was installed");
+        require(new ReefProvinceLayout.Center(-4317,37119).equals(target),"Balanced seed0 target changed after default province integration");
         require(level.getChunkSource().getLoadedChunksCount()==loaded,"Locator generated distant chunks");
         var stack=new ItemStack(ModEquipment.REEF_COMPASS.get());
         require(ReefCompassItem.target(stack)==null,"Unbound compass invented a target");

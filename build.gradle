@@ -171,7 +171,6 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    implementation fg.deobf("com.github.glitchfiend:TerraBlender-forge:1.20.1-3.0.1.6")
     if (file('.dependencies/shaders/oculus-mc1.20.1-1.8.0.jar').exists()
             && file('.dependencies/shaders/embeddium-0.3.31+mc1.20.1.jar').exists()
             && !project.properties.keySet().any { it.endsWith('Tests') }
@@ -208,7 +207,6 @@ tasks.named('processResources', ProcessResources).configure {
             loader_version_range: loader_version_range,
             mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
             mod_authors: mod_authors, mod_description: mod_description,
-            terrablender_required: true,
     ]
     inputs.properties replaceProperties
 
@@ -298,7 +296,7 @@ if (project.hasProperty('reefPreview')) {
             new File(preview, 'shaderpacks/ComplementaryReimagined_r5.9.3.zip.txt').text = 'WATER_FOG_MULT=15\n'
             def world = new File(preview, 'saves/Coral Cathedral Preview')
             if (!world.exists()) {
-                def audited = file('build/reef-native-test-v4a/reef-audit-world')
+                def audited = file('build/reef-native-test-v5-province/reef-audit-world')
                 if (!audited.exists()) throw new GradleException('Run the isolated reefTests server audit first.')
                 copy { from audited; into world }
             }
@@ -318,7 +316,7 @@ if (project.hasProperty('reefPreview')) {
 if (project.hasProperty('reefTests')) {
     sourceSets.main.java.srcDir 'src/reefTest/java'
     minecraft.runs.server {
-        workingDirectory project.file('build/reef-native-test-v4a')
+        workingDirectory project.file('build/reef-native-test-v5-province')
         property 'tidalterror.reefAudit', 'true'
         property 'forge.logging.console.level', 'info'
     }
@@ -592,7 +590,6 @@ sourceSets.main.java.srcDir 'common-1201/src/main/java'
 
 // Opt-in Forge province preset; legacy placement remains the release default.
 if (project.hasProperty('provinceExplore')) {
-    if (!project.hasProperty('provincePrototype')) throw new GradleException('provinceExplore requires provincePrototype')
     sourceSets.main.java.srcDir 'src/provinceExplore/java'
     minecraft.runs.client {
         workingDirectory project.file('build/province-explore')
@@ -623,7 +620,6 @@ if (project.hasProperty('provinceExplore')) {
 }
 // provincePrototype remains a development alias for withEndless; one production jar.
 if (project.hasProperty('provinceTests')) {
-    if (!project.hasProperty('provincePrototype')) throw new GradleException('provinceTests requires provincePrototype')
     sourceSets.main.java.srcDir 'src/provinceTest/java'
     minecraft.runs.server {
         workingDirectory project.file('build/province-native-test')
@@ -651,7 +647,7 @@ if (project.hasProperty('provinceTests')) {
 }
 
 if (project.hasProperty('deepProvinceTests')) {
-    if (!project.hasProperty('provincePrototype')) throw new GradleException('deepProvinceTests requires provincePrototype')
+    if (!project.hasProperty('withEndless') && !project.hasProperty('provincePrototype')) throw new GradleException('deepProvinceTests requires withEndless')
     def deepTestDirectory=project.file(project.findProperty('deepProvinceTestDirectory') ?: 'build/deep-province-test')
     sourceSets.main.java.srcDir 'src/deepProvinceTest/java'
     minecraft.runs.server {
@@ -678,7 +674,7 @@ if (project.hasProperty('deepProvinceTests')) {
 }
 
 if (project.hasProperty('deepProvinceExplore')) {
-    if (!project.hasProperty('provincePrototype')) throw new GradleException('deepProvinceExplore requires provincePrototype')
+    if (!project.hasProperty('withEndless') && !project.hasProperty('provincePrototype')) throw new GradleException('deepProvinceExplore requires withEndless')
     sourceSets.main.java.srcDir 'src/provinceExplore/java'
     minecraft.runs.client {
         workingDirectory project.file('build/deep-province-explore')

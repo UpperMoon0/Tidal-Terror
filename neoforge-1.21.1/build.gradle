@@ -31,7 +31,6 @@ neoForge {
 }
 dependencies {
     implementation 'dev.architectury:architectury-neoforge:13.0.8'
-    implementation 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 }
 processResources { from(rootProject.file('src/main/resources')) { include 'assets/**', 'tidalterror-icon.png' }; inputs.property 'version', project.version; filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version } }

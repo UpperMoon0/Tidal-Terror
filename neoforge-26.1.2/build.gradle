@@ -28,7 +28,6 @@ neoForge {
 }
 dependencies {
     implementation 'dev.architectury:architectury-neoforge:20.1.16'
-    implementation 'com.github.glitchfiend:TerraBlender-neoforge:26.1.2-26.1.2.0.3'
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 }
 processResources { from(rootProject.file('src/main/resources')) { include 'assets/**', 'tidalterror-icon.png'; exclude 'assets/tidalterror/models/item/reef_spear.json' }; inputs.property 'version', project.version; filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version } }

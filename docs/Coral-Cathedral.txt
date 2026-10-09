@@ -5,12 +5,12 @@ rounded sandstone boulders, seagrass, coral fans, pickles and vanilla warm-ocean
 All building materials are vanilla blocks.
 
 Terrain:
-- Warm, lukewarm, deep lukewarm, normal and deep oceans are mapped to the reef inside
-  the TerraBlender reef region. Shared region weight remains 18; a broad seeded patch gate targets roughly 5% of ocean area. Cold/frozen oceans and land mappings remain native.
+- Ocean-centered provinces contain a full-size Cathedral core and proportionally scaled Sunken Wastes rings. The Cathedral model radius is 1,024 blocks; outside the full footprint, terrain stays native.
 - ReefTerrain samples the native biome source without requesting distant chunks.
 - The reef interior floor undulates around Y -49; sea level is 63.
-  Shoreward slopes interpolate over 192 blocks, with a refined distance to the biome boundary.
-  They meet each column's actual original native seabed, instead of a fixed-height ledge.
+  The surrounding Wastes include a raised rim, lower inner ring and outer approach.
+  The outermost 569 model blocks blend into the actual original native terrain.
+  Forge 1.20.1 also supports the optional Endless deep world type, whose core is near Y -448.
   Original heightmaps are captured before excavation; sparse noise-height lookups anchor
   cross-chunk giant corals deterministically. Both shared caches are bounded.
 - ReefBasinFeature operates only on the decorating chunk's reef columns at RAW_GENERATION.

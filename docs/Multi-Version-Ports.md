@@ -34,7 +34,7 @@ Run multi-version Gradle with **Java 21**. Toolchains select Java 17 for Minecra
 ./gradlew.bat -Pmultiversion :neoforge-26.1.2:runClient
 ```
 
-Qualified target tasks configure only the required common/version modules. `buildAll` configures every port. Keep each loader in its own instance and use the corresponding TerraBlender/Architectury/Fabric API builds. Development dependencies, caches, worlds, evidence and downloaded libraries are ignored by Git. All five interactive dev environments include JEI as a local-only runtime dependency, omitted from native server tests and production metadata/archives. Client smoke checks require JEI to load.
+Qualified target tasks configure only the required common/version modules. `buildAll` configures every port. Keep each loader in its own instance and use the corresponding Architectury/Fabric API builds. Development dependencies, caches, worlds, evidence and downloaded libraries are ignored by Git. All five interactive dev environments include JEI as a local-only runtime dependency, omitted from native server tests and production metadata/archives. Client smoke checks require JEI to load.
 
 ## Verification
 

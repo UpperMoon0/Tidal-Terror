@@ -36,11 +36,11 @@ Choose a file for your exact Minecraft version and loader:
 
 | Minecraft | Loader | Java | Companion mods |
 | --- | --- | --- | --- |
-| 1.20.1 | Forge 47.2+ | 17 | TerraBlender 3.0.1.6+ |
-| 1.20.1 | Fabric 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+, TerraBlender 3.0.1.6+ |
-| 1.21.1 | Fabric 0.17.2+ | 21 | Fabric API, Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
-| 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+, TerraBlender 4.1.0.8+ |
-| 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+, TerraBlender 26.1.2.0.3+ |
+| 1.20.1 | Forge 47.2+ | 17 | None |
+| 1.20.1 | Fabric 0.16.14+ | 17 | Fabric API, Architectury API 9.2.14+ |
+| 1.21.1 | Fabric 0.17.2+ | 21 | Fabric API, Architectury API 13.0.8+ |
+| 1.21.1 | NeoForge 21.1.228+ | 21 | Architectury API 13.0.8+ |
+| 26.1.2 | NeoForge 26.1.2.99+ | 25 | Architectury API 20.1.16+ |
 
 Place the matching Tidal Terror jar and required companion mods in your instance's `mods` folder. Multiplayer needs them on the server and every client. Use companion builds for the same Minecraft version and loader. Fabric 1.20.1 bundles Reach Entity Attributes for the spear; newer versions use native reach.
 

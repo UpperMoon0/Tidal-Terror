@@ -4,7 +4,7 @@ public final class PortTestBootstrap {
  @net.neoforged.bus.api.SubscribeEvent public static void register(net.neoforged.neoforge.event.RegisterGameTestsEvent event){
   var environment=event.registerEnvironment(net.minecraft.resources.Identifier.fromNamespaceAndPath("tidalterror","equipment"),new net.minecraft.gametest.framework.TestEnvironmentDefinition.AllOf());
   java.util.Map<String,java.util.function.Consumer<net.minecraft.gametest.framework.GameTestHelper>> tests=java.util.Map.ofEntries(
-   java.util.Map.entry("reef_distribution",helper->ReefDistributionTests.verify(helper,helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME).getOrThrow(net.minecraft.world.level.biome.Biomes.PLAINS))),
+   java.util.Map.entry("reef_distribution",helper->ReefDistributionTests.verify(helper,helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME).getOrThrow(net.minecraft.world.level.biome.Biomes.WARM_OCEAN))),
    java.util.Map.entry("crab_spawn_seabed",helper->CrabSpawnTargetTests.verify(helper,helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BIOME).getOrThrow(com.nhat.tidal_terror.worldgen.ReefWorldgen.BIOME),level->{var player=helper.makeMockServerPlayerInLevel();player.teleportTo(level,player.getX(),player.getY(),player.getZ(),java.util.Set.of(),player.getYRot(),player.getXRot(),true);return player;})),
    java.util.Map.entry("ray_leaves_seabed",ReefLifeAiTests::rayLeavesSeabed),
    java.util.Map.entry("ray_shortcut_wings",ReefLifeAiTests::rayShortcutChecksWings),

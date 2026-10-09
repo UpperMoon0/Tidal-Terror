@@ -10,9 +10,12 @@ Craft the **Reef Compass** with a vanilla Compass, three Amethyst Shards and a N
 
 ## Current Endless-backed deep preset
 
-The Forge 1.20.1 build now uses one jar for both world-generation paths. **TerraBlender remains required**, and ordinary worlds retain the previous natural Cathedral distribution and normal bedrock floor. **Endless 0.9.3 is optional**; installing it on both client and server adds **Deep Reef Province (Endless)** to the world-type choices (`tidalterror:reef_province_deep` on a server). The earlier shallow source and preset remain readable for saved-world compatibility, but only the deep preset is added to the world-type menu. Depth descriptions further below record the earlier shallow pass.
+Normal worlds on all five supported targets now use the province biome source around a vanilla Overworld delegate. TerraBlender is removed from runtime, build dependencies and publication metadata. The Cathedral keeps its 1,024-block model radius and all outer bands retain their proportional size. Normal worlds use the ordinary terrain height and bedrock at -64; the optional Forge 1.20.1 Endless world type uses the same admission, geometry, gardens and habitat code with a deep floor profile. No legacy TerraBlender world migration is provided.
 
-World types come from a built-in data pack registered only when Endless is installed. Sparse mixins are skipped before their optional API is resolved. A saved deep biome source refuses to decode without Endless instead of falling back to ordinary generation. Installing Endless never changes a normal world's generator. Province sampling uses the delegate's native climate parameter tree so TerraBlender's globally registered reef region cannot add legacy Cathedrals outside the province layout or move previously saved provinces.
+Only the deep world type is supplied by the conditional Endless pack. The default `minecraft:normal` preset supplies shallow provinces without an addon. Installing Endless does not change that profile; decoding a saved deep world without its supported Endless adapter fails explicitly. Province versions 1 and 2 and their existing deep layouts remain readable. Custom presets and generators are left to their own data packs.
+
+Admission still requires an ocean center and an ocean-dominated full-size Cathedral envelope. It does not guarantee an entirely ocean-only outer footprint: a province can absorb nearby islands/coast within its rings. Native terrain remains delegated outside the footprint. This retains the previously balanced placement and complete ring sizes; this change does not claim coast preservation inside a province.
+
 
 Both paths use the same Cathedral biome resource, feature graph, spawn tables, `ReefTerrain`, `CoralCathedralFeature.decorate` and `ReefGardenFeature.decorate`. The sparse worker supplies a private block view to those decorators. Canopy-specific spawn restrictions apply only to deep sources; ordinary worlds retain the prior habitat rules. The Reef Compass recipe is available in either world type: normal worlds use native horizontal biome lookup; province worlds use seeded centers. Both searches use the same bounded server worker and saved compass target.
 
@@ -188,8 +191,8 @@ Do not switch an existing save between the released and prototype generators. Us
 Forge 1.20.1 uses the repository's Java 17 toolchain.
 
 ```powershell
-# Native shallow-preset audit (both companion mods installed):
-.\gradlew.bat -PprovincePrototype -PprovinceTests runServer --offline
+# Native shallow-preset audit (no companion mod required):
+.\gradlew.bat -PprovinceTests runServer --offline
 
 # Interactive review: select Deep Reef Province (Endless) in a NEW world.
 .\gradlew.bat -PprovincePrototype runClient --offline
@@ -215,7 +218,7 @@ The audit checks preset loading, absence of TerraBlender, world seed binding, bi
 3. Test chunk-generation order, negative chunk edges, save/reload, structure anchors, neighboring native decorations and underwater block survival after ticking.
 4. Preserve cave biomes below the new seabed; measure generation time and bound coral-plan work.
 5. Review native spawn populations. The first pass permits Crushers only at the rim/core and in the lower 65% of the water column; it does not yet provide a continuous population-density gradient. Sparse spawn weights alone do not guarantee low absolute counts with independent species caps.
-6. Adapt each supported loader/version and run its native normal-world and serialization checks before replacing TerraBlender in production metadata.
+6. Default provinces now replace TerraBlender on all supported targets; maintain the native default-preset, biome-graph and serialization checks for each loader.
 
 The visual targets and remaining gates above are proposals and unverified work unless a test result is explicitly recorded. Passing the layout model or a compile is not an in-world appearance check.
 

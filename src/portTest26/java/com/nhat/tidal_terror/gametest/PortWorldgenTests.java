@@ -13,13 +13,10 @@ public final class PortWorldgenTests {
                 .getOrThrow(WorldPresets.NORMAL).value();
         var generator = preset.overworld().orElseThrow().generator();
         helper.assertTrue(generator instanceof NoiseBasedChunkGenerator, "Expected normal noise generation");
-        // A normal preset outside an active normal world has not received TerraBlender's
-        // runtime region injection. Include the loaded reef explicitly so flat test
-        // worlds cannot silently omit the biome that caused the client crash.
         var biomes = new java.util.ArrayList<>(generator.getBiomeSource().possibleBiomes());
-        var reef = helper.getLevel().registryAccess().lookupOrThrow(Registries.BIOME)
-                .getOrThrow(ReefWorldgen.BIOME);
-        if (biomes.stream().noneMatch(b -> b.is(ReefWorldgen.BIOME))) biomes.add(reef);
+        helper.assertTrue(generator.getBiomeSource() instanceof com.nhat.tidal_terror.worldgen.ReefProvinceAccess access&&!access.deep(),"Normal preset lacks shallow province source");
+        helper.assertTrue(biomes.stream().anyMatch(b->b.is(ReefWorldgen.BIOME)),"Default source omitted Cathedral");
+        helper.assertTrue(biomes.stream().anyMatch(b->b.is(ReefWorldgen.WASTES)),"Default source omitted Wastes");
         net.minecraft.world.level.biome.FeatureSorter.buildFeaturesPerStep(
                 biomes, biome -> biome.value().getGenerationSettings().features(), true);
         // Also exercise the normal generator's own validation entry point.

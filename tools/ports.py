@@ -46,8 +46,9 @@ def verify_jar(path, target, version):
             meta = json.loads(jar.read('fabric.mod.json'))
             assert meta['id'] == 'tidalterror' and meta['version'] == version
             assert meta['depends']['minecraft'] == spec['minecraft']
-            for dependency in ('fabricloader', 'fabric-api', 'architectury', 'terrablender'):
+            for dependency in ('fabricloader', 'fabric-api', 'architectury'):
                 assert dependency in meta['depends']
+            assert 'terrablender' not in meta['depends']
             assert 'META-INF/neoforge.mods.toml' not in names
             configs = meta['mixins']
         else:
@@ -55,8 +56,9 @@ def verify_jar(path, target, version):
             assert meta['mods'][0]['modId'] == 'tidalterror' and meta['mods'][0]['version'] == version
             dependencies = {d['modId']:d for d in meta['dependencies']['tidalterror']}
             assert dependencies['minecraft']['versionRange'] == '['+spec['minecraft']+']'
-            for dependency in ('neoforge','minecraft','architectury','terrablender'):
+            for dependency in ('neoforge','minecraft','architectury'):
                 assert dependencies[dependency]['type'] == 'required'
+            assert 'terrablender' not in dependencies
             assert 'fabric.mod.json' not in names
             configs = [entry['config'] for entry in meta['mixins']]
             extensions = json.loads(jar.read(meta['mods'][0]['enumExtensions']))
@@ -69,7 +71,13 @@ def verify_jar(path, target, version):
                 assert mixins['package'].replace('.','/')+'/'+mixin+'.class' in names
             if spec['loader']=='fabric':
                 assert mixins.get('refmap') in names, 'Production Fabric mixins need their mapped refmap'
+        normal=json.loads(jar.read('data/minecraft/worldgen/world_preset/normal.json'))
+        source=normal['dimensions']['minecraft:overworld']['generator']['biome_source']
+        assert source['type']=='tidalterror:reef_province' and not source.get('deep',False)
+        assert source['placement_version']==2
+        assert 'data/tidalterror/worldgen/biome/sunken_wastes.json' in names
         base='com/nhat/tidal_terror/'
+        assert base+'worldgen/ProvincePresetAudit.class' not in names, 'Native preset fixture leaked'
         for name in ('TidalTerror','effects/ModEffects','items/ReefSpearItem','items/ReefArmorItem','entities/FangArrowEntity',
                      'entities/coral_crusher/CoralCrusherEntity','entities/cathedral_ray/CathedralRayEntity',
                      'entities/shardback/ShardbackEntity','entities/veilglow/VeilglowEntity'):

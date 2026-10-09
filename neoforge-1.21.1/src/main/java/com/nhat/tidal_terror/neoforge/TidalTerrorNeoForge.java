@@ -10,7 +10,6 @@ import net.neoforged.bus.api.IEventBus;
 public final class TidalTerrorNeoForge {
     public TidalTerrorNeoForge(IEventBus bus) {
         new com.nhat.tidal_terror.TidalTerror();
-        bus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event)->event.enqueueWork(com.nhat.tidal_terror.worldgen.ReefWorldgen::initializeBiomes));
         bus.addListener(TidalTerrorNeoForge::attributes);
         bus.addListener(TidalTerrorNeoForge::spawns);
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.tick.LevelTickEvent.Post event)->{

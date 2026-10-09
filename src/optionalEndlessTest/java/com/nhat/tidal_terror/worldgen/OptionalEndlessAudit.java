@@ -27,7 +27,8 @@ public final class OptionalEndlessAudit {
             boolean endless=ModList.get().isLoaded("endless");
             require(endless==Boolean.getBoolean("tidalterror.expectEndless"),"Runtime dependency matrix incorrect");
             var generator=level.getChunkSource().getGenerator();
-            require(generator.getBiomeSource() instanceof MultiNoiseBiomeSource,"Normal world switched to province generation");
+            require(!ModList.get().isLoaded("terrablender"),"TerraBlender still on runtime classpath");
+            require(generator.getBiomeSource() instanceof ReefProvinceAccess access&&!access.deep(),"Default normal province missing");
             require(!ReefSpawnHabitat.deep(level),"Normal world acquired deep spawning rules");
             require(level.getSectionsCount()==24,"Normal dense core widened");
             var presets=level.registryAccess().registryOrThrow(Registries.WORLD_PRESET);
@@ -37,7 +38,7 @@ public final class OptionalEndlessAudit {
             var reef=biomes.getHolderOrThrow(ReefWorldgen.BIOME);
             var wastes=biomes.getHolderOrThrow(ReefWorldgen.WASTES);
             var ops=RegistryOps.create(JsonOps.INSTANCE,level.registryAccess());
-            var shallow=new ReefProvinceBiomeSource(generator.getBiomeSource(),reef,wastes,false);
+            var shallow=new ReefProvinceBiomeSource(((ReefProvinceBiomeSource)generator.getBiomeSource()).delegate(),reef,wastes,false);
             var encoded=BiomeSource.CODEC.encodeStart(ops,shallow).getOrThrow(false,m->{});
             var decoded=BiomeSource.CODEC.parse(ops,encoded).getOrThrow(false,m->{});
             require(decoded instanceof ReefProvinceAccess access&&!access.deep(),"Shallow saved source no longer decodes");
@@ -51,11 +52,11 @@ public final class OptionalEndlessAudit {
                     .getResultItem(level.registryAccess()).is(ModEquipment.REEF_COMPASS.get()),"Normal compass recipe missing");
             int before=level.getChunkSource().getLoadedChunksCount();
             var found=ReefLocator.find(level,0,0,()->false);
-            require(found!=null,"Legacy TerraBlender reef does not generate naturally");
+            require(found!=null,"Default province does not generate naturally");
             require(before==level.getChunkSource().getLoadedChunksCount(),"Normal compass lookup loaded distant chunks");
             var site=new BlockPos(found.x(),32,found.z());var terrain=new ReefTerrain(level,generator);
-            require(terrain.provinceSample(site.getX(),site.getZ())==null,"Normal Cathedral became a province");
-            require(terrain.reef(site.getX(),site.getZ()),"Legacy source misses located reef");
+            require(terrain.provinceSample(site.getX(),site.getZ())!=null,"Default Cathedral lacks province rings");
+            require(terrain.reef(site.getX(),site.getZ()),"Default source misses located reef");
             level.getChunkAt(site);
             require(level.getBlockState(site.atY(-64)).is(Blocks.BEDROCK),"Normal bedrock floor removed");
             LegacyCathedralInventory.verify(level);

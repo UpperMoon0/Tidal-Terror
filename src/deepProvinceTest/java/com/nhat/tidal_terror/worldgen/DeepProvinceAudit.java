@@ -30,7 +30,7 @@ public final class DeepProvinceAudit {
         server=event.getServer();
         try {
             require(ModList.get().isLoaded("endless"),"Endless required");
-            require(ModList.get().isLoaded("terrablender"),"Default-world integration missing");
+            require(!ModList.get().isLoaded("terrablender"),"TerraBlender still required");
             var level=server.overworld();var generator=level.getChunkSource().getGenerator();
             require(generator.getBiomeSource() instanceof ReefProvinceBiomeSource source && source.deep(),"Wrong deep preset");
             require(EndlessHeights.getDenseMinBuildHeight()==-64 && level.getSectionsCount()==24,"Dense core widened");

@@ -1,6 +1,6 @@
 # Release checklist
 
-CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minecraft/mc-mods/tidal-terror). Its description is maintained in `CURSEFORGE.md`. TerraBlender is a required dependency of every uploaded file.
+CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minecraft/mc-mods/tidal-terror). Its description is maintained in `CURSEFORGE.md`. TerraBlender is no longer a dependency of any target; Endless is optional for Forge 1.20.1.
 
 ## Version-driven publication
 
@@ -10,7 +10,7 @@ The workflows follow Endless's structure, adapted to Forge 1.20.1 and Java 17. T
 2. Commit and push to `main`. The Release workflow compares the version with the previous revision. An untagged current version also runs, allowing the initial release and workflow repairs.
 3. Preflight rejects missing notes and tags belonging to another commit. Validation runs 71 native GameTests, the terrain audit, five model checks, release tooling tests, and a clean packaging check.
 4. A separate clean build produces the ordinary jar, verifies expanded metadata, dependencies, the icon and all resources, and rejects test/preview classes. The exact jar, SHA256SUMS, and source manifest are retained as an artifact and in a draft GitHub release.
-5. The same jar uploads to CurseForge project 1726637 using `CURSEFORGE_API_TOKEN`, marked Forge 1.20.1, Java 17, client/server, release, with required TerraBlender. A receipt containing its file ID and checksum is saved before the GitHub release becomes public.
+5. The same jar uploads to CurseForge project 1726637 using `CURSEFORGE_API_TOKEN`, marked Forge 1.20.1, Java 17, client/server, release, with optional Endless. A receipt containing its file ID and checksum is saved before the GitHub release becomes public.
 
 Normal PRs and non-main pushes use Validate without publishing. Manual Release runs must target `main`. Completed uploads with a recorded receipt are reused; differing bytes or reused version tags fail rather than overwrite a release. Archive ordering and timestamps are stable across rebuilds.
 
@@ -20,7 +20,7 @@ Use **Re-run failed jobs** for a failed pipeline. A manual retry of the exact ta
 
 Check the Actions run, the GitHub release's jar/checksum/manifest, and the CurseForge Files page separately. An accepted upload can remain pending moderation; green Actions does not mean a publicly downloadable CurseForge file. Client playtesting and shader screenshot review remain separate from automated native checks.
 
-The normal jar excludes worlds, logs, development galleries, shader packs, and test/preview classes. TerraBlender and optional shaders are separate downloads. The mod is MIT licensed; the preserved third-party Forge MDK notice is `LICENSE-Forge-MDK.txt`.
+The normal jar excludes worlds, logs, development galleries, shader packs, and test/preview classes. Endless and optional shaders are separate downloads. The mod is MIT licensed; the preserved third-party Forge MDK notice is `LICENSE-Forge-MDK.txt`.
 
 ## Verified initial release
 

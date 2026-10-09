@@ -44,7 +44,6 @@ class ArtifactTests(unittest.TestCase):
         self.jar = self.folder/f'tidalterror-{self.version}.jar'
         self.entries = {}
         props = release.properties((release.ROOT/'gradle.properties').read_text())
-        props['terrablender_required'] = 'true'  # Normal release metadata.
         for dirname in ('src/main/resources','src/generated/resources','src/forgeProvince/resources'):
             base=release.ROOT/dirname
             for path in base.rglob('*'):
@@ -61,6 +60,17 @@ class ArtifactTests(unittest.TestCase):
     def test_valid_production_resources(self):
         self.write_jar()
         self.assertEqual(len(release.verify_jar(self.jar,self.version)),64)
+    def test_legacy_dependency_rejected(self):
+        self.entries['META-INF/mods.toml'] += b'\n[[dependencies.tidalterror]]\nmodId="terrablender"\nmandatory=true\nversionRange="*"\nside="BOTH"\n'
+        self.write_jar()
+        with self.assertRaises(AssertionError): release.verify_jar(self.jar,self.version)
+    def test_vanilla_only_default_rejected(self):
+        key='data/minecraft/worldgen/world_preset/normal.json'
+        data=json.loads(self.entries[key])
+        data['dimensions']['minecraft:overworld']['generator']['biome_source']={'type':'minecraft:multi_noise','preset':'minecraft:overworld'}
+        self.entries[key]=json.dumps(data).encode()
+        self.write_jar()
+        with self.assertRaises(AssertionError): release.verify_jar(self.jar,self.version)
     def test_missing_resource(self):
         del self.entries['tidalterror.mixins.json']
         self.write_jar()
