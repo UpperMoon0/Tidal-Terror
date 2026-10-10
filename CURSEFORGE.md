@@ -62,7 +62,7 @@ Coral Crushers ignore Creative and Spectator players. Switch to Survival or Adve
 
 Created by **NsTut**.
 
-Licensed under the [MIT License](https://github.com/UpperMoon0/Tidal-Terror/blob/main/LICENSE.txt).
+Licensed under the [MIT License](https://github.com/UpperMoon0/Tidal-Terror/blob/main/LICENSE.md).
 
 Report bugs on the [issue tracker](https://github.com/UpperMoon0/Tidal-Terror/issues). Include your Minecraft, loader, companion mod, and Tidal Terror versions, other installed mods, steps to reproduce, and the relevant log or crash report. For generation issues, also include the world seed and coordinates.
 

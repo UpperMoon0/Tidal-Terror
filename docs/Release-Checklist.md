@@ -6,7 +6,7 @@ CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minec
 
 The version-driven workflow publishes all five loader/version targets. Merging a version change to `main` starts publication automatically; it is not a merge-only check. Before releasing 0.0.4:
 
-1. Confirm `mod_version=0.0.4` in `gradle.properties`, nonempty `changelogs/v0.0.4.txt` notes, and no `v0.0.4` tag reserved by another commit. Update the current README, CurseForge description and changelog while preserving historical benchmark data and reports.
+1. Confirm `mod_version=0.0.4` in `gradle.properties`, nonempty `changelogs/v0.0.4.md` notes, and no `v0.0.4` tag reserved by another commit. Update the current README, CurseForge description and changelog while preserving historical benchmark data and reports.
 2. Publish Endless 0.9.3 first and verify that its Forge 1.20.1 jar is publicly downloadable. Tidal's optional runtime range is `[0.9.3,0.10)`; older Endless releases cannot supply the supported deep adapter. Deep users also need Architectury API 9.2.14+ on the server and clients. Ordinary Tidal Forge worlds need neither companion.
 3. Check `tools/endless-source.json`: CI builds that exact reviewed Endless commit and shares its unbundled Forge 0.9.3 jar with the validation and release builds. A local Forge build also requires this jar in `.dependencies/endless/`, even when Endless is absent at runtime. The pin need not change for an Endless docs-only merge whose runtime code is unchanged.
 4. Confirm the latest exact-head Validate run: Forge native gameplay/model/terrain suites, normal worlds with and without Endless and reload after removing it, deep fresh/cold generation, four port native/client suites, tooling regressions, and clean five-target packaging. Passing these checks does not resolve the documented deep cave/structure, preset-collision or performance limitations.
@@ -24,7 +24,7 @@ Use **Re-run failed jobs** for a failed pipeline. A manual retry of the exact ta
 
 Check the Actions run, the GitHub release's jar/checksum/manifest, and the CurseForge Files page separately. An accepted upload can remain pending moderation; green Actions does not mean a publicly downloadable CurseForge file. Client playtesting and shader screenshot review remain separate from automated native checks.
 
-The normal jar excludes worlds, logs, development galleries, shader packs, and test/preview classes. Endless and optional shaders are separate downloads. The mod is MIT licensed; the preserved third-party Forge MDK notice is `LICENSE-Forge-MDK.txt`.
+The normal jar excludes worlds, logs, development galleries, shader packs, and test/preview classes. Endless and optional shaders are separate downloads. The mod is MIT licensed; the preserved third-party Forge MDK notice is `LICENSE-Forge-MDK.md`.
 
 ## Verified initial release
 

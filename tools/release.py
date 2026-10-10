@@ -163,7 +163,7 @@ def main():
     value = current()
     sha = os.getenv('GITHUB_SHA') or command('git','rev-parse','HEAD')
     tag = f'v{value}'
-    notes = ROOT / f'changelogs/{tag}.txt'
+    notes = ROOT / f'changelogs/{tag}.md'
     if args.action == 'plan':
         before = os.getenv('BEFORE_SHA','')
         previous = None
@@ -171,7 +171,10 @@ def main():
             previous = version(command('git','show',f'{before}:gradle.properties'))
         output(changed=should_release(value,previous,os.getenv('GITHUB_EVENT_NAME',''),tag_commit(value)), value=value)
         return
-    preflight(value,sha,tag_commit(value),notes)
+    # Packaging verifies local artifacts without reserving or publishing a version.
+    # Publication actions must still reject tags belonging to a different commit.
+    tagged = None if args.action == 'package' else tag_commit(value)
+    preflight(value,sha,tagged,notes)
     folder = args.output.resolve()
     if args.action == 'preflight':
         print(f'Release {value} preflight passed')

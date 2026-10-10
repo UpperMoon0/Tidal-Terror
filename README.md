@@ -27,7 +27,7 @@ Craft the spear with a Crusher Tooth, **iron ingot, dead coral block and leather
 | Fang Arrow | Native arrow damage plus 2 bleeding damage over 4 seconds on land or in water. Craft four with a Crusher Tooth, stick and feather. Supports bows, crossbows and modded weapons using standard arrow ammunition. Serration and Hemorrhage cannot enchant arrows or ranged weapons. |
 | Reef Armor | Helmet/chestplate/leggings/boots give 2/6/5/2 armor (15 total), zero toughness, and iron-equivalent durability. Each piece reduces knockback by 5% while standing on submerged ground, up to 20%. Knockback reduction works with mixed equipment. The full set reduces bleeding damage by 25% on land and underwater; ordinary protection remains iron-tier. |
 
-The equipment inherits the mobs' materials: an ivory tooth and sandy bindings for the spear; violet Shardback carapace, cobalt coral, ivory segments and slate joints for armor. Diamond remains the stronger general defensive tier. See [equipment artwork and verification](docs/Reef-Equipment-Art-Workflow.md).
+The equipment inherits the mobs' materials: an ivory tooth and sandy bindings for the spear; violet Shardback carapace, cobalt coral, ivory segments and slate joints for armor. Diamond remains the stronger general defensive tier.
 
 **Serration I�?"III** adds 0.5 damage per level every two seconds. **Hemorrhage I�?"II** extends bleeding to six/eight seconds. Both are spear-only enchantments available through tables and books/anvils, and can be combined with each other. Both conflict with Sharpness, Smite and Bane of Arthropods, creating a choice between immediate damage and stronger bleeding. All five book levels appear beside the spear in the Tidal Terror creative tab; book tooltips explain their level-specific bleeding bonuses. The spear tooltip shows enchanted damage every two seconds and duration. Coral Crusher bites also cause the base bleed: two damage over four seconds, with the same custom blood particles. The spear points forward in both hands. Bleeding produces custom blood droplets and dispersing underwater plumes with a dedicated status icon. See [sprite references, bleeding and enchantment details](docs/Reef-Sprites-and-Bleeding.md).
 
@@ -63,7 +63,7 @@ Downloads are available from [GitHub Releases](https://github.com/UpperMoon0/Tid
 
 Report problems on the [issue tracker](https://github.com/UpperMoon0/Tidal-Terror/issues), with mod/loader versions, reproduction steps, and the relevant log or crash report. Include the seed and coordinates for generation problems.
 
-Author: **NsTut**. Licensed under the [MIT License](LICENSE.txt). The original Forge MDK notice is preserved separately in [LICENSE-Forge-MDK.txt](LICENSE-Forge-MDK.txt).
+Author: **NsTut**. Licensed under the [MIT License](LICENSE.md). The original Forge MDK notice is preserved separately in [LICENSE-Forge-MDK.md](LICENSE-Forge-MDK.md).
 
 ## Development
 
@@ -86,7 +86,7 @@ The Forge release jar is written to `build/libs`. Port jars are written to each 
 
 See [multi-version architecture and verification](docs/Multi-Version-Ports.md) for source ownership, runtime checks and release packaging.
 
-To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.txt`, and push to `main`. CI runs native regression checks and packaging verification, then uploads all five verified jars to CurseForge and creates the matching GitHub release only after every upload has a matching receipt. Publication requires the repository secret `CURSEFORGE_API_TOKEN`. Verify the compatible Endless Forge 0.9.3 release is publicly downloadable before publishing this version; see the [release checklist](docs/Release-Checklist.md).
+To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.md`, and push to `main`. CI runs native regression checks and packaging verification, then uploads all five verified jars to CurseForge and creates the matching GitHub release only after every upload has a matching receipt. Publication requires the repository secret `CURSEFORGE_API_TOKEN`. Verify the compatible Endless Forge 0.9.3 release is publicly downloadable before publishing this version; see the [release checklist](docs/Release-Checklist.md).
 
 Generate biome and feature data with `./gradlew.bat runData`. Generated registry JSON is tracked; runtime worlds and generator caches are ignored.
 

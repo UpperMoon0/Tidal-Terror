@@ -1,6 +1,7 @@
 import tempfile
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 import json
 import zipfile
 import hashlib
@@ -34,6 +35,37 @@ class ReleaseTests(unittest.TestCase):
                 if content is not None: notes.write_text(content)
                 with self.assertRaises(ValueError):
                     release.preflight('0.0.1','sha',None,notes)
+
+    def test_package_verifies_docs_commit_after_version_was_released(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root/'build/libs').mkdir(parents=True)
+            jar = root/'build/libs/tidalterror-0.0.4.jar'
+            jar.write_bytes(b'production jar')
+            (root/'changelogs').mkdir()
+            (root/'changelogs/v0.0.4.md').write_text('# Release notes')
+            output = root/'bundle'
+            with patch.object(release, 'ROOT', root), \
+                 patch.object(release, 'current', return_value='0.0.4'), \
+                 patch.object(release, 'command', return_value='docs-commit'), \
+                 patch.object(release, 'tag_commit', return_value='released-commit') as tag, \
+                 patch.object(release, 'verify_jar', return_value='a'*64) as verify, \
+                 patch.object(release, 'verify_bundle') as bundle, \
+                 patch.dict(release.os.environ, {}, clear=True), \
+                 patch('sys.argv', ['release.py', 'package', '--output', str(output)]):
+                release.main()
+            verify.assert_called_once_with(jar, '0.0.4')
+            bundle.assert_called_once_with(output, '0.0.4', 'docs-commit')
+            tag.assert_not_called()
+            self.assertEqual((output/jar.name).read_bytes(), jar.read_bytes())
+            self.assertEqual(json.loads((output/'release-manifest.json').read_text())['commit'], 'docs-commit')
+
+    def test_publication_still_rejects_docs_commit_for_released_version(self):
+        with tempfile.TemporaryDirectory() as temp:
+            notes = Path(temp)/'v0.0.4.md'
+            notes.write_text('# Release notes')
+            with self.assertRaisesRegex(ValueError, 'already belongs'):
+                release.preflight('0.0.4', 'docs-commit', 'released-commit', notes)
 
 
 class ArtifactTests(unittest.TestCase):

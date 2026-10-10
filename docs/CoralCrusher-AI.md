@@ -1,4 +1,4 @@
-Coral Crusher AI repair (Minecraft 1.20.1 / Forge 47.2.0)
+# Coral Crusher AI repair (Minecraft 1.20.1 / Forge 47.2.0)
 
 Depth control: automatic swim-controller lift and target-dependent sinking
 are removed; navigation controls underwater height. See the depth control

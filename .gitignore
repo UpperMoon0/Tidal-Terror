@@ -66,3 +66,20 @@ Desktop.ini
 
 # Unused original Forge MDK changelog.
 /changelog.txt
+
+# Retain documented native visual evidence, but ignore artwork source images.
+!/docs/assets/deep-cathedral-garden-2026-10-09.png
+!/docs/assets/reef-compass/
+/docs/assets/reef-compass/*
+!/docs/assets/reef-compass/compass-pose-*.png
+
+# Documentation and release notes use Markdown.
+/README.txt
+/CREDITS.txt
+/docs/**/*.txt
+/changelogs/*.txt
+
+# Local artwork process notes and generation prompts.
+/docs/*-Art-Workflow.md
+/docs/*-art-workflow.md
+/docs/*-material-prompt.md

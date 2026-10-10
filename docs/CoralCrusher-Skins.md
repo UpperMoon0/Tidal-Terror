@@ -1,4 +1,4 @@
-Coral Crusher skins — Minecraft 1.20.1 / Forge 47.2.0
+# Coral Crusher skins — Minecraft 1.20.1 / Forge 47.2.0
 
 Both skins use tidalterror:coral_crusher, with the same model, animation,
 attributes, attacks and navigation. No new entity type or spawn-list entry.
