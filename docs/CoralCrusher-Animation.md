@@ -1,8 +1,5 @@
 # Coral Crusher model animation (Minecraft 1.20.1)
 
-For the complete modeling, animation, ImageGen texturing, UV reconstruction,
-and variant workflow, see CoralCrusher-Art-Workflow.md in this directory.
-
 The exported setupAnim method was empty, lowerjaw contained no cubes, and
 head/body/tail were independent root parts. Head and tail now belong to the
 body, with geometry rebased around the neck, jaw hinges, and tail attachment.

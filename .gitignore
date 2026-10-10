@@ -78,3 +78,8 @@ Desktop.ini
 /CREDITS.txt
 /docs/**/*.txt
 /changelogs/*.txt
+
+# Local artwork process notes and generation prompts.
+/docs/*-Art-Workflow.md
+/docs/*-art-workflow.md
+/docs/*-material-prompt.md
