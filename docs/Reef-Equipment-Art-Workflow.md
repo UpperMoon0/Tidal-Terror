@@ -22,7 +22,7 @@ These native exports, rather than inferred rectangles from the concept, are the
 texture source of truth.
 
 Built-in ImageGen supplied six flat pixel material tiles. Its full prompt is
-retained in [reef-equipment-material-prompt.txt](reef-equipment-material-prompt.txt)
+retained in [reef-equipment-material-prompt.md](reef-equipment-material-prompt.md)
 and its source image in the optional local `docs/assets/reef-equipment-materials.png`.
 The material sheet contains violet, cobalt, ivory, slate, sandy hide and porous
 coral in two columns and three rows. It contains no painted anatomy or directional

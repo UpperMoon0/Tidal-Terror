@@ -163,7 +163,7 @@ def main():
     value = current()
     sha = os.getenv('GITHUB_SHA') or command('git','rev-parse','HEAD')
     tag = f'v{value}'
-    notes = ROOT / f'changelogs/{tag}.txt'
+    notes = ROOT / f'changelogs/{tag}.md'
     if args.action == 'plan':
         before = os.getenv('BEFORE_SHA','')
         previous = None

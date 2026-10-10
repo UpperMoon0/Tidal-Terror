@@ -38,7 +38,7 @@ Both skins share this controller and entity type. Skin assignment remains fixed 
 
 ## Source references and checks
 
-The local Minecraft 1.20.1 decompiled sources inspected for this rewrite include `MeleeAttackGoal` (reach, native swing/damage), `AvoidEntityGoal` (escape destinations farther from the threat and native paths), `NearestAttackableTargetGoal` (target predicates and selector separation), and the swimming-control/navigation references listed in `CoralCrusher-AI.txt`. Mapped project APIs were validated through compilation and native GameTests.
+The local Minecraft 1.20.1 decompiled sources inspected for this rewrite include `MeleeAttackGoal` (reach, native swing/damage), `AvoidEntityGoal` (escape destinations farther from the threat and native paths), `NearestAttackableTargetGoal` (target predicates and selector separation), and the swimming-control/navigation references listed in `CoralCrusher-AI.md`. Mapped project APIs were validated through compilation and native GameTests.
 
 The test fixtures exercise actual server entities, water navigation, synchronized behavior, player targeting, and native damage. Player fixture physics are ticked and their positions held where the test requires a stationary target. The dry-healing fixture explicitly clears its air volume and holds the shark there so escape movement cannot invalidate the condition being tested.
 

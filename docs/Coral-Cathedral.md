@@ -1,4 +1,4 @@
-Coral Cathedral - deep reef revision
+# Coral Cathedral - deep reef revision
 
 The biome has a sandy deep basin, open water between giant corals, smaller seabed gardens,
 rounded sandstone boulders, seagrass, coral fans, pickles and vanilla warm-ocean fauna.

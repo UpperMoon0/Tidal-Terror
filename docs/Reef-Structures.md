@@ -1,4 +1,4 @@
-Reef structure placement — Minecraft 1.20.1 / Forge 47.2.0
+# Reef structure placement — Minecraft 1.20.1 / Forge 47.2.0
 
 The reef basin excavates the ocean during RAW_GENERATION. Vanilla ruined
 portal starts are calculated earlier from noise columns. Vanilla shipwreck

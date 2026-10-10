@@ -98,7 +98,7 @@ jobs:
           name: Tidal Terror ${{ needs.version-change.outputs.value }} - Forge 1.20.1
           version: ${{ needs.version-change.outputs.value }}
           version-type: release
-          changelog-file: changelogs/v${{ needs.version-change.outputs.value }}.txt
+          changelog-file: changelogs/v${{ needs.version-change.outputs.value }}.md
           loaders: forge
           game-versions: '1.20.1'
           game-version-filter: none
@@ -166,7 +166,7 @@ jobs:
           name: Tidal Terror ${{ needs.version-change.outputs.value }} - ${{ matrix.target }}
           version: ${{ needs.version-change.outputs.value }}
           version-type: release
-          changelog-file: changelogs/v${{ needs.version-change.outputs.value }}.txt
+          changelog-file: changelogs/v${{ needs.version-change.outputs.value }}.md
           loaders: ${{ matrix.loader }}
           game-versions: ${{ matrix.minecraft }}
           game-version-filter: none

@@ -1,4 +1,4 @@
-Coral Crusher model animation (Minecraft 1.20.1)
+# Coral Crusher model animation (Minecraft 1.20.1)
 
 For the complete modeling, animation, ImageGen texturing, UV reconstruction,
 and variant workflow, see CoralCrusher-Art-Workflow.md in this directory.

@@ -63,7 +63,7 @@ Downloads are available from [GitHub Releases](https://github.com/UpperMoon0/Tid
 
 Report problems on the [issue tracker](https://github.com/UpperMoon0/Tidal-Terror/issues), with mod/loader versions, reproduction steps, and the relevant log or crash report. Include the seed and coordinates for generation problems.
 
-Author: **NsTut**. Licensed under the [MIT License](LICENSE.txt). The original Forge MDK notice is preserved separately in [LICENSE-Forge-MDK.txt](LICENSE-Forge-MDK.txt).
+Author: **NsTut**. Licensed under the [MIT License](LICENSE.md). The original Forge MDK notice is preserved separately in [LICENSE-Forge-MDK.md](LICENSE-Forge-MDK.md).
 
 ## Development
 
@@ -86,7 +86,7 @@ The Forge release jar is written to `build/libs`. Port jars are written to each 
 
 See [multi-version architecture and verification](docs/Multi-Version-Ports.md) for source ownership, runtime checks and release packaging.
 
-To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.txt`, and push to `main`. CI runs native regression checks and packaging verification, then uploads all five verified jars to CurseForge and creates the matching GitHub release only after every upload has a matching receipt. Publication requires the repository secret `CURSEFORGE_API_TOKEN`. Verify the compatible Endless Forge 0.9.3 release is publicly downloadable before publishing this version; see the [release checklist](docs/Release-Checklist.md).
+To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.md`, and push to `main`. CI runs native regression checks and packaging verification, then uploads all five verified jars to CurseForge and creates the matching GitHub release only after every upload has a matching receipt. Publication requires the repository secret `CURSEFORGE_API_TOKEN`. Verify the compatible Endless Forge 0.9.3 release is publicly downloadable before publishing this version; see the [release checklist](docs/Release-Checklist.md).
 
 Generate biome and feature data with `./gradlew.bat runData`. Generated registry JSON is tracked; runtime worlds and generator caches are ignored.
 

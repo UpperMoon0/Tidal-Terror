@@ -36,7 +36,7 @@ Targets survive native item serialization and do not require a lodestone block a
 
 ## Generated artwork and validation
 
-The dial and needle were generated separately with the built-in image generation tool, with transparent backgrounds. The resource packer resizes them for the game and produces 32 rotating 64x64 RGBA frames. [Original art, exact prompts and packer](../assets/reef-compass/README.md) are saved in the repository. [Native screenshot](../assets/reef-compass/compass-pose-0.png) shows the real atlas/model in the inventory.
+The dial and needle were generated separately with the built-in image generation tool, with transparent backgrounds. The resource packer resizes them for the game and produces 32 rotating 64x64 RGBA frames. [Exact prompts and packer instructions](../Reef-Compass-Art-Workflow.md) are saved in the repository; original source images remain local. [Native screenshot](../assets/reef-compass/compass-pose-0.png) shows the real atlas/model in the inventory.
 
 - Native fresh generation and separate-process reload preserve all six garden families, all five coral colors, giant crown fans, deep spawns, reduced Drowned weight, bedrock/water seams, lighting and a player edit. A newly located province uses a larger 80x80 garden witness; all-color preservation is not assumed within every 48x48 patch. Its 2,456 living coral blocks, 485 boulder blocks, 925 plants, 844 fans, 422 seagrass and 220 pickles remain stable after ticking/reload.
 - Native locator search returns seed-0 center (-4317,37119), with unchanged loaded-chunk count. Recipe output, native target serialization, native inventory ticking without a lodestone, foreign-seed clearing, unbound tooltip/target access and both placement codec versions are checked.
