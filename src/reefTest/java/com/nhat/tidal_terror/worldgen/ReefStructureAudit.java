@@ -29,13 +29,13 @@ public final class ReefStructureAudit {
                 int x=center.getX()+(int)Math.round(Math.cos(angle)*distance);
                 int z=center.getZ()+(int)Math.round(Math.sin(angle)*distance);
                 if(reef==null && terrain.giant(x,z))reef=new BlockPos(x,25,z);
-                if(outside==null && !terrain.reef(x,z))outside=new BlockPos(x,25,z);
+                if(outside==null && outsideProvince(terrain,x,z))outside=new BlockPos(x,25,z);
                 if(reef!=null && outside!=null)break outer;
             }
         check(reef != null && outside != null, "Missing structure test sites");
         int tests = 0;
         for (var site : new BlockPos[]{reef, outside}) {
-            boolean inReef = terrain.reef(site.getX(), site.getZ());
+            boolean inReef = terrain.province(site.getX(), site.getZ());
             for (var rotation : Rotation.values()) {
                 var ship = new ShipwreckPieces.ShipwreckPiece(level.getStructureManager(),
                         new ResourceLocation("minecraft", "shipwreck/with_mast"), site, rotation, false);
@@ -46,7 +46,7 @@ public final class ReefStructureAudit {
                 for (int x = site.getX(); x < site.getX() + size.getX(); x++) {
                     for (int z = site.getZ(); z < site.getZ() + size.getZ(); z++) {
                         level.getChunk(x >> 4, z >> 4);
-                        sum += terrain.reef(x, z) ? terrain.anchorFloor(x, z) + 1
+                        sum += terrain.province(x, z) ? terrain.anchorFloor(x, z) + 1
                                 : level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, x, z);
                     }
                 }
@@ -122,6 +122,16 @@ public final class ReefStructureAudit {
                         new ChunkPos(x, z), piece.templatePosition());
             }
         }
+    }
+
+    private static boolean outsideProvince(ReefTerrain terrain, int x, int z) {
+        if (terrain.province(x, z)) return false;
+        // Keep the full rotated template and portal foundation footprint in
+        // vanilla terrain; Wastes are no longer a valid vanilla control.
+        for (int dx = -32; dx <= 48; dx++)
+            for (int dz = -32; dz <= 48; dz++)
+                if (terrain.province(x + dx, z + dz)) return false;
+        return true;
     }
 
     private static void check(boolean valid, String message) {
