@@ -90,7 +90,7 @@ To publish a new version, change `mod_version` in `gradle.properties`, add `chan
 
 Generate biome and feature data with `./gradlew.bat runData`. Generated registry JSON is tracked; runtime worlds and generator caches are ignored.
 
-Set `mod_release_type` in `gradle.properties` to `alpha`, `beta`, or `release` for all five CurseForge uploads. Omitting it defaults to `release`; 0.0.5 explicitly selects `alpha`. CI validates the channel and preserves it in the verified release manifest.
+Set `mod_release_type` in `gradle.properties` to `alpha`, `beta`, or `release` for all five CurseForge uploads. Omitting it defaults to `release`; 0.0.5 explicitly selects `alpha`. CI validates the channel and preserves it in the verified release manifest. Alpha and beta builds are GitHub prereleases and do not replace the stable Latest release; only release builds are marked Latest.
 
 ## Verification
 

@@ -6,6 +6,7 @@
 - Keep province biomes above sea level so excavated ocean columns do not retain land-biome eligibility for villages and grass.
 - Add native structure and surface-biome regressions. These fixes affect future generation; existing saved structures are not moved.
 - Support alpha, beta, and release CurseForge channels in CI, defaulting to release when unspecified. Publish 0.0.5 as alpha on all five targets.
+- Publish alpha and beta builds as GitHub prereleases without changing stable Latest; mark only release builds stable and Latest.
 
 ## 0.0.4
 

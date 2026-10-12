@@ -4,6 +4,10 @@ CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minec
 
 ## Version-driven publication
 
+Alpha and beta channels create and publish GitHub prereleases with Latest
+explicitly disabled. The release channel publishes stable GitHub releases
+marked Latest. Finalization reapplies these settings when resuming a draft.
+
 The version-driven workflow publishes all five loader/version targets. Merging a version change to `main` starts publication automatically; it is not a merge-only check. Before releasing 0.0.5:
 
 1. Confirm `mod_version=0.0.5` and `mod_release_type=alpha` in `gradle.properties`, nonempty `changelogs/v0.0.5.md` notes, and no `v0.0.5` tag reserved by another commit. The CurseForge channel supports `alpha`, `beta`, and `release`; omission defaults to `release`. All five uploads use the same validated channel, recorded in the immutable release manifest. Update the current README, CurseForge description and changelog while preserving historical benchmark data and reports.

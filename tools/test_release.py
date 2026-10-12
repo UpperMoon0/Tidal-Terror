@@ -100,6 +100,50 @@ class ReleaseTests(unittest.TestCase):
                 release.preflight('0.0.4', 'docs-commit', 'released-commit', notes)
 
 
+class GitHubChannelTests(unittest.TestCase):
+    def test_prepare_and_finalize_commands_for_each_channel(self):
+        for channel in ('alpha', 'beta', 'release'):
+            with self.subTest(channel=channel), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                (root/'gradle.properties').write_text('mod_version=0.0.5\nmod_release_type='+channel+'\n')
+                (root/'changelogs').mkdir()
+                notes = root/'changelogs/v0.0.5.md'
+                notes.write_text('# Release notes')
+                folder = root/'bundle'
+                folder.mkdir()
+                manifest = dict(version='0.0.5',release_type=channel,commit='sha',sha256='forge-digest',
+                                ports=[dict(target='fabric-1.20.1',jar='fabric.jar',sha256='port-digest')])
+                info = dict(isDraft=True,assets=[dict(name=name) for name in release.bundle_assets(manifest)])
+                with patch.object(release, 'ROOT', root), \
+                     patch.object(release, 'command', return_value='sha'), \
+                     patch.object(release, 'tag_commit', return_value='sha'), \
+                     patch.object(release, 'verify_bundle', return_value=manifest), \
+                     patch.object(release, 'release_info', side_effect=[None, info]), \
+                     patch.object(release, 'download'), \
+                     patch.object(release, 'output'), \
+                     patch.object(release, 'gh') as gh, \
+                     patch.dict(release.os.environ, {}, clear=True), \
+                     patch('sys.argv', ['release.py', 'prepare', '--output', str(folder)]):
+                    release.main()
+                expected_flags = ('--prerelease=false', '--latest') if channel == 'release' else ('--prerelease', '--latest=false')
+                self.assertEqual(gh.call_args_list[0].args,
+                    ('release','create','v0.0.5','--verify-tag','--draft','--title','Tidal Terror v0.0.5','--notes-file',str(notes),*expected_flags))
+                # Finalization also corrects metadata on a resumed, older draft.
+                for name, digest in (('curseforge-upload.json','forge-digest'), ('curseforge-fabric-1.20.1.json','port-digest')):
+                    (folder/name).write_text(json.dumps(dict(project_id=release.PROJECT_ID,file_id=123,commit='sha',sha256=digest)))
+                with patch.object(release, 'ROOT', root), \
+                     patch.object(release, 'command', return_value='sha'), \
+                     patch.object(release, 'tag_commit', return_value='sha'), \
+                     patch.object(release, 'verify_bundle', return_value=manifest), \
+                     patch.object(release, 'download') as download, \
+                     patch.object(release, 'gh') as gh, \
+                     patch.dict(release.os.environ, {}, clear=True), \
+                     patch('sys.argv', ['release.py', 'finalize', '--output', str(folder)]):
+                    release.main()
+                gh.assert_called_once_with('release','edit','v0.0.5','--draft=false',*expected_flags)
+                self.assertEqual(download.call_count, 2, 'Both Forge and port receipts must still be checked')
+
+
 class ArtifactTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
