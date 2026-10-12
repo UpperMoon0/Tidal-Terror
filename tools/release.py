@@ -172,7 +172,9 @@ def main():
     args = parser.parse_args()
     value = current()
     channel = current_release_type()
-    github_channel_flags = ('--prerelease=false', '--latest') if channel == 'release' else ('--prerelease', '--latest=false')
+    github_draft_flags = ('--prerelease=false',) if channel == 'release' else ('--prerelease',)
+    # GitHub cannot designate a draft as Latest; set that only on publication.
+    github_publish_flags = (*github_draft_flags, '--latest' if channel == 'release' else '--latest=false')
     sha = os.getenv('GITHUB_SHA') or command('git','rev-parse','HEAD')
     tag = f'v{value}'
     notes = ROOT / f'changelogs/{tag}.md'
@@ -221,7 +223,7 @@ def main():
             command('git','tag','-a',tag,'-m',f'Tidal Terror {tag}',sha)
             command('git','push','origin',tag)
         if info is None:
-            gh('release','create',tag,'--verify-tag','--draft','--title',f'Tidal Terror {tag}','--notes-file',str(notes),*github_channel_flags)
+            gh('release','create',tag,'--verify-tag','--draft','--title',f'Tidal Terror {tag}','--notes-file',str(notes),*github_draft_flags)
             gh('release','upload',tag,*[str(folder/asset) for asset in bundle_assets(manifest)])
             info = release_info(tag)
         assets = {x['name'] for x in info['assets']}
@@ -293,7 +295,7 @@ def main():
             asset = f"curseforge-{record['target']}.json"
             download(tag,asset,folder)
             verify_receipt(json.loads((folder/asset).read_text()),record['sha256'],sha)
-        gh('release','edit',tag,'--draft=false',*github_channel_flags)
+        gh('release','edit',tag,'--draft=false',*github_publish_flags)
         print(f'Published GitHub release {tag}; CurseForge file {receipt["file_id"]}')
 
 if __name__ == '__main__':

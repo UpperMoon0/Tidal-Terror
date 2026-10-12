@@ -4,9 +4,10 @@ CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minec
 
 ## Version-driven publication
 
-Alpha and beta channels create and publish GitHub prereleases with Latest
-explicitly disabled. The release channel publishes stable GitHub releases
-marked Latest. Finalization reapplies these settings when resuming a draft.
+Alpha and beta channels create GitHub prerelease drafts. Draft creation never
+requests a Latest designation. Publication explicitly disables Latest for
+alpha/beta and enables it for stable releases. Finalization reapplies these
+settings when resuming a draft.
 
 The version-driven workflow publishes all five loader/version targets. Merging a version change to `main` starts publication automatically; it is not a merge-only check. Before releasing 0.0.5:
 

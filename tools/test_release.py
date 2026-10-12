@@ -125,9 +125,12 @@ class GitHubChannelTests(unittest.TestCase):
                      patch.dict(release.os.environ, {}, clear=True), \
                      patch('sys.argv', ['release.py', 'prepare', '--output', str(folder)]):
                     release.main()
-                expected_flags = ('--prerelease=false', '--latest') if channel == 'release' else ('--prerelease', '--latest=false')
+                expected_draft_flags = ('--prerelease=false',) if channel == 'release' else ('--prerelease',)
+                expected_publish_flags = ('--prerelease=false', '--latest') if channel == 'release' else ('--prerelease', '--latest=false')
                 self.assertEqual(gh.call_args_list[0].args,
-                    ('release','create','v0.0.5','--verify-tag','--draft','--title','Tidal Terror v0.0.5','--notes-file',str(notes),*expected_flags))
+                    ('release','create','v0.0.5','--verify-tag','--draft','--title','Tidal Terror v0.0.5','--notes-file',str(notes),*expected_draft_flags))
+                self.assertFalse(any(arg.startswith('--latest') for arg in gh.call_args_list[0].args),
+                                 'Draft creation must not request a Latest designation')
                 # Finalization also corrects metadata on a resumed, older draft.
                 for name, digest in (('curseforge-upload.json','forge-digest'), ('curseforge-fabric-1.20.1.json','port-digest')):
                     (folder/name).write_text(json.dumps(dict(project_id=release.PROJECT_ID,file_id=123,commit='sha',sha256=digest)))
@@ -140,7 +143,7 @@ class GitHubChannelTests(unittest.TestCase):
                      patch.dict(release.os.environ, {}, clear=True), \
                      patch('sys.argv', ['release.py', 'finalize', '--output', str(folder)]):
                     release.main()
-                gh.assert_called_once_with('release','edit','v0.0.5','--draft=false',*expected_flags)
+                gh.assert_called_once_with('release','edit','v0.0.5','--draft=false',*expected_publish_flags)
                 self.assertEqual(download.call_count, 2, 'Both Forge and port receipts must still be checked')
 
 
