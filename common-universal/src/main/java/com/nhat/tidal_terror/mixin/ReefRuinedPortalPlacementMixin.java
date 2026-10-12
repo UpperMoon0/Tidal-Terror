@@ -35,13 +35,13 @@ public abstract class ReefRuinedPortalPlacementMixin {
         var piece = (TemplateStructurePiece) (Object) this;
         var box = piece.getBoundingBox();
         var center = box.getCenter();
-        if (!this.tidalterror$terrain.reef(center.getX(), center.getZ())) return;
+        if (!this.tidalterror$terrain.province(center.getX(), center.getZ())) return;
         // Bury the foundation at the lowest reef column under the footprint,
         // rather than balancing a flat platform above sloping sand or corals.
         int bottom = Integer.MAX_VALUE;
         for (int x = box.minX(); x <= box.maxX(); x++) {
             for (int z = box.minZ(); z <= box.maxZ(); z++) {
-                if (this.tidalterror$terrain.reef(x, z))
+                if (this.tidalterror$terrain.province(x, z))
                     bottom = Math.min(bottom, this.tidalterror$terrain.anchorFloor(x, z));
             }
         }
@@ -52,7 +52,7 @@ public abstract class ReefRuinedPortalPlacementMixin {
             target = "Lnet/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece;getSurfaceY(Lnet/minecraft/world/level/LevelAccessor;IILnet/minecraft/world/level/levelgen/structure/structures/RuinedPortalPiece$VerticalPlacement;)I"))
     private int tidalterror$foundation(LevelAccessor level, int x, int z,
             RuinedPortalPiece.VerticalPlacement placement) {
-        return this.tidalterror$terrain.reef(x, z)
+        return this.tidalterror$terrain.province(x, z)
                 ? this.tidalterror$terrain.anchorFloor(x, z) : getSurfaceY(level, x, z, placement);
     }
 
@@ -63,13 +63,13 @@ public abstract class ReefRuinedPortalPlacementMixin {
         var piece = (TemplateStructurePiece) (Object) this;
         var box = piece.getBoundingBox();
         var center = box.getCenter();
-        if (!this.tidalterror$terrain.reef(center.getX(), center.getZ())) return;
+        if (!this.tidalterror$terrain.province(center.getX(), center.getZ())) return;
         // Vanilla's random drip columns can end in water on a sloping reef.
         // Extend only the bottom of its netherrack foundation to sediment.
         var cursor = new BlockPos.MutableBlockPos();
         for (int x = center.getX() - 14; x <= center.getX() + 14; x++) {
             for (int z = center.getZ() - 14; z <= center.getZ() + 14; z++) {
-                if (!this.tidalterror$terrain.reef(x, z)) continue;
+                if (!this.tidalterror$terrain.province(x, z)) continue;
                 int floor = this.tidalterror$terrain.anchorFloor(x, z);
                 for (int y = floor + 1; y <= box.maxY(); y++) {
                     cursor.set(x, y, z);

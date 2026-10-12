@@ -48,7 +48,9 @@ public final class ReefProvinceBiomeSource extends BiomeSource implements ReefPr
     }
     @Override public Holder<Biome> getNoiseBiome(int qx, int qy, int qz, Climate.Sampler sampler) {
         Long seed = ProvinceSeeds.get(sampler);
-        if (seed == null || qy >= 16 || (!deep && qy < -16)) return backgroundBiome(qx, qy, qz, sampler);
+        // Structures test their biome at the original surface height. Keep the
+        // excavated province biome above sea level too, excluding land features.
+        if (seed == null || (!deep && qy < -16)) return backgroundBiome(qx, qy, qz, sampler);
         var s = province(seed, QuartPos.toBlock(qx), QuartPos.toBlock(qz), sampler);
         return s == null ? backgroundBiome(qx, qy, qz, sampler)
                 : s.zone() == ReefProvinceLayout.Zone.CATHEDRAL ? cathedral : wastes;
