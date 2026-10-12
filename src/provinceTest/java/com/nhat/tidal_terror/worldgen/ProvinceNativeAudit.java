@@ -60,6 +60,15 @@ public final class ProvinceNativeAudit {
                 require(biome.equals(decoded.getNoiseBiome(QuartPos.fromBlock(x), 8, QuartPos.fromBlock(z), sampler)), "Reload source disagrees");
                 if (i == offsets.length - 1) { require(!biome.is(ReefWorldgen.BIOME) && !biome.is(ReefWorldgen.WASTES), "Province leaked outside ring"); continue; }
                 require(biome.is(i == 0 ? ReefWorldgen.BIOME : ReefWorldgen.WASTES), "Zone biome mismatch");
+                for (int y : new int[]{64, 80, 128, 256}) {
+                    var surfaceBiome = source.getNoiseBiome(QuartPos.fromBlock(x), QuartPos.fromBlock(y), QuartPos.fromBlock(z), sampler);
+                    require(surfaceBiome.equals(biome), "Native land biome leaked above province at Y=" + y);
+                    var registry = level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.STRUCTURE);
+                    for (var entry : registry.entrySet()) {
+                        if (entry.getKey().location().getPath().startsWith("village"))
+                            require(!entry.getValue().biomes().contains(surfaceBiome), "Village allowed in province at Y=" + y);
+                    }
+                }
                 var chunk = level.getChunk(x >> 4, z >> 4);
                 int floor = terrain.floor(x, z);
                 require(chunk.getBlockState(new BlockPos(x, floor, z)).is(Blocks.SAND), "Generated floor disagrees with province model");
@@ -91,7 +100,8 @@ public final class ProvinceNativeAudit {
             require(!ProvinceSpawnRules.allowed(level, point, true), "Surface predator allowed");
             require(!ProvinceSpawnRules.allowed(level, new BlockPos(center.x()+scaled(500), 0, center.z()), true), "Outer Wastes predator allowed");
             require(ProvinceSpawnRules.allowed(level, new BlockPos(center.x(), -20, center.z()), true), "Deep core predator rejected");
-            Files.writeString(Path.of("passed.txt"), "Preset, no TerraBlender, seed, codec, feature graph, five zones, generated floors/water/biomes, spawn depth passed\n");
+            ProvinceStructureAudit.verify(level, new BlockPos(center.x(), 25, center.z()));
+            Files.writeString(Path.of("passed.txt"), "Preset, no TerraBlender, seed, codec, feature graph, five zones, generated floors/water/biomes, spawn depth, grounded structures passed\n");
             System.out.println("PROVINCE_AUDIT PASSED");
         } catch (Throwable error) {
             com.mojang.logging.LogUtils.getLogger().error("PROVINCE_AUDIT FAILED", error);

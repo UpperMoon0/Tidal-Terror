@@ -39,7 +39,7 @@ class ClientLoadingTests(unittest.TestCase):
 class MatrixBundleTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.folder=Path(self.temp.name)
-        self.manifest=dict(version='0.0.3',commit='source',curseforge_project=release.PROJECT_ID,sha256='forge-digest',ports=[])
+        self.manifest=dict(version='0.0.3',release_type=release.current_release_type(),commit='source',curseforge_project=release.PROJECT_ID,sha256='forge-digest',ports=[])
         for target,spec in ports.TARGETS.items():
             self.manifest['ports'].append(dict(target=target,jar=f'tidalterror-{target}-0.0.3.jar',sha256=target,**{field:spec[field] for field in ('minecraft','loader','java')}))
     def tearDown(self):self.temp.cleanup()

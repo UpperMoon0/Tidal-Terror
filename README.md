@@ -35,7 +35,7 @@ JEI loads automatically in the development client (`runClient`) for recipe inspe
 
 ## Install and explore
 
-Choose the jar matching your Minecraft version and loader. Version **0.0.4** supports five loader/version targets and changes default new-world ocean generation:
+Choose the jar matching your Minecraft version and loader. Version **0.0.5 (alpha)** supports five loader/version targets and fixes province structure placement and surface land-biome leakage:
 
 | Minecraft | Loader | Java | Required companion mods |
 | --- | --- | --- | --- |
@@ -89,6 +89,8 @@ See [multi-version architecture and verification](docs/Multi-Version-Ports.md) f
 To publish a new version, change `mod_version` in `gradle.properties`, add `changelogs/vVERSION.md`, and push to `main`. CI runs native regression checks and packaging verification, then uploads all five verified jars to CurseForge and creates the matching GitHub release only after every upload has a matching receipt. Publication requires the repository secret `CURSEFORGE_API_TOKEN`. Verify the compatible Endless Forge 0.9.3 release is publicly downloadable before publishing this version; see the [release checklist](docs/Release-Checklist.md).
 
 Generate biome and feature data with `./gradlew.bat runData`. Generated registry JSON is tracked; runtime worlds and generator caches are ignored.
+
+Set `mod_release_type` in `gradle.properties` to `alpha`, `beta`, or `release` for all five CurseForge uploads. Omitting it defaults to `release`; 0.0.5 explicitly selects `alpha`. CI validates the channel and preserves it in the verified release manifest. Alpha and beta builds are GitHub prereleases and do not replace the stable Latest release; only release builds are marked Latest.
 
 ## Verification
 

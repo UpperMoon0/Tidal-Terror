@@ -33,7 +33,7 @@ public abstract class ReefShipwreckPlacementMixin {
     private int tidalterror$seabed(WorldGenLevel level, Heightmap.Types type, int x, int z) {
         // Keep vanilla's averaging, beach burial, rotations, and loot handling.
         // The coordinate-only anchor is stable across all intersecting chunks.
-        return this.tidalterror$terrain.reef(x, z)
+        return this.tidalterror$terrain.province(x, z)
                 ? this.tidalterror$terrain.anchorFloor(x, z) + 1 : level.getHeight(type, x, z);
     }
 }

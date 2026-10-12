@@ -74,6 +74,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - suite: province
+            property: provinceTests
+            task: runServer
+            directory: province-native-test
           - suite: crusher
             property: coralCrusherTests
             task: runGameTestServer
@@ -135,6 +139,8 @@ jobs:
           path: |
             build/${{ matrix.directory }}/logs/
             build/reef-audit-v4/
+            build/province-native-test/passed.txt
+            build/province-native-test/failure.txt
             build/*-model*/
             build/equipment-art/
           if-no-files-found: ignore

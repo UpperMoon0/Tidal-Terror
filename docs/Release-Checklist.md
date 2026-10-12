@@ -4,9 +4,14 @@ CurseForge project: **1726637**, [Tidal Terror](https://www.curseforge.com/minec
 
 ## Version-driven publication
 
-The version-driven workflow publishes all five loader/version targets. Merging a version change to `main` starts publication automatically; it is not a merge-only check. Before releasing 0.0.4:
+Alpha and beta channels create GitHub prerelease drafts. Draft creation never
+requests a Latest designation. Publication explicitly disables Latest for
+alpha/beta and enables it for stable releases. Finalization reapplies these
+settings when resuming a draft.
 
-1. Confirm `mod_version=0.0.4` in `gradle.properties`, nonempty `changelogs/v0.0.4.md` notes, and no `v0.0.4` tag reserved by another commit. Update the current README, CurseForge description and changelog while preserving historical benchmark data and reports.
+The version-driven workflow publishes all five loader/version targets. Merging a version change to `main` starts publication automatically; it is not a merge-only check. Before releasing 0.0.5:
+
+1. Confirm `mod_version=0.0.5` and `mod_release_type=alpha` in `gradle.properties`, nonempty `changelogs/v0.0.5.md` notes, and no `v0.0.5` tag reserved by another commit. The CurseForge channel supports `alpha`, `beta`, and `release`; omission defaults to `release`. All five uploads use the same validated channel, recorded in the immutable release manifest. Update the current README, CurseForge description and changelog while preserving historical benchmark data and reports.
 2. Publish Endless 0.9.3 first and verify that its Forge 1.20.1 jar is publicly downloadable. Tidal's optional runtime range is `[0.9.3,0.10)`; older Endless releases cannot supply the supported deep adapter. Deep users also need Architectury API 9.2.14+ on the server and clients. Ordinary Tidal Forge worlds need neither companion.
 3. Check `tools/endless-source.json`: CI builds that exact reviewed Endless commit and shares its unbundled Forge 0.9.3 jar with the validation and release builds. A local Forge build also requires this jar in `.dependencies/endless/`, even when Endless is absent at runtime. The pin need not change for an Endless docs-only merge whose runtime code is unchanged.
 4. Confirm the latest exact-head Validate run: Forge native gameplay/model/terrain suites, normal worlds with and without Endless and reload after removing it, deep fresh/cold generation, four port native/client suites, tooling regressions, and clean five-target packaging. Passing these checks does not resolve the documented deep cave/structure, preset-collision or performance limitations.
