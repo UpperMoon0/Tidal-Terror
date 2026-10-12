@@ -32,6 +32,15 @@ def version(text):
 def current():
     return version((ROOT / 'gradle.properties').read_text())
 
+def release_type(text):
+    value = properties(text).get('mod_release_type', 'release')
+    if value not in ('alpha', 'beta', 'release'):
+        raise ValueError(f'Invalid mod_release_type: {value!r}; expected alpha, beta, or release')
+    return value
+
+def current_release_type():
+    return release_type((ROOT / 'gradle.properties').read_text())
+
 def tag_commit(value):
     try:
         return subprocess.check_output(['git', 'rev-list', '-n', '1', f'refs/tags/v{value}'], cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip()
@@ -105,6 +114,7 @@ def verify_jar(path, value):
 def verify_bundle(folder, value, sha):
     manifest = json.loads((folder / 'release-manifest.json').read_text())
     assert manifest['version'] == value and manifest['commit'] == sha
+    assert manifest.get('release_type', 'release') == current_release_type(), 'Release channel mismatch'
     assert manifest['curseforge_project'] == PROJECT_ID
     jar = folder / f'tidalterror-{value}.jar'
     assert manifest['sha256'] == verify_jar(jar, value), 'Release jar checksum mismatch'
@@ -161,6 +171,7 @@ def main():
     parser.add_argument('--target', choices=ports.TARGETS)
     args = parser.parse_args()
     value = current()
+    channel = current_release_type()
     sha = os.getenv('GITHUB_SHA') or command('git','rev-parse','HEAD')
     tag = f'v{value}'
     notes = ROOT / f'changelogs/{tag}.md'
@@ -169,7 +180,7 @@ def main():
         previous = None
         if before and set(before) != {'0'}:
             previous = version(command('git','show',f'{before}:gradle.properties'))
-        output(changed=should_release(value,previous,os.getenv('GITHUB_EVENT_NAME',''),tag_commit(value)), value=value)
+        output(changed=should_release(value,previous,os.getenv('GITHUB_EVENT_NAME',''),tag_commit(value)), value=value, release_type=channel)
         return
     # Packaging verifies local artifacts without reserving or publishing a version.
     # Publication actions must still reject tags belonging to a different commit.
@@ -185,7 +196,7 @@ def main():
         digest = verify_jar(jars[0],value)
         folder.mkdir(parents=True,exist_ok=True)
         shutil.copy2(jars[0],folder/jars[0].name)
-        manifest = dict(version=value,commit=sha,sha256=digest,curseforge_project=PROJECT_ID,minecraft='1.20.1',loader='forge',java=17)
+        manifest = dict(version=value,release_type=channel,commit=sha,sha256=digest,curseforge_project=PROJECT_ID,minecraft='1.20.1',loader='forge',java=17)
         checksums = f'{digest}  {jars[0].name}\n'
         if args.ports:
             manifest['ports'] = []

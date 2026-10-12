@@ -2,7 +2,7 @@
 
 ![Tidal Terror banner](https://raw.githubusercontent.com/UpperMoon0/Tidal-Terror/main/docs/assets/tidal-terror-banner.png)
 
-**Version 0.0.4:** Explore provinces of **Coral Cathedral** and the adjoining **Sunken Wastes**, with towering coral formations, sandstone basins, and four animated marine creatures. New normal worlds on all five ports generate full-sized Cathedral provinces and their wide Wastes rings at ordinary heights. The optional Forge 1.20.1 Deep Reef Province world type extends the same terrain below vanilla bedrock using Endless.
+**Version 0.0.5 (alpha):** Explore provinces of **Coral Cathedral** and the adjoining **Sunken Wastes**, with towering coral formations, sandstone basins, and four animated marine creatures. New normal worlds on all five ports generate full-sized Cathedral provinces and their wide Wastes rings at ordinary heights. The optional Forge 1.20.1 Deep Reef Province world type extends the same terrain below vanilla bedrock using Endless.
 
 ## Meet the reef's creatures
 
@@ -15,7 +15,7 @@ All four creatures have animated models and custom spawn eggs in the **Tidal Ter
 
 ## Explore, survive, and cook
 
-The reef combines branching coral groves, open chalices, lace-like sea fans, boulders, dense coral plants, seagrass, and sea pickles using vanilla blocks. Dolphins, turtles, and tropical fish can spawn in its deep water. Newly generated shipwrecks and ruined portals are placed against the seabed in this biome.
+The reef combines branching coral groves, open chalices, lace-like sea fans, boulders, dense coral plants, seagrass, and sea pickles using vanilla blocks. Dolphins, turtles, and tropical fish can spawn in its deep water. Newly generated shipwrecks and ruined portals are placed against the seabed throughout the province, including the Sunken Wastes. Province biomes extend above sea level so original land biomes do not allow villages and grass over excavated ocean. Existing floating structures are not automatically relocated.
 
 Each creature drops its own seafood: **Coral Crusher Steak**, **Cathedral Ray Wing**, **Veilglow Gel**, or **Shardback Claw**. Cook them in a furnace, smoker, or campfire for better hunger restoration.
 

@@ -22,6 +22,36 @@ class ReleaseTests(unittest.TestCase):
                 release.version('mod_version='+value)
     def test_crlf_properties(self):
         self.assertEqual(release.version('mod_version = 0.0.1\r\n'),'0.0.1')
+    def test_release_channel_defaults_to_release(self):
+        self.assertEqual(release.release_type('mod_version=0.0.5\n'), 'release')
+    def test_supported_release_channels(self):
+        for channel in ('alpha', 'beta', 'release'):
+            with self.subTest(channel=channel):
+                self.assertEqual(release.release_type('mod_release_type = '+channel+'\r\n'), channel)
+    def test_invalid_release_channels(self):
+        for channel in ('', 'Alpha', 'stable', 'alpha;script'):
+            with self.subTest(channel=channel), self.assertRaises(ValueError):
+                release.release_type('mod_release_type='+channel)
+    def test_plan_outputs_configured_channel(self):
+        for channel in ('alpha', 'beta', 'release'):
+            with self.subTest(channel=channel), \
+                 patch.object(release, 'current', return_value='0.0.5'), \
+                 patch.object(release, 'current_release_type', return_value=channel), \
+                 patch.object(release, 'command', return_value='sha'), \
+                 patch.object(release, 'tag_commit', return_value=None), \
+                 patch.object(release, 'output') as output, \
+                 patch.dict(release.os.environ, {}, clear=True), \
+                 patch('sys.argv', ['release.py', 'plan']):
+                release.main()
+                output.assert_called_once_with(changed=True, value='0.0.5', release_type=channel)
+    def test_all_curseforge_upload_steps_use_validated_channel(self):
+        workflow=(release.ROOT/'.github/workflows/release.yml').read_text()
+        upload_steps=workflow.split('uses: Kira-NT/mc-publish@')[1:]
+        self.assertEqual(len(upload_steps), 2, 'Expected Forge and port upload steps')
+        for step in upload_steps:
+            inputs=step.split('      - name:', 1)[0]
+            self.assertIn('version-type: ${{ needs.version-change.outputs.release_type }}', inputs)
+        self.assertIn('release_type: ${{ steps.version.outputs.release_type }}', workflow)
     def test_preflight_collision(self):
         with tempfile.TemporaryDirectory() as temp:
             notes=Path(temp)/'notes.txt';notes.write_text('Release notes')
@@ -39,6 +69,7 @@ class ReleaseTests(unittest.TestCase):
     def test_package_verifies_docs_commit_after_version_was_released(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
+            (root/'gradle.properties').write_text('mod_version=0.0.4\nmod_release_type=beta\n')
             (root/'build/libs').mkdir(parents=True)
             jar = root/'build/libs/tidalterror-0.0.4.jar'
             jar.write_bytes(b'production jar')
@@ -59,6 +90,7 @@ class ReleaseTests(unittest.TestCase):
             tag.assert_not_called()
             self.assertEqual((output/jar.name).read_bytes(), jar.read_bytes())
             self.assertEqual(json.loads((output/'release-manifest.json').read_text())['commit'], 'docs-commit')
+            self.assertEqual(json.loads((output/'release-manifest.json').read_text())['release_type'], 'beta')
 
     def test_publication_still_rejects_docs_commit_for_released_version(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -119,13 +151,38 @@ class ArtifactTests(unittest.TestCase):
     def test_bundle_tampering_and_wrong_commit(self):
         self.write_jar()
         digest=hashlib.sha256(self.jar.read_bytes()).hexdigest()
-        manifest=dict(version=self.version,commit='source',sha256=digest,curseforge_project=release.PROJECT_ID)
+        manifest=dict(version=self.version,release_type=release.current_release_type(),commit='source',sha256=digest,curseforge_project=release.PROJECT_ID)
         (self.folder/'release-manifest.json').write_text(json.dumps(manifest))
         (self.folder/'SHA256SUMS').write_text(f'{digest}  {self.jar.name}\n')
         release.verify_bundle(self.folder,self.version,'source')
         with self.assertRaises(AssertionError): release.verify_bundle(self.folder,self.version,'different')
         self.entries['extra.txt']=b'tampered';self.write_jar()
         with self.assertRaises(AssertionError): release.verify_bundle(self.folder,self.version,'source')
+
+    def test_bundle_release_channel_must_match_config(self):
+        self.write_jar()
+        digest=hashlib.sha256(self.jar.read_bytes()).hexdigest()
+        for configured in ('alpha', 'beta', 'release'):
+            with self.subTest(configured=configured), patch.object(release, 'current_release_type', return_value=configured):
+                manifest=dict(version=self.version,release_type=configured,commit='source',sha256=digest,curseforge_project=release.PROJECT_ID)
+                (self.folder/'release-manifest.json').write_text(json.dumps(manifest))
+                (self.folder/'SHA256SUMS').write_text(f'{digest}  {self.jar.name}\n')
+                release.verify_bundle(self.folder,self.version,'source')
+                manifest['release_type']='beta' if configured == 'alpha' else 'alpha'
+                (self.folder/'release-manifest.json').write_text(json.dumps(manifest))
+                with self.assertRaisesRegex(AssertionError, 'channel mismatch'):
+                    release.verify_bundle(self.folder,self.version,'source')
+
+    def test_legacy_bundle_defaults_to_release(self):
+        self.write_jar()
+        digest=hashlib.sha256(self.jar.read_bytes()).hexdigest()
+        manifest=dict(version=self.version,commit='source',sha256=digest,curseforge_project=release.PROJECT_ID)
+        (self.folder/'release-manifest.json').write_text(json.dumps(manifest))
+        (self.folder/'SHA256SUMS').write_text(f'{digest}  {self.jar.name}\n')
+        with patch.object(release, 'current_release_type', return_value='release'):
+            release.verify_bundle(self.folder,self.version,'source')
+        with patch.object(release, 'current_release_type', return_value='alpha'), self.assertRaises(AssertionError):
+            release.verify_bundle(self.folder,self.version,'source')
 
 if __name__ == '__main__':
     unittest.main()
